@@ -13,6 +13,7 @@ import {
 import { CategoriesService } from './categories.service';
 import CreateCategoryBody from './dtos/create-category';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { ApiConsumes, ApiCreatedResponse, ApiOperation } from '@nestjs/swagger';
 
 @Controller('categories')
 export class CategoriesController {
@@ -20,6 +21,17 @@ export class CategoriesController {
 
   @Post()
   @UseInterceptors(FileInterceptor('image'))
+  //----Swagger configs
+  @ApiConsumes('multipart/form-data')
+  @ApiOperation({
+    summary: 'Create a new category',
+    description: 'Create a new category with a name, description, and image.',
+    tags: ['categories'],
+  })
+  @ApiCreatedResponse({
+    description: 'Category created successfully',
+  })
+  //-----
   createCategory(
     @Body() data: CreateCategoryBody,
     @UploadedFile() file: Express.Multer.File | undefined,
