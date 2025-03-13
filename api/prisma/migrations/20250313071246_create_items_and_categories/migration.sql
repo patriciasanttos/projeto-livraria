@@ -2,9 +2,9 @@
 CREATE TABLE "Category" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "name" TEXT NOT NULL,
-    "description" TEXT NOT NULL,
-    "image" BLOB NOT NULL,
-    "created_at" DATETIME NOT NULL,
+    "description" TEXT,
+    "image" TEXT,
+    "created_at" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" DATETIME NOT NULL
 );
 
@@ -12,10 +12,10 @@ CREATE TABLE "Category" (
 CREATE TABLE "Item" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "name" TEXT NOT NULL,
-    "description" TEXT NOT NULL,
+    "description" TEXT,
     "price" DECIMAL NOT NULL,
-    "image" BLOB NOT NULL,
-    "created_at" DATETIME NOT NULL,
+    "image" TEXT,
+    "created_at" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" DATETIME NOT NULL
 );
 
