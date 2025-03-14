@@ -64,13 +64,9 @@ export class ItemsController {
     @Body() data: CreateItemBody,
     @UploadedFile() file: Express.Multer.File | undefined,
   ) {
-    let image: string = '';
-
-    if (file) image = file.buffer.toString('base64');
-
     return this.itemsService.create({
       ...data,
-      image,
+      image: file ? file.buffer.toString('base64') : '',
     });
   }
 
@@ -83,7 +79,7 @@ export class ItemsController {
     description: 'Update a item with a name, description, price and image.',
     tags: ['items'],
   })
-  @ApiCreatedResponse({
+  @ApiOkResponse({
     description: 'Item updated successfully',
   })
   //-----
@@ -91,20 +87,17 @@ export class ItemsController {
     @Body() data: UpdateItemBody,
     @UploadedFile() file: Express.Multer.File | undefined,
   ) {
-    let image: string = '';
+    const updateData = { ...data };
 
-    if (file) image = file.buffer.toString('base64');
+    if (file) updateData.image = file.buffer.toString('base64');
 
-    return this.itemsService.update({
-      ...data,
-      image,
-    });
+    return this.itemsService.update(updateData);
   }
 
   @Delete(':itemId')
   //----Swagger configs
   @ApiParam({
-    name: 'categoryId',
+    name: 'itemId',
     required: true,
     description: 'Item ID',
     example: 1,

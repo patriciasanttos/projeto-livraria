@@ -28,7 +28,6 @@ import {
 import { CategoriesService } from './categories.service';
 import CreateCategoryBody from './dtos/create-category';
 import UpdateCategoryBody from './dtos/update-category';
-import AddOrRemoveItemsToCategoryBody from './dtos/add-or-remove-items-to-category';
 
 @Controller('categories')
 export class CategoriesController {
@@ -66,13 +65,9 @@ export class CategoriesController {
     @Body() data: CreateCategoryBody,
     @UploadedFile() file: Express.Multer.File | undefined,
   ) {
-    let image: string = '';
-
-    if (file) image = file.buffer.toString('base64');
-
     return this.categoriesService.create({
       ...data,
-      image,
+      image: file ? file.buffer.toString('base64') : '',
     });
   }
 
@@ -85,7 +80,7 @@ export class CategoriesController {
     description: 'Update a category with a name, description, and image.',
     tags: ['categories'],
   })
-  @ApiCreatedResponse({
+  @ApiOkResponse({
     description: 'Category updated successfully',
   })
   //-----
@@ -93,14 +88,11 @@ export class CategoriesController {
     @Body() data: UpdateCategoryBody,
     @UploadedFile() file: Express.Multer.File | undefined,
   ) {
-    let image: string = '';
+    const updateData = { ...data };
 
-    if (file) image = file.buffer.toString('base64');
+    if (file) updateData.image = file.buffer.toString('base64');
 
-    return this.categoriesService.update({
-      ...data,
-      image,
-    });
+    return this.categoriesService.update(updateData);
   }
 
   @Delete(':categoryId')
@@ -124,34 +116,71 @@ export class CategoriesController {
     return this.categoriesService.delete(categoryId);
   }
 
-  @Patch('add')
+  @Patch(':categoryId/items/:itemId/add')
   //----Swagger configs
+  @ApiParam({
+    name: 'categoryId',
+    required: true,
+    description: 'Category ID',
+    example: 1,
+  })
+  @ApiParam({
+    name: 'itemId',
+    required: true,
+    description: 'Item ID',
+    example: 1,
+  })
   @ApiOperation({
-    summary: 'Add a item to a category',
-    description: 'Add a item to a category with a item id, and a category id.',
+    summary: 'Add an item to a category',
+    description:
+      'Add an item to a category with an item id, and a category id.',
     tags: ['categories'],
   })
   @ApiOkResponse({
     description: 'Item added to category successfully',
   })
   //-----
-  addItemToCategory(@Body() data: AddOrRemoveItemsToCategoryBody) {
-    return this.categoriesService.addItemToCategory(data);
+  addItemToCategory(
+    @Param('categoryId', ParseIntPipe) categoryId: number,
+    @Param('itemId', ParseIntPipe) itemId: number,
+  ) {
+    return this.categoriesService.addItemToCategory({
+      categoryId,
+      itemId,
+    });
   }
 
-  @Patch('remove')
+  @Patch(':categoryId/items/:itemId/remove')
   //----Swagger configs
+  @ApiParam({
+    name: 'categoryId',
+    required: true,
+    description: 'Category ID',
+    example: 1,
+  })
+  @ApiParam({
+    name: 'itemId',
+    required: true,
+    description: 'Item ID',
+    example: 1,
+  })
   @ApiOperation({
-    summary: 'Remove a item from category',
+    summary: 'Remove an item from a category',
     description:
-      'Remove a item from category with a item id, and a category id.',
+      'Remove an item from a category with an item id, and a category id.',
     tags: ['categories'],
   })
   @ApiOkResponse({
     description: 'Item removed from category successfully',
   })
   //-----
-  removeItemFromCategory(@Body() data: AddOrRemoveItemsToCategoryBody) {
-    return this.categoriesService.removeItemFromCategory(data);
+  removeItemFromCategory(
+    @Param('categoryId', ParseIntPipe) categoryId: number,
+    @Param('itemId', ParseIntPipe) itemId: number,
+  ) {
+    return this.categoriesService.removeItemFromCategory({
+      categoryId,
+      itemId,
+    });
   }
 }
