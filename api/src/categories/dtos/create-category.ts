@@ -6,7 +6,7 @@ export default class CreateCategoryBody {
   @ApiProperty()
   @IsString()
   @IsNotEmpty({ message: 'You must provide a category name' })
-  @Length(5, 20)
+  @Length(5, 100)
   name: string;
 
   @ApiProperty()

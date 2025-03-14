@@ -10,7 +10,7 @@ export default class UpdateCategoryBody {
 
   @ApiProperty()
   @IsString()
-  @Length(5, 20)
+  @Length(5, 100)
   name?: string;
 
   @ApiProperty()
