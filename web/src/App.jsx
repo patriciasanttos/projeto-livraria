@@ -1,10 +1,9 @@
-import './App.css'
-import HomePage from './Pages/HomePage/Home'
+import MainRoutes from './routes';
 
 function App() {
   return (
     <>
-      <HomePage />
+      <MainRoutes />
     </>
   )
 }
