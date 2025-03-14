@@ -13,7 +13,11 @@ export class CategoriesService {
   constructor(private readonly prisma: PrismaService) {}
 
   async getAll() {
-    const categories = await this.prisma.category.findMany();
+    const categories = await this.prisma.category.findMany({
+      include: {
+        items: true,
+      },
+    });
 
     return categories;
   }
@@ -34,6 +38,19 @@ export class CategoriesService {
 
   async update(data: UpdateCategoryBody) {
     await this.prisma.$transaction(async (tx) => {
+      const category = await tx.category.findUnique({
+        where: {
+          id: Number(data.id),
+        },
+      });
+      if (!category)
+        throw new HttpException(
+          {
+            message: 'Category not found',
+          },
+          HttpStatus.NOT_FOUND,
+        );
+
       await tx.category.update({
         where: {
           id: Number(data.id),

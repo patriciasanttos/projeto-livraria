@@ -16,8 +16,6 @@ import {
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
-import { CategoriesService } from './categories.service';
-import CreateCategoryBody from './dtos/create-category';
 import { FileInterceptor } from '@nestjs/platform-express';
 import {
   ApiConsumes,
@@ -26,6 +24,9 @@ import {
   ApiOperation,
   ApiParam,
 } from '@nestjs/swagger';
+
+import { CategoriesService } from './categories.service';
+import CreateCategoryBody from './dtos/create-category';
 import UpdateCategoryBody from './dtos/update-category';
 import AddOrRemoveItemsToCategoryBody from './dtos/add-or-remove-items-to-category';
 
@@ -107,7 +108,7 @@ export class CategoriesController {
   @ApiParam({
     name: 'categoryId',
     required: true,
-    description: 'ID da categoria',
+    description: 'Category ID',
     example: 1,
   })
   @ApiOperation({
