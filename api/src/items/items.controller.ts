@@ -76,7 +76,7 @@ export class ItemsController {
   @ApiConsumes('multipart/form-data')
   @ApiOperation({
     summary: 'Update a item',
-    description: 'Update a item with a name, description, price and image.',
+    description: 'Update an item with a name, description, price and image.',
     tags: ['items'],
   })
   @ApiOkResponse({
@@ -104,7 +104,7 @@ export class ItemsController {
   })
   @ApiOperation({
     summary: 'Delete a item',
-    description: 'Delete a item with a id',
+    description: 'Delete an item with an id',
     tags: ['items'],
   })
   @ApiOkResponse({

@@ -2,17 +2,17 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
   IsNotEmpty,
+  IsNumber,
   IsOptional,
   IsString,
   Length,
-  Matches,
 } from 'class-validator';
 
-export default class UpdateItemBody {
+export default class UpdateAdminBody {
   @ApiProperty()
-  @IsNotEmpty({ message: 'You must provide an item ID' })
-  @IsString()
-  id: string;
+  @IsNotEmpty({ message: 'You must provide an admin ID' })
+  @IsNumber()
+  id: number;
 
   @ApiProperty()
   @IsString()
@@ -24,18 +24,17 @@ export default class UpdateItemBody {
   @IsString()
   @Length(5, 100)
   @IsOptional()
-  description?: string;
+  email?: string;
 
   @ApiProperty()
-  @Matches(/^\d+(\.\d{1,2})?$/, {
-    message: 'The price must have a maximum of 2 decimal places',
-  })
+  @IsString()
+  @Length(8, 11)
   @IsOptional()
-  price?: number;
+  phone?: string;
 
-  @ApiProperty({
-    type: 'string',
-  })
+  @ApiProperty()
+  @IsString()
+  @Length(8, 50)
   @IsOptional()
-  image?: string | null | undefined;
+  newPassword?: string;
 }

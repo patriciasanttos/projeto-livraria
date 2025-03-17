@@ -76,8 +76,8 @@ export class CategoriesController {
   //----Swagger configs
   @ApiConsumes('multipart/form-data')
   @ApiOperation({
-    summary: 'Update a category',
-    description: 'Update a category with a name, description, and image.',
+    summary: 'Update an category',
+    description: 'Update an category with a name, description, or image.',
     tags: ['categories'],
   })
   @ApiOkResponse({
@@ -105,7 +105,7 @@ export class CategoriesController {
   })
   @ApiOperation({
     summary: 'Delete a category',
-    description: 'Delete a category with a id',
+    description: 'Delete an category with an id',
     tags: ['categories'],
   })
   @ApiOkResponse({
