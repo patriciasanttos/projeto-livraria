@@ -23,7 +23,7 @@ export class CategoriesService {
     });
   }
 
-  private async getCategoryById(categoryId: number) {
+  private async getById(categoryId: number) {
     const category = await this.prisma.category.findUnique({
       where: { id: categoryId },
     });
@@ -48,7 +48,7 @@ export class CategoriesService {
   }
 
   async update(data: UpdateCategoryBody) {
-    await this.getCategoryById(Number(data.id));
+    await this.getById(Number(data.id));
 
     return await this.prisma.category.update({
       where: {
@@ -63,7 +63,7 @@ export class CategoriesService {
   }
 
   async delete(categoryId: number) {
-    await this.getCategoryById(categoryId);
+    await this.getById(categoryId);
 
     return await this.prisma.$transaction(async (tx) => {
       await tx.category.update({
@@ -88,8 +88,8 @@ export class CategoriesService {
     categoryId: number;
     itemId: number;
   }) {
-    await this.getCategoryById(categoryId);
-    await this.itemsService.getItemById(itemId);
+    await this.getById(categoryId);
+    await this.itemsService.getById(itemId);
 
     await this.prisma.category.update({
       where: {
@@ -114,8 +114,8 @@ export class CategoriesService {
     categoryId: number;
     itemId: number;
   }) {
-    await this.getCategoryById(categoryId);
-    await this.itemsService.getItemById(itemId);
+    await this.getById(categoryId);
+    await this.itemsService.getById(itemId);
 
     await this.prisma.category.update({
       where: {

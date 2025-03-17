@@ -19,7 +19,7 @@ export class ItemsService {
     });
   }
 
-  async getItemById(itemId: number) {
+  async getById(itemId: number) {
     const item = await this.prisma.item.findUnique({
       where: { id: itemId },
     });
@@ -45,7 +45,7 @@ export class ItemsService {
   }
 
   async update(data: UpdateItemBody) {
-    await this.getItemById(Number(data.id));
+    await this.getById(Number(data.id));
 
     return await this.prisma.item.update({
       where: {
@@ -61,7 +61,7 @@ export class ItemsService {
   }
 
   async delete(itemId: number) {
-    await this.getItemById(itemId);
+    await this.getById(itemId);
 
     return await this.prisma.$transaction(async (tx) => {
       await tx.item.update({

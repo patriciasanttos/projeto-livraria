@@ -1,17 +1,24 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsString, Length, Matches } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  Length,
+  Matches,
+} from 'class-validator';
 
 export default class CreateItemBody {
   @ApiProperty()
   @IsString()
-  @IsNotEmpty({ message: 'You must provide a item name' })
+  @IsNotEmpty({ message: 'You must provide an item name' })
   @Length(5, 100)
   name: string;
 
   @ApiProperty()
   @IsString()
   @Length(5, 100)
+  @IsOptional()
   description?: string;
 
   @ApiProperty()
@@ -24,5 +31,6 @@ export default class CreateItemBody {
   @ApiProperty({
     type: 'string',
   })
+  @IsOptional()
   image?: string | null | undefined;
 }
