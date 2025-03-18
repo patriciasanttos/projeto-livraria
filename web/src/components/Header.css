@@ -1,0 +1,110 @@
+header {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-pink);
+    box-sizing: border-box;
+}
+
+#icons-header {
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 240px;
+    background-image: url('../assets/background-header.svg');
+    background-repeat: no-repeat;
+}
+
+#icons-header>img {
+    transition: transform 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+#icons-header>img:hover {
+    transform: translateY(-10px);
+}
+
+.input-with-icons {
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+}
+
+.input-with-icons>img {
+    position: absolute;
+    top: 15px;
+    right: 10px;
+    color: #44463A;
+}
+
+header>ul {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    margin: 0;
+    padding: 0;
+    color: var(--button-dark-blue);
+    font-size: 36px;
+}
+
+header>ul>li {
+    margin: 0;
+    list-style: none;
+    padding-bottom: 20px;
+}
+
+header>ul>li:hover {
+    color: #8080E2;
+    cursor: pointer;
+}
+
+#icons-right-sup>img, #icons-right-sup>a>img {
+    margin-left: 20px;
+    transition: transform 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+#icons-right-sup>img:hover, #icons-right-sup>a>img:hover {
+    transform: translateY(-10px);
+}
+
+.input-with-icons>input {
+    margin: 0;
+    width: 579px;
+    height: 66px;
+    padding-left: 20px;
+    border-radius: 10px;
+    color: #44463A;
+    font-size: 32px;
+    background-color: #D5D8C4;
+    border: none;
+}
+
+
+@media (max-width: 968px) {
+    #icons-header {
+        flex-direction: column;
+        background-size: cover;
+        text-align: center;
+        height: 350px;
+    }
+
+    header>ul {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .input-with-icons>input {
+        width: 360px;
+        font-size: 24px;
+        margin-bottom: 15px;
+    }
+
+    #icons-right-sup {
+        padding-bottom: 70px;
+    }
+}
