@@ -8,25 +8,46 @@ function ItemList() {
       id: 1,
       image: ItemImage,
       name: "Kit Canetas",
-      value: "R$00.00",
+      value: 10.0,
       quantity: 1,
-      subtotal: "R$00,00",
+      subtotal: 10.0,
     },
     {
       id: 2,
       image: ItemImage,
       name: "Kit Lápis",
-      value: "R$00.00",
+      value: 5.0,
       quantity: 1,
-      subtotal: "R$00,00",
+      subtotal: 5.0,
     },
   ]);
+
+  const formatValues = (value) => {
+    const formattedValue = value.toFixed(2).replace(".", ",");
+
+    if (value < 10) {
+      return `R$0${formattedValue}`;
+    }
+
+    return `R$${formattedValue}`;
+  };
+
+  const calculateTotal = () => {
+    let total = 0;
+
+    for (let i = 0; i < productList.length; i++) {
+      total += productList[i].subtotal;
+    }
+    return total;
+  };
 
   const onClickLess = (index) => {
     const products = [...productList];
 
     if (products[index].quantity > 0) {
       products[index].quantity = products[index].quantity - 1;
+      products[index].subtotal =
+        products[index].value * products[index].quantity;
       setProductList(products);
     }
   };
@@ -36,6 +57,8 @@ function ItemList() {
 
     if (products[index].quantity < 99) {
       products[index].quantity = products[index].quantity + 1;
+      products[index].subtotal =
+        products[index].value * products[index].quantity;
       setProductList(products);
     }
   };
@@ -66,7 +89,7 @@ function ItemList() {
                     />
                     <p>{product.name}</p>
                   </td>
-                  <td className="right">{product.value}</td>
+                  <td className="right">{formatValues(product.value)}</td>
                   <td className="right">
                     <div className="td-quantify">
                       <div
@@ -75,7 +98,7 @@ function ItemList() {
                       >
                         -
                       </div>
-                      <div className="btn-quantityList">{product.quantity}</div>
+                      <div className="btn-quantifyList">{product.quantity}</div>
                       <div
                         className="btn-quantify more"
                         onClick={() => onClickMore(index)}
@@ -84,9 +107,9 @@ function ItemList() {
                       </div>
                     </div>
                   </td>
-                  <td className="right">{product.subtotal}</td>
+                  <td className="right">{formatValues(product.subtotal)}</td>
                 </tr>
-              ); 
+              );
             })}
           </tbody>
         </table>
@@ -94,7 +117,7 @@ function ItemList() {
 
       <section className="total-price">
         <h3>TOTAL</h3>
-        <h3>R$ 00,00</h3>
+        <h3>{formatValues(calculateTotal())}</h3>
       </section>
 
       <section className="buy">
@@ -110,7 +133,7 @@ function ItemList() {
         </div>
       </section>
     </main>
-  );
+  )
 }
 
 export default ItemList;
