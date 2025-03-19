@@ -1,0 +1,112 @@
+.item-list-main {
+    width: 90vw;
+    margin: auto;
+
+    .item-list-title {
+        color: var(--title-blue);
+    }
+
+    table {
+        width: 100%;
+
+        tr {
+            text-align: left;
+        }
+
+        td {
+            border-top: 1px solid #cfd1c4;
+        }
+    }
+
+    .product-title {
+        width: 35%;
+    }
+
+    .product-item {
+        display: flex;
+        align-items: center;
+    }
+
+    .td-quantify {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        width: 100px;
+
+        .btn-quantify {
+            width: 20px;
+            text-align: center;
+            align-items: center;
+
+            border-radius: 6px;
+            border: 1px solid #0A2C3D;
+            background-color: #D9D9D9;
+
+            cursor: pointer;
+        }
+
+        .btn-quantity {
+            width: 30px;
+            height: 1.6rem;
+            text-align: center;
+            padding-top: 1.2%;
+
+            border-radius: 5px;
+            border: 1px solid #0A2C3D;
+            background-color: #D9D9D9;
+
+        }
+    }
+
+    .total-price {
+        display: flex;
+        flex-direction: row;
+        justify-content: right;
+        gap: 5%;
+
+        width: 89%;
+    }
+
+    .buy {
+        text-align: right;
+        width: 89%;
+        margin-top: 20px;
+
+        .finish {
+            background-color: var(--button-pink);
+            border: 1px solid #44463A;
+            border-radius: 5px;
+
+            width: 250px;
+            height: 40px;
+
+            font-size: 1rem;
+            color: #F6F9E6;
+
+            cursor: pointer;
+        }
+
+        .btn-info {
+            width: 97%;
+            font-size: 0.6rem;
+            text-align: right;
+            margin-bottom: 30px;
+        }
+
+        .continue {
+            background-color: white;
+            border: 1px solid #44463A;
+            border-radius: 5px;
+
+            width: 250px;
+            height: 40px;
+
+            font-size: 1rem;
+            color: var(--title-pink);
+
+            cursor: pointer;
+        }
+
+    }
+}
