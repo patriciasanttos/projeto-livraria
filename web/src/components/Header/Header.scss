@@ -97,12 +97,14 @@ header {
             box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
             border-radius: 0 0 8px 8px;
 
-            height: 10em;
+            height: auto;
+            max-height: 30dvh;
             padding: 0.5em;
+            overflow-y: auto;
 
             display: flex;
             flex-direction: column;
-            gap: 10%;
+            gap: 1em;
 
             li {
                 list-style-type: none;

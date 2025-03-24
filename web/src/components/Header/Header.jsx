@@ -27,7 +27,13 @@ const Header = () => {
                         <img className='header-logo' src={logo} alt="Logo DNC" />
                     </Link>
 
-                    <div className="header-search-container">
+                    <div
+                        className="header-search-container"
+                        onBlur={(e) => {
+                            setQuery('');
+                            e.target.value = '';
+                        }}
+                    >
                         <SearchInput setQuery={setQuery} />
                         {query && <SearchResults query={query} />}
                     </div>

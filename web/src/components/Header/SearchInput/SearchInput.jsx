@@ -25,19 +25,15 @@ function SearchInput({ setQuery }) {
           color: 'var(--input-label)',
           '& .MuiInputBase-input::placeholder': {
             color: 'var(--input-label)',
-            opacity: 1
+            opacity: 1,
           },
         }}
         placeholder="O que você está buscando?"
         inputProps={{ 'aria-label': 'search' }}
 
         onChange={(e) => setQuery(e.target.value)}
-        onBlur={(e) => {
-          setQuery('');
-          e.target.value = '';
-        }}
       />
-      {/* <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" /> */}
+      <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
       <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
         <SearchIcon />
       </IconButton>

@@ -43,8 +43,6 @@ const SearchResults = ({ query }) => {
       });
     });
 
-    console.log([...filteredResults.values()]);
-
     if (filteredResults.size > 0)
       setResults([...filteredResults.values()]);
 
@@ -61,7 +59,7 @@ const SearchResults = ({ query }) => {
             return result.type === "category"
               ? // Category result
               <li key={result.type + '-' + result.id}>
-                <span>Categoria:</span>
+                <span>Categoria: </span>
                 {result.name}
               </li>
               : // Item result
