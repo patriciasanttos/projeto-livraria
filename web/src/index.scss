@@ -7,7 +7,6 @@
   --bg-blue: #B5ECF5;
 
   --text-primary-color: #0A2C3D;
-
   --title-pink: #B34983;
   --title-green: #8F9753;
   --title-blue: #2789B9;
@@ -17,9 +16,10 @@
   --button-lime-green: #6BA57D;
   --button-blue: #2789B9;
   --button-dark-blue: #0A2C3D;
-   --card-background: #D5D8C4;
+  --card-background: #D5D8C4;
   --cart-background: #C9C9C9;
 }
+
 body {
   margin: 0 auto;
   max-width: 100dvw;
@@ -28,7 +28,6 @@ body {
   overflow-x: hidden;
   justify-content: center;
   --button-dark-blue-hover: #1e678c;
-
   --input-color: #daddce;
   --input-label: #44463a;
   --input-border: #0a2c3d80;
