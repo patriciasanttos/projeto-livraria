@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 
 //-----Icons & images
 import logo from '../../assets/images/logo.svg'
@@ -7,20 +8,29 @@ import instagramGreenIcon from '../../assets/icons/instagramGreenIcon.svg'
 import locationGreenIcon from '../../assets/icons/locationGreenIcon.svg'
 import shoppingCartIcon from '../../assets/icons/shoppingCartIcon.svg'
 
-import './Header.scss'
-import { Link } from 'react-router-dom'
+//-----Components
 import SearchInput from './SearchInput/SearchInput'
+import SearchResults from './SearchResults/SearchResults'
+
+import './Header.scss'
 
 const Header = () => {
+    const [query, setQuery] = useState();
+
     return (
         <header>
             <img className='backgound-image' src={backgroundImage} alt="Image"></img>
 
             <div className='header-content'>
                 <div>
-                    <img className='header-logo' src={logo} alt="Logo DNC" />
+                    <Link to='/' className='header-logo-link'>
+                        <img className='header-logo' src={logo} alt="Logo DNC" />
+                    </Link>
 
-                    <SearchInput />
+                    <div className="header-search-container">
+                        <SearchInput setQuery={setQuery} />
+                        {query && <SearchResults query={query} />}
+                    </div>
 
                     <div className='header-buttons'>
                         <Link to='/cart'>
@@ -47,27 +57,27 @@ const Header = () => {
                 </div>
 
                 <div className='header-items-categories'>
-                    <Link>
+                    <Link to='/categories' state={{ category: 'presentes' }}>
                         Presentes
                     </Link>
-                    <Link>
+                    <Link to='/categories' state={{ category: 'livros infantis' }}>
                         Livros Infantis
                     </Link>
-                    <Link>
+                    <Link to='/categories' state={{ category: 'canetas' }}>
                         Canetas
                     </Link>
-                    <Link>
+                    <Link to='/categories' state={{ category: 'cadernos' }}>
                         Cadernos
                     </Link>
-                    <Link>
+                    <Link to='/categories' state={{ category: 'materiais para colorir' }}>
                         Materiais para colorir
                     </Link>
-                    <Link>
+                    <Link to='/categories'>
                         Ver tudo
                     </Link>
                 </div>
             </div>
-        </header >
+        </header>
     )
 }
 

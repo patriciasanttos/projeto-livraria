@@ -2,7 +2,7 @@ import { Divider, IconButton, InputBase, Paper } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import React from 'react';
 
-function SearchInput() {
+function SearchInput({ setQuery }) {
   return (
     <Paper
       component="form"
@@ -11,7 +11,7 @@ function SearchInput() {
         display: 'flex',
         alignItems: 'center',
 
-        marginTop: '1%',
+        marginTop: '4%',
         width: '50dvh',
         height: '2.2em',
         backgroundColor: 'var(--input-color)',
@@ -30,6 +30,12 @@ function SearchInput() {
         }}
         placeholder="O que você está buscando?"
         inputProps={{ 'aria-label': 'search' }}
+
+        onChange={(e) => setQuery(e.target.value)}
+        onBlur={(e) => {
+          setQuery('');
+          e.target.value = '';
+        }}
       />
       {/* <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" /> */}
       <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
