@@ -3,6 +3,7 @@ import { Routes, Route, BrowserRouter, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 
 import { publicPages } from "./pages/pages";
+import Header from "./components/Header/Header";
 const ScrollToTop = () => {
   const { pathname } = useLocation();
 
@@ -17,6 +18,7 @@ export default function MainRoutes() {
   return (
     <BrowserRouter>
       <ScrollToTop />
+      <Header />
 
       <Routes>
         <Route path="/" element={<publicPages.HomePage />} />
