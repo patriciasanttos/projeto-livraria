@@ -16,8 +16,14 @@
   --button-lime-green: #6BA57D;
   --button-blue: #2789B9;
   --button-dark-blue: #0A2C3D;
+  --button-dark-blue-hover: #1e678c;
+
   --card-background: #D5D8C4;
   --cart-background: #C9C9C9;
+
+  --input-color: #daddce;
+  --input-label: #44463a;
+  --input-border: #0a2c3d80;
 }
 
 body {
@@ -26,10 +32,4 @@ body {
   min-height: 100vh;
   box-sizing: border-box;
   overflow-x: hidden;
-  justify-content: center;
-  --button-dark-blue-hover: #1e678c;
-  --input-color: #daddce;
-  --input-label: #44463a;
-  --input-border: #0a2c3d80;
-
 }
