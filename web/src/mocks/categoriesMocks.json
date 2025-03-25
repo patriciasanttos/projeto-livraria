@@ -3,7 +3,7 @@
     {
       "id": 1,
       "name": "Agendas",
-      "description": "Agendas",
+      "description": "Agendas em Espanhol",
       "image": "",
       "created_at": "2025-03-14T16:43:18.126Z",
       "updated_at": "2025-03-14T16:43:18.126Z",
@@ -22,7 +22,7 @@
     {
       "id": 2,
       "name": "Presentes",
-      "description": "Presentes",
+      "description": "Presentes Infantis",
       "image": "",
       "created_at": "2025-03-14T16:43:18.126Z",
       "updated_at": "2025-03-14T16:43:18.126Z",
@@ -31,7 +31,45 @@
           "id": 2,
           "name": "Chaveiro Winx Ultimate Edition Plus Ultra Max Revoluton Pro",
           "description": "Chaveiro Winx Ultimate Edition Plus Ultra Max Revoluton Pro",
-          "price": "20",
+          "price": "30",
+          "image": "",
+          "created_at": "2025-03-14T16:45:53.714Z",
+          "updated_at": "2025-03-14T16:45:53.714Z"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Canetas",
+      "description": "Canetas Infantis",
+      "image": "",
+      "created_at": "2025-03-14T16:43:18.126Z",
+      "updated_at": "2025-03-14T16:43:18.126Z",
+      "items": [
+        {
+          "id": 3,
+          "name": "Chaveiro Winx Ultimate Edition Plus Ultra Max Revoluton Pro",
+          "description": "Chaveiro Winx Ultimate Edition Plus Ultra Max Revoluton Pro",
+          "price": "40",
+          "image": "",
+          "created_at": "2025-03-14T16:45:53.714Z",
+          "updated_at": "2025-03-14T16:45:53.714Z"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Lápis",
+      "description": "Lápis Labra Colorido",
+      "image": "",
+      "created_at": "2025-03-14T16:43:18.126Z",
+      "updated_at": "2025-03-14T16:43:18.126Z",
+      "items": [
+        {
+          "id": 4,
+          "name": "Chaveiro Winx Ultimate Edition Plus Ultra Max Revoluton Pro",
+          "description": "Chaveiro Winx Ultimate Edition Plus Ultra Max Revoluton Pro",
+          "price": "5000",
           "image": "",
           "created_at": "2025-03-14T16:45:53.714Z",
           "updated_at": "2025-03-14T16:45:53.714Z"

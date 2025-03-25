@@ -1,0 +1,126 @@
+/* Estilos para o Card */
+.class-card {
+    max-width: 1920px;
+    display: grid;
+    text-align: center;
+}
+
+.class-card h2 {
+    margin: 10px;
+}
+
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    justify-items: center;
+}
+
+.general-container {
+    display: flex;
+    justify-content: center;
+    //Este align-items: center; faz com que o botão fique ao centro
+    align-items: center;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    // background-color: var(--card-background);
+    text-align: center;
+    width: 280px;
+    border-radius: 10px;
+    margin: 0 10px;
+    /* Este overflow-wrap: break-word faz com que o texto quebre quando chegar ao limite da largura */
+    overflow-wrap: break-word;
+    /* Adiciona espaço entre os cards */
+    justify-items: center;
+}
+
+.card-with-background{
+    background-color: var(--card-background)
+}
+
+.card img {
+    width: 100%;
+    height: 100%;
+}
+
+.cart-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+    border: none;
+    cursor: pointer;
+}
+
+.cart-text h3 {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    width: 100%;   
+    font-size: 1.5rem;
+    font-weight: bold;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    margin-bottom: auto;
+    background-color: var(--cart-background);
+}
+
+
+p{
+    margin: 0;
+    font-size: 1.5rem;
+    color: #0A2C3D;
+}
+
+h2{
+    font-weight: bold;
+    font-size: 3rem;
+}
+.pink {
+    color: var(--title-pink);    
+}
+
+.green {
+    color: var(--title-green);  
+}
+
+.blue {
+    color: var(--title-blue);   
+}
+
+.default{
+    color: var( --text-primary-color);
+}
+
+.arrow {
+    margin: 30px;
+    width: 46px;
+    height: 49px;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .card {
+        width: 78%;
+    }
+    h2 {
+        font-size: 2rem;
+    }
+
+    .cart-text h3 {
+        font-size: 1rem;
+    }
+
+    .card p {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 685px) {
+    .card {
+        width: 78%;
+    }
+}
