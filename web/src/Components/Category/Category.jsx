@@ -62,7 +62,6 @@ const Category = ({
 
     const displayedCards = data.slice(startIndex, startIndex + cardsPerPage);
 
-
     return (
         <div className='category-component'>
             <h2 className={categoryColor}>{name}</h2>

@@ -12,7 +12,7 @@
   p {
     font-size: 16px;
     font-weight: 600;
-    
+
     margin: 5px 0;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -45,6 +45,8 @@
       font-size: 16px;
       font-weight: bold;
       margin-top: 10px;
+
+      cursor: pointer;
     }
   }
 }
