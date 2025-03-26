@@ -10,9 +10,45 @@
       "items": [
         {
           "id": 1,
+          "name": "Agenda Ben 10 Ultimate Edition Plus",
+          "description": "Agenda Ben 10 Ultimate Edition Plus",
+          "price": "20",
+          "image": "",
+          "created_at": "2025-03-14T16:45:53.714Z",
+          "updated_at": "2025-03-14T16:45:53.714Z"
+        },
+        {
+          "id": 123,
+          "name": "Agenda Ben 10 Ultimate Edition Plus Ultra Max",
+          "description": "Agenda Ben 10 Ultimate Edition Plus Ultra Max",
+          "price": "50",
+          "image": "",
+          "created_at": "2025-03-14T16:45:53.714Z",
+          "updated_at": "2025-03-14T16:45:53.714Z"
+        },
+        {
+          "id": 523,
           "name": "Agenda Ben 10 Ultimate Edition Plus Ultra Max Revoluton Pro",
           "description": "Agenda Ben 10 Ultimate Edition Plus Ultra Max Revoluton Pro",
-          "price": "20",
+          "price": "100",
+          "image": "",
+          "created_at": "2025-03-14T16:45:53.714Z",
+          "updated_at": "2025-03-14T16:45:53.714Z"
+        },
+        {
+          "id": 525,
+          "name": "Agenda Ben 10 Ultimate Edition Plus Ultra Max Revoluton Pro V12 Pocket Edition",
+          "description": "Agenda Ben 10 Ultimate Edition Plus Ultra Max Revoluton Pro V12 Pocket Edition",
+          "price": "150",
+          "image": "",
+          "created_at": "2025-03-14T16:45:53.714Z",
+          "updated_at": "2025-03-14T16:45:53.714Z"
+        },
+        {
+          "id": 521,
+          "name": "Agenda Ben 10 Ultimate Edition Plus Ultra Max Revoluton Pro V12 Pocket Edition Premium",
+          "description": "Agenda Ben 10 Ultimate Edition Plus Ultra Max Revoluton Pro V12 Pocket Edition Premium",
+          "price": "190",
           "image": "",
           "created_at": "2025-03-14T16:45:53.714Z",
           "updated_at": "2025-03-14T16:45:53.714Z"
@@ -29,9 +65,27 @@
       "items": [
         {
           "id": 2,
+          "name": "Chaveiro Winx Ultimate Edition Plus",
+          "description": "Chaveiro Winx Ultimate Edition Plus",
+          "price": "30",
+          "image": "",
+          "created_at": "2025-03-14T16:45:53.714Z",
+          "updated_at": "2025-03-14T16:45:53.714Z"
+        },
+        {
+          "id": 412,
+          "name": "Chaveiro Winx Ultimate Edition Plus Ultra Max",
+          "description": "Chaveiro Winx Ultimate Edition Plus Ultra Max",
+          "price": "60",
+          "image": "",
+          "created_at": "2025-03-14T16:45:53.714Z",
+          "updated_at": "2025-03-14T16:45:53.714Z"
+        },
+        {
+          "id": 242,
           "name": "Chaveiro Winx Ultimate Edition Plus Ultra Max Revoluton Pro",
           "description": "Chaveiro Winx Ultimate Edition Plus Ultra Max Revoluton Pro",
-          "price": "30",
+          "price": "120",
           "image": "",
           "created_at": "2025-03-14T16:45:53.714Z",
           "updated_at": "2025-03-14T16:45:53.714Z"

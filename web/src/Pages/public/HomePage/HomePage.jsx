@@ -1,44 +1,33 @@
 import React from 'react';
-import Card from '../../../Components/Card';
-import dataJson from '../../../mocks/categoriesMocks.json'
+
+import mock from '../../../mocks/categoriesMocks.json'
 import './HomePage.scss';
-import leftArrowPink from '../../../assets/left-arrow-pink.svg'
-import rightArrowPink from '../../../assets/right-arrow-pink.svg'
-import leftArrowBlue from '../../../assets/left-arrow-blue.svg'
-import rightArrowBlue from '../../../assets/right-arrow-blue.svg'
-import leftArrowGreen from '../../../assets/left-arrow-green.svg'
-import rightArrowGreen from '../../../assets/right-arrow-green.svg'
+import Category from '../../../components/Category/Category';
 
 function HomePage() {
-  const objectArray = dataJson.data;
-  console.log(objectArray)
+  const category1 = mock.data[0];
+  const category2 = mock.data[1];
+  const allCategories = mock.data;
 
   return (
     <div>
       <h1>Home Page</h1>
-      <Card data={objectArray}
-        category='Presentes' // Qualquer texto que represente a Categoria de seu produto
-        cardBackground='card-with-background'//Opçoes: card-with-background ou ''
-        titleColorClass='pink' //Opções de cores: default, pink, green e blue. Outro valor, a cor fica vermelha
-        cartText='Adicionar ao Carrinho'//Opções de texto: O texto que você quiser
-        typeLeftArrow={leftArrowPink}//Opções de cor de seta: leftArrowPink,leftArrowGreen,leftArrowBlue
-        typeRightArrow={rightArrowPink}////Opções de cor de seta: rightArrowPink,rightArrowGreen,rightArrowBlue
+
+      <Category
+        data={category1.items}
+        name={category1.name.charAt(0).toUpperCase() + category1.name.slice(1)}
+        categoryColor='pink'
       />
-      <Card data={objectArray}
-        category='Livros Infantis' // Qualquer texto que represente a Categoria de seu produto
-        cardBackground=''//Opçoes: card-with-background ou ''
-        titleColorClass='green' //Opções de cores: default, pink, green e blue. Outro valor, a cor fica vermelha
-        cartText='Adicionar ao Carrinho'//Opções de texto: O texto que você quiser
-        typeLeftArrow={leftArrowGreen}//Opções de cor de seta: leftArrowPink,leftArrowGreen,leftArrowBlue
-        typeRightArrow={rightArrowGreen}////Opções de cor de seta: rightArrowPink,rightArrowGreen,rightArrowBlue
+      <Category
+        data={category2.items}
+        name={category2.name.charAt(0).toUpperCase() + category2.name.slice(1)}
+        categoryColor='green'
       />
-      <Card data={objectArray}
-        category='Compre por Categoria' // Qualquer texto que represente a Categoria de seu produto
-        cardBackground=''//Opçoes: card-with-background ou ''
-        titleColorClass='blue' //Opções de cores: default, pink, green e blue. Outro valor, a cor fica vermelha
-        cartText='Adicionar ao Carrinho'//Opções de texto: O texto que você quiser
-        typeLeftArrow={leftArrowBlue}//Opções de cor de seta: leftArrowPink,leftArrowGreen,leftArrowBlue
-        typeRightArrow={rightArrowBlue}////Opções de cor de seta: rightArrowPink,rightArrowGreen,rightArrowBlue
+      <Category
+        data={allCategories}
+        name='Compre por Categoria'
+        categoryColor='blue'
+        showOnlyCategories
       />
     </div>
   );

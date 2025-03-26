@@ -1,0 +1,52 @@
+.category-component {
+    text-align: center;
+    padding: 0 12%;
+
+    height: 80dvh;
+
+    h2 {
+        font-weight: 700;
+        font-size: 2.2rem;
+    }
+
+    .category-component-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .arrows {
+            margin: 0 2em;
+            width: 2em;
+            height: auto;
+            position: absolute;
+
+            cursor: pointer;
+
+            &:first-child {
+                left: 5%;
+            }
+
+            &:last-child {
+                right: 5%;
+            }
+        }
+
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+
+    .default {
+        color: var(--text-primary-color);
+    }
+    .pink {
+        color: var(--title-pink);    
+    }
+    .green {
+        color: var(--title-green);  
+    }
+    .blue {
+        color: var(--title-blue);   
+    }
+}
