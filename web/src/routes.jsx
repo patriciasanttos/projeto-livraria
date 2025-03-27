@@ -2,7 +2,7 @@ import React from "react";
 import { Routes, Route, BrowserRouter, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 
-import { publicPages } from "./pages/pages";
+import { privatePages, publicPages } from "./pages/pages";
 import Header from "./components/Header/Header";
 import { ToastContainer } from "react-toastify";
 const ScrollToTop = () => {
@@ -28,6 +28,11 @@ export default function MainRoutes() {
         <Route path="item" element={<publicPages.ItemPage />} />
         <Route path="cart" element={<publicPages.Cart />} />
         <Route path="aboutus" element={<publicPages.AboutUs />} />
+
+        <Route path="admin/login" element={<privatePages.Login />} />
+        <Route path="admin/control_panel" element={<privatePages.ControlPanel />} />
+        <Route path="admin/items" element={<privatePages.Items />} />
+        <Route path="admin/categories" element={<privatePages.AdminCategoriesPage />} />
       </Routes>
     </BrowserRouter>
   );
