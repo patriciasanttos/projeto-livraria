@@ -41,7 +41,15 @@ const Category = ({
     }, [categoryColor]);
 
     useEffect(() => {
-        const loadCardsPerPage = () => window.innerWidth < 768 ? setCardsPerPage(2) : setCardsPerPage(3);
+        const loadCardsPerPage = () => {
+            if (window.innerWidth <= 503)
+                return setCardsPerPage(1)
+
+            if (window.innerWidth <= 820)
+                return setCardsPerPage(2)
+
+            return setCardsPerPage(3);
+        };
 
         loadCardsPerPage();
         window.addEventListener('resize', loadCardsPerPage);

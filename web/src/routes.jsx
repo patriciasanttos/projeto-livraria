@@ -4,6 +4,7 @@ import { useEffect } from "react";
 
 import { publicPages } from "./pages/pages";
 import Header from "./components/Header/Header";
+import { ToastContainer } from "react-toastify";
 const ScrollToTop = () => {
   const { pathname } = useLocation();
 
@@ -19,6 +20,7 @@ export default function MainRoutes() {
     <BrowserRouter>
       <ScrollToTop />
       <Header />
+      <ToastContainer />
 
       <Routes>
         <Route path="/" element={<publicPages.HomePage />} />

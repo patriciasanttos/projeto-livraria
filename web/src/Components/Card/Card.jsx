@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from 'react';
 
+//-----Icons
+import addToCartIcon from '../../assets/icons/addToCart.svg';
+import addedToCart from '../../assets/icons/addedToCart.svg';
+
 import './Card.scss';
+import { toast } from 'react-toastify';
 
 function Card({ id, name, price, image, color, isCategory }) {
   const [isInCart, setIsInCart] = useState(false);
@@ -20,6 +25,14 @@ function Card({ id, name, price, image, color, isCategory }) {
 
     localStorage.setItem('cart', JSON.stringify(cartCookie));
     setIsInCart(true);
+
+    return toast.success('Item adicionado ao seu carrinho', {
+      autoClose: 3000,
+      closeOnClick: true,
+      pauseOnHover: false,
+      pauseOnFocusLoss: false,
+      draggable: true
+    })
   }
 
   const removeFromCart = () => {
@@ -36,30 +49,40 @@ function Card({ id, name, price, image, color, isCategory }) {
       localStorage.setItem('cart', JSON.stringify(cartCookie));
 
     setIsInCart(false);
+
+    return toast('Item removido de seu carrinho', {
+      autoClose: 3000,
+      closeOnClick: true,
+      pauseOnHover: false,
+      pauseOnFocusLoss: false,
+      draggable: true
+    });
   }
 
   return (
-    <div className="card">
-      <div key={id} className={isCategory ? 'category-card' : 'item-card'}>
-        <img src={image} alt="Logo DNC" />
+    <div className={`card ${isCategory ? 'category-card' : 'item-card'}`}>
+      <div className="card-image">
+        <img src={image} alt={name} />
+      </div>
 
-        <div className='card-data'>
-          <p className={isCategory && color} title={name}>{name}</p>
-          {
-            !isCategory && (
-              <>
-                <p>{`R$${price},00`}</p>
-                <p>Até xxxx no cartão de crédito</p>
+      <div className='card-data'>
+        <p className={isCategory && color} title={name}>{name}</p>
+        {
+          !isCategory && (
+            <>
+              <p className="price">{`R$${price},00`}</p>
+              <p className="installment">Até xxxx no cartão de crédito</p>
 
+              <div className='cart-buttons'>
                 {!isInCart ? (
-                  <button onClick={addToCart}>Adicionar ao Carrinho</button>
+                  <img src={addToCartIcon} alt="Adicionar ao carrinho" onClick={addToCart} />
                 ) : (
-                  <button onClick={removeFromCart}>Remover do Carrinho</button>
+                  <img src={addedToCart} alt="Remover do carrinho" onClick={removeFromCart} />
                 )}
-              </>
-            )
-          }
-        </div>
+              </div>
+            </>
+          )
+        }
       </div>
     </div>
   );
