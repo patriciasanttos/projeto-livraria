@@ -50,7 +50,7 @@ function Card({ id, name, price, image, color, isCategory }) {
 
     setIsInCart(false);
 
-    return toast('Item removido de seu carrinho', {
+    return toast.success('Item removido de seu carrinho', {
       autoClose: 3000,
       closeOnClick: true,
       pauseOnHover: false,
