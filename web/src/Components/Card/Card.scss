@@ -78,11 +78,15 @@
       aspect-ratio: 1 / 1;
       object-fit: cover;
       border-radius: 50%;
+
+      cursor: pointer;
     }
   }
 
   .card-data p {
     font-size: 24pt;
+    
+    cursor: pointer;
   }
 }
 
