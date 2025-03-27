@@ -1,0 +1,27 @@
+.no-items-warn {
+  text-align: center;
+  font-size: 24pt;
+  font-weight: 600;
+  margin-top: 2em;
+}
+
+.category-page {
+  text-align: center;
+
+  h1 {
+    color: var(--title-pink);
+    font-weight: 600;
+    margin-top: 1em;
+  }
+
+  .category-page-items {
+    margin-top: 2em;
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2em;
+    justify-content: center;
+    width: 80%;
+    margin: 0 auto;
+  }
+}

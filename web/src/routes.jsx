@@ -25,6 +25,7 @@ export default function MainRoutes() {
       <Routes>
         <Route path="/" element={<publicPages.HomePage />} />
         <Route path="categories" element={<publicPages.Categories />} />
+        <Route path="categories/:categoryName" element={<publicPages.Categories />} />
         <Route path="item" element={<publicPages.ItemPage />} />
         <Route path="cart" element={<publicPages.Cart />} />
         <Route path="aboutus" element={<publicPages.AboutUs />} />

@@ -63,19 +63,19 @@ const Header = () => {
                 </div>
 
                 <div className='header-items-categories'>
-                    <Link to='/categories' state={{ category: 'presentes' }}>
+                    <Link to='/categories/presentes' state={{ category: 'presentes' }}>
                         Presentes
                     </Link>
-                    <Link to='/categories' state={{ category: 'livros infantis' }}>
+                    <Link to='/categories/livros%20infantis' state={{ category: 'livros infantis' }}>
                         Livros Infantis
                     </Link>
-                    <Link to='/categories' state={{ category: 'canetas' }}>
+                    <Link to='/categories/canetas' state={{ category: 'canetas' }}>
                         Canetas
                     </Link>
-                    <Link to='/categories' state={{ category: 'cadernos' }}>
+                    <Link to='/categories/cadernos' state={{ category: 'cadernos' }}>
                         Cadernos
                     </Link>
-                    <Link to='/categories' state={{ category: 'materiais para colorir' }}>
+                    <Link to='/categories/materiais%20para%20colorir' state={{ category: 'materiais para colorir' }}>
                         Materiais para colorir
                     </Link>
                     <Link to='/categories'>
