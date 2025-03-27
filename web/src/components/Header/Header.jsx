@@ -5,7 +5,7 @@ import HeaderMobile from "./HeaderMobile";
 import HeaderDesktop from "./HeaderDesktop";
 
 const Header = () => {
-  const isMobile = useMediaQuery({ maxWidth: 767 });
+  const isMobile = useMediaQuery({ maxWidth: 821 });
 
   return isMobile ? <HeaderMobile /> : <HeaderDesktop />;
 };

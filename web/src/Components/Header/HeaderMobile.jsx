@@ -25,6 +25,7 @@ const HeaderMobile = () => {
         style={{
           backgroundImage: `url(${waveHeader})`,
           backgroundSize: "cover",
+          height: "100%"
         }}
       >
         <div className="row-top">
