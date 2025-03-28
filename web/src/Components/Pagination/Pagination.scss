@@ -1,0 +1,48 @@
+.pagination-component {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5em;
+
+  margin-top: 5em;
+
+  .pagination-component-button {
+    width: 2.5em;
+    height: 2.5em;
+    border-radius: 5px;
+
+    border: 2px solid var(--button-pink);
+    background-color: transparent;
+    color: var(--button-pink);
+
+    cursor: pointer;
+  }
+
+  .current-page {
+    background-color: var(--button-pink);
+    color: #fff;
+  }
+
+  .more-pages-button {
+    cursor: default;
+  }
+
+  .pagination-component-arrow {
+    border: none;
+    background-color: transparent;
+    color: var(--button-pink);
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.3em;
+
+    cursor: pointer;
+  }
+
+  .pagination-component-arrow-disabled {
+    opacity: 0.5;
+    
+    cursor: default;
+  }
+}
