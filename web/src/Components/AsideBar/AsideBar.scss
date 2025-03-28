@@ -1,0 +1,34 @@
+.sidebar-list {
+    width: 194px;
+    height: 100%;
+    grid-column: 1;
+    grid-row: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-right: solid 1px var(--button-lime-green);
+    text-align: center;
+    list-style-type: none;
+}
+
+.sidebar-item {
+    width: 100%;
+    height: 100%;
+}
+.sidebar-link {
+    width: 100%;
+    height: 100%;
+}
+
+.sidebar-icon {
+    color: white;
+    transition: transform 0.3s ease;
+}
+
+.sidebar-link:hover .sidebar-icon {
+    transform: scale(1.1);
+}
+
+.sidebar-item p {
+    margin: 0;
+}

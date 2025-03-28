@@ -1,0 +1,10 @@
+.painel-controle {
+    display: grid;
+    grid-template-columns: 1fr 100%;
+    grid-template-rows: 1fr;
+    width: 100%;
+    align-items: start;
+    margin: 0;
+    // background-color: pink;
+    height: 100vh;
+}

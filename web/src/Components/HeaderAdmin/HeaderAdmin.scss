@@ -1,0 +1,14 @@
+.admin-title {
+    width: 100%;
+    display: grid;
+    justify-items: center;
+    word-wrap: break-word;
+    background-color: var(--button-lime-green);
+}
+
+.admin-title h2 {
+    margin-right: 240px;
+    color: #FFFFFF;
+    font-weight: 500;
+    font-size: 3rem;
+}
