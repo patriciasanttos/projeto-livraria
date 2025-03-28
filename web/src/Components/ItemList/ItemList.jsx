@@ -1,6 +1,9 @@
 import "./ItemList.scss";
 import ItemImage from "../../assets/Images/itemImage.svg";
 import { useState } from "react";
+import { Link } from "react-router-dom";
+
+import deleteIcon from "../../assets/icons/deleteIcon.svg";
 
 function ItemList() {
   const [productList, setProductList] = useState([
@@ -63,6 +66,16 @@ function ItemList() {
     }
   };
 
+  const onClickRemoveItem = (index) => {
+    const products = [...productList];
+    products.splice(index, 1);
+    setProductList(products);
+  };
+
+  const removeAllItems = () => {
+    setProductList([]);
+  };
+
   return (
     <main className="item-list-main">
       <h1 className="item-list-title">Carrinho</h1>
@@ -108,6 +121,13 @@ function ItemList() {
                     </div>
                   </td>
                   <td className="right">{formatValues(product.subtotal)}</td>
+                  <td className="delete-icon-container">
+                    <img
+                      onClick={onClickRemoveItem}
+                      src={deleteIcon}
+                      alt="Excluir"
+                    />
+                  </td>
                 </tr>
               );
             })}
@@ -115,25 +135,36 @@ function ItemList() {
         </table>
       </section>
 
-      <section className="total-price">
-        <h3>TOTAL</h3>
-        <h3>{formatValues(calculateTotal())}</h3>
+      <section className="clear-cart" onClick={removeAllItems}>
+        <div className="clear-cart-text">
+          <h3>Limpar carrinho</h3>
+        </div>
+        <div className="clear-cart-icon">
+          <img src={deleteIcon} alt="Excluir" width="30px" />
+        </div>
       </section>
 
-      <section className="buy">
-        <div finish-info>
-          <button className="finish">FINALIZAR COMPRA</button>
-          <p className="btn-info">
-            Você será direcionado para o nosso <br /> WhatsApp para finalizar
-            seu pedido!
-          </p>
-        </div>
-        <div>
-          <button className="continue">CONTINUAR COMPRANDO</button>
-        </div>
+      <section className="total-price-container">
+        <section className="total-price">
+          <h3>TOTAL</h3>
+          <h3>{formatValues(calculateTotal())}</h3>
+        </section>
+
+        <section className="buy">
+          <div finish-info>
+            <button className="finish">FINALIZAR COMPRA</button>
+            <p className="btn-info">
+              Você será direcionado para o nosso <br /> WhatsApp para finalizar
+              seu pedido!
+            </p>
+          </div>
+          <div>
+            <button className="continue">CONTINUAR COMPRANDO</button>
+          </div>
+        </section>
       </section>
     </main>
-  )
+  );
 }
 
 export default ItemList;

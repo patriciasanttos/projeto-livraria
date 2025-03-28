@@ -61,54 +61,97 @@
         }
     }
 
-    .total-price {
+    .delete-icon-container {
+        img {
+            width: 25%;
+            cursor: pointer;
+        }
+    }
+
+    .clear-cart {
         display: flex;
-        flex-direction: row;
-        justify-content: right;
-        gap: 5%;
+        justify-content: end;
+        align-items: center;
+        width: 14%;
+        position: absolute;
+        right: 10%;
 
-        width: 88%;
-    }
-
-    .buy {
-        text-align: right;
-        width: 89%;
-        margin-top: 20px;
-
-        .finish {
-            background-color: var(--button-pink);
-            border: 1px solid #44463A;
-            border-radius: 5px;
-
-            width: 250px;
-            height: 40px;
-
-            font-size: 1rem;
-            color: #F6F9E6;
-
+        .clear-cart-text {
+            background-color: #FB7676;
+            border-radius: 5px 0px 0px 5px;
             cursor: pointer;
+
+            h3 {
+                margin: 0px;
+                padding: 0.4rem;
+                font-weight: 500;
+            }
         }
 
-        .btn-info {
-            width: 97%;
-            font-size: 0.6rem;
+        .clear-cart-icon {
+            background-color: transparent;
+            border: 1px solid #FB7676;
+            border-radius: 0px 5px 5px 0px;
+            cursor: pointer;
+        }
+    }
+
+    .total-price-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 8% 0;
+
+        .total-price {
+            display: flex;
+            flex-direction: row;
+            justify-content: right;
+            gap: 5%;
+
+            width: 85%;
+        }
+
+        .buy {
             text-align: right;
-            margin-bottom: 30px;
+            width: 89%;
+            margin-top: 20px;
+
+            .finish {
+                background-color: var(--button-pink);
+                border: 1px solid #44463A;
+                border-radius: 5px;
+
+                width: 250px;
+                height: 40px;
+
+                font-size: 1rem;
+                color: #F6F9E6;
+
+                cursor: pointer;
+            }
+
+            .btn-info {
+                width: 97%;
+                font-size: 0.6rem;
+                text-align: right;
+                margin-bottom: 30px;
+            }
+
+            .continue {
+                background-color: white;
+                border: 1px solid #44463A;
+                border-radius: 5px;
+
+                width: 250px;
+                height: 40px;
+
+                font-size: 1rem;
+                color: var(--title-pink);
+
+                cursor: pointer;
+            }
+
         }
-
-        .continue {
-            background-color: white;
-            border: 1px solid #44463A;
-            border-radius: 5px;
-
-            width: 250px;
-            height: 40px;
-
-            font-size: 1rem;
-            color: var(--title-pink);
-
-            cursor: pointer;
-        }
-
     }
+
 }
