@@ -34,7 +34,7 @@ function SearchInput({ setQuery }) {
 
         onChange={(e) => setQuery(e.target.value)}
       />
-      <Divider sx={{ height: 28, m: 0.1 }} orientation="vertical" />
+      <Divider sx={{ m: 0.1 }} style={{ height: "22px" }} orientation="vertical" />
       <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
         <SearchIcon />
       </IconButton>
