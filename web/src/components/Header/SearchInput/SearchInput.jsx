@@ -6,14 +6,13 @@ function SearchInput({ setQuery }) {
   return (
     <Paper
       component="form"
-      className='search-input-component'
       sx={{
         p: '2px 4px',
         display: 'flex',
         alignItems: 'center',
 
         marginTop: '4%',
-        width: '100%',
+        width: '50dvh',
         height: '2.2em',
         backgroundColor: 'var(--input-color)',
         border: '1px solid var(--input-border)',
@@ -34,7 +33,7 @@ function SearchInput({ setQuery }) {
 
         onChange={(e) => setQuery(e.target.value)}
       />
-      <Divider sx={{ m: 0.1 }} style={{ height: "22px" }} orientation="vertical" />
+      <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
       <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
         <SearchIcon />
       </IconButton>
