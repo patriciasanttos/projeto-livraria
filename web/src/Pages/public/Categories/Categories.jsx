@@ -83,7 +83,7 @@ function Categories() {
 
 
   if (data && data.length <= 0)
-    return <p className='no-items-warn'>Desculpe, não encontramos nenhum produto nessa categoria até o momento.</p>
+    return <p className='no-items-warn'>Desculpe, parece que nenhum item foi adicionado nessa categoria ainda.</p>
 
   return (
     <div className='category-page'>
