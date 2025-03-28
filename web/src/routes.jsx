@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { privatePages, publicPages } from "./pages/pages";
 import Header from "./components/Header/Header";
 import { ToastContainer } from "react-toastify";
+import WhatsappPopup from "./components/WhatsappPopup/WhatsappPopup";
 const ScrollToTop = () => {
   const { pathname } = useLocation();
 
@@ -21,6 +22,7 @@ export default function MainRoutes() {
       <ScrollToTop />
       <Header />
       <ToastContainer />
+      <WhatsappPopup />
 
       <Routes>
         <Route path="/" element={<publicPages.HomePage />} />
