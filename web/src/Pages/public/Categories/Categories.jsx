@@ -1,55 +1,88 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 import { data as mock } from '../../../mocks/categoriesMocks.json';
 import kitCanetas from '../../../assets/Images/kit-canetas.svg';
+import whatsappContactImage from '../../../assets/Images/whatsapp-contact.svg'
 
 import Card from '../../../components/Card/Card';
 
 import './Categories.scss';
-import { toast } from 'react-toastify';
+import Pagination from '../../../components/Pagination/Pagination';
 
 function Categories() {
   const navigate = useNavigate();
   const { categoryName } = useParams();
 
   const [data, setData] = useState([]);
+  const [displayedItems, setDisplayedItems] = useState([]);
+
+  const handleChangePage = useCallback(page => {
+    const startIndex = (page - 1) * 9;
+    const endIndex = startIndex + 9;
+
+    const itemsPage = data.slice(startIndex, endIndex);
+
+    setDisplayedItems(itemsPage);
+  }, [data]);
 
   useEffect(() => {
-    if (!categoryName)
-      return setData(
-        mock.map(category => ({
+    setData([]);
+    setDisplayedItems([])
+
+    const loadData = () => {
+      if (!categoryName) {
+        return mock.map(category => ({
           id: category.id,
           name: category.name,
           image: category.image
         }))
-      );
+      }
 
-    const category = mock.filter(category => category.name.toLowerCase() === categoryName.toLowerCase());
-    if (category.length <= 0) {
-      toast.error('Opa, parece que essa categoria não foi encontrada!', {
-        autoClose: 3000,
-        closeOnClick: true,
-        pauseOnHover: false,
-        pauseOnFocusLoss: false,
-        draggable: true
-      });
+      const category = mock.find(category => category.name.toLowerCase() === categoryName.toLowerCase());
+      if (category.length <= 0) {
+        toast.error('Opa, parece que essa categoria não foi encontrada!', {
+          autoClose: 3000,
+          closeOnClick: true,
+          pauseOnHover: false,
+          pauseOnFocusLoss: false,
+          draggable: true
+        });
 
-      return navigate('/categories');
-    }
+        navigate('/categories');
+        return [];
+      };
 
-    const items = category[0].items;
+      const categoryItems = category.items.map(item => ({
+        id: item.id,
+        name: item.name,
+        description: item.description,
+        price: item.price,
+        image: item.image,
+      }));
 
-    setData(items.map(item => ({
-      id: item.id,
-      name: item.name,
-      description: item.description,
-      price: item.price,
-      image: item.image,
-    })));
+      const multipliedItems = [];
+      for (let i = 0; i < 40; i++) {
+        multipliedItems.push(...categoryItems.map(item => ({
+          ...item,
+          id: `${item.id}-${i}`,
+          name: i + ' ' + item.name
+        })));
+      }
+
+      return multipliedItems;
+    };
+
+    const newData = loadData();
+    setData(newData);
+
+    if (newData && newData.length > 0)
+      setDisplayedItems(newData.slice(0, 9));
   }, [categoryName, navigate]);
 
-  if (data.length <= 0)
+
+  if (data && data.length <= 0)
     return <p className='no-items-warn'>Desculpe, não encontramos nenhum produto nessa categoria até o momento.</p>
 
   return (
@@ -57,7 +90,7 @@ function Categories() {
       {categoryName && <h1>{categoryName.charAt(0).toUpperCase() + categoryName.slice(1)}</h1>}
 
       <div className='category-page-items'>
-        {data.map(option => (
+        {displayedItems.map(option => (
           <Card
             key={option.id}
             id={option.id}
@@ -69,6 +102,15 @@ function Categories() {
           />
         ))}
       </div>
+
+      <Pagination
+        totalItems={data?.length}
+        onPageChange={handleChangePage}
+      />
+
+      <a href="https://wa.me/5512982294420" target='_blank'>
+        <img className='whatsapp-contact-image' src={whatsappContactImage} alt="Whatsapp" />
+      </a>
     </div>
   );
 }
