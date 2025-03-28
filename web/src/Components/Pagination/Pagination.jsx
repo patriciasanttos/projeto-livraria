@@ -4,6 +4,8 @@ import React, { useEffect, useState } from 'react';
 import arrowLeft from '../../assets/icons/no-bg-arrow-left.svg';
 import arrowRight from '../../assets/icons/no-bg-arrow-right.svg';
 
+import './Pagination.scss';
+
 const Pagination = ({ totalItems, onPageChange }) => {
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -19,6 +21,8 @@ const Pagination = ({ totalItems, onPageChange }) => {
       setCurrentPage(newPage);
       onPageChange(newPage);
     }
+
+    return window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const getPageNumbers = () => {
@@ -55,9 +59,13 @@ const Pagination = ({ totalItems, onPageChange }) => {
   return (
     <div className="pagination-component">
       <button
-        onClick={() => handlePageChange(currentPage - 1)}
-        disabled={currentPage === 1}
-        className="pagination-component-arrow"
+        onClick={() => currentPage !== 1 && handlePageChange(currentPage - 1)}
+        className={`pagination-component-arrow 
+          ${currentPage === 1
+            ? 'pagination-component-arrow-disabled'
+            : ''
+          }
+        `}
       >
         <img src={arrowLeft} alt="Página anterior" />
         <p>Página anterior</p>
@@ -71,7 +79,7 @@ const Pagination = ({ totalItems, onPageChange }) => {
             ${number === currentPage
               ? 'current-page'
               : number === '...'
-                ? 'more-pages-icon'
+                ? 'more-pages-button'
                 : ''
             }
           `}
@@ -81,12 +89,16 @@ const Pagination = ({ totalItems, onPageChange }) => {
       ))}
 
       <button
-        onClick={() => handlePageChange(currentPage + 1)}
-        disabled={currentPage === totalPages}
-        className="pagination-component-arrow"
+        onClick={() => currentPage !== totalPages && handlePageChange(currentPage + 1)}
+        className={`pagination-component-arrow 
+          ${currentPage === totalPages
+            ? 'pagination-component-arrow-disabled'
+            : ''
+          }
+        `}
       >
-        <img src={arrowRight} alt="Próxima página" />
         <p>Próxima página</p>
+        <img src={arrowRight} alt="Próxima página" />
       </button>
     </div>
   );
