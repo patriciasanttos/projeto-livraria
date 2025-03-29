@@ -1,21 +1,13 @@
 .header-mobile {
-    height: 28dvh;
-    padding: 10px 30px;
+    background-image: url("../../assets/images/mobile-bg-header.svg");
+    background-repeat: no-repeat;
+
+    min-height: 13em;
+    height: auto;
+    padding: 0.6em 1.8em;
 
     display: flex;
     flex-direction: column;
-
-    .logo {
-        height: 120px;
-    }
-
-    .icon {
-        height: 30px;
-    }
-
-    .search-container {
-        width: 90%;
-    }
 
     .row-top {
         display: flex;
@@ -24,6 +16,14 @@
         justify-content: space-between;
 
         width: 100%;
+
+        .logo {
+            height: 7.2em;
+        }
+    
+        .icon {
+            height: 1.8em;
+        }
     }
 
     .row-bottom {
@@ -33,46 +33,15 @@
         justify-content: center;
 
         width: 100%;
-    }
 
-    .search-container {
-        display: flex;
-        flex-direction: column;
-        position: relative;
-
-        .search-results {
-            position: absolute;
-            top: 75%;
-            left: 0;
-            z-index: 10;
-
-            width: 98%;
-            background-color: #f4f4f4;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-            border-radius: 0 0 8px 8px;
-
-            height: auto;
-            max-height: 30dvh;
-            padding: 0.5em;
-            overflow-y: auto;
-
+        .search-container {
             display: flex;
             flex-direction: column;
-            gap: 1em;
-
-            li {
-                list-style-type: none;
-
-                cursor: pointer;
-            }
-        }
-    }
-
-    @media (min-width: 319px) and (max-width: 394px) {
-        .search-container {
+            position: relative;
+    
+            max-width: 40em;
             width: 100%;
-
+            min-width: 18em;
         }
     }
-        
 }

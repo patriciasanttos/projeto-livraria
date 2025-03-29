@@ -12,8 +12,8 @@ function SearchInput({ setQuery }) {
         display: 'flex',
         alignItems: 'center',
 
-        marginTop: '4%',
-        width: '100%',
+        marginTop: '0.4em',
+        width: 'auto',
         height: '2.2em',
         backgroundColor: 'var(--input-color)',
         border: '1px solid var(--input-border)',

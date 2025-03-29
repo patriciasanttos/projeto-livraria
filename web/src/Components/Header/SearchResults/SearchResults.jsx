@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 
 import mock from '../../../mocks/categoriesMocks.json';
 
+import './SearchResults.scss'
+
 const SearchResults = ({ query }) => {
   const [results, setResults] = useState([]);
 
