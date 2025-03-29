@@ -3,33 +3,60 @@ import { Link } from 'react-router-dom';
 
 //-----Icons & images
 import logo from '../../assets/images/logo.svg'
-import produtos from '../../assets/icons/produtos.svg'
-import categorias from '../../assets/icons/categorias.svg'
-import relatorios from '../../assets/icons/relatorios.svg'
-import clientes from '../../assets/icons/clientes.svg'
-import gerenciar from '../../assets/icons/gerenciar.svg'
+import products from '../../assets/icons/products.svg'
+import categories from '../../assets/icons/categories.svg'
+import reports from '../../assets/icons/reports.svg'
+import clients from '../../assets/icons/clients.svg'
+import manage from '../../assets/icons/manage.svg'
 
 import './AsideBar.scss';
 
 function AsideBar() {
-    const asideBarItens = ['Produtos', 'Categorias', 'Relatórios', 'Clientes', 'Gerenciar'];
-    const arrayIcones = [logo, produtos, categorias, relatorios, clientes, gerenciar];
-
     return (
-        <ul className="sidebar-list">
-            <Link to="/" className="sidebar-link">
-                <img id='logo' src={logo} alt="Home" className="sidebar-icon" />
-            </Link><br /> <br />
-            {
-                asideBarItens.map((string, indice) => (
-                    <>
-                        <Link to="/" className="sidebar-link">
-                            <img src={arrayIcones[indice + 1]} alt="Home" className="sidebar-icon" />
-                        </Link>
-                        <li key={indice} className="sidebar-item">{string}</li>
-                    </>
-                ))}
-        </ul>
+        <div className="admin-asidebar">
+            <div className="logo">
+                <Link to="/admin/control_panel">
+                    <img src={logo} alt="Home" />
+                </Link>
+            </div>
+
+            <ul className='admin-asidebar-buttons'>
+                <li>
+                    <Link to="/admin/items">
+                        <img src={products} alt="Produtos" />
+                        <p>Produtos</p>
+                    </Link>
+                </li>
+
+                <li>
+                    <Link to="/admin/categories">
+                        <img src={categories} alt="Categorias" />
+                        <p>Categorias</p>
+                    </Link>
+                </li>
+
+                <li>
+                    <Link to="/admin/control_panel">
+                        <img src={reports} alt="Relatórios" />
+                        <p>Relatórios</p>
+                    </Link>
+                </li>
+
+                <li>
+                    <Link to="/admin/control_panel">
+                        <img src={clients} alt="Clientes" />
+                        <p>Clientes</p>
+                    </Link>
+                </li>
+
+                <li>
+                    <Link to="/admin/control_panel">
+                        <img src={manage} alt="Gerenciar" />
+                        <p>Gerenciar</p>
+                    </Link>
+                </li>
+            </ul>
+        </div>
     );
 }
 
