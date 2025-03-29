@@ -1,14 +1,16 @@
-.admin-title {
-    width: 100%;
-    display: grid;
-    justify-items: center;
-    word-wrap: break-word;
+.admin-header {
     background-color: var(--button-lime-green);
+
+    height: 12dvh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.admin-title h2 {
-    margin-right: 240px;
+.admin-header h2 {
     color: #FFFFFF;
     font-weight: 500;
-    font-size: 3rem;
+    font-size: 24pt;
+    margin: 0;
 }

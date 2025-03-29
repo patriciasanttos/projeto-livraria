@@ -1,11 +1,11 @@
 import React from 'react';
 import './HeaderAdmin.scss';
 
-function HeaderAdmin() {
+function HeaderAdmin({ page }) {
     return (
-        < div className="admin-title" >
-            <h2>Painel de Controle</h2>
-        </div >
+        <div className="admin-header">
+            <h2>{page}</h2>
+        </div>
     );
 }
 
