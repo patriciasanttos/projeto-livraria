@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './AsideBar.scss';
 
 //-----Icons & images
 import logo from '../../assets/images/logo.svg'
@@ -10,7 +9,10 @@ import relatorios from '../../assets/icons/relatorios.svg'
 import clientes from '../../assets/icons/clientes.svg'
 import gerenciar from '../../assets/icons/gerenciar.svg'
 
-function AsideBar({ produto }) {
+import './AsideBar.scss';
+
+function AsideBar() {
+    const asideBarItens = ['Produtos', 'Categorias', 'Relatórios', 'Clientes', 'Gerenciar'];
     const arrayIcones = [logo, produtos, categorias, relatorios, clientes, gerenciar];
 
     return (
@@ -19,7 +21,7 @@ function AsideBar({ produto }) {
                 <img id='logo' src={logo} alt="Home" className="sidebar-icon" />
             </Link><br /> <br />
             {
-                produto.map((string, indice) => (
+                asideBarItens.map((string, indice) => (
                     <>
                         <Link to="/" className="sidebar-link">
                             <img src={arrayIcones[indice + 1]} alt="Home" className="sidebar-icon" />

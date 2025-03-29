@@ -22,7 +22,6 @@ export default function MainRoutes() {
     <BrowserRouter>
       <ScrollToTop />
       <ToastContainer />
-      <WhatsappPopup />
 
       <Routes>
         <Route element={<PublicRoutesTemplate />}>
