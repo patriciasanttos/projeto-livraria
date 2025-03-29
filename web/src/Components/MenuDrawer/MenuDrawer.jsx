@@ -1,8 +1,10 @@
 import React from "react";
 import Drawer from "@mui/material/Drawer";
+import { Link } from "react-router-dom";
+
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
-import { Link } from "react-router-dom";
+
 import "./MenuDrawer.scss";
 
 const MenuDrawer = ({ isOpen, setMenuOpen }) => {
@@ -41,13 +43,13 @@ const MenuDrawer = ({ isOpen, setMenuOpen }) => {
         >
           <CloseIcon />
         </IconButton>
-        {/* Add your menu content here */}
         <div>Menu</div>
 
         <div className="menu-items">
-          {listLinks.map((linkItem) =>
+          {listLinks.map((linkItem, index) =>
             linkItem.category ? (
               <Link
+                key={index}
                 className="menu-link"
                 to={linkItem.link}
                 state={{ category: "presentes" }}
@@ -57,6 +59,7 @@ const MenuDrawer = ({ isOpen, setMenuOpen }) => {
               </Link>
             ) : (
               <Link
+                key={index}
                 className="menu-link"
                 to={linkItem.link}
                 onClick={onClickItem}

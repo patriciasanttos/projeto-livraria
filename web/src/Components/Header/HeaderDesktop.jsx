@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 
 //-----Icons & images
 import logo from "../../assets/images/logoV2.svg";
-import waveHeader from "../../assets/images/wave-header.png";
 import instagramGreenIcon from "../../assets/icons/instagramGreenIcon.svg";
 import locationGreenIcon from "../../assets/icons/locationGreenIcon.svg";
 import shoppingCartIcon from "../../assets/icons/shoppingCartIcon.svg";
@@ -19,10 +18,8 @@ const HeaderDesktop = () => {
 
   return (
     <header className="header-desktop">
-      <img className="backgound-image" src={waveHeader} alt="Image"></img>
-
       <div className="header-content">
-        <div>
+        <div className="header-content-top">
           <Link to="/" className="header-logo-link">
             <img className="header-logo" src={logo} alt="Logo DNC" />
           </Link>
@@ -56,7 +53,7 @@ const HeaderDesktop = () => {
           </div>
         </div>
 
-        <div className="header-items-categories">
+        <div className="header-content-bottom">
           <Link to='/categories/presentes' state={{ category: 'presentes' }}>
             Presentes
           </Link>
