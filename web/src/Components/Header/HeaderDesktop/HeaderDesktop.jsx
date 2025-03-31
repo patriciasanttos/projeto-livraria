@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 //-----Icons & images
-import logo from "../../assets/images/logoV2.svg";
-import instagramGreenIcon from "../../assets/icons/instagramGreenIcon.svg";
-import locationGreenIcon from "../../assets/icons/locationGreenIcon.svg";
-import shoppingCartIcon from "../../assets/icons/shoppingCartIcon.svg";
+import logo from "../../../assets/images/logoV2.svg";
+import instagramGreenIcon from "../../../assets/icons/instagramGreenIcon.svg";
+import locationGreenIcon from "../../../assets/icons/locationGreenIcon.svg";
+import shoppingCartIcon from "../../../assets/icons/shoppingCartIcon.svg";
 
 //-----Components
-import SearchInput from "./SearchInput/SearchInput";
-import SearchResults from "./SearchResults/SearchResults";
+import SearchInput from "../SearchInput/SearchInput";
+import SearchResults from "../SearchResults/SearchResults";
 
 import "./HeaderDesktop.scss";
 
@@ -54,19 +54,19 @@ const HeaderDesktop = () => {
         </div>
 
         <div className="header-content-bottom">
-          <Link to='/categories/presentes' state={{ category: 'presentes' }}>
+          <Link to='/categories/presentes'>
             Presentes
           </Link>
-          <Link to='/categories/livros%20infantis' state={{ category: 'livros infantis' }}>
+          <Link to='/categories/livros%20infantis'>
             Livros Infantis
           </Link>
-          <Link to='/categories/canetas' state={{ category: 'canetas' }}>
+          <Link to='/categories/canetas'>
             Canetas
           </Link>
-          <Link to='/categories/cadernos' state={{ category: 'cadernos' }}>
+          <Link to='/categories/cadernos'>
             Cadernos
           </Link>
-          <Link to='/categories/materiais%20para%20colorir' state={{ category: 'materiais para colorir' }}>
+          <Link to='/categories/materiais%20para%20colorir'>
             Materiais para colorir
           </Link>
           <Link to='/categories'>
