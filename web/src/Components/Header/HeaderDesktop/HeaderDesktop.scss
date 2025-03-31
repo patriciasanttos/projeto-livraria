@@ -1,8 +1,8 @@
 .header-desktop {
     width: 100dvw;
-    height: 20dvh;
+    height: 20%;
     
-    background-image: url('../../assets/images/desktop-bg-header.svg');
+    background-image: url('../../../assets/images/desktop-bg-header.svg');
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -24,14 +24,8 @@
 
             height: 12dvh;
 
-            .header-logo-link {
-                width: 12%;
-                height: auto;
-
-                .header-logo {
-                    width: 80%;
-                    height: 100%;
-                }
+            .header-logo-link .header-logo {
+                width: 8dvw;
             }
 
             .header-buttons {

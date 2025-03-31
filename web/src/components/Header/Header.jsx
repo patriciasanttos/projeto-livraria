@@ -1,7 +1,7 @@
 import React from "react";
 
-import HeaderMobile from "./HeaderMobile";
-import HeaderDesktop from "./HeaderDesktop";
+import HeaderMobile from "./HeaderMobile/HeaderMobile";
+import HeaderDesktop from "./HeaderDesktop/HeaderDesktop";
 
 const Header = () => {
   return window.innerWidth <= 821
