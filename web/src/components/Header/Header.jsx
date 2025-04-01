@@ -1,13 +1,12 @@
 import React from "react";
-import { useMediaQuery } from "react-responsive";
 
-import HeaderMobile from "./HeaderMobile";
-import HeaderDesktop from "./HeaderDesktop";
+import HeaderMobile from "./HeaderMobile/HeaderMobile";
+import HeaderDesktop from "./HeaderDesktop/HeaderDesktop";
 
 const Header = () => {
-  const isMobile = useMediaQuery({ maxWidth: 821 });
-
-  return isMobile ? <HeaderMobile /> : <HeaderDesktop />;
+  return window.innerWidth <= 821
+    ? <HeaderMobile />
+    : <HeaderDesktop />;
 };
 
 export default Header;

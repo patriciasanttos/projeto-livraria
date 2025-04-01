@@ -6,8 +6,11 @@ import addedToCart from '../../assets/icons/addedToCart.svg';
 
 import './Card.scss';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 function Card({ id, name, price, image, color, isCategory }) {
+  const navigate = useNavigate();
+
   const [isInCart, setIsInCart] = useState(false);
 
   useEffect(() => {
@@ -60,7 +63,12 @@ function Card({ id, name, price, image, color, isCategory }) {
   }
 
   return (
-    <div className={`card ${isCategory ? 'category-card' : 'item-card'}`}>
+    <div
+      className={`card ${isCategory ? 'category-card' : 'item-card'}`}
+      onClick={() =>
+        isCategory && navigate(`/categories/${name.toLowerCase()}`)
+      }
+    >
       <div className="card-image">
         <img src={image} alt={name} />
       </div>

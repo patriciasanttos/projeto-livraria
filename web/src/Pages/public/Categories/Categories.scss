@@ -1,0 +1,41 @@
+.no-items-warn {
+  text-align: center;
+  font-size: 18pt;
+  font-weight: 600;
+  margin-top: 2em;
+}
+
+.category-page {
+  text-align: center;
+
+  h1 {
+    color: var(--title-pink);
+    font-weight: 600;
+    margin-top: 1em;
+  }
+
+  .category-page-items {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    max-width: 1200px;
+    gap: 1.2em;
+    justify-content: center;
+    justify-items: center;
+    width: 90%;
+    margin: 2em auto;
+  }
+
+  .whatsapp-contact-image {
+    width: 90%;
+    max-width: 500px;
+    height: auto;
+    margin: 8dvh 0;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .category-page .category-page-items {
+    grid-template-columns: repeat(3, 1fr);
+    width: 90%;
+  }
+}
