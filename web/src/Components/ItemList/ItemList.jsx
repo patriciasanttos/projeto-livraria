@@ -44,6 +44,17 @@ function ItemList() {
     return total;
   };
 
+  const onChangeQuantity = (index, value) => {
+    const products = [...productList];
+
+    if (value >= 0) {
+      products[index].quantity = value;
+      products[index].subtotal =
+        products[index].value * products[index].quantity;
+      setProductList(products);
+    }
+  };
+
   const onClickLess = (index) => {
     const products = [...productList];
 
@@ -84,16 +95,16 @@ function ItemList() {
           <thead>
             <tr>
               <th className="product-title">Produto</th>
-              <th className="right">Valor unitário</th>
-              <th className="right">Quantidade</th>
-              <th className="right">Subtotal</th>
+              <th className="value-title">Valor unitário</th>
+              <th className="quantity-titke">Quantidade</th>
+              <th className="subtotal-title">Subtotal</th>
             </tr>
           </thead>
 
           <tbody>
             {productList.map((product, index) => {
               return (
-                <tr>
+                <tr key={product.id}>
                   <td className="product-item">
                     <img
                       src={product.image}
@@ -111,7 +122,14 @@ function ItemList() {
                       >
                         -
                       </div>
-                      <div className="btn-quantifyList">{product.quantity}</div>
+                      {/* <div className="btn-quantifyList">{product.quantity}</div> */}
+                      <input
+                        type="number"
+                        value={product.quantity}
+                        onChange={(e) =>
+                          onChangeQuantity(index, e.target.value)
+                        }
+                      />
                       <div
                         className="btn-quantify more"
                         onClick={() => onClickMore(index)}
