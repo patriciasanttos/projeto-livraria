@@ -3,6 +3,7 @@ import React from 'react';
 import mock from '../../../mocks/categoriesMocks.json'
 import './HomePage.scss';
 import Category from '../../../components/Category/Category';
+import BannerSlider from '../../../Components/Banner/Banner';
 
 function HomePage() {
   const category1 = mock.data[0];
@@ -11,7 +12,7 @@ function HomePage() {
 
   return (
     <div>
-      <h1>Home Page</h1>
+      <BannerSlider />
 
       <Category
         data={category1.items}
