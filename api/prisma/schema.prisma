@@ -33,6 +33,7 @@ model Item {
   description String?
   price       Decimal
   image       String?
+  available   Boolean    @default(true)
   categories  Category[] @relation("CategoryItems")
   created_at  DateTime   @default(now())
   updated_at  DateTime   @updatedAt

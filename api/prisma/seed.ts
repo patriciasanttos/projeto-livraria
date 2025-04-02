@@ -49,6 +49,7 @@ async function main() {
         data: {
           name: item['Descrição'],
           price: item['$Venda'],
+          available: item['Situação'] === 'DISPONÍVEL' ? true : false,
           categories: {
             connect: {
               id: category.id,
