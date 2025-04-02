@@ -10,9 +10,30 @@ import prev from "../../assets/Images/BannerSection/prev.svg"
 import "./Banner.scss";
 
 const BannerSlider = () => {
+    let index = 0;
+    const slides = document.querySelectorAll('.banner');
+    const totalSlides = slides.length;
+
+    function showSlide() {
+        const container = document.getElementById('bannerContainer');
+        container.style.transform = `translateX(-${index * 100}%)`;
+    }
+
+    function nextSlide() {
+        index = (index + 1) % totalSlides;
+        showSlide();
+    }
+
+    function prevSlide() {
+        index = (index - 1 + totalSlides) % totalSlides;
+        showSlide();
+    }
+
+setInterval(nextSlide, 8000);
+
     return (
         <div className="banner-section">
-            <button className="prev arrow">
+            <button className="prev arrow" onClick={prevSlide}>
                 <img src={prev} alt="Banner Anterior"/>
             </button>
             <div id="bannerContainer" className="banner-container">
@@ -23,7 +44,7 @@ const BannerSlider = () => {
                     <img src={bannerTwo} alt="Banner 2"/>
                 </div>
             </div>
-            <button className="next arrow">
+            <button className="next arrow" onClick={nextSlide}>
                 <img src={next} alt="Próximo Banner"/>
             </button>
         </div>
