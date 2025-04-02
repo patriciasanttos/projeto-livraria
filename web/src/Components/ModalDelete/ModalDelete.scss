@@ -66,3 +66,15 @@
 .modal-delete-buttons .delete:hover {
     background-color: #c0392b;
 }
+
+@media screen and (max-width: 490px){
+    .modal-delete-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .modal-delete-content {
+        width: 70%;
+    }
+}
