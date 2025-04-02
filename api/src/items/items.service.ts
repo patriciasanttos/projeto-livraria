@@ -19,6 +19,17 @@ export class ItemsService {
     });
   }
 
+  async getAllAvailables() {
+    return await this.prisma.item.findMany({
+      where: {
+        available: true,
+      },
+      include: {
+        categories: true,
+      },
+    });
+  }
+
   async getById(itemId: number) {
     const item = await this.prisma.item.findUnique({
       where: { id: itemId },
