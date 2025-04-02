@@ -2,7 +2,7 @@ import React from "react";
 import { Routes, Route, BrowserRouter, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 
-import { publicPages } from "./pages/pages";
+import { privatePages, publicPages } from "./pages/pages";
 import Header from "./components/Header/Header";
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -18,7 +18,7 @@ export default function MainRoutes() {
   return (
     <BrowserRouter>
       <ScrollToTop />
-      <Header />
+      {/* <Header /> */}
 
       <Routes>
         <Route path="/" element={<publicPages.HomePage />} />
@@ -26,6 +26,8 @@ export default function MainRoutes() {
         <Route path="item" element={<publicPages.ItemPage />} />
         <Route path="cart" element={<publicPages.Cart />} />
         <Route path="aboutus" element={<publicPages.AboutUs />} />
+
+        <Route path="admin/login" element={<privatePages.Login />} />
       </Routes>
     </BrowserRouter>
   );
