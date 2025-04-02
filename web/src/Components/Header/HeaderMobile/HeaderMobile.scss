@@ -1,0 +1,47 @@
+.header-mobile {
+    background-image: url("../../../assets/images/mobile-bg-header.svg");
+    background-repeat: no-repeat;
+
+    min-height: 13em;
+    height: auto;
+    padding: 0.6em 1.8em;
+
+    display: flex;
+    flex-direction: column;
+
+    .row-top {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+
+        width: 100%;
+
+        .logo {
+            height: 7.2em;
+        }
+    
+        .icon {
+            height: 1.8em;
+        }
+    }
+
+    .row-bottom {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+
+        width: 100%;
+
+        .search-container {
+            display: flex;
+            flex-direction: column;
+            position: relative;
+    
+            max-width: 40em;
+            width: 100%;
+            min-width: 18em;
+        }
+    }
+}

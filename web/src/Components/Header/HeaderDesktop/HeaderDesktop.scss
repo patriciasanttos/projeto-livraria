@@ -1,0 +1,119 @@
+.header-desktop {
+    width: 100dvw;
+    height: 20%;
+    
+    background-image: url('../../../assets/images/desktop-bg-header.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+
+    .header-content {
+        z-index: 2;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        height: 16dvh;
+
+        padding: 1% 5%;
+
+        .header-content-top {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+
+            height: 12dvh;
+
+            .header-logo-link .header-logo {
+                width: 8dvw;
+            }
+
+            .header-buttons {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                
+                width: 8em;
+
+                img {
+                    width: 100%;
+                    height: auto;
+                }
+
+                :nth-child(2) {
+                    margin-left: 0.6em;
+                }
+
+                :last-child {
+                    margin-left: 0.2em;
+                }
+            }
+
+            .header-search-container {
+                display: flex;
+                flex-direction: column;
+                position: relative;
+         
+                max-width: 40dvw;
+                width: 100%;
+            }
+        }
+
+        .header-content-bottom {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-evenly;
+            align-items: center;
+            gap: 4em;
+            width: 100%;
+
+            margin-top: 3%;
+
+            a {
+                color: var(--text-primary-color);
+                text-decoration: none;
+                font-size: 1em;
+                font-weight: 500;
+                white-space: nowrap;
+
+                border-bottom: 1px solid transparent;
+                transition: border-bottom 0.3s ease-out, color 0.3s ease-out;
+
+                &:hover {
+                    color: var(--button-dark-blue-hover);
+                    border-bottom: 1px solid var(--button-dark-blue-hover);
+                }
+            }
+        }
+    }
+}
+
+@media screen and (min-width: 1025px) {
+    .header-desktop .header-content {
+        .header-content-top .header-buttons {
+            width: 10em;
+        }
+
+        .header-content-bottom {
+            margin-top: 1.2em;
+        }
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .header-desktop .header-content .header-content-bottom a {
+        font-size: 1.2em;
+    }
+}
+
+@media screen and (min-width: 1440px) {
+    .header-desktop .header-content .header-content-bottom a {
+        font-size: 1.3em;
+    }
+}
+
+@media screen and (min-width: 1800px) {
+    .header-desktop .header-content .header-content-bottom {
+        margin-top: 2.2dvh;
+    }
+}
