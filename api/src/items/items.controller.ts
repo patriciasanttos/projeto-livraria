@@ -47,6 +47,22 @@ export class ItemsController {
     return this.itemsService.getAll();
   }
 
+  @Get('available')
+  //----Swagger configs
+  @ApiOperation({
+    summary: 'Get all available items',
+    description:
+      'Get all available items with a name, description, price and image.',
+    tags: ['items'],
+  })
+  @ApiOkResponse({
+    description: 'A list of all available items',
+  })
+  //-----
+  getAllAvailables() {
+    return this.itemsService.getAllAvailables();
+  }
+
   @Post()
   @UseInterceptors(FileInterceptor('image'))
   //----Swagger configs
