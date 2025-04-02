@@ -1,10 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import "./CartNumber.scss";
 
-function CartNumber({ isMobile }) {
-  const cartCookie = JSON.parse(localStorage.getItem("cart")) || {};
-  const cartItems = Object.keys(cartCookie).length
-  const [quantity, setQuantity] = useState(cartItems);
+function CartNumber({ isMobile, quantity, setQuantity }) {
 
   useEffect(() => { 
     const interval = setInterval(() => {
@@ -16,12 +13,12 @@ function CartNumber({ isMobile }) {
     return () => clearInterval(interval);
   }, [])
   
-  return (
-    <>
+  return quantity > 0 && (
+    
       <div className={isMobile ? "cart-number-mobile" : "cart-number-desktop"}>
         {quantity}
       </div>
-    </>
+
   );
 }
 

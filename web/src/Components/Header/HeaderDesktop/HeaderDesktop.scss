@@ -32,12 +32,19 @@
                 display: flex;
                 flex-direction: row;
                 justify-content: center;
+                align-items: center;
 
                 width: 8em;
+                height: 4em;
 
                 img {
                     width: 100%;
                     height: auto;
+                }
+
+                .cart-img {
+                    position: relative;
+                    bottom: 11px;
                 }
 
                 :nth-child(2) {

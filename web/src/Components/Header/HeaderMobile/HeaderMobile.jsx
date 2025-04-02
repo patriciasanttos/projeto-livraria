@@ -17,6 +17,9 @@ import CartNumber from "../CartNumber/CartNumber";
 const HeaderMobile = () => {
   const [query, setQuery] = useState();
   const [isMenuOpen, setIsMenuOpen] = useState();
+  const cartCookie = JSON.parse(localStorage.getItem("cart")) || {};
+  const cartItems = Object.keys(cartCookie).length;
+  const [quantity, setQuantity] = useState(cartItems);
 
   return (
     <>
@@ -34,8 +37,17 @@ const HeaderMobile = () => {
           </Link>
 
           <Link to="/cart" style={{ textDecoration: "none" }}>
-            <CartNumber isMobile={true} />
-            <img className="icon" src={shoppingCartIcon} alt="Carrinho" />
+            <CartNumber
+              quantity={quantity}
+              setQuantity={setQuantity}
+              isMobile={true}
+            />
+            <img
+              className="icon"
+              style={quantity == 0 ? { bottom: "0px" } : {}}
+              src={shoppingCartIcon}
+              alt="Carrinho"
+            />
           </Link>
         </div>
 

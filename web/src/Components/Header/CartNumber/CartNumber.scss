@@ -5,7 +5,9 @@
     justify-content: center;
     font-size: 10pt;
     position: relative;
-    left: 48px;
+    left: 34px;
+    top: 6px;
+    z-index: 1;
 
     background-color: white;
     color: var(--text-primary-color);
@@ -21,8 +23,9 @@
     justify-content: center;
     font-size: 9.6pt;
     position: relative;
-    left: 11px;
-    top: 24px;
+    left: 26px;
+    top: 2px;
+    z-index: 1;
 
     background-color: white;
     color: var(--text-primary-color);

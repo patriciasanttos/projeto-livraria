@@ -16,7 +16,10 @@ import CartNumber from "../CartNumber/CartNumber";
 
 const HeaderDesktop = () => {
   const [query, setQuery] = useState();
-
+    const cartCookie = JSON.parse(localStorage.getItem("cart")) || {};
+    const cartItems = Object.keys(cartCookie).length
+    const [quantity, setQuantity] = useState(cartItems);
+    
   return (
     <header className="header-desktop">
       <div className="header-content">
@@ -38,10 +41,13 @@ const HeaderDesktop = () => {
 
           <div className="header-buttons">
             <Link to="/cart" style={{ textDecoration: "none" }}>
-              <CartNumber isMobile={false} />
-            </Link>
-            <Link to="/cart">
-              <img src={shoppingCartIcon} alt="Carrinho de compras" />
+              <CartNumber quantity={quantity} setQuantity={setQuantity}  isMobile={false} />
+              <img
+                className="cart-img"
+                style={quantity == 0 ? { bottom: "0px" } : {}}
+                src={shoppingCartIcon}
+                alt="Carrinho de compras"
+              />
             </Link>
 
             <a
