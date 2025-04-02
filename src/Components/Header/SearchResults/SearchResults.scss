@@ -1,0 +1,32 @@
+.search-results {
+  position: absolute;
+  top: 75%;
+  left: 0;
+  z-index: 10;
+
+  width: auto;
+
+  background-color: #f4f4f4;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 0 0 8px 8px;
+
+  height: auto;
+  max-height: 30dvh;
+  padding: 0;
+  overflow-y: auto;
+
+  display: flex;
+  flex-direction: column;
+
+  li {
+    list-style-type: none;
+    padding: 0.7em;
+
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: #ddd;
+    }
+  }
+}
