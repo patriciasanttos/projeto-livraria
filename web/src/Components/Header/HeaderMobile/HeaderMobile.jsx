@@ -12,6 +12,7 @@ import SearchResults from "../SearchResults/SearchResults";
 import MenuDrawer from "../../MenuDrawer/MenuDrawer";
 
 import "./HeaderMobile.scss";
+import CartNumber from "../CartNumber/CartNumber";
 
 const HeaderMobile = () => {
   const [query, setQuery] = useState();
@@ -32,7 +33,8 @@ const HeaderMobile = () => {
             <img className="logo" src={logo} alt="Logo DNC" />
           </Link>
 
-          <Link to="/cart">
+          <Link to="/cart" style={{ textDecoration: "none" }}>
+            <CartNumber isMobile={true} />
             <img className="icon" src={shoppingCartIcon} alt="Carrinho" />
           </Link>
         </div>

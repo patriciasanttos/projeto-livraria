@@ -1,0 +1,32 @@
+.cart-number-desktop {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    font-size: 10pt;
+    position: relative;
+    left: 48px;
+
+    background-color: white;
+    color: var(--text-primary-color);
+    border-radius: 50px;
+    width: 1.9em;
+    height: 1.8em;
+}
+
+.cart-number-mobile {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    font-size: 9.6pt;
+    position: relative;
+    left: 11px;
+    top: 24px;
+
+    background-color: white;
+    color: var(--text-primary-color);
+    border-radius: 50px;
+    width: 24px;
+    height: 21px;
+}

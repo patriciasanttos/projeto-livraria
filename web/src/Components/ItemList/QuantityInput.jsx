@@ -18,7 +18,7 @@ const QuantityInput = ({
   }, [lastUpdatedIndex, index, inputRef]);
 
   return (
-    <div className="td-quantify">
+    <section className="td-quantify">
       <div className="btn-quantify less" onClick={() => onClickLess(index)}>
         -
       </div>
@@ -31,7 +31,7 @@ const QuantityInput = ({
       <div className="btn-quantify more" onClick={() => onClickMore(index)}>
         +
       </div>
-    </div>
+    </section>
   );
 };
 

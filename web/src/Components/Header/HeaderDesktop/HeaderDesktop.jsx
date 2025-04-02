@@ -12,6 +12,7 @@ import SearchInput from "../SearchInput/SearchInput";
 import SearchResults from "../SearchResults/SearchResults";
 
 import "./HeaderDesktop.scss";
+import CartNumber from "../CartNumber/CartNumber";
 
 const HeaderDesktop = () => {
   const [query, setQuery] = useState();
@@ -36,42 +37,35 @@ const HeaderDesktop = () => {
           </div>
 
           <div className="header-buttons">
+            <Link to="/cart" style={{ textDecoration: "none" }}>
+              <CartNumber isMobile={false} />
+            </Link>
             <Link to="/cart">
-              <img src={shoppingCartIcon} alt="Logo DNC" />
+              <img src={shoppingCartIcon} alt="Carrinho de compras" />
             </Link>
 
             <a
               target="_blank"
               href="https://www.instagram.com/ciadaeducacaosjc/"
             >
-              <img src={instagramGreenIcon} alt="Logo DNC" />
+              <img src={instagramGreenIcon} alt="Instagram" />
             </a>
 
             <a target="_blank" href="">
-              <img src={locationGreenIcon} alt="Logo DNC" />
+              <img src={locationGreenIcon} alt="Localização" />
             </a>
           </div>
         </div>
 
         <div className="header-content-bottom">
-          <Link to='/categories/presentes'>
-            Presentes
-          </Link>
-          <Link to='/categories/livros%20infantis'>
-            Livros Infantis
-          </Link>
-          <Link to='/categories/canetas'>
-            Canetas
-          </Link>
-          <Link to='/categories/cadernos'>
-            Cadernos
-          </Link>
-          <Link to='/categories/materiais%20para%20colorir'>
+          <Link to="/categories/presentes">Presentes</Link>
+          <Link to="/categories/livros%20infantis">Livros Infantis</Link>
+          <Link to="/categories/canetas">Canetas</Link>
+          <Link to="/categories/cadernos">Cadernos</Link>
+          <Link to="/categories/materiais%20para%20colorir">
             Materiais para colorir
           </Link>
-          <Link to='/categories'>
-            Ver tudo
-          </Link>
+          <Link to="/categories">Ver tudo</Link>
         </div>
       </div>
     </header>
