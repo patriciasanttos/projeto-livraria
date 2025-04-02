@@ -6,9 +6,11 @@ import { useMediaQuery } from "react-responsive";
 
 import categoriesMock from "../../mocks/categoriesMocks.json";
 import QuantityInput from "./QuantityInput";
+import ModalDelete from "../ModalDelete/ModalDelete";
 
 function ItemList() {
   const isMobile = useMediaQuery({ maxWidth: 821 });
+  const [modalDelete, setModalDelete] = useState(false);
 
   const getProductById = (id) => {
     const products = categoriesMock.data.reduce(
@@ -89,9 +91,14 @@ function ItemList() {
   };
 
   const removeAllItems = () => {
+    setModalDelete(true);
+  };
+
+  const onDeleteConfirm = () => {
     setProductList([]);
     localStorage.removeItem("cart");
-  };
+    setModalDelete(false);
+  }
 
   const onChangeQuantity = (index, e) => {
     e.preventDefault();
@@ -227,6 +234,10 @@ function ItemList() {
           <button className="continue">CONTINUAR COMPRANDO</button>
         </div>
       </section>
+
+      {modalDelete && (
+        <ModalDelete setModalDelete={setModalDelete} handleDelete={onDeleteConfirm} />
+      )}
     </main>
   );
 }
