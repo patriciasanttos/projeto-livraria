@@ -1,8 +1,10 @@
 import "./ItemList.scss";
-import ItemImage from "../../assets/Images/itemImage.svg";
-import DeleteIcon from "../../assets/icons/deleteIcon.svg";
 import { useState } from "react";
 import { useMediaQuery } from "react-responsive";
+
+import ItemImage from "../../assets/Images/itemImage.svg";
+import DeleteIcon from "../../assets/icons/deleteIcon.svg";
+import CartEmpty from "../../assets/Images/cart-empty.svg";
 
 import categoriesMock from "../../mocks/categoriesMocks.json";
 import QuantityInput from "./QuantityInput";
@@ -98,7 +100,7 @@ function ItemList() {
     setProductList([]);
     localStorage.removeItem("cart");
     setModalDelete(false);
-  }
+  };
 
   const onChangeQuantity = (index, e) => {
     e.preventDefault();
@@ -113,6 +115,20 @@ function ItemList() {
       setProductList(products);
       setLastUpdatedIndex(index);
     }
+  };
+
+  const NoItems = () => {
+    return (
+      <section className="no-items">
+        <img src={CartEmpty} alt="" />
+        <h2>Seu carrinho está vazio!</h2>
+        <p>
+          Parece que você ainda não adicionou nenhum item ao seu carrinho. Vamos
+          às compras?
+        </p>
+        <button>VER PRODUTOS</button>
+      </section>
+    );
   };
 
   const TableDesktop = () => (
@@ -203,40 +219,48 @@ function ItemList() {
       className="item-list-main"
       style={{ width: isMobile ? "95vw" : "90vw" }}
     >
-      <h1 className="item-list-title">Carrinho</h1>
-      <section>{isMobile ? <TableMobile /> : <TableDesktop />}</section>
+      {productList.length === 0 ? (
+        <NoItems />
+      ) : (
+        <>
+          <h1 className="item-list-title">Carrinho</h1>
+          <section>{isMobile ? <TableMobile /> : <TableDesktop />}</section>
+          <section className="clear-cart-container">
+            <div className="clear-cart" onClick={removeAllItems}>
+              <div className="clear-cart-text">
+                <h3>Limpar carrinho</h3>
+              </div>
+              <div className="clear-cart-icon">
+                <img src={DeleteIcon} alt="Excluir" width="30px" />
+              </div>
+            </div>
+          </section>
 
-      <section className="clear-cart-container">
-        <div className="clear-cart" onClick={removeAllItems}>
-          <div className="clear-cart-text">
-            <h3>Limpar carrinho</h3>
-          </div>
-          <div className="clear-cart-icon">
-            <img src={DeleteIcon} alt="Excluir" width="30px" />
-          </div>
-        </div>
-      </section>
+          <section className="total-price">
+            <h3>TOTAL</h3>
+            <h3>{formatValues(calculateTotal())}</h3>
+          </section>
 
-      <section className="total-price">
-        <h3>TOTAL</h3>
-        <h3>{formatValues(calculateTotal())}</h3>
-      </section>
+          <section className="buy">
+            <div finish-info>
+              <button className="finish">FINALIZAR COMPRA</button>
+              <p className="btn-info">
+                Você será direcionado para o nosso <br /> WhatsApp para
+                finalizar seu pedido!
+              </p>
+            </div>
+            <div>
+              <button className="continue">CONTINUAR COMPRANDO</button>
+            </div>
+          </section>
 
-      <section className="buy">
-        <div finish-info>
-          <button className="finish">FINALIZAR COMPRA</button>
-          <p className="btn-info">
-            Você será direcionado para o nosso <br /> WhatsApp para finalizar
-            seu pedido!
-          </p>
-        </div>
-        <div>
-          <button className="continue">CONTINUAR COMPRANDO</button>
-        </div>
-      </section>
-
-      {modalDelete && (
-        <ModalDelete setModalDelete={setModalDelete} handleDelete={onDeleteConfirm} />
+          {modalDelete && (
+            <ModalDelete
+              setModalDelete={setModalDelete}
+              handleDelete={onDeleteConfirm}
+            />
+          )}
+        </>
       )}
     </main>
   );
