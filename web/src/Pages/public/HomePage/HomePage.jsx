@@ -1,8 +1,10 @@
 import React from 'react';
 
+import phoneImage from "../../../assets/Images/whatsapp-contact.svg"
 import mock from '../../../mocks/categoriesMocks.json'
 import './HomePage.scss';
 import Category from '../../../components/Category/Category';
+import HomePageForm from '../../../Components/HomePageForm/HomePageForm';
 
 function HomePage() {
   const category1 = mock.data[0];
@@ -29,6 +31,14 @@ function HomePage() {
         categoryColor='blue'
         showOnlyCategories
       />
+
+     <div className='phone-image'>
+     <a href="https://wa.me/5512982294420">
+        <img src={phoneImage} alt="" />
+
+      </a>
+     </div>
+      <HomePageForm />
     </div>
   );
 }
