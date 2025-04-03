@@ -84,7 +84,6 @@ function ItemList() {
     products.splice(index, 1);
     setProductList(products);
 
-    // Remove from localstorage
     const cartCookie = JSON.parse(localStorage.getItem("cart"));
     delete cartCookie[productList[index].id];
 
