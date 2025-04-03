@@ -74,7 +74,7 @@ function Card({ id, name, price, image, color, isCategory }) {
       </div>
 
       <div className='card-data'>
-        <p className={isCategory && color} title={name}>{name}</p>
+        <p className={isCategory ? color : ''} title={name}>{name}</p>
         {
           !isCategory && (
             <>

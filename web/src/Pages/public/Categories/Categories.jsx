@@ -2,8 +2,6 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-import { data as mock } from '../../../mocks/categoriesMocks.json';
-
 //-----Images
 import kitCanetas from '../../../assets/Images/kit-canetas.svg';
 import whatsappContactImage from '../../../assets/Images/whatsapp-contact.svg'
@@ -14,10 +12,13 @@ import Card from '../../../components/Card/Card';
 import Pagination from '../../../components/Pagination/Pagination';
 
 import './Categories.scss';
+import { useAllCagegoriesData } from '../../../hooks/useCategoriesData';
 
 function Categories() {
   const navigate = useNavigate();
   const { categoryName } = useParams();
+
+  const { data: categoriesData, isLoading, error } = useAllCagegoriesData();
 
   const [data, setData] = useState([]);
   const [displayedItems, setDisplayedItems] = useState([]);
@@ -31,63 +32,74 @@ function Categories() {
     setDisplayedItems(itemsPage);
   }, [data]);
 
-  useEffect(() => {
-    setData([]);
-    setDisplayedItems([])
+  const loadData = useCallback(() => {
+    if (!categoriesData) return [];
 
-    const loadData = () => {
-      if (!categoryName) {
-        return mock.map(category => ({
-          id: category.id,
-          name: category.name,
-          image: category.image
-        }))
-      }
+    if (!categoryName) {
+      return categoriesData.map(category => ({
+        id: category.id,
+        name: category.name,
+        image: category.image
+      }))
+    }
 
-      const category = mock.find(category => category.name.toLowerCase() === categoryName.toLowerCase());
-      if (category.length <= 0) {
-        toast.error('Opa, parece que essa categoria não foi encontrada!', {
-          autoClose: 3000,
-          closeOnClick: true,
-          pauseOnHover: false,
-          pauseOnFocusLoss: false,
-          draggable: true
-        });
+    const category = categoriesData.find(category => category.name.toLowerCase() === categoryName.toLowerCase());
+    if (!category) {
+      toast.error('Opa, parece que essa categoria não foi encontrada!', {
+        autoClose: 3000,
+        closeOnClick: true,
+        pauseOnHover: false,
+        pauseOnFocusLoss: false,
+        draggable: true
+      });
 
-        navigate('/categories');
-        return [];
-      };
-
-      const categoryItems = category.items.map(item => ({
-        id: item.id,
-        name: item.name,
-        description: item.description,
-        price: item.price,
-        image: item.image,
-      }));
-
-      const multipliedItems = [];
-      for (let i = 0; i < 40; i++) {
-        multipliedItems.push(...categoryItems.map(item => ({
-          ...item,
-          id: `${item.id}-${i}`,
-          name: i + ' ' + item.name
-        })));
-      }
-
-      return multipliedItems;
+      navigate('/categories');
+      return [];
     };
 
+    const categoryItems = category.items.map(item => ({
+      id: item.id,
+      name: item.name,
+      description: item.description,
+      price: item.price,
+      image: item.image,
+    }));
+
+    const multipliedItems = [];
+    for (let i = 0; i < 40; i++) {
+      multipliedItems.push(...categoryItems.map(item => ({
+        ...item,
+        id: `${item.id}-${i}`,
+        name: item.name
+      })));
+    }
+
+    return multipliedItems;
+  }, [categoriesData, categoryName, navigate]);
+
+
+  useEffect(() => {
+    if (isLoading)
+      return;
+
     const newData = loadData();
+    if (!newData || newData.length === 0) {
+      setData([]);
+      setDisplayedItems([]);
+      return;
+    }
+
     setData(newData);
-
-    if (newData && newData.length > 0)
-      setDisplayedItems(newData.slice(0, 9));
-  }, [categoryName, navigate]);
+    setDisplayedItems(newData.slice(0, 9));
+  }, [categoryName, navigate, categoriesData, loadData]);
 
 
-  if (data && data.length <= 0)
+  if (isLoading)
+    return <p className='no-items-warn'>Buscando dados...</p>
+
+  if ((data && data.length <= 0) || error)
     return <p className='no-items-warn'>Desculpe, parece que nenhum item foi adicionado nessa categoria ainda.</p>
+
 
   return (
     <div className='category-page'>
