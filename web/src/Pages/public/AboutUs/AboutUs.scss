@@ -1,0 +1,186 @@
+.aboutus-page {
+  margin: 5% 5%;
+
+  .aboutus-apresentation {
+    display: grid;
+    grid-template-columns: 35dvw 30dvw;
+    justify-content: center;
+    gap: 7dvw;
+
+    .aboutus-team {
+      width: 35dvw;
+  
+      img {
+        width: 100%;
+      }
+    }
+
+    .aboutus-text-apresentation {
+      .aboutus-section-title {
+        color: var(--title-blue);
+        font-size: 2dvw;
+        font-weight: 700;
+      }
+      
+      .aboutus-subtitle {
+        color: var(--text-primary-color);
+        font-size: 1.5dvw;
+        font-weight: 600;
+      }
+
+      .aboutus-text-apresentation {
+        color: var(--text-primary-color);
+        font-size: 1.5dvw;
+        font-weight: 400;
+      }
+    }
+  }
+
+  .contacts {
+    display: flex;
+    flex-direction: column;
+    columns: 2;
+    margin: 2% 10% 15% 10%;
+  
+    .contacts-title {
+      color: var(--title-blue);
+      font-size: 2dvw;
+      text-align: center;
+    }
+
+    .address-section {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 5rem;
+  
+      .location {
+        display: flex;
+        gap: 0.5rem;
+
+        .location-title {
+          color: var(--title-blue);
+          font-size: 1.5dvw;
+          font-weight: 700;
+        }
+  
+        .location-icon {
+          width: 2.5dvw;
+          height: auto;
+        }
+      }
+
+      iframe {
+        width: 25dvw;
+        height: 30dvh;
+        border: none;
+      }
+
+      .address-location {
+        font-size: 1dvw;
+        color: var(--text-primary-color);
+      }
+    }
+
+    .socialnetwork {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 4rem;
+
+      .socialnetwork-item {
+        align-items: center;
+
+        .socialnetwork-title {
+          color: var(--title-blue);
+          font-size: 1.5dvw;
+          font-weight: 700;
+        }
+
+        .wpp-instagram {
+          display: flex;
+          gap: 0.5rem;
+
+          .wpp-instagram-icon {
+            width: 2dvw;
+            height: auto;
+          }
+        }
+
+        .wpp-number {
+          color: var(--text-primary-color);
+          font-size: 1dvw;
+          font-weight: 500;
+          text-align: center;
+  
+          .info-number {
+            margin: 0;
+          }
+        }
+
+        .instagram-info {
+          font-size: 1dvw;
+          font-weight: 500;
+          text-align: center;
+          
+          .info-instagram {
+            text-decoration: none;
+            color: var(--text-primary-color);
+          }
+        }
+      }
+    }
+  }
+
+  .faq-section {
+    margin: 0 8%;
+
+    .faq-section-title {
+      color: var(--title-blue);
+      font-size: 2dvw;
+      margin: 3rem 1.2rem;
+    }
+
+    .faq-container {
+      width: 100%;
+      margin: 1.2rem;
+
+      .faq-item {
+        border: 1px solid #2789b9;
+        border-radius: 5px;
+        margin-bottom: 1rem;
+        overflow: hidden;
+
+        .faq-question {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 1rem;
+          font-size: 1dvw;
+          background: #fff;
+          border-radius: 5px;
+          position: relative;
+
+          cursor: pointer;
+
+          &::after {
+            content: "+";
+            font-size: 1.3dvw;
+            font-weight: bold;
+            color: #2789b9;
+            position: absolute;
+            right: 1rem;
+          }
+        }
+
+        .faq-item[open] .faq-question::after {
+          content: "-";
+        }
+
+        .faq-answer {
+          padding: 1rem;
+          font-size: 1dvw;
+          border-top: 1px solid #2789b9;
+        }
+      }
+    }
+  }
+}
