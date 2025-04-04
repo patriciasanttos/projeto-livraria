@@ -15,7 +15,7 @@ const BannerSlider = () => {
     const totalSlides = slides.length;
 
     function showSlide() {
-        const container = document.getElementById('bannerContainer');
+        const container = document.getElementsByClassName("banner-container")[0];
         container.style.transform = `translateX(-${index * 100}%)`;
     }
 
@@ -32,22 +32,22 @@ const BannerSlider = () => {
 setInterval(nextSlide, 8000);
 
     return (
-        <div className="banner-section">
-            <button className="prev arrow" onClick={prevSlide}>
-                <img src={prev} alt="Banner Anterior"/>
-            </button>
-            <div id="bannerContainer" className="banner-container">
-                <div className="banner">
-                    <img src={bannerOne} alt="Banner 1"/>
-                </div>
-                <div className="banner">
-                    <img src={bannerTwo} alt="Banner 2"/>
-                </div>
-            </div>
-            <button className="next arrow" onClick={nextSlide}>
-                <img src={next} alt="Próximo Banner"/>
-            </button>
+      <section className="banner-section">
+        <button className="prev arrow" onClick={prevSlide}>
+          <img src={prev} alt="Banner Anterior" />
+        </button>
+        <div className="banner-container">
+          <div className="banner banner-one">
+            <img src={bannerOne} alt="Banner 1" />
+          </div>
+          <div className="banner banner-two">
+            <img src={bannerTwo} alt="Banner 2" />
+          </div>
         </div>
+        <button className="next arrow" onClick={nextSlide}>
+          <img src={next} alt="Próximo Banner" />
+        </button>
+      </section>
     );
 };
 
