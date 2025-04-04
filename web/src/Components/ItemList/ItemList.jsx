@@ -257,6 +257,9 @@ function ItemList() {
             <ModalDelete
               setModalDelete={setModalDelete}
               handleDelete={onDeleteConfirm}
+              text={
+                "Você tem certeza que deseja excluir todos os itens?"
+              }
             />
           )}
         </>

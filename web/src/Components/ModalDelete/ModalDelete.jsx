@@ -1,12 +1,12 @@
 import './ModalDelete.scss'
 
-function ModalDelete({ setModalDelete, handleDelete }) {
+function ModalDelete({ setModalDelete, handleDelete, text, textItem }) {
   return (
     <section className="modal-delete">
       <div className="modal-delete-content">
         <h2>Confirmação</h2>
         <p>
-          Você tem certeza que deseja excluir <b>todos</b> os itens?
+          {text} {textItem}
         </p>
         <div className="modal-delete-buttons">
           <button className="delete" onClick={handleDelete}>
