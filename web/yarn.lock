@@ -460,7 +460,7 @@
   resolved "https://registry.npmjs.org/@tanstack/query-core/-/query-core-5.71.5.tgz"
   integrity sha512-XOQ5SyjCdwhxyLksGKWSL5poqyEXYPDnsrZAzJm2LgrMm4Yh6VOrfC+IFosXreDw9HNqC11YAMY3HlfHjNzuaA==
 
-"@tanstack/react-query@^5.71.3":
+"@tanstack/react-query@^5.71.5":
   version "5.71.5"
   resolved "https://registry.npmjs.org/@tanstack/react-query/-/react-query-5.71.5.tgz"
   integrity sha512-WpxZWy4fDASjY+iAaXB+aY+LC95PQ34W6EWVkjJ0hdzWWbczFnr9nHvHkVDpwdR18I1NO8igNGQJFrLrgyzI8Q==
