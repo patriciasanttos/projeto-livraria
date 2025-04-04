@@ -1,9 +1,21 @@
-.phone-image {
+.home-page {
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    width: 60%;
+    align-items: center;
 
-    img {
-        width: 100%;
+    margin-top: 5%;
+
+    section {
+        display: flex;
+        flex-direction: column;
+        gap: 4em;
+    }
+
+    .whatsapp-contact-image {
+        width: 60dvw;
+        max-width: 500px;
+        height: auto;
+        margin: 8dvh 0;
     }
 }
