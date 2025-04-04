@@ -1,13 +1,13 @@
-import AboutUs from './Pages/public/AboutUs/AboutUs';
+import { QueryClientProvider } from '@tanstack/react-query';
 import MainRoutes from './routes';
+import queryClient from './lib/queryClient';
 
 function App() {
-  return <MainRoutes />
-    
-       
-       
- 
-  
+  return (
+    <QueryClientProvider client={queryClient}>
+      <MainRoutes />
+    </QueryClientProvider>
+  )
 }
 
 export default App
