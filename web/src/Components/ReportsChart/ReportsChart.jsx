@@ -21,7 +21,7 @@ ChartJS.register(
 
 const ReportsChart = ({ type, data }) => {
   const title =
-    type === 'search_reports'
+    type === 'search'
       ? 'Relatório de buscas'
       : 'Relatório de vendas';
 

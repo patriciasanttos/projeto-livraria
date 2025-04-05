@@ -14,34 +14,43 @@ import './Reports.scss';
 function Reports() {
   const { data, isLoading, error, refetch } = useReportsData();
 
-  const [chartType, setChartType] = useState('search_reports');
+  const [chartConfig, setChartConfig] = useState({
+    type: 'search',
+    entityType: 'items'
+  });
   const [chartData, setChartData] = useState([]);
 
   const [query, setQuery] = useState('');
 
   useEffect(() => {
+    refetch();
     if (!data)
       return;
 
-    refetch();
+    if (chartConfig.type === 'search') {
+      if (!data[chartConfig.entityType].search.length)
+        return setChartData({});
 
-    if (chartType === 'search_reports' && data.searchReports?.length) {
-      const labels = data.searchReports.map((item) => {
+      const labels = data[chartConfig.entityType].search.map((entity) => {
+        const entityName = entity[chartConfig.entityType === 'items' ? 'item' : 'category'].name
+
         if (query !== '')
-          return item.item.name.toLowerCase().includes(query) ? item.item.name : '';
+          return entityName.toLowerCase().includes(query) ? entityName : '';
 
-        return item.item.name;
+        return entityName;
       });
-      const counts = data.searchReports.map((item) => {
+      const counts = data[chartConfig.entityType].search.map((entity) => {
         if (query !== '')
-          return item.item.name.toLowerCase().includes(query) ? item.count : 0;
+          return entity[chartConfig.entityType === 'items' ? 'item' : 'category'].name.toLowerCase().includes(query)
+            ? entity.count
+            : 0;
 
-        return item.count;
+        return entity.count;
       });
 
       const datasets = [
         {
-          label: 'Relatório de buscas por itens',
+          label: `Relatório de buscas por ${chartConfig.entityType === 'items' ? 'itens' : 'categorias'}`,
           data: counts,
           backgroundColor: 'rgba(75, 192, 192, 0.5)',
         },
@@ -50,18 +59,25 @@ function Reports() {
       setChartData({ labels, datasets });
     }
 
-    if (chartType === 'sale_reports' && data.salesReports?.length) {
-      const labels = data.salesReports.map((item) => {
-        if (query !== '')
-          return item.item.name.toLowerCase().includes(query) ? item.item.name : '';
+    if (chartConfig.type === 'sales') {
+      if (!data[chartConfig.entityType].sales.length)
+        return setChartData({});
 
-        return item.item.name;
+      const labels = data[chartConfig.entityType].sales.map((entity) => {
+        const entityName = entity[chartConfig.entityType === 'items' ? 'item' : 'category'].name;
+
+        if (query !== '')
+          return entityName.toLowerCase().includes(query) ? entityName : '';
+
+        return entityName;
       });
-      const counts = data.salesReports.map((item) => {
+      const counts = data[chartConfig.entityType].sales.map((entity) => {
         if (query !== '')
-          return item.item.name.toLowerCase().includes(query) ? item.count : 0;
+          return entity[chartConfig.entityType === 'items' ? 'item' : 'category'].name.toLowerCase().includes(query)
+            ? entity.count
+            : 0;
 
-        return item.count;
+        return entity.count;
       });
 
       const datasets = [
@@ -74,12 +90,12 @@ function Reports() {
 
       setChartData({ labels, datasets });
     }
-  }, [data, chartType, query]);
+  }, [data, chartConfig, query]);
 
   const handleReload = async () => {
     const realoadingDataToast = toast.warning('Recarregando dados...', {
       autoClose: false
-    })
+    });
 
     try {
       await refetch();
@@ -90,6 +106,7 @@ function Reports() {
       toast.error('Erro ao recarregar dados.');
     }
   }
+
 
   if (isLoading)
     return <p className='no-items-warn'>Buscando dados...</p>
@@ -102,15 +119,30 @@ function Reports() {
       <div className="chart-container">
         <div>
           <input
-            className='search-item'
+            className='reports-search-bar'
             type="text"
-            placeholder='Buscar item'
+            placeholder='Buscar'
             onChange={e => setQuery(e.target.value.trim().toLowerCase())}
           />
 
-          <select defaultValue='search_reports' onChange={e => setChartType(e.target.value)}>
-            <option value="search_reports">Relatório de buscas</option>
-            <option value="sale_reports">Relatório de vendas</option>
+          <select
+            defaultValue='search'
+            onChange={
+              e => setChartConfig(prev => ({ ...prev, type: e.target.value }))
+            }
+          >
+            <option value="search">Relatório de buscas</option>
+            <option value="sales">Relatório de vendas</option>
+          </select>
+
+          <select
+            defaultValue='items'
+            onChange={
+              e => setChartConfig(prev => ({ ...prev, entityType: e.target.value }))
+            }
+          >
+            <option value="items">Itens</option>
+            <option value="categories">Categorias</option>
           </select>
 
           <button className='reload-button' onClick={handleReload}>
@@ -121,7 +153,7 @@ function Reports() {
 
         {chartData && chartData.labels && chartData.datasets && (
           <ReportsChart
-            type={chartType}
+            type={chartConfig.type}
             data={chartData}
           />
         )}
