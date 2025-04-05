@@ -12,7 +12,18 @@
     div {
       display: flex;
       flex-direction: row;
+      align-items: center;
       gap: 0.5em;
+
+      .search-item {
+        width: 18%;
+        height: 3dvh;
+
+        border: 1px solid var(--button-lime-green);
+        border-radius: 8px;
+        padding: 0 0.5em;
+        outline: none;
+      }
 
       select {
         width: 18%;
@@ -21,11 +32,18 @@
         font-size: 1dvw;
         border-radius: 8px;
         border: 1px solid var(--button-lime-green);
-  
+        outline: none;
+
+
         cursor: pointer;
       }
   
       .reload-button {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+
         width: 10%;
         height: 3dvh;
 
@@ -38,8 +56,12 @@
         &:hover {
           background-color: #d9d9d9;
         }
+
+        p {
+          font-size: 1dvw;
+          margin: 0;
+        }
       }
     }
-
   }
 }

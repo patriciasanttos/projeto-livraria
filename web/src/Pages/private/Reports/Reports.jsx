@@ -1,16 +1,23 @@
 import React, { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 
 import { useReportsData } from '../../../hooks/useReportsData';
+
+//-----Icons
+import reloadIcon from '../../../assets/icons/reload.svg';
+
+//-----Components
 import ReportsChart from '../../../Components/ReportsChart/ReportsChart';
 
 import './Reports.scss';
-import { toast } from 'react-toastify';
 
 function Reports() {
   const { data, isLoading, error, refetch } = useReportsData();
 
   const [chartType, setChartType] = useState('search_reports');
   const [chartData, setChartData] = useState([]);
+
+  const [query, setQuery] = useState('');
 
   useEffect(() => {
     if (!data)
@@ -19,8 +26,18 @@ function Reports() {
     refetch();
 
     if (chartType === 'search_reports' && data.searchReports?.length) {
-      const labels = data.searchReports.map((item) => item.item.name);
-      const counts = data.searchReports.map((item) => item.count);
+      const labels = data.searchReports.map((item) => {
+        if (query !== '')
+          return item.item.name.toLowerCase().includes(query) ? item.item.name : '';
+
+        return item.item.name;
+      });
+      const counts = data.searchReports.map((item) => {
+        if (query !== '')
+          return item.item.name.toLowerCase().includes(query) ? item.count : 0;
+
+        return item.count;
+      });
 
       const datasets = [
         {
@@ -34,8 +51,18 @@ function Reports() {
     }
 
     if (chartType === 'sale_reports' && data.salesReports?.length) {
-      const labels = data.salesReports.map((item) => item.item.name);
-      const counts = data.salesReports.map((item) => item.count);
+      const labels = data.salesReports.map((item) => {
+        if (query !== '')
+          return item.item.name.toLowerCase().includes(query) ? item.item.name : '';
+
+        return item.item.name;
+      });
+      const counts = data.salesReports.map((item) => {
+        if (query !== '')
+          return item.item.name.toLowerCase().includes(query) ? item.count : 0;
+
+        return item.count;
+      });
 
       const datasets = [
         {
@@ -47,7 +74,7 @@ function Reports() {
 
       setChartData({ labels, datasets });
     }
-  }, [data, chartType]);
+  }, [data, chartType, query]);
 
   const handleReload = async () => {
     const realoadingDataToast = toast.warning('Recarregando dados...', {
@@ -74,12 +101,22 @@ function Reports() {
     <div className='reports-page'>
       <div className="chart-container">
         <div>
+          <input
+            className='search-item'
+            type="text"
+            placeholder='Buscar item'
+            onChange={e => setQuery(e.target.value.trim().toLowerCase())}
+          />
+
           <select defaultValue='search_reports' onChange={e => setChartType(e.target.value)}>
             <option value="search_reports">Relatório de buscas</option>
             <option value="sale_reports">Relatório de vendas</option>
           </select>
 
-          <button className='reload-button' onClick={handleReload}>Recarregar</button>
+          <button className='reload-button' onClick={handleReload}>
+            <p>Recarregar</p>
+            <img src={reloadIcon} alt="Reload" />
+          </button>
         </div>
 
         {chartData && chartData.labels && chartData.datasets && (
