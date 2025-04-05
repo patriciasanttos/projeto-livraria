@@ -1,29 +1,36 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEnum, IsNotEmpty, IsNumber, Min } from 'class-validator';
-
-enum ReportType {
-  SEARCH_REPORT = 'search_report',
-  SALE_REPORT = 'sale_report',
-}
+import { EntityType, ReportType } from 'src/@types/types';
 
 export default class ReportBodyRequest {
   @ApiProperty({
     enum: ReportType,
-    description: 'Tipo do relatório: search_report ou sale_report',
+    description: 'Report type: "search" or "sale"',
   })
   @IsNotEmpty({ message: 'You must to especify the report type' })
   @IsEnum(ReportType, {
     message:
-      'You must provide a valid report type. Report types: "SEARCH_REPORT" | "SALE_REPORT"',
+      'You must provide a valid report type. Report types: "search" | "sale"',
   })
   type: string;
 
+  @ApiProperty({
+    enum: EntityType,
+    description: 'Enity types: "item" or "category"',
+  })
+  @IsNotEmpty({ message: 'You must to especify the entity type' })
+  @IsEnum(EntityType, {
+    message:
+      'You must provide a valid entity type. Enity types: "item" | "category"',
+  })
+  entityType: string;
+
   @ApiProperty()
-  @IsNotEmpty({ message: 'You must provide an item id' })
+  @IsNotEmpty({ message: 'You must provide an entity id' })
   @IsNumber()
   @Min(1)
-  itemId: number;
+  entityId: number;
 
   @ApiProperty()
   @IsNotEmpty({ message: 'You must provide an count value' })

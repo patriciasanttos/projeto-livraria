@@ -19,6 +19,7 @@ import { ReportsService } from './reports.service';
 
 import ReportBodyRequest from './dtos/reports-body-request';
 import { AuthGuard } from 'src/auth.guard';
+import { EntityType, ReportType } from 'src/@types/types';
 
 @Controller('reports')
 export class ReportsController {
@@ -55,7 +56,7 @@ export class ReportsController {
     return this.reportsService.set(data);
   }
 
-  @Delete(':type/:reportId')
+  @Delete(':type/:entityType/:reportId')
   @UseGuards(AuthGuard)
   //----Swagger configs
   @ApiParam({
@@ -79,9 +80,10 @@ export class ReportsController {
   })
   //-----
   deleteCategory(
-    @Param('type') type: string,
+    @Param('type') type: ReportType,
+    @Param('entityType') entityType: EntityType,
     @Param('reportId', ParseIntPipe) reportId: number,
   ) {
-    return this.reportsService.delete(type, reportId);
+    return this.reportsService.delete(type, entityType, reportId);
   }
 }

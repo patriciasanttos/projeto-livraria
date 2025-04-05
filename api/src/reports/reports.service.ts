@@ -2,10 +2,12 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/database/prisma.service';
 import ReportBodyRequest from './dtos/reports-body-request';
 import { ItemsService } from 'src/items/items.service';
+import { EntityType, ReportType } from 'src/@types/types';
 
 type GetByIdType = {
-  type: string;
-  itemId?: number;
+  type: ReportType;
+  entityType: EntityType;
+  entityId?: number;
   reportId?: number;
 };
 
@@ -18,44 +20,77 @@ export class ReportsService {
 
   async getAll() {
     return {
-      salesReports: await this.prisma.saleReport.findMany({
-        include: {
-          item: true,
-        },
-      }),
-      searchReports: await this.prisma.searchReport.findMany({
-        include: {
-          item: true,
-        },
-      }),
+      items: {
+        salesReports: await this.prisma.saleItemReport.findMany({
+          include: {
+            item: true,
+          },
+        }),
+        searchReports: await this.prisma.searchItemReport.findMany({
+          include: {
+            item: true,
+          },
+        }),
+      },
+
+      categories: {
+        salesReports: await this.prisma.saleCategoryReport.findMany({
+          include: {
+            category: true,
+          },
+        }),
+        searchReports: await this.prisma.searchCategoryReport.findMany({
+          include: {
+            category: true,
+          },
+        }),
+      },
     };
   }
 
-  private async getById({ type, itemId, reportId }: GetByIdType) {
+  private async getById({ type, entityType, entityId, reportId }: GetByIdType) {
     let itemToGet: number | undefined;
 
-    if (itemId) {
-      const item = await this.itemsService.getById(itemId);
+    if (entityId && entityType === 'item') {
+      const item = await this.itemsService.getById(entityId);
       itemToGet = item?.id;
     }
 
     return await this.prisma.$transaction(async (tx) => {
-      if (type === 'search_report') {
-        return await tx.searchReport.findFirst({
-          where: {
-            id: reportId || undefined,
-            itemId: itemToGet,
-          },
-        });
+      if (type === 'search') {
+        if (entityType === 'item')
+          return await tx.searchItemReport.findFirst({
+            where: {
+              id: reportId || undefined,
+              itemId: itemToGet,
+            },
+          });
+
+        if (entityType === 'category')
+          return await tx.searchCategoryReport.findFirst({
+            where: {
+              id: reportId || undefined,
+              categoryId: itemToGet,
+            },
+          });
       }
 
-      if (type === 'sale_report') {
-        return await tx.saleReport.findFirst({
-          where: {
-            id: reportId || undefined,
-            itemId: itemToGet,
-          },
-        });
+      if (type === 'sale') {
+        if (entityType === 'item')
+          return await tx.saleItemReport.findFirst({
+            where: {
+              id: reportId || undefined,
+              itemId: itemToGet,
+            },
+          });
+
+        if (entityType === 'category')
+          return await tx.saleCategoryReport.findFirst({
+            where: {
+              id: reportId || undefined,
+              categoryId: itemToGet,
+            },
+          });
       }
 
       throw new HttpException(
@@ -66,55 +101,118 @@ export class ReportsService {
   }
 
   async set(data: ReportBodyRequest) {
-    const report = await this.getById({ type: data.type, itemId: data.itemId });
+    const report = await this.getById({
+      type: data.type as ReportType,
+      entityType: data.entityType as EntityType,
+      entityId: data.entityId,
+    });
 
     if (!report) {
-      return data.type === 'search_report'
-        ? await this.prisma.searchReport.create({
+      if (data.type === 'search') {
+        if (data.entityType === 'item')
+          return await this.prisma.searchItemReport.create({
             data: {
-              itemId: data.itemId,
-              count: data.count,
-            },
-          })
-        : await this.prisma.saleReport.create({
-            data: {
-              itemId: data.itemId,
+              itemId: data.entityId,
               count: data.count,
             },
           });
+
+        if (data.entityType === 'category')
+          return await this.prisma.searchCategoryReport.create({
+            data: {
+              categoryId: data.entityId,
+              count: data.count,
+            },
+          });
+      }
+
+      if (data.type === 'sale') {
+        if (data.entityType === 'item')
+          return await this.prisma.saleItemReport.create({
+            data: {
+              itemId: data.entityId,
+              count: data.count,
+            },
+          });
+
+        if (data.entityType === 'category')
+          return await this.prisma.saleCategoryReport.create({
+            data: {
+              categoryId: data.entityId,
+              count: data.count,
+            },
+          });
+      }
     }
 
-    return data.type === 'search_report'
-      ? await this.prisma.searchReport.update({
-          where: { itemId: data.itemId },
-          data: {
-            count: { increment: data.count },
-          },
-        })
-      : await this.prisma.saleReport.update({
-          where: { itemId: data.itemId },
+    if (data.type === 'search') {
+      if (data.entityType === 'item')
+        return await this.prisma.searchItemReport.update({
+          where: { itemId: data.entityId },
           data: {
             count: { increment: data.count },
           },
         });
+
+      if (data.entityType === 'category')
+        return await this.prisma.searchCategoryReport.update({
+          where: { categoryId: data.entityId },
+          data: {
+            count: { increment: data.count },
+          },
+        });
+    }
+
+    if (data.type === 'sale') {
+      if (data.entityType === 'item')
+        return await this.prisma.saleItemReport.update({
+          where: { itemId: data.entityId },
+          data: {
+            count: { increment: data.count },
+          },
+        });
+
+      if (data.entityType === 'category')
+        return await this.prisma.saleCategoryReport.update({
+          where: { categoryId: data.entityId },
+          data: {
+            count: { increment: data.count },
+          },
+        });
+    }
   }
 
-  async delete(type: string, reportId: number) {
-    console.log(type);
-
-    const report = await this.getById({ type, reportId });
-    if (!report)
+  async delete(type: ReportType, entityType: EntityType, reportId: number) {
+    const report = await this.getById({ type, entityType, reportId });
+    if (!report) {
       throw new HttpException(
         { message: 'Report not found' },
         HttpStatus.NOT_FOUND,
       );
+    }
 
-    return await this.prisma.$transaction(async (tx) => {
-      type === 'search_report'
-        ? await tx.searchReport.delete({ where: { id: reportId } })
-        : await tx.saleReport.delete({ where: { id: reportId } });
+    const deleteMap = {
+      search: {
+        item: this.prisma.searchItemReport,
+        category: this.prisma.searchCategoryReport,
+      },
+      sale: {
+        item: this.prisma.saleItemReport,
+        category: this.prisma.saleCategoryReport,
+      },
+    };
 
-      return { message: 'Report deleted successfully' };
-    });
+    const model = deleteMap[type]?.[entityType];
+
+    if (!model) {
+      throw new HttpException(
+        { message: 'Invalid report type or entity type' },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
+    await (model as any).delete({ where: { id: reportId } });
+
+    return { message: 'Report deleted successfully' };
   }
 }
