@@ -60,12 +60,18 @@ export class ReportsController {
   @UseGuards(AuthGuard)
   //----Swagger configs
   @ApiParam({
-    name: 'type',
+    name: 'Report type',
     required: true,
-    description: 'Report types: sales_report | search_report',
+    description: 'Report types: sales | search',
   })
   @ApiParam({
-    name: 'reportId',
+    name: 'Entity type',
+    required: true,
+    description: 'Entity ID',
+    example: 1,
+  })
+  @ApiParam({
+    name: 'Report Id',
     required: true,
     description: 'Report ID',
     example: 1,
