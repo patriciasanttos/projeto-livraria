@@ -13,7 +13,7 @@ const BannerSlider = () => {
   const [index, setIndex] = React.useState(0);
 
   useEffect(() => {
-    const interval = setInterval(nextSlide, 8000);
+    const interval = setInterval(nextSlide, 6000);
 
     return () => {
       clearInterval(interval);
