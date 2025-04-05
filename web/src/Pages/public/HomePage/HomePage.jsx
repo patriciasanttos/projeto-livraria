@@ -4,6 +4,7 @@ import mock from '../../../mocks/categoriesMocks.json'
 
 //-----Components
 import Category from '../../../components/Category/Category';
+import BannerSlider from '../../../Components/Banner/Banner';
 
 //-----Images
 import whatsappContactImage from '../../../assets/Images/whatsapp-contact.svg'
@@ -18,6 +19,7 @@ function HomePage() {
 
   return (
     <div className='home-page'>
+      <BannerSlider />
       <section>
         <Category
           data={category1.items}
