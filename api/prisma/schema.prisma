@@ -28,13 +28,33 @@ model Category {
 }
 
 model Item {
-  id          Int        @id @default(autoincrement())
-  name        String
-  description String?
-  price       Decimal
-  image       String?
-  available   Boolean    @default(true)
-  categories  Category[] @relation("CategoryItems")
-  created_at  DateTime   @default(now())
-  updated_at  DateTime   @updatedAt
+  id             Int            @id @default(autoincrement())
+  name           String
+  description    String?
+  price          Decimal
+  image          String?
+  available      Boolean        @default(true)
+  categories     Category[]     @relation("CategoryItems")
+  sales_reports  SaleReport[]
+  search_reports SearchReport[]
+  created_at     DateTime       @default(now())
+  updated_at     DateTime       @updatedAt
+}
+
+model SaleReport {
+  id         Int      @id @default(autoincrement())
+  itemId     Int      @unique
+  item       Item     @relation(fields: [itemId], references: [id])
+  count      Int
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model SearchReport {
+  id         Int      @id @default(autoincrement())
+  itemId     Int      @unique
+  item       Item     @relation(fields: [itemId], references: [id])
+  count      Int
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 }
