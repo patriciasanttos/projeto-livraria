@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 
 //-----Icons & images
@@ -16,6 +16,18 @@ import "./HeaderDesktop.scss";
 const HeaderDesktop = () => {
   const [query, setQuery] = useState();
 
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (containerRef.current && !containerRef.current.contains(event.target))
+        setQuery("");
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside)
+  }, []);
+
   return (
     <header className="header-desktop">
       <div className="header-content">
@@ -26,10 +38,7 @@ const HeaderDesktop = () => {
 
           <div
             className="header-search-container"
-            onBlur={(e) => {
-              setQuery("");
-              e.target.value = "";
-            }}
+            ref={containerRef}
           >
             <SearchInput setQuery={setQuery} />
             {query && <SearchResults query={query} />}

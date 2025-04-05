@@ -1,11 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 import mock from '../../../mocks/categoriesMocks.json';
 
 import './SearchResults.scss'
+import { useAvailableItemsData } from "../../../hooks/useItemsData";
+import { useCreateReport } from "../../../hooks/useCreateReport";
 
 const SearchResults = ({ query }) => {
-  const [results, setResults] = useState([]);
+  const { data, isLoading } = useAvailableItemsData();
+  const { mutate } = useCreateReport();
+
+  const [results, setResults] = useState(data);
 
   const [debouncedQuery, setDebouncedQuery] = useState(query);
 
@@ -21,27 +26,30 @@ const SearchResults = ({ query }) => {
       return;
     }
 
+    if (!data)
+      return;
+
     const filteredResults = new Map();
 
-    Object.entries(mock.data).forEach(([, value]) => {
+    Object.entries(data).forEach(([, value]) => {
       const queryString = debouncedQuery.trim().toLowerCase()
 
-      const categoryKey = `category-${value.id}`;
+      const itemKey = `item-${value.id}`;
 
       if (
         value.name.toLowerCase().includes(queryString.toLowerCase()) ||
-        value.description.toLowerCase().includes(queryString.toLowerCase())
+        value.description?.toLowerCase().includes(queryString.toLowerCase())
       )
-        filteredResults.set(categoryKey, { ...value, type: "category" });
+        filteredResults.set(itemKey, { ...value, type: "item" });
 
-      value.items.forEach(item => {
-        const itemKey = `item-${item.id}`;
+      value.categories.forEach(category => {
+        const categoryKey = `category-${category.id}`;
 
         if (
-          item.name.toLowerCase().includes(queryString.toLowerCase()) ||
-          item.description.toLowerCase().includes(queryString.toLowerCase())
+          category.name.toLowerCase().includes(queryString.toLowerCase()) ||
+          category.description?.toLowerCase().includes(queryString.toLowerCase())
         )
-          filteredResults.set(itemKey, { ...item, type: "item" });
+          filteredResults.set(categoryKey, { ...category, type: "category" });
       });
     });
 
@@ -52,6 +60,20 @@ const SearchResults = ({ query }) => {
       setResults([])
   }, [debouncedQuery]);
 
+  const handleReport = useCallback((itemId) => {
+    return mutate({
+      type: 'search_report',
+      itemId,
+      count: 1,
+    });
+  });
+
+  if (isLoading)
+    return <div>Buscando...</div>
+
+  if (!results)
+    return <div>Nenhum resultado encontrado.</div>
+
   return (
     <ul className="search-results">
       {
@@ -60,12 +82,12 @@ const SearchResults = ({ query }) => {
           : results.map(result => {
             return result.type === "category"
               ? // Category result
-              <li key={result.type + '-' + result.id}>
+              <li onClick={() => handleReport(result.id)} key={result.type + '-' + result.id}>
                 <span>Categoria: </span>
                 {result.name}
               </li>
               : // Item result
-              <li key={result.type + '-' + result.id}>
+              <li onClick={() => handleReport(result.id)} key={result.type + '-' + result.id}>
                 {result.name}
               </li>
           })

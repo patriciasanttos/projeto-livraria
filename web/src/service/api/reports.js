@@ -8,3 +8,11 @@ export const getAllReports = async () => {
     searchReports: data.searchReports,
   };
 };
+
+export const createReport = async (data) => {
+  const response = await api.post("/reports", data);
+
+  console.log(response);
+
+  return response.data;
+};
