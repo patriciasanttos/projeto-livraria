@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { getAllCategories } from "../service/api/categories";
 
-export const useAllCagegoriesData = () =>
+export const useCagegoriesData = () =>
   useQuery({
     queryKey: ["categories"],
     queryFn: getAllCategories,

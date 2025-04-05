@@ -1,0 +1,45 @@
+.reports-page {
+  padding: 2em 2em;
+
+  .chart-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    width: 80dvw;
+    height: 70dvh;
+
+    div {
+      display: flex;
+      flex-direction: row;
+      gap: 0.5em;
+
+      select {
+        width: 18%;
+        height: 3dvh;
+  
+        font-size: 1dvw;
+        border-radius: 8px;
+        border: 1px solid var(--button-lime-green);
+  
+        cursor: pointer;
+      }
+  
+      .reload-button {
+        width: 10%;
+        height: 3dvh;
+
+        border-radius: 8px;
+        border: 1px solid var(--button-lime-green);
+        
+        transition: background-color 0.3s ease;
+        cursor: pointer;
+
+        &:hover {
+          background-color: #d9d9d9;
+        }
+      }
+    }
+
+  }
+}

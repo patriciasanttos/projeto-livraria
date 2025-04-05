@@ -8,6 +8,7 @@ import Login from "./private/Login/Login";
 import ControlPanel from "./private/ControlPanel/ControlPanel";
 import Items from "./private/Items/Items";
 import AdminCategoriesPage from "./private/Categories/Categories";
+import Reports from "./private/Reports/Reports";
 
 export const publicPages = {
   HomePage,
@@ -22,4 +23,5 @@ export const privatePages = {
   ControlPanel,
   Items,
   AdminCategoriesPage,
+  Reports,
 };

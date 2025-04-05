@@ -12,13 +12,13 @@ import Card from '../../../components/Card/Card';
 import Pagination from '../../../components/Pagination/Pagination';
 
 import './Categories.scss';
-import { useAllCagegoriesData } from '../../../hooks/useCategoriesData';
+import { useCagegoriesData } from '../../../hooks/useCategoriesData';
 
 function Categories() {
   const navigate = useNavigate();
   const { categoryName } = useParams();
 
-  const { data: categoriesData, isLoading, error } = useAllCagegoriesData();
+  const { data: categoriesData, isLoading, error } = useCagegoriesData();
 
   const [data, setData] = useState([]);
   const [displayedItems, setDisplayedItems] = useState([]);
@@ -99,7 +99,6 @@ function Categories() {
 
   if ((data && data.length <= 0) || error)
     return <p className='no-items-warn'>Desculpe, parece que nenhum item foi adicionado nessa categoria ainda.</p>
-
 
   return (
     <div className='category-page'>
