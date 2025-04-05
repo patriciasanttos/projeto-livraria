@@ -21,12 +21,12 @@ export class ReportsService {
   async getAll() {
     return {
       items: {
-        salesReports: await this.prisma.saleItemReport.findMany({
+        sales: await this.prisma.saleItemReport.findMany({
           include: {
             item: true,
           },
         }),
-        searchReports: await this.prisma.searchItemReport.findMany({
+        search: await this.prisma.searchItemReport.findMany({
           include: {
             item: true,
           },
@@ -34,12 +34,12 @@ export class ReportsService {
       },
 
       categories: {
-        salesReports: await this.prisma.saleCategoryReport.findMany({
+        sales: await this.prisma.saleCategoryReport.findMany({
           include: {
             category: true,
           },
         }),
-        searchReports: await this.prisma.searchCategoryReport.findMany({
+        search: await this.prisma.searchCategoryReport.findMany({
           include: {
             category: true,
           },

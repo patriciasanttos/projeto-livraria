@@ -60,11 +60,12 @@ const SearchResults = ({ query }) => {
       setResults([])
   }, [debouncedQuery]);
 
-  const handleReport = useCallback((itemId) => {
+  const handleReport = useCallback((entityType, entityId) => {
     return mutate({
-      type: 'search_report',
-      itemId,
-      count: 1,
+      type: 'search',
+      entityType,
+      entityId,
+      count: 1
     });
   });
 
@@ -82,12 +83,18 @@ const SearchResults = ({ query }) => {
           : results.map(result => {
             return result.type === "category"
               ? // Category result
-              <li onClick={() => handleReport(result.id)} key={result.type + '-' + result.id}>
+              <li
+                onClick={() => handleReport(result.type, result.id)}
+                key={result.type + '-' + result.id}
+              >
                 <span>Categoria: </span>
                 {result.name}
               </li>
               : // Item result
-              <li onClick={() => handleReport(result.id)} key={result.type + '-' + result.id}>
+              <li
+                onClick={() => handleReport(result.type, result.id)}
+                key={result.type + '-' + result.id}
+              >
                 {result.name}
               </li>
           })
