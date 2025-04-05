@@ -8,6 +8,7 @@ import {
   Post,
   Put,
   UploadedFile,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -22,6 +23,7 @@ import {
 import { ItemsService } from './items.service';
 import CreateItemBody from './dtos/create-item';
 import UpdateItemBody from './dtos/update-item';
+import { AuthGuard } from 'src/auth.guard';
 
 @Controller('items')
 export class ItemsController {
@@ -59,6 +61,7 @@ export class ItemsController {
   }
 
   @Post()
+  @UseGuards(AuthGuard)
   @UseInterceptors(FileInterceptor('image'))
   //----Swagger configs
   @ApiConsumes('multipart/form-data')
@@ -82,6 +85,7 @@ export class ItemsController {
   }
 
   @Put()
+  @UseGuards(AuthGuard)
   @UseInterceptors(FileInterceptor('image'))
   //----Swagger configs
   @ApiConsumes('multipart/form-data')
@@ -106,6 +110,7 @@ export class ItemsController {
   }
 
   @Delete(':itemId')
+  @UseGuards(AuthGuard)
   //----Swagger configs
   @ApiParam({
     name: 'itemId',

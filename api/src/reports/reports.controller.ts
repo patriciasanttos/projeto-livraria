@@ -6,6 +6,7 @@ import {
   Param,
   ParseIntPipe,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 import {
   ApiCreatedResponse,
@@ -17,12 +18,14 @@ import {
 import { ReportsService } from './reports.service';
 
 import ReportBodyRequest from './dtos/reports-body-request';
+import { AuthGuard } from 'src/auth.guard';
 
 @Controller('reports')
 export class ReportsController {
   constructor(private readonly reportsService: ReportsService) {}
 
   @Get()
+  @UseGuards(AuthGuard)
   //----Swagger configs
   @ApiOperation({
     summary: 'Get all reports',
@@ -37,6 +40,7 @@ export class ReportsController {
   }
 
   @Post()
+  @UseGuards(AuthGuard)
   //----Swagger configs
   @ApiOperation({
     summary: "Set an report, or create if don't exists",
@@ -52,6 +56,7 @@ export class ReportsController {
   }
 
   @Delete(':type/:reportId')
+  @UseGuards(AuthGuard)
   //----Swagger configs
   @ApiParam({
     name: 'type',
