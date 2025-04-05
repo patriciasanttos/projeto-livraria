@@ -19,6 +19,7 @@ function HomePage() {
 
   return (
     <div className='home-page'>
+      <BannerSlider />
       <section>
         <Category
           data={category1.items}

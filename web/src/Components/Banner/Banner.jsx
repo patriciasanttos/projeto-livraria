@@ -1,54 +1,70 @@
-import React from "react";
+import React, { useCallback, useEffect } from "react";
 
 //-- Icons and Images
-import bannerOne from "../../assets/Images/BannerSection/banner-1.svg"
-import bannerTwo from "../../assets/Images/BannerSection/banner-2.svg"
-import next from "../../assets/Images/BannerSection/next.svg"
-import prev from "../../assets/Images/BannerSection/prev.svg"
+import bannerOne from "../../assets/Images/BannerSection/banner-1.svg";
+import bannerTwo from "../../assets/Images/BannerSection/banner-2.svg";
+import next from "../../assets/Images/BannerSection/next.svg";
+import prev from "../../assets/Images/BannerSection/prev.svg";
 
 //-- Components
 import "./Banner.scss";
 
 const BannerSlider = () => {
-    let index = 0;
-    const slides = document.querySelectorAll('.banner');
-    const totalSlides = slides.length;
+  const [index, setIndex] = React.useState(0);
 
-    function showSlide() {
-        const container = document.getElementsByClassName("banner-container")[0];
-        container.style.transform = `translateX(-${index * 100}%)`;
-    }
+  useEffect(() => {
+    const interval = setInterval(nextSlide, 8000);
 
-    function nextSlide() {
-        index = (index + 1) % totalSlides;
-        showSlide();
-    }
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
 
-    function prevSlide() {
-        index = (index - 1 + totalSlides) % totalSlides;
-        showSlide();
-    }
+  useEffect(() => {
+    showSlide();
+  }, [index]);
 
-setInterval(nextSlide, 8000);
+  const showSlide = () => {
+    const container = document.getElementsByClassName("banner-container")[0];
+    container.style.transform = `translateX(-${index * 100}%)`;
+  }
+  const nextSlide = useCallback(() => {
+    setIndex((prevIndex) => {
+      const slides = document.querySelectorAll(".banner");
+      const totalSlides = slides.length;
 
-    return (
-      <section className="banner-section">
-        <button className="prev arrow" onClick={prevSlide}>
-          <img src={prev} alt="Banner Anterior" />
-        </button>
-        <div className="banner-container">
-          <div className="banner banner-one">
-            <img src={bannerOne} alt="Banner 1" />
-          </div>
-          <div className="banner banner-two">
-            <img src={bannerTwo} alt="Banner 2" />
-          </div>
+      return (prevIndex + 1) % totalSlides;
+    });
+  }, []);
+
+  const prevSlide = useCallback(() => {
+    console.log("prevSlide")
+    setIndex((prevIndex) => {
+      const slides = document.querySelectorAll(".banner");
+      const totalSlides = slides.length;
+
+      return (prevIndex - 1) % totalSlides;
+    });
+  }, []);
+
+  return (
+    <section className="banner-section">
+      <button className="prev arrow" onClick={prevSlide}>
+        <img src={prev} alt="Banner Anterior" />
+      </button>
+      <div className="banner-container">
+        <div className="banner banner-one">
+          <img src={bannerOne} alt="Banner 1" />
         </div>
-        <button className="next arrow" onClick={nextSlide}>
-          <img src={next} alt="Próximo Banner" />
-        </button>
-      </section>
-    );
+        <div className="banner banner-two">
+          <img src={bannerTwo} alt="Banner 2" />
+        </div>
+      </div>
+      <button className="next arrow" onClick={nextSlide}>
+        <img src={next} alt="Próximo Banner" />
+      </button>
+    </section>
+  );
 };
 
 export default BannerSlider;
