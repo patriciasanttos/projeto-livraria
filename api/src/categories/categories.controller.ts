@@ -1,8 +1,3 @@
-/* eslint-disable @typescript-eslint/no-redundant-type-constituents */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-
 import {
   Body,
   Controller,
@@ -14,6 +9,7 @@ import {
   Post,
   Put,
   UploadedFile,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -28,6 +24,7 @@ import {
 import { CategoriesService } from './categories.service';
 import CreateCategoryBody from './dtos/create-category';
 import UpdateCategoryBody from './dtos/update-category';
+import { AuthGuard } from 'src/auth.guard';
 
 @Controller('categories')
 export class CategoriesController {
@@ -49,6 +46,7 @@ export class CategoriesController {
   }
 
   @Post()
+  @UseGuards(AuthGuard)
   @UseInterceptors(FileInterceptor('image'))
   //----Swagger configs
   @ApiConsumes('multipart/form-data')
@@ -72,6 +70,7 @@ export class CategoriesController {
   }
 
   @Put()
+  @UseGuards(AuthGuard)
   @UseInterceptors(FileInterceptor('image'))
   //----Swagger configs
   @ApiConsumes('multipart/form-data')
@@ -96,6 +95,7 @@ export class CategoriesController {
   }
 
   @Delete(':categoryId')
+  @UseGuards(AuthGuard)
   //----Swagger configs
   @ApiParam({
     name: 'categoryId',
@@ -117,6 +117,7 @@ export class CategoriesController {
   }
 
   @Patch(':categoryId/items/:itemId/add')
+  @UseGuards(AuthGuard)
   //----Swagger configs
   @ApiParam({
     name: 'categoryId',
@@ -151,6 +152,7 @@ export class CategoriesController {
   }
 
   @Patch(':categoryId/items/:itemId/remove')
+  @UseGuards(AuthGuard)
   //----Swagger configs
   @ApiParam({
     name: 'categoryId',
