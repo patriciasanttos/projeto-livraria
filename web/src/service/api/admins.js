@@ -12,3 +12,12 @@ export const login = async (email, password) => {
 
   return response;
 };
+
+export const validate = async () => {
+  const response = await api
+    .get("/admins/auth/me")
+    .then((res) => res)
+    .catch((err) => err);
+
+  return response;
+};

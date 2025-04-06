@@ -6,7 +6,7 @@ import Header from '../components/Header/Header';
 import WhatsappPopup from '../components/WhatsappPopup/WhatsappPopup';
 import Footer from '../Components/Footer/Footer';
 
-function PublicRoutesTemplate() {
+function PublicRoutesLayout() {
   return (
     <>
       <Header />
@@ -19,4 +19,4 @@ function PublicRoutesTemplate() {
   );
 }
 
-export default PublicRoutesTemplate;
+export default PublicRoutesLayout;

@@ -99,6 +99,21 @@ export class AdminsController {
     response.send({ message: 'User logged out successfully' });
   }
 
+  @Get('/auth/me')
+  //----Swagger configs
+  @ApiOperation({
+    summary: 'Validate an admin account',
+    description: 'Validate an admin account with a cookie.',
+    tags: ['admins'],
+  })
+  @ApiOkResponse({
+    description: 'User validated successfully',
+  })
+  //-----
+  async validate(@Req() { cookies: { user } }: Request) {
+    await this.adminsService.validate(user);
+  }
+
   @Post()
   @UseGuards(AuthGuard)
   //----Swagger configs
