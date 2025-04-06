@@ -8,32 +8,42 @@ import locationIcon from '../../../assets/Images/aboutUsLocationIcon.svg';
 
 function AboutUs() {
   return (
-    <main className='aboutus-page'>
-      <section className='aboutus-apresentation'>
-        <figure className='aboutus-team'>
+    <main className="aboutus-page">
+      <h1 className="aboutus-section-title">Sobre nós</h1>
+      <section className="aboutus-apresentation">
+        <figure className="aboutus-team">
           <img src={aboutUsImg} alt="Foto da equipe" />
         </figure>
 
-        <div className='aboutus-text-apresentation'>
-          <h1 className='aboutus-section-title'>Sobre nós</h1>
-          <h2 className='aboutus-subtitle'>Texto teste:</h2>
-          <p className='aboutus-text-apresentation'>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Laborum beatae dolorem dignissimos, pariatur amet possimus deserunt iste accusantium nesciunt nobis magnam culpa explicabo ex est, consectetur ipsa? Officiis aperiam doloribus eligendi inventore.
+        <div className="aboutus-text-container">
+          <p className="aboutus-text">
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Laborum
+            beatae dolorem dignissimos, pariatur amet possimus deserunt iste
+            accusantium nesciunt nobis magnam culpa explicabo ex est,
+            consectetur ipsa? Officiis aperiam doloribus eligendi inventore.
           </p>
         </div>
       </section>
 
-      <section className='contacts'>
-        <h1 className='contacts-title'>Fale conosco</h1>
+      <section className="contacts">
+        <h1 className="contacts-title">Fale conosco</h1>
 
-        <address className='address-section'>
+        <address className="address-section">
           <div>
-            <div className='location'>
-              <h3 className='location-title'>Endereço</h3>
-              <img src={locationIcon} alt="Icone de localização" className='location-icon' />
+            <div className="location">
+              <h3 className="location-title">Endereço</h3>
+              <img
+                src={locationIcon}
+                alt="Icone de localização"
+                className="location-icon"
+              />
             </div>
 
-            <div className='address-location'>
-              <p>R. Andorra, 500 - Jardim America, São José dos Campos - SP, 12235-050</p>
+            <div className="address-location">
+              <p>
+                R. Andorra, 500 - Jardim America, São José dos Campos - SP,
+                12235-050
+              </p>
             </div>
           </div>
 
@@ -45,47 +55,66 @@ function AboutUs() {
           />
         </address>
 
-        <section className='socialnetwork'>
-          <div className='socialnetwork-item'>
-            <div className='wpp-instagram'>
-              <h3 className='socialnetwork-title'>Whatsapp</h3>
-              <img src={whatsappIcon} alt="Icone do Whatsapp" className='wpp-instagram-icon' />
+        <section className="socialnetwork">
+          <div className="socialnetwork-item">
+            <div className="wpp-instagram">
+              <h3 className="socialnetwork-title">Whatsapp</h3>
+              <img
+                src={whatsappIcon}
+                alt="Icone do Whatsapp"
+                className="wpp-instagram-icon"
+              />
             </div>
 
-            <div className='wpp-number'>
-              <p className='info-number'>(12) 98229-4420</p>
+            <div className="wpp-number">
+              <p className="info-number">(12) 98229-4420</p>
             </div>
           </div>
 
-          <div className='socialnetwork-item'>
-            <div className='wpp-instagram'>
-              <h3 className='socialnetwork-title'>Nosso Instagram</h3>
-              <img src={instagramIcon} alt="Icone do Instagram" className='wpp-instagram-icon' />
+          <div className="socialnetwork-item">
+            <div className="wpp-instagram">
+              <h3 className="socialnetwork-title">Nosso Instagram</h3>
+              <img
+                src={instagramIcon}
+                alt="Icone do Instagram"
+                className="wpp-instagram-icon"
+              />
             </div>
 
-            <div className='instagram-info'>
-              <a href="https://www.instagram.com/ciadaeducacaosjc/" className='info-instagram'>@ciadaeducacaosjc</a>
+            <div className="instagram-info">
+              <a
+                href="https://www.instagram.com/ciadaeducacaosjc/"
+                className="info-instagram"
+              >
+                @ciadaeducacaosjc
+              </a>
             </div>
           </div>
         </section>
       </section>
 
       <section className="faq-section">
-        <h1 className='faq-section-title'>Dúvidas Frequentes</h1>
+        <h1 className="faq-section-title">Dúvidas Frequentes</h1>
 
         <div className="faq-container">
           <details className="faq-item">
-            <summary className="faq-question">Como faço para comprar no site?</summary>
+            <summary className="faq-question">
+              Como faço para comprar no site?
+            </summary>
             <p className="faq-answer">Resposta a ser enviada.</p>
           </details>
 
           <details className="faq-item">
-            <summary className="faq-question">Quais são as formas de pagamento?</summary>
+            <summary className="faq-question">
+              Quais são as formas de pagamento?
+            </summary>
             <p className="faq-answer">Resposta a ser enviada.</p>
           </details>
 
           <details className="faq-item">
-            <summary className="faq-question">Até que horas posso retirar meu pedido?</summary>
+            <summary className="faq-question">
+              Até que horas posso retirar meu pedido?
+            </summary>
             <p className="faq-answer">Resposta a ser enviada.</p>
           </details>
 
@@ -96,7 +125,7 @@ function AboutUs() {
         </div>
       </section>
     </main>
-  )
+  );
 }
 
 export default AboutUs;
