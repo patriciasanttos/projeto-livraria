@@ -2,23 +2,14 @@ import "./ItemDescription.scss";
 import { useState } from "react";
 
 import ProductImage from "../../assets/Images/product-img.svg";
-import mock from "../../mocks/categoriesMocks.json";
-import { useParams } from "react-router-dom";
 import ModalInfoBuy from "../ModalInfoBuy/ModalInfoBuy";
 
-function ItemDescription() {
+function ItemDescription({product}) {
   const [modalOpen, setModalOpen] = useState(false);  
-  const { id } = useParams();
-
-  const allProducts = mock.data.reduce((acc, category) => {
-    return acc.concat(category.items);
-  }, []);
-
-  const product = allProducts.find((product) => product.id == id);
 
   const onClickAddToCart = () => {
     const cartCookie = JSON.parse(localStorage.getItem("cart")) || {};
-    cartCookie[id] = (cartCookie[id] || 0) + 1;
+    cartCookie[product.id] = (cartCookie[product.id] || 0) + 1;
     localStorage.setItem("cart", JSON.stringify(cartCookie));
   }
 
