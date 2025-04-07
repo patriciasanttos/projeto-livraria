@@ -1,0 +1,76 @@
+import "./ItemDescription.scss";
+import { useState } from "react";
+
+import ProductImage from "../../assets/Images/product-img.svg";
+import mock from "../../mocks/categoriesMocks.json";
+import { useParams } from "react-router-dom";
+import ModalInfoBuy from "../ModalInfoBuy/ModalInfoBuy";
+
+function ItemDescription() {
+  const [modalOpen, setModalOpen] = useState(false);  
+  const { id } = useParams();
+
+  const allProducts = mock.data.reduce((acc, category) => {
+    return acc.concat(category.items);
+  }, []);
+
+  const product = allProducts.find((product) => product.id == id);
+
+  const onClickAddToCart = () => {
+    const cartCookie = JSON.parse(localStorage.getItem("cart")) || {};
+    cartCookie[id] = (cartCookie[id] || 0) + 1;
+    localStorage.setItem("cart", JSON.stringify(cartCookie));
+  }
+
+  const onClickOpenModal = () => {
+    setModalOpen(true);
+  };
+
+  const onCloseModal = () => {
+    setModalOpen(false);
+  };
+
+  return (
+    product && (
+      <section className="item-description-container">
+        <div className="item-description-images-container">
+          <img className="main-product" src={product.image} alt="" />
+
+          <div className="item-description-images">
+            <img src={product.image} alt="" />
+            <img src={product.image} alt="" />
+            <img src={product.image} alt="" />
+          </div>
+        </div>
+
+        <div className="item-description-text-container">
+          <h1>{product.name}</h1>
+          <h2>R$ {product.price}</h2>
+          <p>até xxxxxx no cartão de crédito</p>
+          <p className="description-title">Descrição do produto:</p>
+          <p className="description-text">{product.description}</p>
+          <div className="item-description-buttons">
+            <button
+              className="add-cart description-btn"
+              onClick={onClickAddToCart}
+            >
+              ADICIONAR AO CARRINHO
+            </button>
+            <button
+              className="info-buy description-btn"
+              onClick={onClickOpenModal}
+            >
+              Saiba como pagar
+            </button>
+          </div>
+        </div>
+
+        {modalOpen && (
+          <ModalInfoBuy isOpen={modalOpen} setModalOpen={onCloseModal} />
+        )}
+      </section>
+    )
+  );
+}
+
+export default ItemDescription;
