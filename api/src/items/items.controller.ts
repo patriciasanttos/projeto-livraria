@@ -7,11 +7,14 @@ import {
   ParseIntPipe,
   Post,
   Put,
-  UploadedFile,
+  UploadedFiles,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { FileInterceptor } from '@nestjs/platform-express';
+import {
+  FileFieldsInterceptor,
+  FileInterceptor,
+} from '@nestjs/platform-express';
 import {
   ApiConsumes,
   ApiCreatedResponse,
@@ -62,7 +65,13 @@ export class ItemsController {
 
   @Post()
   @UseGuards(AuthGuard)
-  @UseInterceptors(FileInterceptor('image'))
+  @UseInterceptors(
+    FileFieldsInterceptor([
+      { name: 'image_1', maxCount: 1 },
+      { name: 'image_2', maxCount: 1 },
+      { name: 'image_3', maxCount: 1 },
+    ]),
+  )
   //----Swagger configs
   @ApiConsumes('multipart/form-data')
   @ApiOperation({
@@ -76,17 +85,30 @@ export class ItemsController {
   //-----
   createItem(
     @Body() data: CreateItemBody,
-    @UploadedFile() file: Express.Multer.File | undefined,
+    @UploadedFiles()
+    images: {
+      image_1: Express.Multer.File;
+      image_2?: Express.Multer.File;
+      image_3?: Express.Multer.File;
+    },
   ) {
     return this.itemsService.create({
       ...data,
-      image: file ? file.buffer.toString('base64') : '',
+      image_1: images.image_1[0],
+      image_2: images.image_2?.[0],
+      image_3: images.image_3?.[0],
     });
   }
 
   @Put()
   @UseGuards(AuthGuard)
-  @UseInterceptors(FileInterceptor('image'))
+  @UseInterceptors(
+    FileFieldsInterceptor([
+      { name: 'image_1', maxCount: 1 },
+      { name: 'image_2', maxCount: 1 },
+      { name: 'image_3', maxCount: 1 },
+    ]),
+  )
   //----Swagger configs
   @ApiConsumes('multipart/form-data')
   @ApiOperation({
@@ -100,13 +122,19 @@ export class ItemsController {
   //-----
   updateItem(
     @Body() data: UpdateItemBody,
-    @UploadedFile() file: Express.Multer.File | undefined,
+    @UploadedFiles()
+    images: {
+      image_1: Express.Multer.File;
+      image_2?: Express.Multer.File;
+      image_3?: Express.Multer.File;
+    },
   ) {
-    const updateData = { ...data };
-
-    if (file) updateData.image = file.buffer.toString('base64');
-
-    return this.itemsService.update(updateData);
+    return this.itemsService.update({
+      ...data,
+      image_1: images.image_1[0],
+      image_2: images.image_2?.[0],
+      image_3: images.image_3?.[0],
+    });
   }
 
   @Delete(':itemId')

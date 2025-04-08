@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import { ApiProperty } from '@nestjs/swagger';
 import {
+  IsEmpty,
   IsNotEmpty,
   IsOptional,
   IsString,
@@ -31,6 +32,23 @@ export default class CreateItemBody {
   @ApiProperty({
     type: 'string',
   })
+  @IsEmpty({ message: 'You must provide at least one image' })
+  image_1: Express.Multer.File;
+
+  @ApiProperty({
+    type: 'string',
+  })
   @IsOptional()
-  image?: string | null | undefined;
+  image_2?: Express.Multer.File;
+
+  @ApiProperty({
+    type: 'string',
+  })
+  @IsOptional()
+  image_3?: Express.Multer.File;
+
+  @ApiProperty({
+    type: 'number',
+  })
+  main_image: number;
 }
