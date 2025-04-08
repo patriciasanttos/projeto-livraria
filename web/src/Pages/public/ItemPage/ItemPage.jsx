@@ -42,9 +42,6 @@ function ItemPage() {
           <Category
             data={_.shuffle(productsOfSameCategory)}
             name={"Produtos similares"}
-            // name={
-            //   category1.name.charAt(0).toUpperCase() + category1.name.slice(1)
-            // }
             categoryColor="blue"
           />
         </div>
@@ -52,9 +49,6 @@ function ItemPage() {
           <Category
             data={_.shuffle(productsOfDifferentCategory)}
             name={"Compre junto"}
-            // name={
-            //   category2.name.charAt(0).toUpperCase() + category2.name.slice(1)
-            // }
             categoryColor="blue"
           />
         </div>
