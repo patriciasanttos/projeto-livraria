@@ -57,7 +57,7 @@ const HeaderDesktop = () => {
               <img src={instagramGreenIcon} alt="Instagram" />
             </a>
 
-            <a target="_blank" href="">
+            <a target="_blank" href="https://maps.app.goo.gl/p6ybQXXrXudsQcsA7">
               <img src={locationGreenIcon} alt="Localização" />
             </a>
           </div>
