@@ -1,5 +1,7 @@
 import "./ItemDescription.scss";
 import { useState } from "react";
+import { toast } from "react-toastify";
+
 
 import ProductImage from "../../assets/Images/product-img.svg";
 import ModalInfoBuy from "../ModalInfoBuy/ModalInfoBuy";
@@ -11,6 +13,14 @@ function ItemDescription({product}) {
     const cartCookie = JSON.parse(localStorage.getItem("cart")) || {};
     cartCookie[product.id] = (cartCookie[product.id] || 0) + 1;
     localStorage.setItem("cart", JSON.stringify(cartCookie));
+
+    return toast.success('Item adicionado ao seu carrinho', {
+          autoClose: 3000,
+          closeOnClick: true,
+          pauseOnHover: false,
+          pauseOnFocusLoss: false,
+          draggable: true
+        })
   }
 
   const onClickOpenModal = () => {
