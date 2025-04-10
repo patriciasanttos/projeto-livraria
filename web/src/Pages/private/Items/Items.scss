@@ -1,0 +1,23 @@
+.filter-container {
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 1rem;
+}
+
+.filter-inputs {
+    display: flex;
+    justify-content: space-around;
+}
+
+.input-price {
+    display: flex;
+    width: 28%;
+
+    .price {
+        width: 65%;
+    }
+
+    .until-price {
+        margin-top: 1.2rem;
+    }
+}
