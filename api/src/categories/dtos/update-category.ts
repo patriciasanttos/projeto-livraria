@@ -24,5 +24,5 @@ export default class UpdateCategoryBody {
     type: 'string',
   })
   @IsOptional()
-  image?: string | null | undefined;
+  image?: Express.Multer.File;
 }

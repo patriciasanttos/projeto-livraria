@@ -8,9 +8,6 @@ export class SupabaseService {
     process.env.SUPABASE_URL as string,
     process.env.SUPABASE_SECRET as string,
   );
-
-  private readonly bucket = 'products';
-
   private async ensureBucketExists(bucketName: string) {
     const { data, error } = await this.supabase.storage.getBucket(bucketName);
 
@@ -25,8 +22,13 @@ export class SupabaseService {
     }
   }
 
-  async uploadImage(buffer: Buffer, path: string, mimetype: string) {
-    await this.ensureBucketExists(this.bucket);
+  async uploadImage(
+    bucket: string,
+    buffer: Buffer,
+    path: string,
+    mimetype: string,
+  ) {
+    await this.ensureBucketExists(bucket);
 
     const compressed = await sharp(buffer)
       .resize(800)
@@ -34,7 +36,7 @@ export class SupabaseService {
       .toBuffer();
 
     const { error } = await this.supabase.storage
-      .from(this.bucket)
+      .from(bucket)
       .upload(path, compressed, {
         contentType: mimetype,
         upsert: true,
@@ -46,16 +48,14 @@ export class SupabaseService {
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
 
-    const publicUrl = this.supabase.storage.from(this.bucket).getPublicUrl(path)
+    const publicUrl = this.supabase.storage.from(bucket).getPublicUrl(path)
       .data.publicUrl;
 
     return publicUrl;
   }
 
-  async deleteImages(paths: string[]) {
-    const { error } = await this.supabase.storage
-      .from(this.bucket)
-      .remove(paths);
+  async deleteImages(bucket: string, paths: Array<string>) {
+    const { error } = await this.supabase.storage.from(bucket).remove(paths);
 
     if (error)
       throw new HttpException(

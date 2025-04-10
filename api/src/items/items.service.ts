@@ -85,8 +85,9 @@ export class ItemsService {
       for (let image of images) {
         if (!image) continue;
 
-        const path = `items/${item.id}/image_${images.indexOf(image) + 1}`;
+        const path = `${item.id}/image_${images.indexOf(image) + 1}`;
         const url = await this.supabase.uploadImage(
+          'products',
           image.buffer,
           path,
           image.mimetype,
@@ -194,6 +195,7 @@ export class ItemsService {
         );
 
         await this.supabase.uploadImage(
+          'products',
           newImage.buffer,
           oldImagePath!,
           newImage.mimetype,
@@ -204,9 +206,10 @@ export class ItemsService {
           data: { updated_at: new Date() },
         });
       } else {
-        const newPath = `items/${itemId}/image_${i + 1}`;
+        const newPath = `${itemId}/image_${i + 1}`;
 
         const publicUrl = await this.supabase.uploadImage(
+          'products',
           newImage.buffer,
           newPath,
           newImage.mimetype,
@@ -260,7 +263,7 @@ export class ItemsService {
       return path;
     });
 
-    await this.supabase.deleteImages(imagePaths);
+    await this.supabase.deleteImages('products', imagePaths);
 
     return await this.prisma.$transaction(async (tx) => {
       await tx.item.update({

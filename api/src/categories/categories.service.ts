@@ -3,12 +3,14 @@ import { PrismaService } from 'src/database/prisma.service';
 import CreateCategoryBody from './dtos/create-category';
 import UpdateCategoryBody from './dtos/update-category';
 import { ItemsService } from 'src/items/items.service';
+import { SupabaseService } from 'src/supabase/supabase.service';
 
 @Injectable()
 export class CategoriesService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly itemsService: ItemsService,
+    private readonly supabase: SupabaseService,
   ) {}
 
   async getAll() {
@@ -34,26 +36,51 @@ export class CategoriesService {
   }
 
   async create(data: CreateCategoryBody) {
-    return await this.prisma.category.create({
+    const category = await this.prisma.category.create({
       data: {
         name: data.name,
         description: data.description,
-        image: data.image,
       },
+    });
+
+    if (!data.image) return category;
+
+    const path = `${category.id}/image`;
+    const imageUrl = await this.supabase.uploadImage(
+      'categories',
+      data.image.buffer,
+      path,
+      data.image.mimetype,
+    );
+
+    return await this.prisma.category.update({
+      where: { id: category.id },
+      data: { image: imageUrl },
     });
   }
 
   async update(data: UpdateCategoryBody) {
-    await this.getById(Number(data.id));
+    const category = await this.getById(Number(data.id));
+
+    let imageUrl = '';
+    if (data.image) {
+      const path = `${category.id}/image`;
+      imageUrl = await this.supabase.uploadImage(
+        'categories',
+        data.image.buffer,
+        path,
+        data.image.mimetype,
+      );
+    }
 
     return await this.prisma.category.update({
       where: {
-        id: Number(data.id),
+        id: category.id,
       },
       data: {
         name: data.name,
         description: data.description,
-        image: data.image,
+        image: imageUrl,
       },
     });
   }
@@ -62,7 +89,7 @@ export class CategoriesService {
     await this.getById(categoryId);
 
     return await this.prisma.$transaction(async (tx) => {
-      await tx.category.update({
+      const category = await tx.category.update({
         where: { id: categoryId },
         data: {
           items: {
@@ -70,6 +97,15 @@ export class CategoriesService {
           },
         },
       });
+
+      if (category.image) {
+        const url = new URL(category.image);
+        const path = decodeURIComponent(
+          url.pathname.replace('/storage/v1/object/public/categories/', ''),
+        );
+
+        await this.supabase.deleteImages('categories', [path]);
+      }
 
       await tx.category.delete({ where: { id: categoryId } });
 

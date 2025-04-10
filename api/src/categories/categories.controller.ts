@@ -61,12 +61,9 @@ export class CategoriesController {
   //-----
   createCategory(
     @Body() data: CreateCategoryBody,
-    @UploadedFile() file: Express.Multer.File | undefined,
+    @UploadedFile() image: Express.Multer.File,
   ) {
-    return this.categoriesService.create({
-      ...data,
-      image: file ? file.buffer.toString('base64') : '',
-    });
+    return this.categoriesService.create({ ...data, image });
   }
 
   @Put()
@@ -85,13 +82,9 @@ export class CategoriesController {
   //-----
   updateCategory(
     @Body() data: UpdateCategoryBody,
-    @UploadedFile() file: Express.Multer.File | undefined,
+    @UploadedFile() image: Express.Multer.File,
   ) {
-    const updateData = { ...data };
-
-    if (file) updateData.image = file.buffer.toString('base64');
-
-    return this.categoriesService.update(updateData);
+    return this.categoriesService.update({ ...data, image });
   }
 
   @Delete(':categoryId')

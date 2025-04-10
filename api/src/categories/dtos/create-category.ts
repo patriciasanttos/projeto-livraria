@@ -19,5 +19,5 @@ export default class CreateCategoryBody {
     type: 'string',
   })
   @IsOptional()
-  image?: string | null | undefined;
+  image?: Express.Multer.File;
 }

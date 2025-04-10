@@ -25,19 +25,8 @@ model Category {
   items                Item[]                 @relation("CategoryItems")
   SaleCategoryReport   SaleCategoryReport[]
   SearchCategoryReport SearchCategoryReport[]
-  images               CategoryImage[]
   created_at           DateTime               @default(now())
   updated_at           DateTime               @updatedAt
-}
-
-model CategoryImage {
-  id         Int      @id @default(autoincrement())
-  url        String
-  isMain     Boolean  @default(false)
-  categoryId Int
-  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
 }
 
 model Item {
