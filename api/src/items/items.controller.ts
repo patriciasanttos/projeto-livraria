@@ -131,7 +131,7 @@ export class ItemsController {
   ) {
     return this.itemsService.update({
       ...data,
-      image_1: images.image_1[0],
+      image_1: images.image_1?.[0],
       image_2: images.image_2?.[0],
       image_3: images.image_3?.[0],
     });
