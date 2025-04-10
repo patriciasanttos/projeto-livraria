@@ -1,8 +1,24 @@
 .control-panel {
-    padding: 1em 4em;
+    padding: 2% 7%;
+   display: flex;
+   flex-direction: column;
+   justify-content: space-evenly;
 
     h2 {
+        font-size: 4.5em;
         font-weight: 600;
+
+        @media(max-width:2785px) {
+            font-size: 2.5em;
+        }
+        
+        @media(max-width:2000px) {
+            font-size: 1.7em;
+        }
+
+        @media(max-width:1350px) {
+            font-size: 1em;
+        }
     }
 
     ul {
@@ -13,13 +29,39 @@
             margin-bottom: 2em;
 
             h3 {
+                font-size: 4.5em;
                 color: var(--button-lime-green);
                 margin: 0;
+
+              
+                @media(max-width:2785px) {
+                    font-size: 2.5em;
+                }
+                
+                @media(max-width:2000px) {
+                    font-size: 1.7em;
+                }
+                @media(max-width:1350px) {
+                    font-size: 1em;
+                }
             }
-            
+
             p {
+                font-size: 4.5em;
                 margin: 0;
                 font-weight: 500;
+               
+                @media(max-width:2785px) {
+                    font-size: 2.5em;
+                }
+               
+                @media(max-width:2000px) {
+                    font-size: 1.7em;
+                }
+                @media(max-width:1350px) {
+                    font-size: 1em;
+                }
+               
             }
         }
     }
