@@ -26,7 +26,6 @@ function Products() {
   });
   const [formData, setFormData] = useState({});
 
-  // Memoize categories to avoid recalculating on every render
   const categories = useMemo(() => {
     return categoriesData
       ? categoriesData.map((category) => ({
@@ -36,7 +35,6 @@ function Products() {
       : [];
   }, [categoriesData]);
 
-  // Memoize filtered products to avoid recalculating on every render
   const filteredProducts = useMemo(() => {
     let filteredProducts = categoriesData
       ? categoriesData.reduce(
@@ -86,7 +84,6 @@ function Products() {
     return filteredProducts;
   }, [categoriesData, filters]);
 
-  // Memoize event handlers to avoid re-creating them on every render
   const handleFilterChange = useCallback((evt) => {
     const { name, value } = evt.target;
 
@@ -144,7 +141,6 @@ function Products() {
 
   return (
     <section className="item-page-container">
-      {/* Filters */}
       <section className="filter-container">
         <div className="filter-inputs">
           <SearchInputAdmin
@@ -206,7 +202,6 @@ function Products() {
         />
       </section>
 
-      {/* Table list */}
       <AdminList
         tableLayout={[
           {
@@ -234,6 +229,7 @@ function Products() {
           title={`Adicionar novo produto`}
           onClose={() => setIsCreateModalOpen(false)}
           onConfirm={onConfirmSaveProduct}
+          buttonConfirmText={"Adicionar"}
         >
           <div className="modal-row">
             <div className="modal-column">
@@ -241,6 +237,7 @@ function Products() {
                 className="modal-field"
                 placeholder="Nome"
                 name="name"
+                value={formData.name}
                 onChange={handleFormChange}
               />
 
@@ -248,12 +245,14 @@ function Products() {
                 className="modal-field"
                 placeholder="Preço"
                 name="price"
+                value={formData.price}
                 onChange={handleFormChange}
               />
 
               <DropdownAdmin
                 className="modal-select"
                 name="category"
+                value={formData.category}
                 onChange={handleFormChange}
               >
                 {categories.map((category) => (
@@ -262,6 +261,20 @@ function Products() {
                   </option>
                 ))}
               </DropdownAdmin>
+              <textarea
+                name="description"
+                value={formData.description}
+                onChange={handleFormChange}
+                placeholder="Descrição do produto"
+                className="textarea-product"
+              ></textarea>
+              <p className="input-status-title">Status:</p>
+              <div className="input-status">
+                <p>Disponível</p>
+                <input type="radio" />
+                <p>Indisponível</p>
+                <input type="radio" />
+              </div>
             </div>
 
             <div className="modal-column">
@@ -270,7 +283,11 @@ function Products() {
                   src={imagePreview}
                   alt="Preview"
                   className="image-preview"
-                  style={{ marginTop: "10px", maxWidth: "100%", height: "auto" }}
+                  style={{
+                    marginTop: "10px",
+                    maxWidth: "100%",
+                    height: "auto",
+                  }}
                 />
               )}
               <button
@@ -278,7 +295,7 @@ function Products() {
                 className="upload-button"
                 onClick={() => document.getElementById("image-upload").click()}
               >
-                Escolher Imagem
+                Escolher Imagem (máx. 03)
               </button>
               <input
                 type="file"
