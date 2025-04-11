@@ -36,7 +36,7 @@ export default function MainRoutes() {
         <Route element={<PrivateRoutesTemplate />}>
           <Route path="admin/login" element={<privatePages.Login />} />
           <Route path="admin/control_panel" element={<privatePages.ControlPanel />} />
-          <Route path="admin/items" element={<privatePages.Items />} />
+          <Route path="admin/products" element={<privatePages.Products />} />
           <Route path="admin/categories" element={<privatePages.AdminCategoriesPage />} />
         </Route>
       </Routes>

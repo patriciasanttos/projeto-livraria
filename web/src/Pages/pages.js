@@ -6,7 +6,7 @@ import AboutUs from "./public/AboutUs/AboutUs";
 
 import Login from "./private/Login/Login";
 import ControlPanel from "./private/ControlPanel/ControlPanel";
-import Items from "./private/Items/Items";
+import Products from "./private/Products/Products";
 import AdminCategoriesPage from "./private/Categories/Categories";
 
 export const publicPages = {
@@ -20,6 +20,6 @@ export const publicPages = {
 export const privatePages = {
   Login,
   ControlPanel,
-  Items,
+  Products,
   AdminCategoriesPage,
 };

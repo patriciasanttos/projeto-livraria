@@ -1,14 +1,13 @@
 import React, { useState } from "react";
+
 import "./AdminList.scss";
 import ModalAdmin from "../ModalAdmin/ModalAdmin";
+import EditIcon from "../../assets/icons/editIcon.svg";
+import DeleteIcon from "../../assets/icons/deleteIcon.svg";
 
-function AdminList({
-  tableLayout,
-  listData,
-  onEdit,
-  onDelete
-}) {
-  const [isConfirmDeleteModalOpen, setIsConfirmDeleteModalOpen] = useState(false);
+function AdminList({ tableLayout, listData, onEdit, onDelete }) {
+  const [isConfirmDeleteModalOpen, setIsConfirmDeleteModalOpen] =
+    useState(false);
   const [confirmDeltetePropName, setConfirmDeltetePropName] = useState(null);
 
   const handleConfirmDelete = (name) => {
@@ -16,9 +15,18 @@ function AdminList({
     setIsConfirmDeleteModalOpen(true);
   };
 
+  const getCellValue = (row, key) => {
+    if (row[key] === undefined || row[key] === "") {
+      return "Indisponível";
+    } else if (key === "available") {
+      return row.available ? "Disponível" : "Sem estoque";
+    } else {
+      return row[key];
+    }
+  };
+
   return (
     <div className="admin-list">
-
       {isConfirmDeleteModalOpen && (
         <ModalAdmin
           title={`Deseja mesmo deletar "${confirmDeltetePropName}"?`}
@@ -34,8 +42,7 @@ function AdminList({
             {tableLayout.map((title) => (
               <th key={title.key}>{title.label}</th>
             ))}
-            <th>Editar</th>
-            <th>Deletar</th>
+            <th className="actions">Ações</th>
           </tr>
         </thead>
 
@@ -43,32 +50,24 @@ function AdminList({
           {listData.map((row, index) => (
             <tr key={row.id}>
               {tableLayout.map(({ key }) => (
-                <td key={key}>
-                  {row[key] === undefined || row[key] === ""
-                    ? "Indisponível"
-                    : key === "status"
-                    ? row.status
-                      ? "Disponível"
-                      : "Sem estoque"
-                    : row[key]}
-                </td>
+                <td key={key}>{getCellValue(row, key)}</td>
               ))}
 
-              <td>
-                <button
-                  className="btn-editar"
+              <td className="actions">
+                <img
+                  src={EditIcon}
+                  className="icon-editar"
                   onClick={() => onEdit(row.name, index)}
-                >
-                  Editar
-                </button>
-              </td>
-              <td>
-                <button
-                  className="btn-deletar"
-                  onClick={() => handleConfirmDelete(row.name)}
-                >
-                  Deletar
-                </button>
+                  data-tooltip-id="tooltip"
+                  data-tooltip-content="Editar"
+                />
+                <img
+                  src={DeleteIcon}
+                  className="icon-deletar"
+                  onClick={() => handleConfirmDelete(row.name, index)}
+                  data-tooltip-id="tooltip"
+                  data-tooltip-content="Excluir"
+                />
               </td>
             </tr>
           ))}
