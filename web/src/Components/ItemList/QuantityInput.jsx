@@ -12,7 +12,6 @@ const QuantityInput = ({
 
   useEffect(() => {
     if (lastUpdatedIndex === index) {
-      console.log(">>> index", index);
       inputRef.current.focus();
     }
   }, [lastUpdatedIndex, index, inputRef]);

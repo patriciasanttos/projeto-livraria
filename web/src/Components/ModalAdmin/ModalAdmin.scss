@@ -15,15 +15,14 @@
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;
-    width: 90%;
-    max-width: 400px;
+    max-width: 65vw;
     text-align: center;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .modal-admin-header {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
     margin-bottom: 2rem;
     img {
         width: 2rem;
