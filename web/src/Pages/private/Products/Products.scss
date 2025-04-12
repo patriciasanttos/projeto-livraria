@@ -3,24 +3,40 @@
 
     justify-content: space-between;
     padding: 1dvh 3dvw;
-    margin-top: 1rem;
+    margin: 1rem 3rem 0 0.5rem;
 }
 
 .filter-inputs {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
 }
 
 .input-price {
     display: flex;
-    width: 28%;
+    width: 15%;
 
     .price {
-        width: 65%;
+        width: 70%;
     }
 
     .until-price {
         margin-top: 1.2rem;
+    }
+}
+
+.results-found {
+    text-align: center;
+        margin: 0.2rem 0 0.7rem 1.5rem;
+    
+    h3 {
+        font-weight: 600;
+        font-size: 12pt;
+        margin: 0;
+    }
+
+    p {
+        text-align: center;
+        margin-top: 0.6rem;
     }
 }
 
@@ -57,9 +73,6 @@
         }
     }
 
-
-
-
     .image-preview-row {
         display: flex;
         flex-direction: row;
@@ -86,8 +99,6 @@
             }
         }
     }
-
-
 
     .upload-button {
         background-color: var(--button-blue);
@@ -123,7 +134,6 @@
         }
 
         .status-title {
-            
             position: relative;
             bottom: 2px;
         }
@@ -137,6 +147,7 @@
             input {
                 position: relative;
                 bottom: 4px;
+                accent-color: var(--button-lime-green);
             }
         }
     }

@@ -105,7 +105,7 @@ function Products() {
     }));
   }, []);
 
-  const onClickUpdate = (row, index) => {
+  const onClickUpdate = (row) => {
     setFormData({
       ...row,
     });
@@ -175,6 +175,10 @@ function Products() {
               Sem estoque
             </option>
           </DropdownAdmin>
+          <div className="results-found">
+            <h3>Itens encontrados</h3>
+            <p>{filteredProducts.length}</p>
+          </div>
         </div>
         <AdminAddButton title="Adicionar" onClick={onClickCreate} />
       </section>
