@@ -90,6 +90,10 @@
         text-align: left;
         padding: 0.4em;
       }
+
+      th.actions {
+        text-align: center;
+      }
     }
 
     tbody {
@@ -114,8 +118,25 @@
           text-overflow: ellipsis;
         }
 
+        td.actions {
+          text-align: center;
+
+          img {
+            cursor: pointer;
+          }
+        }
+
+        .icon-editar, .icon-deletar {
+          padding: 10px 0px;
+        }
+
+        .icon-deletar {
+          width: 40px;
+          margin-left: 5px;
+        }
+
         .btn-editar {
-          width: 100%;
+          width: 40%;
           margin: 10px 0;
           padding: 10px;
           background-color: var(--button-lime-green);
@@ -130,7 +151,7 @@
         }
         
         .btn-deletar {
-          width: 100%;
+          width: 40%;
           margin: 10px 0;
           padding: 10px;
           background-color: #e74c3c;

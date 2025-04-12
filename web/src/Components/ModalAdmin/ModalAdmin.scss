@@ -1,0 +1,91 @@
+.modal-admin {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-admin-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 65vw;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.modal-admin-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    img {
+        width: 2rem;
+        cursor: pointer;
+    }
+}
+
+.modal-admin-content h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    font-weight: 500;
+    color: var(--title-lime-green);
+}
+
+.modal-admin-content p {
+    font-size: 1rem;
+    margin-bottom: 20px;
+    color: var(--text-primary-color);
+}
+
+.modal-admin-buttons {
+    display: flex;
+    justify-content: space-evenly;
+    gap: 5px;
+}
+
+.modal-admin-buttons .cancel {
+    background-color: #707070;
+    color: white;
+    font-weight: 600;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.modal-admin-buttons .cancel:hover {
+    background-color: #525151;
+}       
+
+.modal-admin-buttons .delete {
+    background-color: var(--button-blue);
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.modal-admin-buttons .delete:hover {
+    background-color: #097cb5;
+}
+
+@media screen and (max-width: 490px) {
+    .modal-admin-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .modal-admin-content {
+        width: 70%;
+    }
+}

@@ -1,0 +1,22 @@
+.dropdown-admin-container {
+    display: flex;
+    flex-direction: column;
+
+    h3 {
+        margin: 0 0 0.5rem 0;
+        font-weight: 500;
+        font-size: 12pt;
+    }
+
+    select {
+        border: 1px solid #6BA57D;
+        border-radius: 5px;
+
+        height: 1.7rem;
+        padding-left: 0.5rem;
+
+        &:focus {
+            outline: none;
+        }
+    }
+}
