@@ -14,6 +14,7 @@ function ModalAdmin({
     <section className="modal-admin">
       <div className="modal-admin-content">
         <div className="modal-admin-header">
+          <div></div>
           <h2>{title}</h2>
           <img src={CloseBtnAdmin} alt="Fechar" onClick={onClose} />
         </div>

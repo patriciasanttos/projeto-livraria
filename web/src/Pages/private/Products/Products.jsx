@@ -2,7 +2,8 @@ import React, { useCallback, useState, useMemo } from "react";
 import _ from "lodash";
 
 import "./Products.scss";
-import ModalAdmin from "../../../Components/ModalAdmin/ModalAdmin";
+import { ProductsModal } from "./ProductsModal";
+
 import AdminList from "../../../Components/AdminList/AdminList";
 import SearchInputAdmin from "../../../Components/SearchInputAdmin/SearchInputAdmin";
 import DropdownAdmin from "../../../Components/DropdownAdmin/DropdownAdmin";
@@ -13,13 +14,14 @@ import { useAllCagegoriesData } from "../../../hooks/useCategoriesData";
 const currency = new Intl.NumberFormat("pt-BR", {
   style: "currency",
   currency: "BRL",
-})
+});
 
 function Products() {
   const { data: categoriesData, isLoading, error } = useAllCagegoriesData();
 
-  const [imagePreview, setImagePreview] = useState(null);
-  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isCreateItem, setIsCreateItem] = useState(false);
+
   const [filters, setFilters] = useState({
     available: "",
     category: "BROCHURA",
@@ -50,7 +52,7 @@ function Products() {
         )
       : [];
 
-    if (filters.category !== '') {
+    if (filters.category !== "") {
       filteredProducts = filteredProducts.filter(
         (product) => product.category === filters.category
       );
@@ -103,41 +105,19 @@ function Products() {
     }));
   }, []);
 
-  const handleFormChange = useCallback((evt) => {
-    const { name, value, files } = evt.target;
+  const onClickUpdate = (row, index) => {
+    setFormData({
+      ...row,
+    });
+    setIsModalOpen(true);
+    setIsCreateItem(false);
+  };
 
-    const getValue = (val) => {
-      if (val === "true") {
-        return true;
-      } else if (val === "false") {
-        return false;
-      } else {
-        return val;
-      }
-    };
-
-    if (files && files[0]) {
-      const file = files[0];
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result);
-      };
-      reader.readAsDataURL(file);
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        [name]: file,
-      }));
-    } else {
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        [name]: getValue(value),
-      }));
-    }
-  }, []);
-
-  const onConfirmSaveProduct = useCallback(() => {
-    console.log(formData);
-  }, [formData]);
+  const onClickCreate = () => {
+    setFormData({})
+    setIsModalOpen(true);
+    setIsCreateItem(true);
+  };
 
   return (
     <section className="item-page-container">
@@ -196,10 +176,7 @@ function Products() {
             </option>
           </DropdownAdmin>
         </div>
-        <AdminAddButton
-          title="Adicionar"
-          onClick={() => setIsCreateModalOpen(true)}
-        />
+        <AdminAddButton title="Adicionar" onClick={onClickCreate} />
       </section>
 
       <AdminList
@@ -222,92 +199,17 @@ function Products() {
           },
         ]}
         listData={filteredProducts}
+        onEdit={onClickUpdate}
       ></AdminList>
 
-      {isCreateModalOpen && (
-        <ModalAdmin
-          title={`Adicionar novo produto`}
-          onClose={() => setIsCreateModalOpen(false)}
-          onConfirm={onConfirmSaveProduct}
-          buttonConfirmText={"Adicionar"}
-        >
-          <div className="modal-row">
-            <div className="modal-column">
-              <SearchInputAdmin
-                className="modal-field"
-                placeholder="Nome"
-                name="name"
-                value={formData.name}
-                onChange={handleFormChange}
-              />
-
-              <SearchInputAdmin
-                className="modal-field"
-                placeholder="Preço"
-                name="price"
-                value={formData.price}
-                onChange={handleFormChange}
-              />
-
-              <DropdownAdmin
-                className="modal-select"
-                name="category"
-                value={formData.category}
-                onChange={handleFormChange}
-              >
-                {categories.map((category) => (
-                  <option key={category.id} value={category.name}>
-                    {category.name}
-                  </option>
-                ))}
-              </DropdownAdmin>
-              <textarea
-                name="description"
-                value={formData.description}
-                onChange={handleFormChange}
-                placeholder="Descrição do produto"
-                className="textarea-product"
-              ></textarea>
-              <p className="input-status-title">Status:</p>
-              <div className="input-status">
-                <p>Disponível</p>
-                <input type="radio" />
-                <p>Indisponível</p>
-                <input type="radio" />
-              </div>
-            </div>
-
-            <div className="modal-column">
-              {imagePreview && (
-                <img
-                  src={imagePreview}
-                  alt="Preview"
-                  className="image-preview"
-                  style={{
-                    marginTop: "10px",
-                    maxWidth: "100%",
-                    height: "auto",
-                  }}
-                />
-              )}
-              <button
-                type="button"
-                className="upload-button"
-                onClick={() => document.getElementById("image-upload").click()}
-              >
-                Escolher Imagem (máx. 03)
-              </button>
-              <input
-                type="file"
-                id="image-upload"
-                name="image"
-                accept="image/*"
-                style={{ display: "none" }}
-                onChange={handleFormChange}
-              />
-            </div>
-          </div>
-        </ModalAdmin>
+      {isModalOpen && (
+        <ProductsModal
+          isCreateItem={isCreateItem}
+          categories={categories}
+          formData={formData}
+          setFormData={setFormData}
+          setIsModalOpen={setIsModalOpen}
+        />
       )}
     </section>
   );

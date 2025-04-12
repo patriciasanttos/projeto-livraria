@@ -57,7 +57,7 @@ function AdminList({ tableLayout, listData, onEdit, onDelete }) {
                 <img
                   src={EditIcon}
                   className="icon-editar"
-                  onClick={() => onEdit(row.name, index)}
+                  onClick={() => onEdit(row, index)}
                   data-tooltip-id="tooltip"
                   data-tooltip-content="Editar"
                 />
