@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState, useCallback } from "react";
 
 import "./Categories.scss";
 
@@ -8,24 +8,78 @@ import DropdownAdmin from "../../../Components/DropdownAdmin/DropdownAdmin";
 import AdminAddButton from "../../../Components/AdminAddButton/AdminAddButton";
 
 import { useAllCagegoriesData } from "../../../hooks/useCategoriesData";
+import { CategoriesModal } from "./CategoriesModal";
 
 function Categories() {
-    const { data: categoriesData} = useAllCagegoriesData();
-      // const [isModalOpen, setIsModalOpen] = useState(false);
-      // const [isCreateItem, setIsCreateItem] = useState(false);
-    
+  const { data: categoriesData } = useAllCagegoriesData();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isCreateItem, setIsCreateItem] = useState(false);
 
-  const categories = useMemo(() => {
-    return categoriesData
-      ? categoriesData.map((category) => ({
+  const [filters, setFilters] = useState({});
+  const [formData, setFormData] = useState({});
+
+  const filteredCategories = useMemo(() => {
+    let categories = categoriesData
+      ? categoriesData?.map((category) => ({
           ...category,
-          itemsQuantity: category.items.length
+          itemsQuantity: category.items.length,
         }))
       : [];
-  }, [categoriesData]);
 
+    if (filters.name) {
+      categories = categories.filter(
+        (category) =>
+          category.name.toUpperCase().indexOf(filters.name.toUpperCase()) !== -1
+      );
+    }
 
+    if (filters.quantityFrom) {
+      categories = categories.filter(
+        (category) => Number(category.itemsQuantity) >= filters.quantityFrom
+      );
+    }
 
+    if (filters.quantityTo) {
+      categories = categories.filter(
+        (category) => Number(category.itemsQuantity) <= filters.quantityTo
+      );
+    }
+
+    return categories;
+  }, [categoriesData, filters]);
+
+  const handleFilterChange = useCallback((evt) => {
+    const { name, value } = evt.target;
+
+    const getValue = (val) => {
+      if (val === "true") {
+        return true;
+      } else if (val === "false") {
+        return false;
+      } else {
+        return val;
+      }
+    };
+
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      [name]: getValue(value),
+    }));
+  }, []);
+
+  const onClickUpdate = (row) => {
+    setFormData({
+      ...row,
+    });
+    setIsModalOpen(true);
+    setIsCreateItem(false);
+  };
+
+  const onClickCreate = () => {
+    setFormData({});
+    setIsModalOpen(true);
+    setIsCreateItem(true);
+  };
 
   return (
     <section className="categories-page-container">
@@ -34,15 +88,25 @@ function Categories() {
           <SearchInputAdmin
             title="Categoria"
             placeholder="Papelaria"
-            name="categories"
-            // onChange={handleFilterChange}
+            name="name"
+            onChange={handleFilterChange}
           />
-          <SearchInputAdmin
-            title="Quantidade de itens"
-            placeholder="20"
-            name="quantity"
-            className="input-quantity"
-          />
+          <div className="input-quantity">
+            <SearchInputAdmin
+              title="Qte Items"
+              placeholder="De"
+              className="quantity"
+              name="quantityFrom"
+              onChange={handleFilterChange}
+            />
+            <SearchInputAdmin
+              placeholder="Até"
+              className="until-quantity quantity"
+              name="quantityTo"
+              onChange={handleFilterChange}
+            />
+          </div>
+
           <DropdownAdmin title="Status" name="available">
             <option name="available" value="">
               Tudo
@@ -55,7 +119,7 @@ function Categories() {
             </option>
           </DropdownAdmin>
         </section>
-        <AdminAddButton title="Adicionar" />
+        <AdminAddButton title="Adicionar" onClick={onClickCreate} />
       </section>
       <AdminList
         tableLayout={[
@@ -72,9 +136,18 @@ function Categories() {
             label: "Status",
           },
         ]}
-        listData={categories}
-        // onEdit={onClickUpdate}
+        listData={filteredCategories}
+        onEdit={onClickUpdate}
       ></AdminList>
+
+      {isModalOpen && (
+        <CategoriesModal
+          isCreateItem={isCreateItem}
+          formData={formData}
+          setFormData={setFormData}
+          setIsModalOpen={setIsModalOpen}
+        />
+      )}
     </section>
   );
 }
