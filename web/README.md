@@ -4,7 +4,6 @@
 
 - [Descrição do Projeto](#descrição-do-projeto)
 - [Tecnologias Utilizadas](#tecnologias-utilizadas)
-- [Estrutura do Projeto](#estrutura-do-projeto)
 - [Funcionalidades](#funcionalidades)
 - [Primeiros passos](#primeiros-passos)
 
