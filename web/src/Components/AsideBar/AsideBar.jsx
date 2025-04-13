@@ -22,7 +22,7 @@ function AsideBar() {
 
             <ul className='admin-asidebar-buttons'>
                 <li>
-                    <Link to="/admin/items">
+                    <Link to="/admin/products">
                         <img src={products} alt="Produtos" />
                         <p>Produtos</p>
                     </Link>
