@@ -6,9 +6,7 @@
 - [Tecnologias Utilizadas](#tecnologias-utilizadas)
 - [Estrutura do Projeto](#estrutura-do-projeto)
 - [Funcionalidades](#funcionalidades)
-- [Instalação e Execução](#instalação-e-execução)
-- [Conclusão](#conclusão)
-- [Notas](#notas)
+- [Primeiros passos](#primeiros-passos)
 
 ## Descrição do Projeto
 
