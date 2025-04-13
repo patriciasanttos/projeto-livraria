@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback } from "react";
 
 import ModalAdmin from "../../../Components/ModalAdmin/ModalAdmin";
 import SearchInputAdmin from "../../../Components/SearchInputAdmin/SearchInputAdmin";
@@ -60,19 +60,20 @@ export const CategoriesModal = ({
       title={isCreateItem ? `Adicionar nova categoria` : `Editar categoria`}
       onClose={() => setIsModalOpen(false)}
       onConfirm={onConfirmSaveProduct}
-      buttonConfirmText={"Adicionar"}
+      buttonConfirmText={
+        isCreateItem ? `Adicionar` : `Salvar`
+      }
     >
       <div className="modal-row">
         <div className="modal-column">
-
           <div className="input-name">
-          <SearchInputAdmin
-            className="modal-field"
-            placeholder="Nome"
-            name="name"
-            value={formData.name}
-            onChange={handleFormChange}
-          />
+            <SearchInputAdmin
+              className="modal-field"
+              placeholder="Nome da categoria"
+              name="name"
+              value={formData.name}
+              onChange={handleFormChange}
+            />
           </div>
 
           <div className="image-preview-row">
@@ -89,9 +90,7 @@ export const CategoriesModal = ({
             disabled={formData?.image}
             type="button"
             className={
-              formData?.image
-                ? "upload-button disabled"
-                : "upload-button"
+              formData?.image ? "upload-button disabled" : "upload-button"
             }
             onClick={() => document.getElementById("image-upload").click()}
           >
@@ -108,7 +107,7 @@ export const CategoriesModal = ({
         </div>
         <div className="modal-column">
           <div className="status-container">
-            <label className="status-title">Disponivel:</label>
+            <label className="status-title">Status:</label>
 
             <div className="status-radio">
               <div className="status-input">
@@ -119,7 +118,7 @@ export const CategoriesModal = ({
                   onChange={handleFormChange}
                 />
 
-                <p>Sim</p>
+                <p>Habilitado</p>
               </div>
 
               <div className="status-input">
@@ -137,10 +136,8 @@ export const CategoriesModal = ({
                     })
                   }
                 />
-                <p>Não</p>
+                <p>Desabilitado</p>
               </div>
-
-             
             </div>
           </div>
 
@@ -158,9 +155,7 @@ export const CategoriesModal = ({
             disabled={formData?.imageBanner}
             type="button"
             className={
-              formData?.imageBanner
-                ? "upload-button disabled"
-                : "upload-button"
+              formData?.imageBanner ? "upload-button disabled" : "upload-button"
             }
             onClick={() => document.getElementById("image-upload2").click()}
           >
