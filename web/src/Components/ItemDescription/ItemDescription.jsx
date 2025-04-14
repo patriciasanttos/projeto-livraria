@@ -3,7 +3,6 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 
 
-import ProductImage from "../../assets/Images/product-img.svg";
 import ModalInfoBuy from "../ModalInfoBuy/ModalInfoBuy";
 
 function ItemDescription({product}) {
