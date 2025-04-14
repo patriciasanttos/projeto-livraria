@@ -92,7 +92,7 @@ const Category = ({
                             name={card.name}
                             description={card.description}
                             price={card?.price}
-                            image={kitCanetas}
+                            image={card.image ? card.image : kitCanetas}
                             color={categoryColor}
                             isCategory={showOnlyCategories}
                         />

@@ -69,7 +69,7 @@ function Card({ id, name, price, image, color, isCategory }) {
         isCategory && navigate(`/categories/${name.toLowerCase()}`)
       }
     >
-      <div className="card-image">
+      <div className="card-image" onClick={() => !isCategory && navigate(`/item/${id}`)}>
         <img src={image} alt={name} />
       </div>
 

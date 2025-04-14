@@ -1,0 +1,170 @@
+.admin-list {
+  margin: 1dvh 3dvw;
+  height: 70dvh;
+  overflow-y: auto;
+
+  .confirm-delete-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.7);
+
+    transition: opacity 0.3s ease;
+
+    .confirm-delete-modal-content {
+      background: #fff;
+      border-radius: 8px;
+      padding: 1em 2em;
+
+      max-width: 500px;
+      width: 90%;
+
+      text-align: center;
+
+      p {
+        margin: 0;
+        font-size: 1.2em;
+        font-weight: 500;
+      }
+
+      div {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        gap: 3em;
+        margin-top: 8%;
+
+        .confirm-delete-modal-button {
+          width: 12em;
+          height: 3em;
+
+          border: none;
+          border-radius: 5px;
+          color: white;
+
+          transition: background-color 0.3s ease;
+          cursor: pointer;
+
+          &:first-of-type {
+            background-color: var(--button-confirm);
+
+            &:hover {
+              background-color: var(--button-confirm-hover);
+            }
+          }
+
+          &:last-of-type {
+            background-color: var(--button-cancel);
+
+            &:hover {
+              background-color: var(--button-cancel-hover);
+            }
+          }
+        }
+
+      }
+    }
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+
+    thead {
+      position: sticky;
+      top: 0;
+      background-color: #fff;
+      z-index: 100;
+
+      tr th {
+        color: #2D2D33;
+        font-size: 1.3rem;
+        font-weight: 500;
+        text-align: left;
+        padding: 0.4em;
+      }
+
+      th.actions {
+        text-align: center;
+      }
+    }
+
+    tbody {
+      tr {
+        width: 10em;
+
+        &:hover {
+          background-color: #f1f1f1;
+        }
+
+        td {
+          border-bottom: 1px solid var(--button-lime-green);
+          font-size: 1.2rem;
+          font-weight: normal;
+          color: #2D2D33;
+          text-align: left;
+          padding: 0.2em 0.8em;
+
+          max-width: 10dvw;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+
+        td.actions {
+          text-align: center;
+
+          img {
+            cursor: pointer;
+          }
+        }
+
+        .icon-editar, .icon-deletar {
+          padding: 10px 0px;
+        }
+
+        .icon-deletar {
+          width: 40px;
+          margin-left: 5px;
+        }
+
+        .btn-editar {
+          width: 40%;
+          margin: 10px 0;
+          padding: 10px;
+          background-color: var(--button-lime-green);
+          color: white;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+        
+          &:hover {
+            background-color: #005f73;
+          }
+        }
+        
+        .btn-deletar {
+          width: 40%;
+          margin: 10px 0;
+          padding: 10px;
+          background-color: #e74c3c;
+          color: white;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+          
+          &:hover {
+            background-color: red;
+          }
+        }
+      }
+    }
+  }
+}

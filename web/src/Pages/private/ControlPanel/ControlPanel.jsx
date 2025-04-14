@@ -24,11 +24,6 @@ function ControlPanel() {
         </li>
 
         <li>
-          <h3>Clientes</h3>
-          <p>Relação de e-mail de clientes que se cadastraram para receberem novidades</p>
-        </li>
-
-        <li>
           <h3>Gerenciar</h3>
           <p>Adicionar e/ou excluir usuários para gerenciar a página</p>
         </li>

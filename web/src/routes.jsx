@@ -27,7 +27,7 @@ export default function MainRoutes() {
           <Route path="/" element={<publicPages.HomePage />} />
           <Route path="categories" element={<publicPages.Categories />} />
           <Route path="categories/:categoryName" element={<publicPages.Categories />} />
-          <Route path="item" element={<publicPages.ItemPage />} />
+          <Route path="item/:id" element={<publicPages.ItemPage />} />
           <Route path="cart" element={<publicPages.Cart />} />
           <Route path="aboutus" element={<publicPages.AboutUs />} />
         </Route>
@@ -37,8 +37,8 @@ export default function MainRoutes() {
 
           <Route path="login" element={<privatePages.Login />} />
           <Route path="control_panel" element={<privatePages.ControlPanel />} />
-          <Route path="items" element={<privatePages.Items />} />
-          <Route path="categories" element={<privatePages.AdminCategoriesPage />} />
+          <Route path="admin/products" element={<privatePages.Products />} />
+          <Route path="admin/categories" element={<privatePages.AdminCategoriesPage />} />
           <Route path="reports" element={<privatePages.Reports />} />
         </Route>
       </Routes>

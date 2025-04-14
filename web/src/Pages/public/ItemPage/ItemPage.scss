@@ -1,0 +1,21 @@
+.item-page-categories {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+
+    .categoris-container {
+        margin-bottom: 5rem;
+    }
+
+    a {
+        width: 45%;
+        margin: 0 auto;
+        
+        .whatsapp-contact-image {
+            width: 90%;
+            max-width: 500px;
+            height: auto;
+            margin: 8dvh 0;
+        }
+    }
+}

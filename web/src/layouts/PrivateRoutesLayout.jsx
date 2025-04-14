@@ -41,7 +41,7 @@ function PrivateRoutesLayout() {
   const pagesObj = {
     '/admin/control_panel': 'Painel de controle',
     '/admin/categories': 'Categorias',
-    '/admin/items': 'Produtos',
+    '/admin/products': 'Produtos',
     '/admin/reports': 'Relatórios'
   };
   const page = pagesObj[pathname];

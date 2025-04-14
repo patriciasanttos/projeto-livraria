@@ -6,7 +6,7 @@ import logo from '../../assets/images/logo.svg'
 import products from '../../assets/icons/products.svg'
 import categories from '../../assets/icons/categories.svg'
 import reports from '../../assets/icons/reports.svg'
-import clients from '../../assets/icons/clients.svg'
+// import clients from '../../assets/icons/clients.svg'
 import manage from '../../assets/icons/manage.svg'
 
 import './AsideBar.scss';
@@ -22,7 +22,7 @@ function AsideBar() {
 
             <ul className='admin-asidebar-buttons'>
                 <li>
-                    <Link to="/admin/items">
+                    <Link to="/admin/products">
                         <img src={products} alt="Produtos" />
                         <p>Produtos</p>
                     </Link>
@@ -42,12 +42,12 @@ function AsideBar() {
                     </Link>
                 </li>
 
-                <li>
+                {/* <li>
                     <Link to="/admin/control_panel">
                         <img src={clients} alt="Clientes" />
                         <p>Clientes</p>
                     </Link>
-                </li>
+                </li> */}
 
                 <li>
                     <Link to="/admin/control_panel">

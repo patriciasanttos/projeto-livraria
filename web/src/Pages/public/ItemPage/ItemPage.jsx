@@ -1,11 +1,69 @@
-import React from 'react';
+import React from "react";
+import { useParams } from "react-router-dom";
+import _ from "lodash";
 
-import './ItemPage.scss';
+import "./ItemPage.scss";
+import ItemDescription from "../../../Components/ItemDescription/ItemDescription";
+import Category from "../../../components/Category/Category";
+import mock from "../../../mocks/categoriesMocks.json";
+
+import whatsappContactImage from "../../../assets/Images/whatsapp-contact.svg";
+import whatsappContactImageMobile from "../../../assets/Images/whatsapp-contact-mobile.svg";
 
 function ItemPage() {
+  const { id } = useParams();
+
+  const allProducts = mock.data.reduce((acc, category) => {
+    return [
+      ...acc,
+      ...category.items.map((item) => ({
+        ...item,
+        categoryId: category.id,
+        categoryName: category.name,
+      })),
+    ]; 
+  }, []);
+
+  const product = allProducts.find((product) => product.id == id);
+
+  const productsOfSameCategory = allProducts.filter(
+    (item) => item.id !== product.id && item.categoryId === product.categoryId
+  );
+
+  const productsOfDifferentCategory = allProducts.filter(
+    (item) => item.id !== product.id && item.categoryId !== product.categoryId 
+  )
+  
   return (
     <div>
-      <h1>Item Page</h1>
+      <ItemDescription product={product} />
+      <section className="item-page-categories">
+        <div className="categoris-container">
+          <Category
+            data={_.shuffle(productsOfSameCategory)}
+            name={"Produtos similares"}
+            categoryColor="blue"
+          />
+        </div>
+        <div className="categoris-container">
+          <Category
+            data={_.shuffle(productsOfDifferentCategory)}
+            name={"Compre junto"}
+            categoryColor="blue"
+          />
+        </div>
+        <a target="_blank" href="https://wa.me/5512982294420">
+          <img
+            className="whatsapp-contact-image"
+            src={
+              window.innerWidth >= 768
+                ? whatsappContactImage
+                : whatsappContactImageMobile
+            }
+            alt="Whatsapp"
+          />
+        </a>
+      </section>
     </div>
   );
 }
