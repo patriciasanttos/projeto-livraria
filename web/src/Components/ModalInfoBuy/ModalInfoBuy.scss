@@ -34,4 +34,33 @@
             }
         }
     }
+
+    @media screen and (max-width: 420px) {
+        .modal-info-buy-content {
+            width: 82%;
+            height: 50%;
+
+            h2 {
+                text-align: center;
+            }
+        }
+    }
+
+    @media screen and (min-width: 421px) and (max-width: 600px) {
+        .modal-info-buy-content {
+            width: 82%;
+            height: 38%;
+
+            h2 {
+                text-align: center;
+                width: 80%;
+            }
+        }
+    }
+
+    @media screen and (min-width: 601px) and (max-width: 822px) {
+        .modal-info-buy-content {
+            height: 25%;
+        }
+    }
 }
