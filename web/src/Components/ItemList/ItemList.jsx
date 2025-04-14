@@ -1,6 +1,7 @@
 import "./ItemList.scss";
 import { useState } from "react";
 import { useMediaQuery } from "react-responsive";
+import { Link } from "react-router-dom";
 
 import ItemImage from "../../assets/Images/itemImage.svg";
 import DeleteIcon from "../../assets/icons/deleteIcon.svg";
@@ -116,6 +117,19 @@ function ItemList() {
     }
   };
 
+  const onClickCompletePurchase = () => {
+    let url =
+      "https://wa.me/551176362085?text=Lista+de+compras+no+carrinho%3A%0A";
+
+      console.log(productList);
+      productList.forEach((product) => {
+        url += `%0A%E2%80%A2${product.quantity}x+${product.name}+(R$${product.price})`;
+      })
+      url += `%0A%0ATotal da compra: ${formatValues(calculateTotal())}`;
+
+      window.open(url, '_blank').focus()
+  };
+
   const NoItems = () => {
     return (
       <section className="no-items">
@@ -125,7 +139,9 @@ function ItemList() {
           Parece que você ainda não adicionou nenhum item ao seu carrinho. Vamos
           às compras?
         </p>
-        <button>VER PRODUTOS</button>
+        <Link to="/categories">
+          <button>VER PRODUTOS</button>
+        </Link>
       </section>
     );
   };
@@ -242,24 +258,24 @@ function ItemList() {
 
           <section className="buy">
             <div finish-info>
-              <button className="finish">FINALIZAR COMPRA</button>
+              <button className="finish" onClick={onClickCompletePurchase}>
+                FINALIZAR COMPRA
+              </button>
               <p className="btn-info">
                 Você será direcionado para o nosso <br /> WhatsApp para
                 finalizar seu pedido!
               </p>
             </div>
-            <div>
+            <Link to="/categories">
               <button className="continue">CONTINUAR COMPRANDO</button>
-            </div>
+            </Link>
           </section>
 
           {modalDelete && (
             <ModalDelete
               setModalDelete={setModalDelete}
               handleDelete={onDeleteConfirm}
-              text={
-                "Você tem certeza que deseja excluir todos os itens?"
-              }
+              text={"Você tem certeza que deseja excluir todos os itens?"}
             />
           )}
         </>

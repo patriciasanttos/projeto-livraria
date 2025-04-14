@@ -11,6 +11,9 @@
 
     border-right: 1px solid var(--button-lime-green);
 
+    @media(max-width:768px) {
+        width: 28dvw;
+    }
     .logo {
         margin-bottom: 3em;
 
@@ -23,6 +26,10 @@
             height: auto;
 
             transition: transform 0.3s ease;
+
+            @media(max-width:768px) {
+                max-width: 17dvw;
+            }
 
             &:hover {
                 transform: scale(1.2);
@@ -37,7 +44,7 @@
         flex-direction: column;
 
         padding: 0;
-        gap: 2em;
+        gap: 1.5em;
 
         li {
             transition: transform 0.3s ease;
@@ -52,11 +59,17 @@
     
                 img {
                     width: 30%;
+                    // @media(max-width:768px) {
+                    //     width: 40%;
+                    // }
                 }
 
                 p {
                     margin: 0;
                     font-size: 1dvw;
+                    // @media(max-width:768px) {
+                    //     font-size: .7rem;
+                    // }
                 }
             }
         }
