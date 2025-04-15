@@ -15,6 +15,10 @@ const SearchResults = ({ query }) => {
   const [debouncedQuery, setDebouncedQuery] = useState(query);
 
   useEffect(() => {
+    setResults(data);
+  }, [data]);
+
+  useEffect(() => {
     const handler = setTimeout(() => setDebouncedQuery(query), 500);
 
     return () => clearTimeout(handler);
