@@ -62,7 +62,7 @@ function Card({ id, name, price, image, color, isCategory, currentCategory }) {
     });
   }
 
-  const handleOpenItemPage = () => {
+  const handleOpenPage = () => {
     if (isCategory)
       return navigate(`/categories/${name.toLowerCase()}`)
 
@@ -70,19 +70,22 @@ function Card({ id, name, price, image, color, isCategory, currentCategory }) {
   }
 
   return (
-    <div
-      className={`card ${isCategory ? 'category-card' : 'item-card'}`}
-      onClick={handleOpenItemPage}
-    >
+    <div className={`card ${isCategory ? 'category-card' : 'item-card'}`}>
       <div
         className="card-image"
-        onClick={() => !isCategory && ({})}
+        onClick={handleOpenPage}
       >
         <img src={image} alt={name} />
       </div>
 
       <div className='card-data'>
-        <p className={isCategory ? color : ''} title={name}>{name}</p>
+        <p
+          className={isCategory ? color : ''}
+          title={name}
+          onClick={handleOpenPage}
+        >
+          {name}
+        </p>
         {
           !isCategory && (
             <>
