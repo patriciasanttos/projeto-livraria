@@ -119,7 +119,7 @@ function ItemList() {
 
   const onClickCompletePurchase = () => {
     let url =
-      "https://wa.me/551176362085?text=Lista+de+compras+no+carrinho%3A%0A";
+      "https://wa.me/5512982294420?text=Lista+de+compras+no+carrinho%3A%0A";
 
       console.log(productList);
       productList.forEach((product) => {
