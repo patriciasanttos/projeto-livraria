@@ -1,41 +1,50 @@
-import "./ItemList.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Link } from "react-router-dom";
 
-import ItemImage from "../../assets/Images/itemImage.svg";
+import { useAllItemsData } from '../../hooks/useItemsData';
+
+//-----Images and icons
 import DeleteIcon from "../../assets/icons/deleteIcon.svg";
 import CartEmpty from "../../assets/Images/cart-empty.svg";
 
-import categoriesMock from "../../mocks/categoriesMocks.json";
+//-----Components
 import QuantityInput from "./QuantityInput";
 import ModalDelete from "../ModalDelete/ModalDelete";
+
+import "./ItemList.scss";
 
 function ItemList() {
   const isMobile = useMediaQuery({ maxWidth: 821 });
   const [modalDelete, setModalDelete] = useState(false);
 
-  const getProductById = (id) => {
-    const products = categoriesMock.data.reduce(
-      (acc, category) => [...acc, ...category.items],
-      []
-    );
-    const results = products.filter((item) => item.id == id);
-
-    return results.length > 0
-      ? {
-          ...results[0],
-          quantity: 1,
-          subtotal: Number(results[0].price),
-        }
-      : null;
-  };
+  const { data, isLoading, error } = useAllItemsData()
 
   const cartCookie = JSON.parse(localStorage.getItem("cart")) || {};
-  const [productList, setProductList] = useState(
-    Object.keys(cartCookie).map(getProductById)
-  );
+  const [productList, setProductList] = useState([]);
   const [lastUpdatedIndex, setLastUpdatedIndex] = useState(null);
+
+  const loadProducts = () => {
+    if (!data)
+      return [];
+
+    return Object.entries(cartCookie).map(([productId, quantity]) => {
+      const product = data.find(p => p.id == productId);
+
+      return {
+        id: product?.id,
+        name: product?.name,
+        image: product?.mainImage,
+        price: product?.price,
+        quantity,
+        subtotal: product?.price * quantity
+      }
+    })
+  }
+
+  useEffect(() => {
+    setProductList(loadProducts());
+  }, [data]);
 
   const formatValues = (value) => {
     const formattedValue = Number(value).toFixed(2).replace(".", ",");
@@ -51,8 +60,12 @@ function ItemList() {
     let total = 0;
 
     for (let i = 0; i < productList.length; i++) {
-      total += productList[i].subtotal;
+      const product = productList[i]
+
+      if (product?.id)
+        total += product.subtotal;
     }
+
     return total;
   };
 
@@ -63,6 +76,7 @@ function ItemList() {
       products[index].quantity = products[index].quantity - 1;
       products[index].subtotal =
         products[index].price * products[index].quantity;
+
       setProductList(products);
       setLastUpdatedIndex(index);
     }
@@ -121,14 +135,19 @@ function ItemList() {
     let url =
       "https://wa.me/551176362085?text=Lista+de+compras+no+carrinho%3A%0A";
 
-      console.log(productList);
-      productList.forEach((product) => {
-        url += `%0A%E2%80%A2${product.quantity}x+${product.name}+(R$${product.price})`;
-      })
-      url += `%0A%0ATotal da compra: ${formatValues(calculateTotal())}`;
+    productList.forEach((product) => {
+      url += `%0A%E2%80%A2${product.quantity}x+${product.name}+(R$${product.price})`;
+    })
+    url += `%0A%0ATotal da compra: ${formatValues(calculateTotal())}`;
 
-      window.open(url, '_blank').focus()
+    window.open(url, '_blank').focus()
   };
+
+  if (isLoading)
+    return <h1>Buscando dados...</h1>
+
+  if (error)
+    return <h1>Erro ao buscar itens...</h1>
 
   const NoItems = () => {
     return (
@@ -158,53 +177,14 @@ function ItemList() {
       </thead>
 
       <tbody>
-        {productList.map((product, index) => {
-          return (
-            <tr>
-              <td className="product-item">
-                <img src={ItemImage} alt="Imagem do item" width="120px" />
-                <p className="product-text">{product.name}</p>
-              </td>
-              <td className="right">{formatValues(product.price)}</td>
-              <td className="right">
-                <QuantityInput
-                  quantity={product.quantity}
-                  index={index}
-                  onClickLess={onClickLess}
-                  onClickMore={onClickMore}
-                  onChangeQuantity={onChangeQuantity}
-                  lastUpdatedIndex={lastUpdatedIndex}
-                />
-              </td>
-              <td className="right">{formatValues(product.subtotal)}</td>
-              <td>
-                <img
-                  className="icon-remove"
-                  src={DeleteIcon}
-                  onClick={() => onClickRemoveItem(index)}
-                  alt="Excluir"
-                />
-              </td>
-            </tr>
-          );
-        })}
-      </tbody>
-    </table>
-  );
-
-  const TableMobile = () => {
-    return productList.map((product, index) => {
-      return (
-        <section className="mobile-row">
-          <img src={ItemImage} alt="Imagem do item" width="120px" />
-
-          <div className="column">
-            <div className="mobile-row">
+        {productList.map((product, index) => product?.id && (
+          <tr key={index}>
+            <td className="product-item">
+              <img src={product.image} alt="Imagem do item" width="120px" />
               <p className="product-text">{product.name}</p>
-              <div className="right">{formatValues(product.price)}</div>
-            </div>
-
-            <div className="mobile-row">
+            </td>
+            <td className="right">{formatValues(product.price)}</td>
+            <td className="right">
               <QuantityInput
                 quantity={product.quantity}
                 index={index}
@@ -213,20 +193,55 @@ function ItemList() {
                 onChangeQuantity={onChangeQuantity}
                 lastUpdatedIndex={lastUpdatedIndex}
               />
+            </td>
+            <td className="right">{formatValues(product.subtotal)}</td>
+            <td>
+              <img
+                className="icon-remove"
+                src={DeleteIcon}
+                onClick={() => onClickRemoveItem(index)}
+                alt="Excluir"
+              />
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
 
-              <div className="right">{formatValues(product.subtotal)}</div>
-            </div>
+  const TableMobile = () => {
+    return productList.map((product, index) => product?.id && (
+      <section className="mobile-row" key={index}>
+        <img src={product.image} alt="Imagem do item" width="120px" />
+
+        <div className="column">
+          <div className="mobile-row">
+            <p className="product-text">{product.name}</p>
+            <div className="right">{formatValues(product.price)}</div>
           </div>
 
-          <img
-            className="icon-remove"
-            src={DeleteIcon}
-            onClick={() => onClickRemoveItem(index)}
-            alt="Excluir"
-          />
-        </section>
-      );
-    });
+          <div className="mobile-row">
+            <QuantityInput
+              quantity={product.quantity}
+              index={index}
+              onClickLess={onClickLess}
+              onClickMore={onClickMore}
+              onChangeQuantity={onChangeQuantity}
+              lastUpdatedIndex={lastUpdatedIndex}
+            />
+
+            <div className="right">{formatValues(product.subtotal)}</div>
+          </div>
+        </div>
+
+        <img
+          className="icon-remove"
+          src={DeleteIcon}
+          onClick={() => onClickRemoveItem(index)}
+          alt="Excluir"
+        />
+      </section>
+    ));
   };
 
   return (
@@ -257,7 +272,7 @@ function ItemList() {
           </section>
 
           <section className="buy">
-            <div finish-info>
+            <div>
               <button className="finish" onClick={onClickCompletePurchase}>
                 FINALIZAR COMPRA
               </button>

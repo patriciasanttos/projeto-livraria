@@ -1,14 +1,11 @@
 import React from 'react';
 
-import './Cart.scss';
 import ItemList from '../../../Components/ItemList/ItemList';
 
+import './Cart.scss';
+
 function Cart() {
-  return (
-    <>
-    <ItemList />
-    </>
-  );
+  return <ItemList />;
 }
 
 export default Cart;
