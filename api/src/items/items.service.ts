@@ -1,15 +1,30 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import {
+  forwardRef,
+  HttpException,
+  HttpStatus,
+  Inject,
+  Injectable,
+} from '@nestjs/common';
 import { PrismaService } from 'src/database/prisma.service';
 import CreateItemBody from './dtos/create-item';
 import UpdateItemBody from './dtos/update-item';
 import { SupabaseService } from 'src/supabase/supabase.service';
 import { Prisma } from '@prisma/client';
+import { CategoriesService } from 'src/categories/categories.service';
 
 interface IHandleUpdateImages {
   tx: Prisma.TransactionClient;
   itemId: number;
-  images: Array<Express.Multer.File>;
-  oldImages: Array<string>;
+  images: {
+    image_1?: Express.Multer.File;
+    image_2?: Express.Multer.File;
+    image_3?: Express.Multer.File;
+  };
+  oldImages: {
+    image_1?: string;
+    image_2?: string;
+    image_3?: string;
+  };
   mainImage?: string;
 }
 
@@ -17,6 +32,8 @@ interface IHandleUpdateImages {
 export class ItemsService {
   constructor(
     private readonly prisma: PrismaService,
+    @Inject(forwardRef(() => CategoriesService))
+    private readonly categoriesService: CategoriesService,
     private readonly supabase: SupabaseService,
   ) {}
 
@@ -36,6 +53,11 @@ export class ItemsService {
       available: item.available,
       mainImage: item.images.find((img) => img.isMain)?.url ?? null,
       gallery: item.images.map((img) => img.url),
+      mainCategory: item.mainCategory,
+      categories: item.categories.map((category) => ({
+        id: category.id,
+        name: category.name,
+      })),
       created_at: item.created_at,
       updated_at: item.updated_at,
     }));
@@ -72,11 +94,19 @@ export class ItemsService {
 
   async create(data: CreateItemBody) {
     return await this.prisma.$transaction(async (tx) => {
+      await this.categoriesService.getById(Number(data.main_category));
+
       const item = await tx.item.create({
         data: {
           name: data.name,
           description: data.description,
           price: data.price,
+          mainCategory: Number(data.main_category),
+          categories: {
+            connect: {
+              id: Number(data.main_category),
+            },
+          },
         },
       });
 
@@ -120,6 +150,9 @@ export class ItemsService {
   async update(data: UpdateItemBody) {
     const item = await this.getById(Number(data.id));
 
+    if (data.main_category)
+      await this.categoriesService.getById(Number(data.main_category));
+
     await this.prisma.$transaction(async (tx) => {
       await tx.item.update({
         where: {
@@ -130,19 +163,24 @@ export class ItemsService {
           description: data.description,
           price: data.price,
           available: data.available,
+          mainCategory: Number(data.main_category) || item.mainCategory,
         },
       });
 
-      const images = [data.image_1, data.image_2, data.image_3].filter(
-        (img): img is Express.Multer.File => Boolean(img),
-      );
-      const oldImages = [
-        data.old_image_1,
-        data.old_image_2,
-        data.old_image_3,
-      ].filter((img): img is string => Boolean(img));
+      const images = {
+        image_1: data?.image_1,
+        image_2: data?.image_2,
+        image_3: data?.image_3,
+      };
+      const oldImages = {
+        image_1: data?.old_image_1,
+        image_2: data?.old_image_2,
+        image_3: data?.old_image_3,
+      };
 
-      if (images.length > 0 || data.main_image)
+      const hasImagesChanges = Object.values(images).some((value) => value);
+
+      if (hasImagesChanges || data.main_image)
         await this.handleUpdateImages({
           tx,
           itemId: item.id,
@@ -166,9 +204,8 @@ export class ItemsService {
       where: { itemId: Number(itemId) },
     });
 
-    for (let i = 0; i < images.length; i++) {
-      const newImage = images[i];
-      const oldImage = oldImages[i];
+    for (let [newImageKey, newImage] of Object.entries(images)) {
+      const oldImage: string = oldImages[newImageKey];
 
       if (!newImage) continue;
 
@@ -186,7 +223,7 @@ export class ItemsService {
             HttpStatus.BAD_REQUEST,
           );
 
-        const oldImageUrlFormated = new URL(oldImage!);
+        const oldImageUrlFormated = new URL(oldImage);
         const oldImagePath = decodeURIComponent(
           oldImageUrlFormated.pathname.replace(
             '/storage/v1/object/public/products',
@@ -206,7 +243,7 @@ export class ItemsService {
           data: { updated_at: new Date() },
         });
       } else {
-        const newPath = `${itemId}/image_${i + 1}`;
+        const newPath = `${itemId}/${newImageKey}`;
 
         const publicUrl = await this.supabase.uploadImage(
           'products',

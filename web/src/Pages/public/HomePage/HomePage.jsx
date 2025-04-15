@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import mock from '../../../mocks/categoriesMocks.json'
 
@@ -23,12 +23,14 @@ function HomePage() {
       <section>
         <Category
           data={category1.items}
+          id={category1.id}
           name={category1.name.charAt(0).toUpperCase() + category1.name.slice(1)}
           categoryColor='pink'
         />
 
         <Category
           data={category2.items}
+          id={category2.id}
           name={category2.name.charAt(0).toUpperCase() + category2.name.slice(1)}
           categoryColor='green'
         />

@@ -1,12 +1,17 @@
 import "./ItemDescription.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 
 import ModalInfoBuy from "../ModalInfoBuy/ModalInfoBuy";
 
-function ItemDescription({product}) {
-  const [modalOpen, setModalOpen] = useState(false);  
+function ItemDescription({ product }) {
+  const [modalOpen, setModalOpen] = useState(false);
+  const [mainImage, setMainImage] = useState();
+
+  useEffect(() => {
+    setMainImage(product?.images[0].url)
+  }, [product]);
 
   const onClickAddToCart = () => {
     const cartCookie = JSON.parse(localStorage.getItem("cart")) || {};
@@ -14,12 +19,12 @@ function ItemDescription({product}) {
     localStorage.setItem("cart", JSON.stringify(cartCookie));
 
     return toast.success('Item adicionado ao seu carrinho', {
-          autoClose: 3000,
-          closeOnClick: true,
-          pauseOnHover: false,
-          pauseOnFocusLoss: false,
-          draggable: true
-        })
+      autoClose: 3000,
+      closeOnClick: true,
+      pauseOnHover: false,
+      pauseOnFocusLoss: false,
+      draggable: true
+    })
   }
 
   const onClickOpenModal = () => {
@@ -34,12 +39,20 @@ function ItemDescription({product}) {
     product && (
       <section className="item-description-container">
         <div className="item-description-images-container">
-          <img className="main-product" src={product.image} alt="" />
+          <img className="main-product" src={mainImage} alt="" />
 
           <div className="item-description-images">
-            <img src={product.image} alt="" />
-            <img src={product.image} alt="" />
-            <img src={product.image} alt="" />
+            {product.images.map((image, index) => (
+              <img
+                key={index}
+                src={image.url}
+                alt=""
+                onClick={() => setMainImage(image.url)}
+                style={{
+                  border: mainImage === image.url ? '3px solid var(--button-pink)' : 'none'
+                }}
+              />
+            ))}
           </div>
         </div>
 

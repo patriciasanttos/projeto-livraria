@@ -9,7 +9,7 @@ import SearchInputAdmin from "../../../Components/SearchInputAdmin/SearchInputAd
 import DropdownAdmin from "../../../Components/DropdownAdmin/DropdownAdmin";
 import AdminAddButton from "../../../Components/AdminAddButton/AdminAddButton";
 
-import { useAllCagegoriesData } from "../../../hooks/useCategoriesData";
+import { useCategoriesData } from "../../../hooks/useCategoriesData";
 
 const currency = new Intl.NumberFormat("pt-BR", {
   style: "currency",
@@ -17,7 +17,7 @@ const currency = new Intl.NumberFormat("pt-BR", {
 });
 
 function Products() {
-  const { data: categoriesData, isLoading, error } = useAllCagegoriesData();
+  const { data: categoriesData, isLoading, error } = useCategoriesData();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isCreateItem, setIsCreateItem] = useState(false);
@@ -31,25 +31,25 @@ function Products() {
   const categories = useMemo(() => {
     return categoriesData
       ? categoriesData.map((category) => ({
-          id: category.id,
-          name: category.name,
-        }))
+        id: category.id,
+        name: category.name,
+      }))
       : [];
   }, [categoriesData]);
 
   const filteredProducts = useMemo(() => {
     let filteredProducts = categoriesData
       ? categoriesData.reduce(
-          (acc, category) => [
-            ...acc,
-            ...category.items.map((item) => ({
-              ...item,
-              category: category.name,
-              priceFormatted: currency.format(item.price),
-            })),
-          ],
-          []
-        )
+        (acc, category) => [
+          ...acc,
+          ...category.items.map((item) => ({
+            ...item,
+            category: category.name,
+            priceFormatted: currency.format(item.price),
+          })),
+        ],
+        []
+      )
       : [];
 
     if (filters.category !== "") {

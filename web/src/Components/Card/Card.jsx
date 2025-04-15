@@ -8,7 +8,7 @@ import './Card.scss';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 
-function Card({ id, name, price, image, color, isCategory }) {
+function Card({ id, name, price, image, color, isCategory, currentCategory }) {
   const navigate = useNavigate();
 
   const [isInCart, setIsInCart] = useState(false);
@@ -62,14 +62,22 @@ function Card({ id, name, price, image, color, isCategory }) {
     });
   }
 
+  const handleOpenItemPage = () => {
+    if (isCategory)
+      return navigate(`/categories/${name.toLowerCase()}`)
+
+    return navigate(`/item/${id}`, { state: { currentCategory } })
+  }
+
   return (
     <div
       className={`card ${isCategory ? 'category-card' : 'item-card'}`}
-      onClick={() =>
-        isCategory && navigate(`/categories/${name.toLowerCase()}`)
-      }
+      onClick={handleOpenItemPage}
     >
-      <div className="card-image" onClick={() => !isCategory && navigate(`/item/${id}`)}>
+      <div
+        className="card-image"
+        onClick={() => !isCategory && ({})}
+      >
         <img src={image} alt={name} />
       </div>
 

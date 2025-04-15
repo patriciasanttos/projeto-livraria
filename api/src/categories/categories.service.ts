@@ -1,4 +1,10 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import {
+  forwardRef,
+  HttpException,
+  HttpStatus,
+  Inject,
+  Injectable,
+} from '@nestjs/common';
 import { PrismaService } from 'src/database/prisma.service';
 import CreateCategoryBody from './dtos/create-category';
 import UpdateCategoryBody from './dtos/update-category';
@@ -9,6 +15,7 @@ import { SupabaseService } from 'src/supabase/supabase.service';
 export class CategoriesService {
   constructor(
     private readonly prisma: PrismaService,
+    @Inject(forwardRef(() => ItemsService))
     private readonly itemsService: ItemsService,
     private readonly supabase: SupabaseService,
   ) {}
@@ -16,12 +23,16 @@ export class CategoriesService {
   async getAll() {
     return await this.prisma.category.findMany({
       include: {
-        items: true,
+        items: {
+          include: {
+            images: true,
+          },
+        },
       },
     });
   }
 
-  private async getById(categoryId: number) {
+  async getById(categoryId: number) {
     const category = await this.prisma.category.findUnique({
       where: { id: categoryId },
     });

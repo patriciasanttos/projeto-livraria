@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 //-----Images
@@ -12,13 +12,14 @@ import Card from '../../../components/Card/Card';
 import Pagination from '../../../components/Pagination/Pagination';
 
 import './Categories.scss';
-import { useCagegoriesData } from '../../../hooks/useCategoriesData';
+import { useCategoriesData } from '../../../hooks/useCategoriesData';
 
 function Categories() {
   const navigate = useNavigate();
+  const { pathname } = useLocation();
   const { categoryName } = useParams();
 
-  const { data: categoriesData, isLoading, error } = useCagegoriesData();
+  const { data: categoriesData, isLoading, error } = useCategoriesData();
 
   const [data, setData] = useState([]);
   const [displayedItems, setDisplayedItems] = useState([]);
@@ -69,7 +70,7 @@ function Categories() {
     for (let i = 0; i < 40; i++) {
       multipliedItems.push(...categoryItems.map(item => ({
         ...item,
-        id: `${item.id}-${i}`,
+        id: item.id,
         name: item.name
       })));
     }
@@ -93,7 +94,6 @@ function Categories() {
     setDisplayedItems(newData.slice(0, 9));
   }, [categoryName, navigate, categoriesData, loadData]);
 
-
   if (isLoading)
     return <p className='no-items-warn'>Buscando dados...</p>
 
@@ -105,15 +105,16 @@ function Categories() {
       {categoryName && <h1>{categoryName.charAt(0).toUpperCase() + categoryName.slice(1)}</h1>}
 
       <div className='category-page-items'>
-        {displayedItems.map(option => (
+        {displayedItems.map((option, index) => (
           <Card
-            key={option.id}
+            key={`${option.id}-${index}`}
             id={option.id}
             name={option.name}
             image={kitCanetas}
             price={option.price}
             color='pink'
             isCategory={categoryName ? false : true}
+            currentCategory={pathname.split('/')[2]}
           />
         ))}
       </div>

@@ -3,6 +3,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import {
   IsEmpty,
   IsNotEmpty,
+  IsNumber,
   IsOptional,
   IsString,
   Length,
@@ -28,6 +29,11 @@ export default class CreateItemBody {
     message: 'The price must have a maximum of 2 decimal places',
   })
   price: number;
+
+  @ApiProperty()
+  @Length(1)
+  @IsNotEmpty({ message: 'You must provide a main category id' })
+  main_category: number;
 
   @ApiProperty({
     type: 'string',

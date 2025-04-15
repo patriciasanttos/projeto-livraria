@@ -1,11 +1,12 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { ItemsController } from './items.controller';
 import { ItemsService } from './items.service';
 import { AuthModule } from 'src/authentication/authentication.module';
 import { SupabaseModule } from 'src/supabase/supabase.module';
+import { CategoriesModule } from 'src/categories/categories.module';
 
 @Module({
-  imports: [AuthModule, SupabaseModule],
+  imports: [forwardRef(() => CategoriesModule), AuthModule, SupabaseModule],
   exports: [ItemsService],
   controllers: [ItemsController],
   providers: [ItemsService],

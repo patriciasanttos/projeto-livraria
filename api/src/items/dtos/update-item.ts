@@ -39,6 +39,11 @@ export default class UpdateItemBody {
   @IsOptional()
   available?: boolean;
 
+  @ApiProperty()
+  @Length(1)
+  @IsOptional()
+  main_category?: number;
+
   @ApiProperty({
     type: 'string',
   })

@@ -16,6 +16,7 @@ import './Category.scss';
 
 const Category = ({
     data,
+    id,
     name,
     categoryColor,
     showOnlyCategories
@@ -27,7 +28,6 @@ const Category = ({
 
     const [startIndex, setStartIndex] = useState(0);
     const [cardsPerPage, setCardsPerPage] = useState(3);
-
 
     useEffect(() => {
         setCategoryArrow(prev => {
@@ -95,6 +95,7 @@ const Category = ({
                             image={card.image ? card.image : kitCanetas}
                             color={categoryColor}
                             isCategory={showOnlyCategories}
+                            currentCategory={id ? id : 0}
                         />
                     ))
                 }
