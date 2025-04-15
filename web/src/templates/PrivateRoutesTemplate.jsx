@@ -10,7 +10,8 @@ function PrivateRoutesTemplate() {
   const pagesObj = {
     '/admin/control_panel': 'Painel de controle',
     '/admin/categories': 'Categorias',
-    '/admin/products': 'Produtos'
+    '/admin/products': 'Produtos',
+    '/admin/manage': 'Gerenciar'
   };
 
   const page = pagesObj[pathname];
