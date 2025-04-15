@@ -24,11 +24,11 @@
             cursor: pointer;
 
             &:first-child {
-                left: 4%;
+                left: 22%;
             }
 
             &:last-child {
-                right: 4%;
+                right: 22%;
             }
         }
     }
@@ -36,19 +36,26 @@
     .default {
         color: var(--text-primary-color);
     }
+
     .pink {
-        color: var(--title-pink);    
+        color: var(--title-pink);
     }
+
     .green {
-        color: var(--title-green);  
+        color: var(--title-green);
     }
+
     .blue {
-        color: var(--title-blue);   
+        color: var(--title-blue);
     }
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 319px) and (max-width: 768px) {
     .category-component {
+        .category-component-container {
+            gap: 1rem;
+        }
+
         .category-component-container .arrows {
             &:first-child {
                 left: 7%;
@@ -56,6 +63,20 @@
 
             &:last-child {
                 right: 7%;
+            }
+        }
+    }
+}
+
+@media screen and (min-width: 769px) and (max-width: 860px) {
+    .category-component {
+        .category-component-container .arrows {
+            &:first-child {
+                left: 12%;
+            }
+
+            &:last-child {
+                right: 12%;
             }
         }
     }
