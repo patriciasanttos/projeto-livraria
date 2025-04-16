@@ -67,7 +67,9 @@ function AboutUs() {
             </div>
 
             <div className="wpp-number">
-              <p className="info-number">(12) 98229-4420</p>
+              <a href={`https://wa.me/${import.meta.env.VITE_WHATSAPP_NUMBER}`} className="info-number">
+                (12) 98229-4420
+              </a>
             </div>
           </div>
 
@@ -83,7 +85,7 @@ function AboutUs() {
 
             <div className="instagram-info">
               <a
-                href="https://www.instagram.com/ciadaeducacaosjc/"
+                href={import.meta.env.VITE_INSTAGRAM_URL}
                 className="info-instagram"
               >
                 @ciadaeducacaosjc

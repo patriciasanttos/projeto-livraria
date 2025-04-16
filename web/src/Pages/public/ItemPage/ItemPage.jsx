@@ -6,10 +6,7 @@ import _ from "lodash";
 //-----Components
 import ItemDescription from "../../../Components/ItemDescription/ItemDescription";
 import Category from "../../../components/Category/Category";
-
-//-----Images
-import whatsappContactImage from "../../../assets/Images/whatsapp-contact.svg";
-import whatsappContactImageMobile from "../../../assets/Images/whatsapp-contact-mobile.svg";
+import WhatsappContact from "../../../Components/WhatsappContact/WhatsappContact";
 
 import "./ItemPage.scss";
 
@@ -58,39 +55,32 @@ function ItemPage() {
       <ItemDescription product={product} />
 
       <section className="item-page-categories">
-        {(locationState && productsOfSameCategory.length > 0) && (
-          <div className="categoris-container">
-            <Category
-              data={_.shuffle(productsOfSameCategory)}
-              name={"Produtos similares"}
-              categoryColor="blue"
-            />
-          </div>
-        )}
+        {
+          (locationState && productsOfSameCategory.length > 0) && (
+            <div className="categoris-container">
+              <Category
+                data={_.shuffle(productsOfSameCategory)}
+                name={"Produtos similares"}
+                categoryColor="blue"
+              />
+            </div>
+          )
+        }
+        {
+          productsOfDifferentCategory.length > 0 && (
+            <div className="categoris-container">
+              <Category
+                data={_.shuffle(productsOfDifferentCategory)}
+                name={"Compre junto"}
+                categoryColor="blue"
+              />
+            </div>
+          )
+        }
 
-        {productsOfDifferentCategory.length > 0 && (
-          <div className="categoris-container">
-            <Category
-              data={_.shuffle(productsOfDifferentCategory)}
-              name={"Compre junto"}
-              categoryColor="blue"
-            />
-          </div>
-        )}
-
-        <a target="_blank" href="https://wa.me/5512982294420">
-          <img
-            className="whatsapp-contact-image"
-            src={
-              window.innerWidth >= 768
-                ? whatsappContactImage
-                : whatsappContactImageMobile
-            }
-            alt="Whatsapp"
-          />
-        </a>
-      </section>
-    </div>
+        <WhatsappContact />
+      </section >
+    </div >
   );
 }
 

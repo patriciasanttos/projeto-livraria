@@ -40,7 +40,7 @@ function Products() {
   }, [categoriesData]);
 
   const filteredProducts = useMemo(() => {
-    let filteredProducts = categoriesData
+    let products = categoriesData
       ? categoriesData.reduce(
         (acc, category) => [
           ...acc,
@@ -55,37 +55,37 @@ function Products() {
       : [];
 
     if (filters.category !== "") {
-      filteredProducts = filteredProducts.filter(
+      products = products.filter(
         (product) => product.category === filters.category
       );
     }
 
     if (filters.name) {
-      filteredProducts = filteredProducts.filter(
+      products = products.filter(
         (product) =>
           product.name.toUpperCase().indexOf(filters.name.toUpperCase()) !== -1
       );
     }
 
     if (filters.priceFrom) {
-      filteredProducts = filteredProducts.filter(
-        (product) => product.price >= filters.priceFrom
+      products = products.filter(
+        (product) => Number(product.price) >= filters.priceFrom
       );
     }
 
     if (filters.priceTo) {
-      filteredProducts = filteredProducts.filter(
-        (product) => product.price <= filters.priceTo
+      products = products.filter(
+        (product) => Number(product.price) <= filters.priceTo
       );
     }
 
     if (_.isBoolean(filters.available)) {
-      filteredProducts = filteredProducts.filter((product) =>
+      products = products.filter((product) =>
         filters.available ? product.available : !product.available
       );
     }
 
-    return filteredProducts;
+    return products;
   }, [categoriesData, filters]);
 
   const handleFilterChange = useCallback((evt) => {
@@ -160,31 +160,26 @@ function Products() {
             name="category"
             value={filters.category}
             onChange={handleFilterChange}
-          >
-            <option value=""> Todos </option>
-            {categories.map((category) => (
-              <option key={category.id} value={category.name}>
-                {category.name}
-              </option>
-            ))}
-          </DropdownAdmin>
+            options={[
+              { value: "", text: "Todos" },
+              ...categories.map((category) => ({
+                value: category.name,
+                text: category.name,
+              })),
+            ]}
+          />
 
           <DropdownAdmin
             title="Status"
             name="available"
             value={filters.available}
             onChange={handleFilterChange}
-          >
-            <option name="available" value="">
-              Tudo
-            </option>
-            <option name="available" value={true}>
-              Disponível
-            </option>
-            <option name="available" value={false}>
-              Sem estoque
-            </option>
-          </DropdownAdmin>
+            options={[
+              { value: "", text: "Tudo" },
+              { value: true, text: "Disponível" },
+              { value: false, text: "Sem estoque" },
+            ]}
+          />
           <div className="results-found">
             <h3>Itens encontrados</h3>
             <p>{filteredProducts.length}</p>

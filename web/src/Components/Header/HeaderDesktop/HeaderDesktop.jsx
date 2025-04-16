@@ -62,12 +62,12 @@ const HeaderDesktop = () => {
 
             <a
               target="_blank"
-              href="https://www.instagram.com/ciadaeducacaosjc/"
+              href={import.meta.env.VITE_INSTAGRAM_URL}
             >
               <img src={instagramGreenIcon} alt="Instagram" />
             </a>
 
-            <a target="_blank" href="https://maps.app.goo.gl/p6ybQXXrXudsQcsA7">
+            <a target="_blank" href={import.meta.env.VITE_MAPS_URL}>
               <img src={locationGreenIcon} alt="Localização" />
             </a>
           </div>

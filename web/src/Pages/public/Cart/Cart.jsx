@@ -8,4 +8,4 @@ function Cart() {
   return <ItemList />;
 }
 
-export default Cart;
+export default Cart

@@ -5,10 +5,7 @@ import mock from '../../../mocks/categoriesMocks.json'
 //-----Components
 import Category from '../../../components/Category/Category';
 import BannerSlider from '../../../Components/Banner/Banner';
-
-//-----Images
-import whatsappContactImage from '../../../assets/Images/whatsapp-contact.svg'
-import whatsappContactImageMobile from '../../../assets/Images/whatsapp-contact-mobile.svg'
+import WhatsappContact from '../../../Components/WhatsappContact/WhatsappContact';
 
 import './HomePage.scss';
 
@@ -43,17 +40,7 @@ function HomePage() {
         />
       </section>
 
-      <a target='_blank' href="https://wa.me/5512982294420">
-        <img
-          className='whatsapp-contact-image'
-          src={
-            window.innerWidth >= 768
-              ? whatsappContactImage
-              : whatsappContactImageMobile
-          }
-          alt="Whatsapp"
-        />
-      </a>
+      <WhatsappContact />
     </div>
   );
 }

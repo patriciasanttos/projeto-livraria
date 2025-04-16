@@ -76,30 +76,32 @@ const SearchResults = ({ query }) => {
     return <div>Nenhum resultado encontrado.</div>
 
   return (
-    <ul className="search-results">
-      {
-        results.length === 0
-          ? <p>Nenhum resultado encontrado.</p>
-          : results.map(result => {
-            return result.type === "category"
-              ? // Category result
+    <div className="search-wrapper">
+      <ul className="search-results">
+        {results.length === 0 ? (
+          <p className="no-results">Nenhum resultado encontrado.</p>
+        ) : (
+          results.map(result => {
+            return result.type === "category" ? (
               <li
-                onClick={() => handleReport(result.type, result.id)}
                 key={result.type + '-' + result.id}
+                onClick={() => handleReport(result.type, result.id)}
               >
                 <span>Categoria: </span>
                 {result.name}
               </li>
-              : // Item result
+            ) : (
               <li
-                onClick={() => handleReport(result.type, result.id)}
                 key={result.type + '-' + result.id}
+                onClick={() => handleReport(result.type, result.id)}
               >
                 {result.name}
               </li>
+            );
           })
-      }
-    </ul>
+        )}
+      </ul>
+    </div >
   );
 };
 

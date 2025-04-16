@@ -133,7 +133,7 @@ function ItemList() {
 
   const onClickCompletePurchase = () => {
     let url =
-      "https://wa.me/551176362085?text=Lista+de+compras+no+carrinho%3A%0A";
+      `https://wa.me/${import.meta.env.VITE_WHATSAPP_NUMBER}?text=Lista+de+compras+no+carrinho%3A%0A`;
 
     productList.forEach((product) => {
       url += `%0A%E2%80%A2${product.quantity}x+${product.name}+(R$${product.price})`;

@@ -4,15 +4,16 @@ import { toast } from 'react-toastify';
 
 //-----Images
 import kitCanetas from '../../../assets/Images/kit-canetas.svg';
-import whatsappContactImage from '../../../assets/Images/whatsapp-contact.svg'
-import whatsappContactImageMobile from '../../../assets/Images/whatsapp-contact-mobile.svg'
 
 //-----Components
 import Card from '../../../components/Card/Card';
 import Pagination from '../../../components/Pagination/Pagination';
+import WhatsappContact from '../../../Components/WhatsappContact/WhatsappContact';
+
+import { useCategoriesData } from '../../../hooks/useCategories';
 
 import './Categories.scss';
-import { useCategoriesData } from '../../../hooks/useCategories';
+
 
 function Categories() {
   const navigate = useNavigate();
@@ -124,17 +125,7 @@ function Categories() {
         onPageChange={handleChangePage}
       />
 
-      <a href="https://wa.me/5512982294420" target='_blank'>
-        <img
-          className='whatsapp-contact-image'
-          src={
-            window.innerWidth >= 768
-              ? whatsappContactImage
-              : whatsappContactImageMobile
-          }
-          alt="Whatsapp"
-        />
-      </a>
+      <WhatsappContact />
     </div>
   );
 }
