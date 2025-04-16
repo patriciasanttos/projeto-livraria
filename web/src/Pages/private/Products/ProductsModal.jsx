@@ -1,9 +1,10 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 import ModalAdmin from "../../../Components/ModalAdmin/ModalAdmin";
 import SearchInputAdmin from "../../../Components/SearchInputAdmin/SearchInputAdmin";
 import DropdownAdmin from "../../../Components/DropdownAdmin/DropdownAdmin";
 import ProductThumb from "./ProductThumb";
+import { useUpdateProduct } from "../../../hooks/useProducts";
 
 export const ProductsModal = ({
   isCreateItem,
@@ -12,7 +13,9 @@ export const ProductsModal = ({
   setFormData,
   setIsModalOpen,
 }) => {
-  const [mainImageIndex, setMainImageIndex] = useState(null);
+  const [mainImageIndex, setMainImageIndex] = useState(formData.images.findIndex(img => img.isMain));
+
+  const { mutate: updateProduct } = useUpdateProduct();
 
   const onClickDeleteImage = (index) => {
     const imageList = formData?.images.splice(index, 1);
@@ -28,8 +31,25 @@ export const ProductsModal = ({
   };
 
   const onConfirmSaveProduct = useCallback(() => {
-    console.log(formData);
-  }, [formData]);
+    const getImageFile = (index) => {
+      const image = formData.images?.[index];
+
+      return image instanceof File ? image : undefined;
+    };
+
+    updateProduct({
+      id: formData.id,
+      name: formData.name,
+      description: formData.description,
+      price: formData.price,
+      available: formData.available,
+      mainCategory: formData.mainCategory,
+      mainImage: mainImageIndex,
+      image_1: getImageFile(0),
+      image_2: getImageFile(1),
+      image_3: getImageFile(2),
+    });
+  }, [formData, mainImageIndex]);
 
   const handleFormChange = (evt) => {
     const { name, value, files, checked, type } = evt.target;
@@ -37,7 +57,7 @@ export const ProductsModal = ({
     const getValue = (val) => {
       if (type === "checkbox") {
         return checked;
-      }else if (type === "radio") {
+      } else if (type === "radio") {
         return value === 'on';
       } else if (val === "true") {
         return true;
@@ -101,8 +121,8 @@ export const ProductsModal = ({
             onChange={handleFormChange}
           >
             <option value={null}>
-                Selecione uma categoria
-              </option>
+              Selecione uma categoria
+            </option>
             {categories.map((category) => (
               <option key={category.id} value={category.name}>
                 {category.name}
@@ -142,7 +162,7 @@ export const ProductsModal = ({
             }
             onClick={() => document.getElementById("image-upload").click()}
           >
-            Upload Imagem ({formData?.images?.length ?? 0}/3)
+            Adicionar imagem ({formData?.images?.length ?? 0}/3)
           </button>
           <input
             type="file"

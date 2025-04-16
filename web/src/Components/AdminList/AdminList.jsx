@@ -6,8 +6,7 @@ import EditIcon from "../../assets/icons/editIcon.svg";
 import DeleteIcon from "../../assets/icons/deleteIcon.svg";
 
 function AdminList({ tableLayout, listData, onEdit, onDelete }) {
-  const [isConfirmDeleteModalOpen, setIsConfirmDeleteModalOpen] =
-    useState(false);
+  const [isConfirmDeleteModalOpen, setIsConfirmDeleteModalOpen] = useState(false);
   const [confirmDelteteProp, setConfirmDelteteProp] = useState();
 
   const handleConfirmDelete = (row) => {
@@ -50,7 +49,7 @@ function AdminList({ tableLayout, listData, onEdit, onDelete }) {
         </thead>
 
         <tbody>
-          {listData.map((row, index) => (
+          {listData.map(row => (
             <tr key={row.id}>
               {tableLayout.map(({ key }) => (
                 <td key={key}>{getCellValue(row, key)}</td>
@@ -60,7 +59,7 @@ function AdminList({ tableLayout, listData, onEdit, onDelete }) {
                 <img
                   src={EditIcon}
                   className="icon-editar"
-                  onClick={() => onEdit(row, index)}
+                  onClick={() => onEdit(row)}
                   data-tooltip-id="tooltip"
                   data-tooltip-content="Editar"
                 />

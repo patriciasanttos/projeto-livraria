@@ -12,6 +12,12 @@ export const getAllAvailablesProducts = async () => {
   return data;
 };
 
+export const updateProduct = async (updatedData) => {
+  const { data } = await api.put("/items", updatedData);
+
+  return data;
+};
+
 export const deleteProduct = async (id) => {
   const { data } = await api.delete(`/items/${id}`);
 

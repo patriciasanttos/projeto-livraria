@@ -19,7 +19,7 @@ const currency = new Intl.NumberFormat("pt-BR", {
 
 function Products() {
   const { data: categoriesData, isLoading, error } = useCategoriesData();
-  const { mutate } = useDeleteProduct();
+  const { mutate: deleteProduct } = useDeleteProduct();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isCreateItem, setIsCreateItem] = useState(false);
@@ -113,16 +113,14 @@ function Products() {
     setIsCreateItem(true);
   };
 
-  const onClickUpdate = (data) => {
-    setFormData({
-      ...row,
-    });
+  const onClickUpdate = (row) => {
+    setFormData(row);
     setIsModalOpen(true);
     setIsCreateItem(false);
   };
 
   const onClickDelete = (data) => {
-    return mutate(data.id);
+    return deleteProduct(data.id);
   }
 
   if (isLoading)
