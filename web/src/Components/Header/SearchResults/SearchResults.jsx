@@ -1,13 +1,11 @@
 import React, { useCallback, useEffect, useState } from "react";
 
-import mock from '../../../mocks/categoriesMocks.json';
-
 import './SearchResults.scss'
-import { useAvailableItemsData } from "../../../hooks/useItemsData";
-import { useCreateReport } from "../../../hooks/useCreateReport";
+import { useAvailableProductsData } from "../../../hooks/useProducts";
+import { useCreateReport } from "../../../hooks/useReports";
 
 const SearchResults = ({ query }) => {
-  const { data, isLoading } = useAvailableItemsData();
+  const { data, isLoading } = useAvailableProductsData();
   const { mutate } = useCreateReport();
 
   const [results, setResults] = useState(data);

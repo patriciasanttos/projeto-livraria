@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
-import { useReportsData } from '../../../hooks/useReportsData';
+import { useReportsData } from '../../../hooks/useReports';
 
 //-----Icons
 import reloadIcon from '../../../assets/icons/reload.svg';

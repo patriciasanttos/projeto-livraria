@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Link } from "react-router-dom";
 
-import { useAllItemsData } from '../../hooks/useItemsData';
+import { useAllProductsData } from '../../hooks/useProducts';
 
 //-----Images and icons
 import DeleteIcon from "../../assets/icons/deleteIcon.svg";
@@ -18,7 +18,7 @@ function ItemList() {
   const isMobile = useMediaQuery({ maxWidth: 821 });
   const [modalDelete, setModalDelete] = useState(false);
 
-  const { data, isLoading, error } = useAllItemsData()
+  const { data, isLoading, error } = useAllProductsData()
 
   const cartCookie = JSON.parse(localStorage.getItem("cart")) || {};
   const [productList, setProductList] = useState([]);

@@ -12,7 +12,7 @@ import Card from '../../../components/Card/Card';
 import Pagination from '../../../components/Pagination/Pagination';
 
 import './Categories.scss';
-import { useCategoriesData } from '../../../hooks/useCategoriesData';
+import { useCategoriesData } from '../../../hooks/useCategories';
 
 function Categories() {
   const navigate = useNavigate();

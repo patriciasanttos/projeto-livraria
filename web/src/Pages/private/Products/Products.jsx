@@ -9,7 +9,8 @@ import SearchInputAdmin from "../../../Components/SearchInputAdmin/SearchInputAd
 import DropdownAdmin from "../../../Components/DropdownAdmin/DropdownAdmin";
 import AdminAddButton from "../../../Components/AdminAddButton/AdminAddButton";
 
-import { useCategoriesData } from "../../../hooks/useCategoriesData";
+import { useCategoriesData } from "../../../hooks/useCategories";
+import { useDeleteProduct } from "../../../hooks/useProducts";
 
 const currency = new Intl.NumberFormat("pt-BR", {
   style: "currency",
@@ -18,13 +19,14 @@ const currency = new Intl.NumberFormat("pt-BR", {
 
 function Products() {
   const { data: categoriesData, isLoading, error } = useCategoriesData();
+  const { mutate } = useDeleteProduct();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isCreateItem, setIsCreateItem] = useState(false);
 
   const [filters, setFilters] = useState({
     available: "",
-    category: "BROCHURA",
+    category: "",
   });
   const [formData, setFormData] = useState({});
 
@@ -105,7 +107,13 @@ function Products() {
     }));
   }, []);
 
-  const onClickUpdate = (row) => {
+  const onClickCreate = () => {
+    setFormData({})
+    setIsModalOpen(true);
+    setIsCreateItem(true);
+  };
+
+  const onClickUpdate = (data) => {
     setFormData({
       ...row,
     });
@@ -113,11 +121,15 @@ function Products() {
     setIsCreateItem(false);
   };
 
-  const onClickCreate = () => {
-    setFormData({})
-    setIsModalOpen(true);
-    setIsCreateItem(true);
-  };
+  const onClickDelete = (data) => {
+    return mutate(data.id);
+  }
+
+  if (isLoading)
+    return <h1>Buscando dados...</h1>
+
+  if (error)
+    return <h1>Erro ao carregar dados.</h1>
 
   return (
     <section className="item-page-container">
@@ -204,6 +216,7 @@ function Products() {
         ]}
         listData={filteredProducts}
         onEdit={onClickUpdate}
+        onDelete={onClickDelete}
       ></AdminList>
 
       {isModalOpen && (

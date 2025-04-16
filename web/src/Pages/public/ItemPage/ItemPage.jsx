@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
-import { useCategoriesData } from '../../../hooks/useCategoriesData';
+import { useCategoriesData } from '../../../hooks/useCategories';
 import _ from "lodash";
 
 //-----Components

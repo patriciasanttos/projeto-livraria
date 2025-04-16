@@ -8,10 +8,10 @@ import DeleteIcon from "../../assets/icons/deleteIcon.svg";
 function AdminList({ tableLayout, listData, onEdit, onDelete }) {
   const [isConfirmDeleteModalOpen, setIsConfirmDeleteModalOpen] =
     useState(false);
-  const [confirmDeltetePropName, setConfirmDeltetePropName] = useState(null);
+  const [confirmDelteteProp, setConfirmDelteteProp] = useState();
 
-  const handleConfirmDelete = (name) => {
-    setConfirmDeltetePropName(name);
+  const handleConfirmDelete = (row) => {
+    setConfirmDelteteProp(row);
     setIsConfirmDeleteModalOpen(true);
   };
 
@@ -29,9 +29,12 @@ function AdminList({ tableLayout, listData, onEdit, onDelete }) {
     <div className="admin-list">
       {isConfirmDeleteModalOpen && (
         <ModalAdmin
-          title={`Deseja mesmo deletar "${confirmDeltetePropName}"?`}
+          title={`Deseja mesmo deletar "${confirmDelteteProp.name}"?`}
           onClose={() => setIsConfirmDeleteModalOpen(false)}
-          onConfirm={() => onDelete(category.name, index)}
+          onConfirm={() => {
+            setIsConfirmDeleteModalOpen(false)
+            onDelete(confirmDelteteProp)
+          }}
           isButtonConfirmRed={true}
           buttonConfirmText="Excluir"
         />
@@ -64,7 +67,7 @@ function AdminList({ tableLayout, listData, onEdit, onDelete }) {
                 <img
                   src={DeleteIcon}
                   className="icon-deletar"
-                  onClick={() => handleConfirmDelete(row.name, index)}
+                  onClick={() => handleConfirmDelete(row)}
                   data-tooltip-id="tooltip"
                   data-tooltip-content="Excluir"
                 />
