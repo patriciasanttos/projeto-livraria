@@ -1,6 +1,8 @@
 import React, { useCallback, useState } from "react";
 
 import "./Manages.scss";
+import { ManagesModal } from "./ManagesModal";
+
 import SearchInputAdmin from "../../../Components/SearchInputAdmin/SearchInputAdmin";
 import AdminAddButton from "../../../Components/AdminAddButton/AdminAddButton";
 import mock from "../../../mocks/adminsMock.json";
@@ -8,18 +10,26 @@ import AdminList from "../../../Components/AdminList/AdminList";
 
 function Manages() {
   const [filters, setFilters] = useState({});
+  const [formData, setFormData] = useState({});
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isCreateAdmin, setIsCreateAdmin] = useState(false);
 
   const data = mock.data;
 
   const getFilteredData = () => {
-    let filteredData = [...data]
-    
+    let filteredData = [...data];
+
     if (filters.name) {
-      filteredData = filteredData.filter((adminItem) => adminItem.name.toUpperCase().indexOf(filters.name.toUpperCase()) !== -1)
+      filteredData = filteredData.filter(
+        (adminItem) =>
+          adminItem.name.toUpperCase().indexOf(filters.name.toUpperCase()) !==
+          -1
+      );
     }
 
-    return filteredData
-  }
+    return filteredData;
+  };
 
   const handleFilterChange = useCallback((evt) => {
     const { name, value } = evt.target;
@@ -40,6 +50,20 @@ function Manages() {
     }));
   }, []);
 
+  const onClickUpdate = (row) => {
+    setFormData({
+      ...row,
+    });
+    setIsModalOpen(true);
+    setIsCreateAdmin(false);
+  };
+
+  const onClickCreate = () => {
+    setFormData({});
+    setIsModalOpen(true);
+    setIsCreateAdmin(true);
+  };
+
   return (
     <section className="manages">
       <div className="inputs-manages">
@@ -49,7 +73,7 @@ function Manages() {
           name="name"
           onChange={handleFilterChange}
         />
-        <AdminAddButton title="Adicionar" />
+        <AdminAddButton title="Adicionar" onClick={onClickCreate} />
       </div>
 
       <AdminList
@@ -68,7 +92,17 @@ function Manages() {
           },
         ]}
         listData={getFilteredData()}
+        onEdit={onClickUpdate}
       ></AdminList>
+
+      {isModalOpen && (
+        <ManagesModal
+          isCreateAdmin={isCreateAdmin}
+          formData={formData}
+          setFormData={setFormData}
+          setIsModalOpen={setIsModalOpen}
+        />
+      )}
     </section>
   );
 }
