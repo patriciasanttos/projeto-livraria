@@ -2,13 +2,13 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import _ from "lodash";
 
-import "./ItemPage.scss";
-import ItemDescription from "../../../Components/ItemDescription/ItemDescription";
-import Category from "../../../components/Category/Category";
 import mock from "../../../mocks/categoriesMocks.json";
 
-import whatsappContactImage from "../../../assets/Images/whatsapp-contact.svg";
-import whatsappContactImageMobile from "../../../assets/Images/whatsapp-contact-mobile.svg";
+import ItemDescription from "../../../Components/ItemDescription/ItemDescription";
+import Category from "../../../Components/Category/Category";
+import WhatsappContact from "../../../Components/WhatsappContact/WhatsappContact";
+
+import "./ItemPage.scss";
 
 function ItemPage() {
   const { id } = useParams();
@@ -21,7 +21,7 @@ function ItemPage() {
         categoryId: category.id,
         categoryName: category.name,
       })),
-    ]; 
+    ];
   }, []);
 
   const product = allProducts.find((product) => product.id == id);
@@ -31,12 +31,13 @@ function ItemPage() {
   );
 
   const productsOfDifferentCategory = allProducts.filter(
-    (item) => item.id !== product.id && item.categoryId !== product.categoryId 
+    (item) => item.id !== product.id && item.categoryId !== product.categoryId
   )
-  
+
   return (
     <div>
       <ItemDescription product={product} />
+
       <section className="item-page-categories">
         <div className="categoris-container">
           <Category
@@ -52,17 +53,8 @@ function ItemPage() {
             categoryColor="blue"
           />
         </div>
-        <a target="_blank" href="https://wa.me/5512982294420">
-          <img
-            className="whatsapp-contact-image"
-            src={
-              window.innerWidth >= 768
-                ? whatsappContactImage
-                : whatsappContactImageMobile
-            }
-            alt="Whatsapp"
-          />
-        </a>
+
+        <WhatsappContact />
       </section>
     </div>
   );
