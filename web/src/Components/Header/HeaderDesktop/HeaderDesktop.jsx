@@ -16,10 +16,10 @@ import CartNumber from "../CartNumber/CartNumber";
 
 const HeaderDesktop = () => {
   const [query, setQuery] = useState();
-    const cartCookie = JSON.parse(localStorage.getItem("cart")) || {};
-    const cartItems = Object.keys(cartCookie).length
-    const [quantity, setQuantity] = useState(cartItems);
-    
+  const cartCookie = JSON.parse(localStorage.getItem("cart")) || {};
+  const cartItems = Object.keys(cartCookie).length
+  const [quantity, setQuantity] = useState(cartItems);
+
   return (
     <header className="header-desktop">
       <div className="header-content">
@@ -41,7 +41,7 @@ const HeaderDesktop = () => {
 
           <div className="header-buttons">
             <Link to="/cart" style={{ textDecoration: "none" }}>
-              <CartNumber quantity={quantity} setQuantity={setQuantity}  isMobile={false} />
+              <CartNumber quantity={quantity} setQuantity={setQuantity} isMobile={false} />
               <img
                 className="cart-img"
                 style={quantity == 0 ? { bottom: "0px" } : {}}
@@ -52,12 +52,12 @@ const HeaderDesktop = () => {
 
             <a
               target="_blank"
-              href="https://www.instagram.com/ciadaeducacaosjc/"
+              href={import.meta.env.VITE_INSTAGRAM_URL}
             >
               <img src={instagramGreenIcon} alt="Instagram" />
             </a>
 
-            <a target="_blank" href="https://maps.app.goo.gl/p6ybQXXrXudsQcsA7">
+            <a target="_blank" href={import.meta.env.VITE_MAPS_URL}>
               <img src={locationGreenIcon} alt="Localização" />
             </a>
           </div>
