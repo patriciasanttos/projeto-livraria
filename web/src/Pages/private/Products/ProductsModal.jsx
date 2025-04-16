@@ -37,18 +37,20 @@ export const ProductsModal = ({
       return image instanceof File ? image : undefined;
     };
 
-    updateProduct({
-      id: formData.id,
-      name: formData.name,
-      description: formData.description,
-      price: formData.price,
-      available: formData.available,
-      mainCategory: formData.mainCategory,
-      mainImage: mainImageIndex,
-      image_1: getImageFile(0),
-      image_2: getImageFile(1),
-      image_3: getImageFile(2),
-    });
+    const updatedFormData = new FormData();
+    updatedFormData.append('id', formData.id);
+    updatedFormData.append('name', formData.name);
+    updatedFormData.append('description', formData.description);
+    updatedFormData.append('price', formData.price);
+    updatedFormData.append('available', formData.available);
+    updatedFormData.append('mainCategory', formData.mainCategory);
+    updatedFormData.append('mainImage', formData.mainImage);
+    updatedFormData.append('image_1', getImageFile(0));
+    updatedFormData.append('image_2', getImageFile(1));
+    updatedFormData.append('image_3', getImageFile(2));
+
+    updateProduct(updatedFormData);
+    setIsModalOpen(false);
   }, [formData, mainImageIndex]);
 
   const handleFormChange = (evt) => {
