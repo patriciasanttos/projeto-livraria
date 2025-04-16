@@ -8,11 +8,11 @@ import {
   Patch,
   Post,
   Put,
-  UploadedFile,
+  UploadedFiles,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { FileInterceptor } from '@nestjs/platform-express';
+import { FileFieldsInterceptor } from '@nestjs/platform-express';
 import {
   ApiConsumes,
   ApiCreatedResponse,
@@ -47,7 +47,12 @@ export class CategoriesController {
 
   @Post()
   @UseGuards(AuthGuard)
-  @UseInterceptors(FileInterceptor('image'))
+  @UseInterceptors(
+    FileFieldsInterceptor([
+      { name: 'image', maxCount: 1 },
+      { name: 'banner', maxCount: 1 },
+    ]),
+  )
   //----Swagger configs
   @ApiConsumes('multipart/form-data')
   @ApiOperation({
@@ -61,14 +66,27 @@ export class CategoriesController {
   //-----
   createCategory(
     @Body() data: CreateCategoryBody,
-    @UploadedFile() image: Express.Multer.File,
+    @UploadedFiles()
+    images: {
+      image?: Express.Multer.File[];
+      banner?: Express.Multer.File[];
+    },
   ) {
-    return this.categoriesService.create({ ...data, image });
+    return this.categoriesService.create({
+      ...data,
+      image: images.image?.[0],
+      banner: images.banner?.[0],
+    });
   }
 
   @Put()
   @UseGuards(AuthGuard)
-  @UseInterceptors(FileInterceptor('image'))
+  @UseInterceptors(
+    FileFieldsInterceptor([
+      { name: 'image', maxCount: 1 },
+      { name: 'banner', maxCount: 1 },
+    ]),
+  )
   //----Swagger configs
   @ApiConsumes('multipart/form-data')
   @ApiOperation({
@@ -82,9 +100,17 @@ export class CategoriesController {
   //-----
   updateCategory(
     @Body() data: UpdateCategoryBody,
-    @UploadedFile() image: Express.Multer.File,
+    @UploadedFiles()
+    images: {
+      image?: Express.Multer.File[];
+      banner?: Express.Multer.File[];
+    },
   ) {
-    return this.categoriesService.update({ ...data, image });
+    return this.categoriesService.update({
+      ...data,
+      image: images.image?.[0],
+      banner: images.banner?.[0],
+    });
   }
 
   @Delete(':categoryId')

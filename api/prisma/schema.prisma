@@ -23,6 +23,7 @@ model Category {
   description          String?
   available            Boolean                @default(true)
   image                String?
+  banner               String?
   items                Item[]                 @relation("CategoryItems")
   SaleCategoryReport   SaleCategoryReport[]
   SearchCategoryReport SearchCategoryReport[]

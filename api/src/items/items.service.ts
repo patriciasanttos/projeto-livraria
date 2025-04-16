@@ -142,55 +142,6 @@ export class ItemsService {
     });
   }
 
-  async update(data: UpdateItemBody) {
-    const item = await this.getById(Number(data.id));
-
-    if (data.main_category)
-      await this.categoriesService.getById(Number(data.main_category));
-
-    await this.prisma.$transaction(async (tx) => {
-      await tx.item.update({
-        where: {
-          id: item.id,
-        },
-        data: {
-          name: data.name,
-          description: data.description,
-          price: data.price,
-          available: data.available,
-          mainCategory: Number(data.main_category) || item.mainCategory,
-        },
-      });
-
-      const images = {
-        image_1: data?.image_1,
-        image_2: data?.image_2,
-        image_3: data?.image_3,
-      };
-
-      const hasImagesChanges = Object.values(images).some((value) => value);
-
-      const mainImageInDb = await tx.itemImage.findFirst({
-        where: { id: data.main_image },
-      });
-      if (!mainImageInDb)
-        throw new HttpException(
-          { message: 'Main image id not found' },
-          HttpStatus.NOT_FOUND,
-        );
-
-      if (hasImagesChanges || data.main_image)
-        await this.handleUpdateImages({
-          tx,
-          itemId: item.id,
-          images,
-          mainImage: mainImageInDb.url,
-        });
-    });
-
-    return item;
-  }
-
   private async handleUpdateImages({
     tx,
     itemId,
@@ -263,6 +214,55 @@ export class ItemsService {
         data: { isMain: true },
       });
     }
+  }
+
+  async update(data: UpdateItemBody) {
+    const item = await this.getById(Number(data.id));
+
+    if (data.main_category)
+      await this.categoriesService.getById(Number(data.main_category));
+
+    await this.prisma.$transaction(async (tx) => {
+      await tx.item.update({
+        where: {
+          id: item.id,
+        },
+        data: {
+          name: data.name,
+          description: data.description,
+          price: data.price,
+          available: data.available,
+          mainCategory: Number(data.main_category) || item.mainCategory,
+        },
+      });
+
+      const images = {
+        image_1: data?.image_1,
+        image_2: data?.image_2,
+        image_3: data?.image_3,
+      };
+
+      const hasImagesChanges = Object.values(images).some((value) => value);
+
+      const mainImageInDb = await tx.itemImage.findFirst({
+        where: { id: data.main_image },
+      });
+      if (!mainImageInDb)
+        throw new HttpException(
+          { message: 'Main image id not found' },
+          HttpStatus.NOT_FOUND,
+        );
+
+      if (hasImagesChanges || data.main_image)
+        await this.handleUpdateImages({
+          tx,
+          itemId: item.id,
+          images,
+          mainImage: mainImageInDb.url,
+        });
+    });
+
+    return item;
   }
 
   async delete(itemId: number) {

@@ -34,11 +34,20 @@ export default class UpdateCategoryBody {
     if (typeof value === 'string') return value.toLowerCase() === 'true';
     return false;
   })
+  @IsOptional()
   available?: boolean;
 
   @ApiProperty({
     type: 'string',
+    format: 'binary',
   })
   @IsOptional()
   image?: Express.Multer.File;
+
+  @ApiProperty({
+    type: 'string',
+    format: 'binary',
+  })
+  @IsOptional()
+  banner?: Express.Multer.File;
 }

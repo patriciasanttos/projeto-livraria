@@ -44,6 +44,7 @@ export default class UpdateItemBody {
     if (typeof value === 'string') return value.toLowerCase() === 'true';
     return false;
   })
+  @IsOptional()
   available?: boolean;
 
   @ApiProperty()

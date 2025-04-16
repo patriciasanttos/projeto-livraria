@@ -47,27 +47,50 @@ export class CategoriesService {
   }
 
   async create(data: CreateCategoryBody) {
-    const category = await this.prisma.category.create({
+    let category = await this.prisma.category.create({
       data: {
         name: data.name,
         description: data.description,
       },
     });
 
-    if (!data.image) return category;
+    if (data.image) {
+      if (!Buffer.isBuffer(data.image.buffer)) {
+        console.error('Invalid image buffer');
+        throw new Error('Invalid image buffer');
+      }
 
-    const path = `${category.id}/image`;
-    const imageUrl = await this.supabase.uploadImage(
-      'categories',
-      data.image.buffer,
-      path,
-      data.image.mimetype,
-    );
+      const path = `${category.id}/image`;
 
-    return await this.prisma.category.update({
-      where: { id: category.id },
-      data: { image: imageUrl },
-    });
+      const imageUrl = await this.supabase.uploadImage(
+        'categories',
+        data.image.buffer,
+        path,
+        data.image.mimetype,
+      );
+
+      category = await this.prisma.category.update({
+        where: { id: category.id },
+        data: { image: imageUrl },
+      });
+    }
+
+    if (data.banner) {
+      const path = `${category.id}/banner`;
+      const bannerUrl = await this.supabase.uploadImage(
+        'categories',
+        data.banner.buffer,
+        path,
+        data.banner.mimetype,
+      );
+
+      category = await this.prisma.category.update({
+        where: { id: category.id },
+        data: { banner: bannerUrl },
+      });
+    }
+
+    return category;
   }
 
   async update(data: UpdateCategoryBody) {
@@ -84,6 +107,17 @@ export class CategoriesService {
       );
     }
 
+    let bannerUrl = '';
+    if (data.banner) {
+      const path = `${category.id}/banner`;
+      bannerUrl = await this.supabase.uploadImage(
+        'categories',
+        data.banner.buffer,
+        path,
+        data.banner.mimetype,
+      );
+    }
+
     return await this.prisma.category.update({
       where: {
         id: category.id,
@@ -92,6 +126,7 @@ export class CategoriesService {
         name: data.name,
         description: data.description,
         image: imageUrl,
+        banner: bannerUrl,
         available: data.available,
       },
     });
@@ -112,6 +147,15 @@ export class CategoriesService {
 
       if (category.image) {
         const url = new URL(category.image);
+        const path = decodeURIComponent(
+          url.pathname.replace('/storage/v1/object/public/categories/', ''),
+        );
+
+        await this.supabase.deleteImages('categories', [path]);
+      }
+
+      if (category.banner) {
+        const url = new URL(category.banner);
         const path = decodeURIComponent(
           url.pathname.replace('/storage/v1/object/public/categories/', ''),
         );

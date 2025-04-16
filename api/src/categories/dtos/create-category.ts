@@ -17,7 +17,15 @@ export default class CreateCategoryBody {
 
   @ApiProperty({
     type: 'string',
+    format: 'binary',
   })
   @IsOptional()
   image?: Express.Multer.File;
+
+  @ApiProperty({
+    type: 'string',
+    format: 'binary',
+  })
+  @IsOptional()
+  banner?: Express.Multer.File;
 }
