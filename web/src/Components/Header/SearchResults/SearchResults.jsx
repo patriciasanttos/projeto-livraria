@@ -13,16 +13,12 @@ const SearchResults = ({ query }) => {
   const [debouncedQuery, setDebouncedQuery] = useState(query);
 
   useEffect(() => {
-    setResults(data);
-  }, [data]);
-
-  useEffect(() => {
     const handler = setTimeout(() => setDebouncedQuery(query), 500);
 
     return () => clearTimeout(handler);
   }, [query]);
 
-  useEffect(() => {
+  const loadResults = useCallback(() => {
     if (!debouncedQuery) {
       setResults([]);
       return;
@@ -60,16 +56,18 @@ const SearchResults = ({ query }) => {
 
     else
       setResults([])
-  }, [debouncedQuery]);
+  }, [data, debouncedQuery]);
 
-  const handleReport = useCallback((entityType, entityId) => {
-    return mutate({
-      type: 'search',
-      entityType,
-      entityId,
-      count: 1
-    });
-  });
+  useEffect(() => {
+    loadResults()
+  }, [data, debouncedQuery]);
+
+  const handleReport = useCallback((entityType, entityId) => mutate({
+    type: 'search',
+    entityType,
+    entityId,
+    count: 1
+  }), []);
 
   if (isLoading)
     return <div>Buscando...</div>

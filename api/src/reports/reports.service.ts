@@ -3,6 +3,7 @@ import { PrismaService } from 'src/database/prisma.service';
 import ReportBodyRequest from './dtos/reports-body-request';
 import { ItemsService } from 'src/items/items.service';
 import { EntityType, ReportType } from 'src/@types/types';
+import { CategoriesService } from 'src/categories/categories.service';
 
 type GetByIdType = {
   type: ReportType;
@@ -16,6 +17,7 @@ export class ReportsService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly itemsService: ItemsService,
+    private readonly categoriesService: CategoriesService,
   ) {}
 
   async getAll() {
@@ -49,11 +51,16 @@ export class ReportsService {
   }
 
   private async getById({ type, entityType, entityId, reportId }: GetByIdType) {
-    let itemToGet: number | undefined;
+    let itemReportedId: number | undefined;
+    let categoryReportedId: number | undefined;
 
     if (entityId && entityType === 'item') {
       const item = await this.itemsService.getById(entityId);
-      itemToGet = item?.id;
+      itemReportedId = item?.id;
+    }
+    if (entityId && entityType === 'category') {
+      const category = await this.categoriesService.getById(entityId);
+      categoryReportedId = category?.id;
     }
 
     return await this.prisma.$transaction(async (tx) => {
@@ -62,7 +69,7 @@ export class ReportsService {
           return await tx.searchItemReport.findFirst({
             where: {
               id: reportId || undefined,
-              itemId: itemToGet,
+              itemId: itemReportedId,
             },
           });
 
@@ -70,7 +77,7 @@ export class ReportsService {
           return await tx.searchCategoryReport.findFirst({
             where: {
               id: reportId || undefined,
-              categoryId: itemToGet,
+              categoryId: categoryReportedId,
             },
           });
       }
@@ -80,7 +87,7 @@ export class ReportsService {
           return await tx.saleItemReport.findFirst({
             where: {
               id: reportId || undefined,
-              itemId: itemToGet,
+              itemId: itemReportedId,
             },
           });
 
@@ -88,7 +95,7 @@ export class ReportsService {
           return await tx.saleCategoryReport.findFirst({
             where: {
               id: reportId || undefined,
-              categoryId: itemToGet,
+              categoryId: categoryReportedId,
             },
           });
       }
