@@ -8,7 +8,7 @@ import './WhatsappContact.scss';
 
 function WhatsappContact() {
   return (
-    <a target='_blank' href="https://wa.me/5512982294420">
+    <a target='_blank' href={`https://wa.me/${import.meta.env.VITE_WHATSAPP_NUMBER}`}>
       <img
         className='whatsapp-contact-image'
         src={
