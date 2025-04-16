@@ -53,24 +53,24 @@ const SearchResults = ({ query }) => {
   }, [debouncedQuery]);
 
   return (
-    <ul className="search-results">
-      {
-        results.length === 0
-          ? <p>Nenhum resultado encontrado.</p>
-          : results.map(result => {
-            return result.type === "category"
-              ? // Category result
+    <div className="search-wrapper">
+      <ul className="search-results">
+        {results.length === 0 ? (
+          <p className="no-results">Nenhum resultado encontrado.</p>
+        ) : (
+          results.map(result => {
+            return result.type === "category" ? (
               <li key={result.type + '-' + result.id}>
                 <span>Categoria: </span>
                 {result.name}
               </li>
-              : // Item result
-              <li key={result.type + '-' + result.id}>
-                {result.name}
-              </li>
+            ) : (
+              <li key={result.type + '-' + result.id}>{result.name}</li>
+            );
           })
-      }
-    </ul>
+        )}
+      </ul>
+    </div>
   );
 };
 
