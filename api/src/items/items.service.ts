@@ -170,12 +170,21 @@ export class ItemsService {
 
       const hasImagesChanges = Object.values(images).some((value) => value);
 
+      const mainImageInDb = await tx.itemImage.findFirst({
+        where: { id: data.main_image },
+      });
+      if (!mainImageInDb)
+        throw new HttpException(
+          { message: 'Main image id not found' },
+          HttpStatus.NOT_FOUND,
+        );
+
       if (hasImagesChanges || data.main_image)
         await this.handleUpdateImages({
           tx,
           itemId: item.id,
           images,
-          mainImage: data.main_image,
+          mainImage: mainImageInDb.url,
         });
     });
 

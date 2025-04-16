@@ -1,12 +1,15 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import { ApiProperty } from '@nestjs/swagger';
+import { Transform } from 'class-transformer';
 import {
   IsBoolean,
+  IsInt,
   IsNotEmpty,
   IsOptional,
   IsString,
   Length,
   Matches,
+  Min,
 } from 'class-validator';
 
 export default class UpdateItemBody {
@@ -36,36 +39,44 @@ export default class UpdateItemBody {
 
   @ApiProperty()
   @IsBoolean()
-  @IsOptional()
+  @Transform(({ value }) => {
+    if (typeof value === 'boolean') return value;
+    if (typeof value === 'string') return value.toLowerCase() === 'true';
+    return false;
+  })
   available?: boolean;
 
   @ApiProperty()
-  @Length(1)
+  @IsInt({ message: 'Main category must be an id' })
+  @Min(1)
   @IsOptional()
   main_category?: number;
 
   @ApiProperty({
     type: 'string',
+    format: 'binary',
   })
   @IsOptional()
   image_1?: Express.Multer.File;
 
   @ApiProperty({
     type: 'string',
+    format: 'binary',
   })
   @IsOptional()
   image_2?: Express.Multer.File;
 
   @ApiProperty({
     type: 'string',
+    format: 'binary',
   })
   @IsOptional()
   image_3?: Express.Multer.File;
 
   @ApiProperty({
-    type: 'string',
+    type: 'number',
   })
   @IsOptional()
-  @IsString({ message: 'You must provide the url of the main image' })
-  main_image?: string;
+  @IsInt({ message: 'You must provide the main image index' })
+  main_image?: number;
 }

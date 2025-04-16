@@ -2,12 +2,13 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
   IsEmpty,
+  IsInt,
   IsNotEmpty,
-  IsNumber,
   IsOptional,
   IsString,
   Length,
   Matches,
+  Min,
 } from 'class-validator';
 
 export default class CreateItemBody {
@@ -31,24 +32,28 @@ export default class CreateItemBody {
   price: number;
 
   @ApiProperty()
-  @Length(1)
+  @IsInt({ message: 'Main category must be an id' })
+  @Min(1)
   @IsNotEmpty({ message: 'You must provide a main category id' })
   main_category: number;
 
   @ApiProperty({
     type: 'string',
+    format: 'binary',
   })
   @IsEmpty({ message: 'You must provide at least one image' })
   image_1: Express.Multer.File;
 
   @ApiProperty({
     type: 'string',
+    format: 'binary',
   })
   @IsOptional()
   image_2?: Express.Multer.File;
 
   @ApiProperty({
     type: 'string',
+    format: 'binary',
   })
   @IsOptional()
   image_3?: Express.Multer.File;
