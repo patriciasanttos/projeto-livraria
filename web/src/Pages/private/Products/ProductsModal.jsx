@@ -99,16 +99,15 @@ export const ProductsModal = ({
             name="category"
             value={formData.category}
             onChange={handleFormChange}
-          >
-            <option value={null}>
-                Selecione uma categoria
-              </option>
-            {categories.map((category) => (
-              <option key={category.id} value={category.name}>
-                {category.name}
-              </option>
-            ))}
-          </DropdownAdmin>
+            multiple={true}
+            placeholder="Categorias"
+            options={[
+              ...categories.map((category) => ({
+                value: category.name,
+                text: category.name,
+              })),
+            ]}
+          />
           <textarea
             name="description"
             value={formData.description}
@@ -175,11 +174,15 @@ export const ProductsModal = ({
                   checked={!formData?.available}
                   onChange={() =>
                     handleFormChange({
-                      target: { name: "available", value: false, type: "radio" },
+                      target: {
+                        name: "available",
+                        value: false,
+                        type: "radio",
+                      },
                     })
                   }
                 />
-                <p>Não Disponivel</p>
+                <p>Indisponível</p>
               </div>
             </div>
           </div>
