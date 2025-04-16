@@ -19,19 +19,11 @@
     display: flex;
     flex-direction: column;
 
-    // Impede interações quando a lista estiver vazia
-    pointer-events: none;
-
-    &.active {
-      // Libera interações quando houver resultados
-      pointer-events: auto;
-    }
-
     li {
       list-style-type: none;
       padding: 0.7em;
-      cursor: pointer;
       transition: background-color 0.2s ease;
+      cursor: pointer;
 
       &:hover {
         background-color: #ddd;
