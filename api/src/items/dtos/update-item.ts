@@ -78,6 +78,6 @@ export default class UpdateItemBody {
     type: 'number',
   })
   @IsOptional()
-  @IsInt({ message: 'You must provide the main image index' })
+  @Transform(({ value }) => Number(value))
   main_image?: number;
 }

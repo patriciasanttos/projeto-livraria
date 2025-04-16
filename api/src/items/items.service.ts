@@ -20,7 +20,7 @@ interface IHandleUpdateImages {
     image_2?: Express.Multer.File;
     image_3?: Express.Multer.File;
   };
-  mainImage?: string;
+  mainImage?: number;
 }
 
 @Injectable()
@@ -197,8 +197,10 @@ export class ItemsService {
     }
 
     if (mainImage) {
-      const imageExists = imagesInDb.find((img) => img.url === mainImage);
-      if (!imageExists)
+      const mainImageInDb = await tx.itemImage.findFirst({
+        where: { itemId },
+      });
+      if (!mainImageInDb)
         throw new HttpException(
           { message: 'Main image not found' },
           HttpStatus.BAD_REQUEST,
@@ -210,7 +212,7 @@ export class ItemsService {
       });
 
       await tx.itemImage.update({
-        where: { url: mainImage },
+        where: { url: mainImageInDb.url },
         data: { isMain: true },
       });
     }
@@ -244,21 +246,12 @@ export class ItemsService {
 
       const hasImagesChanges = Object.values(images).some((value) => value);
 
-      const mainImageInDb = await tx.itemImage.findFirst({
-        where: { id: data.main_image },
-      });
-      if (!mainImageInDb)
-        throw new HttpException(
-          { message: 'Main image id not found' },
-          HttpStatus.NOT_FOUND,
-        );
-
       if (hasImagesChanges || data.main_image)
         await this.handleUpdateImages({
           tx,
           itemId: item.id,
           images,
-          mainImage: mainImageInDb.url,
+          mainImage: data.main_image,
         });
     });
 
