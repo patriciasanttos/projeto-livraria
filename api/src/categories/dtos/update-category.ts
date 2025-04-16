@@ -1,6 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsOptional, IsString, Length } from 'class-validator';
+import { Transform } from 'class-transformer';
+import {
+  IsBoolean,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  Length,
+} from 'class-validator';
 
 export default class UpdateCategoryBody {
   @ApiProperty()
@@ -19,6 +26,15 @@ export default class UpdateCategoryBody {
   @Length(5, 100)
   @IsOptional()
   description?: string;
+
+  @ApiProperty()
+  @IsBoolean()
+  @Transform(({ value }) => {
+    if (typeof value === 'boolean') return value;
+    if (typeof value === 'string') return value.toLowerCase() === 'true';
+    return false;
+  })
+  available?: boolean;
 
   @ApiProperty({
     type: 'string',

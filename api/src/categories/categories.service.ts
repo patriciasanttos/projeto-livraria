@@ -92,6 +92,7 @@ export class CategoriesService {
         name: data.name,
         description: data.description,
         image: imageUrl,
+        available: data.available,
       },
     });
   }
