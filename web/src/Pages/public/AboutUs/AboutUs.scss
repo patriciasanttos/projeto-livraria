@@ -1,11 +1,12 @@
 .aboutus-page {
-  margin: 5% 5%;
+  margin: 3% 5%;
 
   .aboutus-section-title {
     color: var(--title-blue);
     font-size: 2.5rem;
     font-weight: 700;
     text-align: center;
+    margin: 0;
   }
 
   .aboutus-apresentation {
@@ -15,17 +16,21 @@
     gap: 2%;
 
     .aboutus-team {
-      margin: 5% 0 0 0;
+      margin: 3% 0 0 0;
 
       img {
-        width: 40dvw;
+        width: 32dvw;
       }
     }
 
     .aboutus-text-container {
+      width: 45%;
+
       .aboutus-text {
         color: var(--text-primary-color);
         font-size: 1.1rem;
+        margin: 0;
+        // width: 85%;
       }
     }
   }
@@ -40,6 +45,7 @@
       color: var(--title-blue);
       font-size: 2rem;
       text-align: center;
+      margin: 1rem 0 1rem 0;
     }
 
     .address-section {
@@ -131,7 +137,7 @@
     .faq-section-title {
       color: var(--title-blue);
       font-size: 2rem;
-      margin: 3rem 1.2rem;
+      text-align: center;
     }
 
     .faq-container {
@@ -174,6 +180,7 @@
           padding: 1rem;
           font-size: 1rem;
           border-top: 1px solid #2789b9;
+          margin: 0;
         }
       }
     }
@@ -200,6 +207,8 @@
       }
 
       .aboutus-text-container {
+        width: 85%;
+
         .aboutus-section-title {
           font-size: 2rem;
         }
@@ -223,9 +232,15 @@
         display: flex;
         flex-direction: column;
 
+        .location {
+          justify-content: center;
+        }
+
         .address-location {
+          width: 100%;
+          text-align: center;
           p {
-            margin: 0 0 15% 0;
+            margin: 0 0 8% 0;
           }
         }
 
