@@ -47,35 +47,14 @@ export default class UpdateItemBody {
   @ApiProperty({
     type: 'string',
   })
-  @IsString({ message: 'You must provide the url of the old image' })
-  @IsOptional()
-  old_image_1?: string;
-
-  @ApiProperty({
-    type: 'string',
-  })
   @IsOptional()
   image_1?: Express.Multer.File;
 
   @ApiProperty({
     type: 'string',
   })
-  @IsString({ message: 'You must provide the url of the old image' })
-  @IsOptional()
-  old_image_2?: string;
-
-  @ApiProperty({
-    type: 'string',
-  })
   @IsOptional()
   image_2?: Express.Multer.File;
-
-  @ApiProperty({
-    type: 'string',
-  })
-  @IsString({ message: 'You must provide the url of the old image' })
-  @IsOptional()
-  old_image_3?: string;
 
   @ApiProperty({
     type: 'string',

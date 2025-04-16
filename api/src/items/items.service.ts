@@ -20,11 +20,6 @@ interface IHandleUpdateImages {
     image_2?: Express.Multer.File;
     image_3?: Express.Multer.File;
   };
-  oldImages: {
-    image_1?: string;
-    image_2?: string;
-    image_3?: string;
-  };
   mainImage?: string;
 }
 
@@ -115,7 +110,7 @@ export class ItemsService {
       for (let image of images) {
         if (!image) continue;
 
-        const path = `${item.id}/image_${images.indexOf(image) + 1}`;
+        const path = `${item.id}/${image.fieldname}`;
         const url = await this.supabase.uploadImage(
           'products',
           image.buffer,
@@ -172,11 +167,6 @@ export class ItemsService {
         image_2: data?.image_2,
         image_3: data?.image_3,
       };
-      const oldImages = {
-        image_1: data?.old_image_1,
-        image_2: data?.old_image_2,
-        image_3: data?.old_image_3,
-      };
 
       const hasImagesChanges = Object.values(images).some((value) => value);
 
@@ -185,7 +175,6 @@ export class ItemsService {
           tx,
           itemId: item.id,
           images,
-          oldImages,
           mainImage: data.main_image,
         });
     });
@@ -197,7 +186,6 @@ export class ItemsService {
     tx,
     itemId,
     images,
-    oldImages,
     mainImage,
   }: IHandleUpdateImages) {
     let imagesInDb = await tx.itemImage.findMany({
@@ -205,44 +193,13 @@ export class ItemsService {
     });
 
     for (let [newImageKey, newImage] of Object.entries(images)) {
-      const oldImage: string = oldImages[newImageKey];
-
       if (!newImage) continue;
 
-      if (imagesInDb.length >= 3 && !oldImage)
-        throw new HttpException(
-          { message: 'Image limit reached. You can only have 3 images.' },
-          HttpStatus.BAD_REQUEST,
-        );
+      const existingImage = imagesInDb.find((img) =>
+        img.url.includes(newImageKey),
+      );
 
-      if (oldImage) {
-        const imageToUpdate = imagesInDb.find((img) => img.url === oldImage);
-        if (!imageToUpdate)
-          throw new HttpException(
-            { message: 'Invalid image url' },
-            HttpStatus.BAD_REQUEST,
-          );
-
-        const oldImageUrlFormated = new URL(oldImage);
-        const oldImagePath = decodeURIComponent(
-          oldImageUrlFormated.pathname.replace(
-            '/storage/v1/object/public/products',
-            '',
-          ),
-        );
-
-        await this.supabase.uploadImage(
-          'products',
-          newImage.buffer,
-          oldImagePath!,
-          newImage.mimetype,
-        );
-
-        await tx.itemImage.update({
-          where: { id: imageToUpdate.id },
-          data: { updated_at: new Date() },
-        });
-      } else {
+      if (!existingImage) {
         const newPath = `${itemId}/${newImageKey}`;
 
         const publicUrl = await this.supabase.uploadImage(
@@ -259,10 +216,25 @@ export class ItemsService {
             isMain: false,
           },
         });
+      } else {
+        const url = new URL(existingImage.url);
+        const path = decodeURIComponent(
+          url.pathname.replace('/storage/v1/object/public/products', ''),
+        );
+
+        await this.supabase.uploadImage(
+          'products',
+          newImage.buffer,
+          path!,
+          newImage.mimetype,
+        );
+
+        await tx.itemImage.update({
+          where: { id: existingImage.id },
+          data: { updated_at: new Date() },
+        });
       }
     }
-
-    const updated_at = new Date();
 
     if (mainImage) {
       const imageExists = imagesInDb.find((img) => img.url === mainImage);
@@ -279,14 +251,9 @@ export class ItemsService {
 
       await tx.itemImage.update({
         where: { url: mainImage },
-        data: { isMain: true, updated_at },
+        data: { isMain: true },
       });
     }
-
-    await tx.itemImage.updateMany({
-      where: { itemId },
-      data: { updated_at },
-    });
   }
 
   async delete(itemId: number) {
