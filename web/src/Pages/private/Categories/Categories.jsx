@@ -7,11 +7,13 @@ import SearchInputAdmin from "../../../Components/SearchInputAdmin/SearchInputAd
 import DropdownAdmin from "../../../Components/DropdownAdmin/DropdownAdmin";
 import AdminAddButton from "../../../Components/AdminAddButton/AdminAddButton";
 
-import { useCategoriesData } from "../../../hooks/useCategories";
+import { useCategoriesData, useDeleteCategory } from "../../../hooks/useCategories";
 import { CategoriesModal } from "./CategoriesModal";
 
 function Categories() {
   const { data: categoriesData } = useCategoriesData();
+  const { mutate: deleteCategory } = useDeleteCategory();
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isCreateItem, setIsCreateItem] = useState(false);
 
@@ -67,6 +69,12 @@ function Categories() {
     }));
   }, []);
 
+  const onClickCreate = () => {
+    setFormData({});
+    setIsModalOpen(true);
+    setIsCreateItem(true);
+  };
+
   const onClickUpdate = (row) => {
     setFormData({
       ...row,
@@ -75,11 +83,9 @@ function Categories() {
     setIsCreateItem(false);
   };
 
-  const onClickCreate = () => {
-    setFormData({});
-    setIsModalOpen(true);
-    setIsCreateItem(true);
-  };
+  const onClickDelete = (data) => {
+    return deleteCategory(data.id)
+  }
 
   return (
     <section className="categories-page-container">
@@ -118,8 +124,10 @@ function Categories() {
             ]}
           />
         </section>
+
         <AdminAddButton title="Adicionar" onClick={onClickCreate} />
       </section>
+
       <AdminList
         tableLayout={[
           {
@@ -137,6 +145,7 @@ function Categories() {
         ]}
         listData={filteredCategories}
         onEdit={onClickUpdate}
+        onDelete={onClickDelete}
       ></AdminList>
 
       {isModalOpen && (

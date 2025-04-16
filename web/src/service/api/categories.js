@@ -5,3 +5,9 @@ export const getAllCategories = async () => {
 
   return data;
 };
+
+export const deleteCategory = async (id) => {
+  const { data } = await api.delete(`/categories/${id}`);
+
+  return data;
+};
