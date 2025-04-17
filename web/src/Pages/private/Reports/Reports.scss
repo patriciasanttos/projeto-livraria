@@ -8,6 +8,7 @@
 
     width: 80dvw;
     height: 70dvh;
+    margin-top: 2rem;
 
     div {
       display: flex;
@@ -15,8 +16,13 @@
       align-items: center;
       gap: 0.5em;
 
+      width: 60%;
+
+      position: absolute;
+      bottom: 43rem;
+
       .reports-search-bar {
-        width: 18%;
+        width: 24%;
         height: 3dvh;
 
         border: 1px solid var(--button-lime-green);
@@ -26,7 +32,7 @@
       }
 
       select {
-        width: 18%;
+        width: 24%;
         height: 3dvh;
   
         font-size: 1dvw;
@@ -44,7 +50,7 @@
         justify-content: space-around;
         align-items: center;
 
-        width: 10%;
+        width: 15%;
         height: 3dvh;
 
         border-radius: 8px;

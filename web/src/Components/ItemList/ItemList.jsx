@@ -177,34 +177,42 @@ function ItemList() {
       </thead>
 
       <tbody>
-        {productList.map((product, index) => product?.id && (
-          <tr key={index}>
-            <td className="product-item">
-              <img src={product.image} alt="Imagem do item" width="120px" />
-              <p className="product-text">{product.name}</p>
-            </td>
-            <td className="right">{formatValues(product.price)}</td>
-            <td className="right">
-              <QuantityInput
-                quantity={product.quantity}
-                index={index}
-                onClickLess={onClickLess}
-                onClickMore={onClickMore}
-                onChangeQuantity={onChangeQuantity}
-                lastUpdatedIndex={lastUpdatedIndex}
-              />
-            </td>
-            <td className="right">{formatValues(product.subtotal)}</td>
-            <td>
-              <img
-                className="icon-remove"
-                src={DeleteIcon}
-                onClick={() => onClickRemoveItem(index)}
-                alt="Excluir"
-              />
-            </td>
-          </tr>
-        ))}
+        {productList.map(
+          (product, index) =>
+            product?.id && (
+              <tr key={index}>
+                <td className="product-item">
+                  <img
+                    src={product.image}
+                    alt="Imagem do item"
+                    width="120px"
+                    className="item-list-image"
+                  />
+                  <p className="product-text">{product.name}</p>
+                </td>
+                <td className="right">{formatValues(product.price)}</td>
+                <td className="right">
+                  <QuantityInput
+                    quantity={product.quantity}
+                    index={index}
+                    onClickLess={onClickLess}
+                    onClickMore={onClickMore}
+                    onChangeQuantity={onChangeQuantity}
+                    lastUpdatedIndex={lastUpdatedIndex}
+                  />
+                </td>
+                <td className="right">{formatValues(product.subtotal)}</td>
+                <td>
+                  <img
+                    className="icon-remove"
+                    src={DeleteIcon}
+                    onClick={() => onClickRemoveItem(index)}
+                    alt="Excluir"
+                  />
+                </td>
+              </tr>
+            )
+        )}
       </tbody>
     </table>
   );
@@ -212,7 +220,7 @@ function ItemList() {
   const TableMobile = () => {
     return productList.map((product, index) => product?.id && (
       <section className="mobile-row" key={index}>
-        <img src={product.image} alt="Imagem do item" width="120px" />
+        <img src={product.image} alt="Imagem do item" className="item-list-image" width="120px" />
 
         <div className="column">
           <div className="mobile-row">
