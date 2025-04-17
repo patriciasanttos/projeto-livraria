@@ -82,9 +82,9 @@ function Reports() {
 
       const datasets = [
         {
-          label: 'Relatório de vendas de itens',
+          label: "Relatório de vendas de itens",
           data: counts,
-          backgroundColor: 'rgba(255, 99, 132, 0.5)',
+          backgroundColor: "rgba(23, 150, 150, 0.5)",
         },
       ];
 
