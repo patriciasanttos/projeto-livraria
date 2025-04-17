@@ -17,8 +17,8 @@ const BannerSlider = () => {
   const [slides, setSlides] = useState([bannerOne, bannerTwo]);
 
   useEffect(() => {
-    console.log(data);
-    setSlides(() => data.map(category => category.banner));
+    if (data)
+      setSlides(prev => ([...prev, ...data.map(category => category.banner)]));
   }, [data]);
 
   useEffect(() => {

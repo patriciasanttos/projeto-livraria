@@ -27,17 +27,18 @@ export class SupabaseService {
     buffer: Buffer,
     path: string,
     mimetype: string,
+    type: 'image' | 'banner',
   ) {
     await this.ensureBucketExists(bucket);
 
-    const compressed = await sharp(buffer)
-      .resize(800)
-      .jpeg({ quality: 80 })
-      .toBuffer();
+    let file = buffer;
+
+    if (type === 'image')
+      file = await sharp(buffer).resize(800).jpeg({ quality: 80 }).toBuffer();
 
     const { error } = await this.supabase.storage
       .from(bucket)
-      .upload(path, compressed, {
+      .upload(path, file, {
         contentType: mimetype,
         upsert: true,
       });

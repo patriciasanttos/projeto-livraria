@@ -67,6 +67,7 @@ export class CategoriesService {
         data.image.buffer,
         path,
         data.image.mimetype,
+        'image',
       );
 
       category = await this.prisma.category.update({
@@ -82,6 +83,7 @@ export class CategoriesService {
         data.banner.buffer,
         path,
         data.banner.mimetype,
+        'banner',
       );
 
       category = await this.prisma.category.update({
@@ -104,6 +106,7 @@ export class CategoriesService {
         data.image.buffer,
         path,
         data.image.mimetype,
+        'image',
       );
     }
 
@@ -115,6 +118,7 @@ export class CategoriesService {
         data.banner.buffer,
         path,
         data.banner.mimetype,
+        'banner',
       );
     }
 

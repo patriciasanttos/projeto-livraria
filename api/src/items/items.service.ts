@@ -116,6 +116,7 @@ export class ItemsService {
           image.buffer,
           path,
           image.mimetype,
+          'image',
         );
 
         const isMainImage =
@@ -167,6 +168,7 @@ export class ItemsService {
           newImage.buffer,
           newPath,
           newImage.mimetype,
+          'image',
         );
 
         await tx.itemImage.create({
@@ -187,6 +189,7 @@ export class ItemsService {
           newImage.buffer,
           path!,
           newImage.mimetype,
+          'image',
         );
 
         await tx.itemImage.update({
