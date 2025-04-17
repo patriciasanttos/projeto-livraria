@@ -6,6 +6,12 @@ export const getAllCategories = async () => {
   return data;
 };
 
+export const updateCategory = async (updatedData) => {
+  const { data } = await api.put("/categories", updatedData);
+
+  return data;
+};
+
 export const deleteCategory = async (id) => {
   const { data } = await api.delete(`/categories/${id}`);
 

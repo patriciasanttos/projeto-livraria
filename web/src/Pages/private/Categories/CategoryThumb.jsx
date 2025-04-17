@@ -1,7 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 const CategoryThumb = React.memo(({ name, image, onClickDeleteImage }) => {
-  const imageUrl = React.useMemo(() => URL.createObjectURL(image), [image]);
+  const imageUrl = React.useMemo(() => {
+    if (image instanceof File) {
+      return URL.createObjectURL(image);
+    }
+
+    return image?.url || "";
+  }, [image]);
+
+  useEffect(() => {
+    console.log(name);
+  }, [image])
 
   return (
     <div
@@ -13,7 +23,7 @@ const CategoryThumb = React.memo(({ name, image, onClickDeleteImage }) => {
       <div
         className="image-delete"
         onClick={(e) => {
-          e.stopPropagation(); // Prevent triggering the onClick for setting main image
+          e.stopPropagation();
           onClickDeleteImage(name);
         }}
       >

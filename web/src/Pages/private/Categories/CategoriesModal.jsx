@@ -1,8 +1,9 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 
 import ModalAdmin from "../../../Components/ModalAdmin/ModalAdmin";
 import SearchInputAdmin from "../../../Components/SearchInputAdmin/SearchInputAdmin";
 import CategoryThumb from "./CategoryThumb";
+import { useUpdateCategory } from "../../../hooks/useCategories";
 
 export const CategoriesModal = ({
   isCreateItem,
@@ -10,14 +11,20 @@ export const CategoriesModal = ({
   setFormData,
   setIsModalOpen,
 }) => {
+  const { mutate: updateProduct } = useUpdateCategory();
+
   const onConfirmSaveProduct = useCallback(() => {
+    console.log(formData);
+  }, [formData]);
+
+  useEffect(() => {
     console.log(formData);
   }, [formData]);
 
   const onClickDeleteImage = (name) => {
     setFormData((prevFormData) => ({
       ...prevFormData,
-      [name]: null,
+      [name]: null
     }));
   };
 
@@ -94,7 +101,7 @@ export const CategoriesModal = ({
             }
             onClick={() => document.getElementById("image-upload").click()}
           >
-            Upload Imagem
+            Enviar Imagem
           </button>
           <input
             type="file"
@@ -105,6 +112,7 @@ export const CategoriesModal = ({
             onChange={handleFormChange}
           />
         </div>
+
         <div className="modal-column">
           <div className="status-container">
             <label className="status-title">Status:</label>
@@ -142,29 +150,29 @@ export const CategoriesModal = ({
           </div>
 
           <div className="image-preview-row">
-            {formData?.imageBanner && (
+            {formData?.banner && (
               <CategoryThumb
-                name="imageBanner"
-                image={formData?.imageBanner}
+                name="banner"
+                image={formData?.banner}
                 onClickDeleteImage={onClickDeleteImage}
               />
             )}
           </div>
 
           <button
-            disabled={formData?.imageBanner}
+            disabled={formData?.banner}
             type="button"
             className={
-              formData?.imageBanner ? "upload-button disabled" : "upload-button"
+              formData?.banner ? "upload-button disabled" : "upload-button"
             }
             onClick={() => document.getElementById("image-upload2").click()}
           >
-            Upload Banner
+            Enviar Banner
           </button>
           <input
             type="file"
             id="image-upload2"
-            name="imageBanner"
+            name="banner"
             accept="image/*"
             style={{ display: "none" }}
             onChange={handleFormChange}
