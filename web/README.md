@@ -66,7 +66,7 @@ Usando yarn:
 yarn install
 ```
 
-4. Caso necessário, mude a URL da api no arquivo `.env`
+4. Configure as variáveis de ambiente conforme o arquivo `.env.example`
 
 5. Inicie a aplicação:
 

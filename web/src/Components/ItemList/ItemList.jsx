@@ -24,10 +24,10 @@ function ItemList() {
 
     return results.length > 0
       ? {
-          ...results[0],
-          quantity: 1,
-          subtotal: Number(results[0].price),
-        }
+        ...results[0],
+        quantity: 1,
+        subtotal: Number(results[0].price),
+      }
       : null;
   };
 
@@ -119,15 +119,15 @@ function ItemList() {
 
   const onClickCompletePurchase = () => {
     let url =
-      "https://wa.me/551176362085?text=Lista+de+compras+no+carrinho%3A%0A";
+      `https://wa.me/${import.meta.env.VITE_WHATSAPP_NUMBER}?text=Lista+de+compras+no+carrinho%3A%0A`;
 
-      console.log(productList);
-      productList.forEach((product) => {
-        url += `%0A%E2%80%A2${product.quantity}x+${product.name}+(R$${product.price})`;
-      })
-      url += `%0A%0ATotal da compra: ${formatValues(calculateTotal())}`;
+    console.log(productList);
+    productList.forEach((product) => {
+      url += `%0A%E2%80%A2${product.quantity}x+${product.name}+(R$${product.price})`;
+    })
+    url += `%0A%0ATotal da compra: ${formatValues(calculateTotal())}`;
 
-      window.open(url, '_blank').focus()
+    window.open(url, '_blank').focus()
   };
 
   const NoItems = () => {

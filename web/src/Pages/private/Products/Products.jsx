@@ -150,31 +150,26 @@ function Products() {
             name="category"
             value={filters.category}
             onChange={handleFilterChange}
-          >
-            <option value=""> Todos </option>
-            {categories.map((category) => (
-              <option key={category.id} value={category.name}>
-                {category.name}
-              </option>
-            ))}
-          </DropdownAdmin>
+            options={[
+              { value: "", text: "Todos" },
+              ...categories.map((category) => ({
+                value: category.name,
+                text: category.name,
+              })),
+            ]}
+          />
 
           <DropdownAdmin
             title="Status"
             name="available"
             value={filters.available}
             onChange={handleFilterChange}
-          >
-            <option name="available" value="">
-              Tudo
-            </option>
-            <option name="available" value={true}>
-              Disponível
-            </option>
-            <option name="available" value={false}>
-              Sem estoque
-            </option>
-          </DropdownAdmin>
+            options={[
+              { value: "", text: "Tudo" },
+              { value: true, text: "Disponível" },
+              { value: false, text: "Sem estoque" },
+            ]}
+          />
           <div className="results-found">
             <h3>Itens encontrados</h3>
             <p>{filteredProducts.length}</p>

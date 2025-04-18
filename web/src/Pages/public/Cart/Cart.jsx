@@ -4,11 +4,7 @@ import './Cart.scss';
 import ItemList from '../../../Components/ItemList/ItemList';
 
 function Cart() {
-  return (
-    <>
-    <ItemList />
-    </>
-  );
+  return <ItemList />
 }
 
-export default Cart;
+export default Cart
