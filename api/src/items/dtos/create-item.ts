@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import { ApiProperty } from '@nestjs/swagger';
+import { Transform } from 'class-transformer';
 import {
   IsEmpty,
   IsInt,
@@ -32,7 +33,7 @@ export default class CreateItemBody {
   price: number;
 
   @ApiProperty()
-  @IsInt({ message: 'Main category must be an id' })
+  @Transform(({ value }) => Number(value))
   @Min(1)
   @IsNotEmpty({ message: 'You must provide a main category id' })
   main_category: number;

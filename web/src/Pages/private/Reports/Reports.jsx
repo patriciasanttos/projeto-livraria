@@ -117,7 +117,7 @@ function Reports() {
   return (
     <div className='reports-page'>
       <div className="chart-container">
-        <div>
+        <div className='reports-filters'>
           <input
             className='reports-search-bar'
             type="text"
@@ -151,12 +151,14 @@ function Reports() {
           </button>
         </div>
 
-        {chartData && chartData.labels && chartData.datasets && (
-          <ReportsChart
-            type={chartConfig.type}
-            data={chartData}
-          />
-        )}
+        <div className="charts">
+          {chartData && chartData.labels && chartData.datasets && (
+            <ReportsChart
+              type={chartConfig.type}
+              data={chartData}
+            />
+          )}
+        </div>
       </div>
     </div>
   );
