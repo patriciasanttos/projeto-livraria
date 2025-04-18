@@ -9,6 +9,7 @@ import AdminAddButton from "../../../Components/AdminAddButton/AdminAddButton";
 
 import { useCategoriesData, useDeleteCategory } from "../../../hooks/useCategories";
 import { CategoriesModal } from "./CategoriesModal";
+import { toast } from "react-toastify";
 
 function Categories() {
   const { data: categoriesData } = useCategoriesData();
@@ -17,7 +18,7 @@ function Categories() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isCreateItem, setIsCreateItem] = useState(false);
 
-  const [filters, setFilters] = useState({});
+  const [filters, setFilters] = useState({ available: 'all' });
   const [formData, setFormData] = useState({});
 
   const filteredCategories = useMemo(() => {
@@ -47,6 +48,12 @@ function Categories() {
       );
     }
 
+    if (filters.available !== 'all') {
+      categories = categories.filter(
+        (category) => category.available === filters.available
+      );
+    }
+
     return categories;
   }, [categoriesData, filters]);
 
@@ -70,21 +77,33 @@ function Categories() {
   }, []);
 
   const onClickCreate = () => {
-    setFormData({});
+    setFormData({
+      name: '',
+      available: true
+    });
     setIsModalOpen(true);
     setIsCreateItem(true);
   };
 
   const onClickUpdate = (row) => {
-    setFormData({
-      ...row,
-    });
+    setFormData(row);
     setIsModalOpen(true);
     setIsCreateItem(false);
   };
 
   const onClickDelete = (data) => {
-    return deleteCategory(data.id)
+    const deletingDataToast = toast.loading('Deletando categoria...', {
+      autoClose: false
+    });
+
+    try {
+      deleteCategory(data.id)
+      toast.dismiss(deletingDataToast);
+      toast.success('Categoria deletada com sucesso!');
+    } catch (err) {
+      toast.dismiss(deletingDataToast);
+      toast.error('Erro ao deletar categoria.');
+    }
   }
 
   return (
@@ -116,9 +135,11 @@ function Categories() {
           <DropdownAdmin
             title="Status"
             name="available"
-            value={filters.status}
+            value={filters.available}
+            defaultValue={filters.available}
             onChange={handleFilterChange}
             options={[
+              { value: 'all', text: "Tudo" },
               { value: true, text: "Disponível" },
               { value: false, text: "Indisponível" }
             ]}

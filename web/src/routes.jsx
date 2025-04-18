@@ -40,6 +40,7 @@ export default function MainRoutes() {
           <Route path="products" element={<privatePages.Products />} />
           <Route path="categories" element={<privatePages.AdminCategoriesPage />} />
           <Route path="reports" element={<privatePages.Reports />} />
+          <Route path="manage" element={<privatePages.Manage />} />
         </Route>
       </Routes>
     </BrowserRouter>

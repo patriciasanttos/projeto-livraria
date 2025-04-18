@@ -42,15 +42,8 @@ function AsideBar() {
                     </Link>
                 </li>
 
-                {/* <li>
-                    <Link to="/admin/control_panel">
-                        <img src={clients} alt="Clientes" />
-                        <p>Clientes</p>
-                    </Link>
-                </li> */}
-
                 <li>
-                    <Link to="/admin/control_panel">
+                    <Link to="/admin/manage">
                         <img src={manage} alt="Gerenciar" />
                         <p>Gerenciar</p>
                     </Link>

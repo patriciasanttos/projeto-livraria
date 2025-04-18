@@ -95,7 +95,7 @@ function Reports() {
   }, [data, chartConfig, query]);
 
   const handleReload = async () => {
-    const realoadingDataToast = toast.warning('Recarregando dados...', {
+    const realoadingDataToast = toast.loading('Recarregando dados...', {
       autoClose: false
     });
 

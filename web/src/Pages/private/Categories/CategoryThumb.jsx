@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 const CategoryThumb = React.memo(({ name, image, onClickDeleteImage }) => {
   const imageUrl = React.useMemo(() => {
@@ -6,12 +6,8 @@ const CategoryThumb = React.memo(({ name, image, onClickDeleteImage }) => {
       return URL.createObjectURL(image);
     }
 
-    return image?.url || "";
+    return image || "";
   }, [image]);
-
-  useEffect(() => {
-    console.log(name);
-  }, [image])
 
   return (
     <div

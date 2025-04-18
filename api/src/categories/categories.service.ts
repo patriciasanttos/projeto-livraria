@@ -51,6 +51,7 @@ export class CategoriesService {
       data: {
         name: data.name,
         description: data.description,
+        available: data.available,
       },
     });
 
@@ -98,10 +99,28 @@ export class CategoriesService {
   async update(data: UpdateCategoryBody) {
     const category = await this.getById(Number(data.id));
 
-    let imageUrl = '';
-    if (data.image) {
+    const updatedCategoryData: Record<string, any> = {};
+
+    if (typeof data.name !== 'undefined') updatedCategoryData.name = data.name;
+
+    if (typeof data.description !== 'undefined')
+      updatedCategoryData.description = data.description;
+
+    if (typeof data.available !== 'undefined')
+      updatedCategoryData.available = data.available;
+
+    if (category.image && data.deleteImage) {
+      updatedCategoryData.image = null;
+
+      const url = new URL(category.image);
+      const path = decodeURIComponent(
+        url.pathname.replace('/storage/v1/object/public/categories/', ''),
+      );
+
+      await this.supabase.deleteImages('categories', [path]);
+    } else if (data.image) {
       const path = `${category.id}/image`;
-      imageUrl = await this.supabase.uploadImage(
+      updatedCategoryData.image = await this.supabase.uploadImage(
         'categories',
         data.image.buffer,
         path,
@@ -110,10 +129,19 @@ export class CategoriesService {
       );
     }
 
-    let bannerUrl = '';
+    if (category.banner && data.deleteBanner) {
+      updatedCategoryData.banner = null;
+
+      const url = new URL(category.banner);
+      const path = decodeURIComponent(
+        url.pathname.replace('/storage/v1/object/public/categories/', ''),
+      );
+
+      await this.supabase.deleteImages('categories', [path]);
+    }
     if (data.banner) {
       const path = `${category.id}/banner`;
-      bannerUrl = await this.supabase.uploadImage(
+      updatedCategoryData.banner = await this.supabase.uploadImage(
         'categories',
         data.banner.buffer,
         path,
@@ -126,13 +154,7 @@ export class CategoriesService {
       where: {
         id: category.id,
       },
-      data: {
-        name: data.name,
-        description: data.description,
-        image: imageUrl,
-        banner: bannerUrl,
-        available: data.available,
-      },
+      data: updatedCategoryData,
     });
   }
 
