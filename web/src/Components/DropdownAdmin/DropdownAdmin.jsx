@@ -6,6 +6,7 @@ function DropdownAdmin({
   multiple,
   options,
   value,
+  defaultValue,
   onChange,
   placeholder,
   name,
@@ -44,7 +45,7 @@ function DropdownAdmin({
       }))}
     />
   ) : (
-    <section className="dropdown-admin-container">
+    <section defaultValue={defaultValue} className="dropdown-admin-container">
       <h3>{title}</h3>
       <select name={name} onChange={onChange} value={value} {...props}>
         {options?.map((optionItem, index) => (

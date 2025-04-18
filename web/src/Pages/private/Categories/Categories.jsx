@@ -17,7 +17,7 @@ function Categories() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isCreateItem, setIsCreateItem] = useState(false);
 
-  const [filters, setFilters] = useState({});
+  const [filters, setFilters] = useState({ available: 'all' });
   const [formData, setFormData] = useState({});
 
   const filteredCategories = useMemo(() => {
@@ -44,6 +44,12 @@ function Categories() {
     if (filters.quantityTo) {
       categories = categories.filter(
         (category) => Number(category.itemsQuantity) <= filters.quantityTo
+      );
+    }
+
+    if (filters.available !== 'all') {
+      categories = categories.filter(
+        (category) => category.available === filters.available
       );
     }
 
@@ -116,9 +122,11 @@ function Categories() {
           <DropdownAdmin
             title="Status"
             name="available"
-            value={filters.status}
+            value={filters.available}
+            defaultValue={filters.available}
             onChange={handleFilterChange}
             options={[
+              { value: 'all', text: "Tudo" },
               { value: true, text: "Disponível" },
               { value: false, text: "Indisponível" }
             ]}
