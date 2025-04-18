@@ -3,6 +3,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import './SearchResults.scss'
 import { useAvailableProductsData } from "../../../hooks/useProducts";
 import { useCreateReport } from "../../../hooks/useReports";
+import Loading from "../../PageProcessing/Loading/Loading";
 
 const SearchResults = ({ query }) => {
   const { data, isLoading } = useAvailableProductsData();
@@ -70,7 +71,7 @@ const SearchResults = ({ query }) => {
   }), []);
 
   if (isLoading)
-    return <div>Buscando...</div>
+    return <div className="searching-results"><Loading title="Buscando" style={{marginTop: "2rem"}}/></div>
 
   if (!results)
     return <div>Nenhum resultado encontrado.</div>

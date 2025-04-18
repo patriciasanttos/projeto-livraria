@@ -11,6 +11,7 @@ import CartEmpty from "../../assets/Images/cart-empty.svg";
 //-----Components
 import QuantityInput from "./QuantityInput";
 import ModalDelete from "../ModalDelete/ModalDelete";
+import Loading from "../PageProcessing/Loading/Loading";
 
 import "./ItemList.scss";
 
@@ -144,7 +145,7 @@ function ItemList() {
   };
 
   if (isLoading)
-    return <h1>Buscando dados...</h1>
+    return <Loading title="Buscando itens" style={{marginTop: "4rem"}}/>;
 
   if (error)
     return <h1>Erro ao buscar itens...</h1>

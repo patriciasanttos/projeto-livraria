@@ -9,6 +9,7 @@ import Category from "../../../components/Category/Category";
 import WhatsappContact from "../../../Components/WhatsappContact/WhatsappContact";
 
 import "./ItemPage.scss";
+import Loading from "../../../Components/PageProcessing/Loading/Loading";
 
 function ItemPage() {
   const { id } = useParams();
@@ -45,7 +46,7 @@ function ItemPage() {
   }, [data, id, locationState]);
 
   if (isLoading)
-    return <h1>Buscando dados...</h1>
+    return <Loading title="Buscando produto" style={{marginTop: "4rem"}}/>
 
   if (!data || !product || error)
     return <h1>Produto não encontrado</h1>

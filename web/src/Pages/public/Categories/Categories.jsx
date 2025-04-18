@@ -13,6 +13,7 @@ import WhatsappContact from '../../../Components/WhatsappContact/WhatsappContact
 import { useCategoriesData } from '../../../hooks/useCategories';
 
 import './Categories.scss';
+import Loading from '../../../Components/PageProcessing/Loading/Loading';
 
 
 function Categories() {
@@ -96,7 +97,7 @@ function Categories() {
   }, [categoryName, navigate, categoriesData, loadData]);
 
   if (isLoading)
-    return <p className='no-items-warn'>Buscando dados...</p>
+    return <Loading title="Buscando categorias"/>;
 
   if ((data && data.length <= 0) || error)
     return <p className='no-items-warn'>Desculpe, parece que nenhum item foi adicionado nessa categoria ainda.</p>
