@@ -9,6 +9,7 @@ import ControlPanel from "./private/ControlPanel/ControlPanel";
 import Products from "./private/Products/Products";
 import AdminCategoriesPage from "./private/Categories/Categories";
 import Reports from "./private/Reports/Reports";
+import Manage from "./private/Manages/Manages";
 
 export const publicPages = {
   HomePage,
@@ -24,4 +25,5 @@ export const privatePages = {
   Products,
   AdminCategoriesPage,
   Reports,
+  Manage,
 };

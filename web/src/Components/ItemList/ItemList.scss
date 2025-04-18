@@ -6,6 +6,19 @@
         color: var(--title-blue);
     }
 
+    .table-container {
+        max-height: 435px;
+        overflow-y: auto;
+        margin-bottom: 20px;
+
+        thead {
+            position: sticky;
+            top: 0;
+            background-color: #fff;
+            z-index: 1;
+        }
+    }
+
     table {
         width: 100%;
 

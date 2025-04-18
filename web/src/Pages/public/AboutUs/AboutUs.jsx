@@ -21,6 +21,14 @@ function AboutUs() {
             beatae dolorem dignissimos, pariatur amet possimus deserunt iste
             accusantium nesciunt nobis magnam culpa explicabo ex est,
             consectetur ipsa? Officiis aperiam doloribus eligendi inventore.
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Laborum
+            beatae dolorem dignissimos, pariatur amet possimus deserunt iste
+            accusantium nesciunt nobis magnam culpa explicabo ex est,
+            consectetur ipsa? Officiis aperiam doloribus eligendi inventore.
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Laborum
+            beatae dolorem dignissimos, pariatur amet possimus deserunt iste
+            accusantium nesciunt nobis magnam culpa explicabo ex est,
+            consectetur ipsa? Officiis aperiam doloribus eligendi inventore.
           </p>
         </div>
       </section>
