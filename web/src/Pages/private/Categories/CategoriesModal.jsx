@@ -4,6 +4,7 @@ import ModalAdmin from "../../../Components/ModalAdmin/ModalAdmin";
 import SearchInputAdmin from "../../../Components/SearchInputAdmin/SearchInputAdmin";
 import CategoryThumb from "./CategoryThumb";
 import { useCreateCategory, useUpdateCategory } from "../../../hooks/useCategories";
+import { toast } from "react-toastify";
 
 export const CategoriesModal = ({
   isCreateItem,
@@ -16,6 +17,10 @@ export const CategoriesModal = ({
 
   const onConfirmSaveProduct = useCallback(() => {
     if (isCreateItem) {
+      const creatingDataToast = toast.loading('Criando categoria...', {
+        autoClose: false
+      });
+
       const createItemFormData = new FormData();
       createItemFormData.append('name', formData.name);
       createItemFormData.append('description', formData.description);
@@ -23,9 +28,20 @@ export const CategoriesModal = ({
       createItemFormData.append('image', formData.image);
       createItemFormData.append('banner', formData.banner);
 
-      createCategory(createItemFormData);
-      return setIsModalOpen(false);
+      try {
+        createCategory(createItemFormData);
+        setIsModalOpen(false);
+        toast.dismiss(creatingDataToast);
+        toast.success('Categoria criada com sucesso!');
+      } catch (err) {
+        toast.dismiss(creatingDataToast);
+        toast.error('Erro ao criar categoria.');
+      }
     } else if (!isCreateItem) {
+      const updatingDataToast = toast.loading('Atualizando categoria...', {
+        autoClose: false
+      });
+
       const updatedFormData = new FormData();
       updatedFormData.append('id', formData.id);
       updatedFormData.append('name', formData.name);
@@ -42,8 +58,15 @@ export const CategoriesModal = ({
       else if (formData.banner)
         updatedFormData.append('banner', formData.banner);
 
-      updateCategory(updatedFormData);
-      return setIsModalOpen(false);
+      try {
+        updateCategory(updatedFormData);
+        setIsModalOpen(false);
+        toast.dismiss(updatingDataToast);
+        toast.success('Categoria atualizada com sucesso!');
+      } catch (err) {
+        toast.dismiss(updatingDataToast);
+        toast.error('Erro ao atualizar categoria.');
+      }
     }
   }, [formData]);
 

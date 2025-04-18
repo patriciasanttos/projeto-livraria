@@ -9,6 +9,7 @@ import AdminAddButton from "../../../Components/AdminAddButton/AdminAddButton";
 
 import { useCategoriesData, useDeleteCategory } from "../../../hooks/useCategories";
 import { CategoriesModal } from "./CategoriesModal";
+import { toast } from "react-toastify";
 
 function Categories() {
   const { data: categoriesData } = useCategoriesData();
@@ -91,7 +92,18 @@ function Categories() {
   };
 
   const onClickDelete = (data) => {
-    return deleteCategory(data.id)
+    const deletingDataToast = toast.loading('Deletando categoria...', {
+      autoClose: false
+    });
+
+    try {
+      deleteCategory(data.id)
+      toast.dismiss(deletingDataToast);
+      toast.success('Categoria deletada com sucesso!');
+    } catch (err) {
+      toast.dismiss(deletingDataToast);
+      toast.error('Erro ao deletar categoria.');
+    }
   }
 
   return (
