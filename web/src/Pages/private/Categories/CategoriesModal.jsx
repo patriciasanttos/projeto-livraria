@@ -11,14 +11,26 @@ export const CategoriesModal = ({
   setFormData,
   setIsModalOpen,
 }) => {
-  const { mutate: updateProduct } = useUpdateCategory();
+  const { mutate: updateCategory } = useUpdateCategory();
 
   const onConfirmSaveProduct = useCallback(() => {
-    console.log(formData);
-  }, [formData]);
+    const updatedFormData = new FormData();
+    updatedFormData.append('id', formData.id);
+    updatedFormData.append('name', formData.name);
+    updatedFormData.append('description', formData.description);
+    updatedFormData.append('available', formData.available);
 
-  useEffect(() => {
-    console.log(formData);
+    if (formData.image === null)
+      updatedFormData.append('deleteImage', 'true');
+    else if (formData.image)
+      updatedFormData.append('image', formData.image);
+
+    if (formData.banner === null)
+      updatedFormData.append('deleteBanner', 'true');
+    else if (formData.banner)
+      updatedFormData.append('banner', formData.banner);
+
+    updateCategory(updatedFormData)
   }, [formData]);
 
   const onClickDeleteImage = (name) => {
@@ -87,7 +99,7 @@ export const CategoriesModal = ({
             {formData?.image && (
               <CategoryThumb
                 name="image"
-                image={formData?.image}
+                image={formData.image}
                 onClickDeleteImage={onClickDeleteImage}
               />
             )}

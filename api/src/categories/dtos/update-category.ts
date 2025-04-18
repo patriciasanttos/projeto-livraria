@@ -44,10 +44,26 @@ export default class UpdateCategoryBody {
   @IsOptional()
   image?: Express.Multer.File;
 
+  @IsOptional()
+  @Transform(({ value }) => {
+    if (typeof value === 'boolean') return value;
+    if (typeof value === 'string') return value.toLowerCase() === 'true';
+    return false;
+  })
+  deleteImage?: boolean;
+
   @ApiProperty({
     type: 'string',
     format: 'binary',
   })
   @IsOptional()
   banner?: Express.Multer.File;
+
+  @IsOptional()
+  @Transform(({ value }) => {
+    if (typeof value === 'boolean') return value;
+    if (typeof value === 'string') return value.toLowerCase() === 'true';
+    return false;
+  })
+  deleteBanner?: boolean;
 }
