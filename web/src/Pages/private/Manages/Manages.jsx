@@ -1,21 +1,22 @@
 import React, { useCallback, useState } from "react";
+import { useAdminsData } from "../../../hooks/useAdmins";
 
-import "./Manages.scss";
-import { ManagesModal } from "./ManagesModal";
-
+//-----Components
 import SearchInputAdmin from "../../../Components/SearchInputAdmin/SearchInputAdmin";
 import AdminAddButton from "../../../Components/AdminAddButton/AdminAddButton";
-import mock from "../../../mocks/adminsMock.json";
 import AdminList from "../../../Components/AdminList/AdminList";
+import { ManagesModal } from "./ManagesModal";
+
+import "./Manages.scss";
 
 function Manages() {
+  const { data, isLoading } = useAdminsData();
+
   const [filters, setFilters] = useState({});
   const [formData, setFormData] = useState({});
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isCreateAdmin, setIsCreateAdmin] = useState(false);
-
-  const data = mock.data;
 
   const getFilteredData = () => {
     let filteredData = [...data];
@@ -23,8 +24,7 @@ function Manages() {
     if (filters.name) {
       filteredData = filteredData.filter(
         (adminItem) =>
-          adminItem.name.toUpperCase().indexOf(filters.name.toUpperCase()) !==
-          -1
+          adminItem.name.toUpperCase().indexOf(filters.name.toUpperCase()) !== -1
       );
     }
 
@@ -64,9 +64,12 @@ function Manages() {
     setIsCreateAdmin(true);
   };
 
+  if (isLoading)
+    return <h1>Buscando dados...</h1>
+
   return (
-    <section className="manages">
-      <div className="inputs-manages">
+    <section className="manage-page">
+      <div className="manage-page-inputs">
         <SearchInputAdmin
           title="Nome"
           placeholder="Pessoa 1"

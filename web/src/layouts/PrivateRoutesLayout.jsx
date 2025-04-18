@@ -42,7 +42,8 @@ function PrivateRoutesLayout() {
     '/admin/control_panel': 'Painel de controle',
     '/admin/categories': 'Categorias',
     '/admin/products': 'Produtos',
-    '/admin/reports': 'Relatórios'
+    '/admin/reports': 'Relatórios',
+    '/admin/manage': 'Gerenciar',
   };
   const page = pagesObj[pathname];
 

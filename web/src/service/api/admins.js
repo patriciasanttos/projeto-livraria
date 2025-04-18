@@ -21,3 +21,9 @@ export const validate = async () => {
 
   return response;
 };
+
+export const getAllAdmins = async () => {
+  const { data } = await api.get("/admins");
+
+  return data;
+};
