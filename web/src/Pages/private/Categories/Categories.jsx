@@ -76,15 +76,16 @@ function Categories() {
   }, []);
 
   const onClickCreate = () => {
-    setFormData({});
+    setFormData({
+      name: '',
+      available: true
+    });
     setIsModalOpen(true);
     setIsCreateItem(true);
   };
 
   const onClickUpdate = (row) => {
-    setFormData({
-      ...row,
-    });
+    setFormData(row);
     setIsModalOpen(true);
     setIsCreateItem(false);
   };

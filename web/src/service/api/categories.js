@@ -6,6 +6,12 @@ export const getAllCategories = async () => {
   return data;
 };
 
+export const createCategory = async (newData) => {
+  const { data } = await api.post("/categories", newData);
+
+  return data;
+};
+
 export const updateCategory = async (updatedData) => {
   const { data } = await api.put("/categories", updatedData);
 

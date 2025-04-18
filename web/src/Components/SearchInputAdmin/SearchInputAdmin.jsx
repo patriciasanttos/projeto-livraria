@@ -10,7 +10,7 @@ function SearchInputAdmin({ title, placeholder, className, name, onChange, value
         placeholder={placeholder}
         className={className}
         onChange={onChange}
-        value={value}
+        {...(value !== undefined ? { value } : { defaultValue: '' })}
         {...props}
       />
     </section>

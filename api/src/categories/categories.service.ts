@@ -51,6 +51,7 @@ export class CategoriesService {
       data: {
         name: data.name,
         description: data.description,
+        available: data.available,
       },
     });
 
