@@ -12,6 +12,7 @@ import CartEmpty from "../../assets/Images/cart-empty.svg";
 import QuantityInput from "./QuantityInput";
 import ModalDelete from "../ModalDelete/ModalDelete";
 import Loading from "../PageProcessing/Loading/Loading";
+import ErrorFinding from "../PageProcessing/ErrorFinding/ErrorFinding";
 
 import "./ItemList.scss";
 
@@ -145,10 +146,15 @@ function ItemList() {
   };
 
   if (isLoading)
-    return <Loading title="Buscando itens" style={{marginTop: "4rem"}}/>;
+    return <Loading title="Buscando lista de compras" style={{marginTop: "4rem"}}/>;
 
   if (error)
-    return <h1>Erro ao buscar itens...</h1>
+    return (
+      <ErrorFinding
+        text="Erro ao carregar a lista de compras"
+        style={{ marginTop: "6rem" }}
+      />
+    );
 
   const NoItems = () => {
     return (
