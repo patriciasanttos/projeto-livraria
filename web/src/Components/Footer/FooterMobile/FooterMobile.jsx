@@ -26,7 +26,7 @@ const FooterMobile = () => {
 
                         <h2 className="flex-field-title">Redes Sociais</h2>
 
-                        <a className="social-media" href="https://www.instagram.com/ciadaeducacaosjc/" target="_blank">
+                        <a className="social-media" href={import.meta.env.VITE_INSTAGRAM_URL} target="_blank">
                             <img src={instagram} alt="insta-logo" />
                             <p>@ciadaeducacaosjc</p>
                         </a>

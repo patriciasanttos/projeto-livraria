@@ -28,7 +28,6 @@ export const ProductsModal = ({
   };
 
   const onConfirmSaveProduct = useCallback(() => {
-    console.log(formData);
   }, [formData]);
 
   const handleFormChange = (evt) => {
@@ -74,9 +73,11 @@ export const ProductsModal = ({
       title={isCreateItem ? `Adicionar novo produto` : `Editar produto`}
       onClose={() => setIsModalOpen(false)}
       onConfirm={onConfirmSaveProduct}
-      buttonConfirmText={"Adicionar"}
+      buttonConfirmText={
+        isCreateItem ? `Adicionar` : `Salvar`
+      }
     >
-      <div className="modal-row">
+      <section className="modal-row">
         <div className="modal-column">
           <SearchInputAdmin
             className="modal-field"
@@ -99,16 +100,15 @@ export const ProductsModal = ({
             name="category"
             value={formData.category}
             onChange={handleFormChange}
-          >
-            <option value={null}>
-                Selecione uma categoria
-              </option>
-            {categories.map((category) => (
-              <option key={category.id} value={category.name}>
-                {category.name}
-              </option>
-            ))}
-          </DropdownAdmin>
+            multiple={true}
+            placeholder="Categorias"
+            options={[
+              ...categories.map((category) => ({
+                value: category.name,
+                text: category.name,
+              })),
+            ]}
+          />
           <textarea
             name="description"
             value={formData.description}
@@ -175,16 +175,20 @@ export const ProductsModal = ({
                   checked={!formData?.available}
                   onChange={() =>
                     handleFormChange({
-                      target: { name: "available", value: false, type: "radio" },
+                      target: {
+                        name: "available",
+                        value: false,
+                        type: "radio",
+                      },
                     })
                   }
                 />
-                <p>Não Disponivel</p>
+                <p>Indisponível</p>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </section>
     </ModalAdmin>
   );
 };
