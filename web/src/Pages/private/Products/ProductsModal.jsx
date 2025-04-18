@@ -28,7 +28,6 @@ export const ProductsModal = ({
   };
 
   const onConfirmSaveProduct = useCallback(() => {
-    console.log(formData);
   }, [formData]);
 
   const handleFormChange = (evt) => {
@@ -74,9 +73,11 @@ export const ProductsModal = ({
       title={isCreateItem ? `Adicionar novo produto` : `Editar produto`}
       onClose={() => setIsModalOpen(false)}
       onConfirm={onConfirmSaveProduct}
-      buttonConfirmText={"Adicionar"}
+      buttonConfirmText={
+        isCreateItem ? `Adicionar` : `Salvar`
+      }
     >
-      <div className="modal-row">
+      <section className="modal-row">
         <div className="modal-column">
           <SearchInputAdmin
             className="modal-field"
@@ -187,7 +188,7 @@ export const ProductsModal = ({
             </div>
           </div>
         </div>
-      </div>
+      </section>
     </ModalAdmin>
   );
 };

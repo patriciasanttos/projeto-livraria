@@ -38,6 +38,7 @@ export default function MainRoutes() {
           <Route path="admin/control_panel" element={<privatePages.ControlPanel />} />
           <Route path="admin/products" element={<privatePages.Products />} />
           <Route path="admin/categories" element={<privatePages.AdminCategoriesPage />} />
+          <Route path="admin/manage" element={<privatePages.Manage />} />
         </Route>
       </Routes>
     </BrowserRouter>
