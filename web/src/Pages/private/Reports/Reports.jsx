@@ -8,6 +8,7 @@ import reloadIcon from '../../../assets/icons/reload.svg';
 
 //-----Components
 import ReportsChart from '../../../Components/ReportsChart/ReportsChart';
+import Loading from '../../../Components/PageProcessing/Loading/Loading';
 
 import './Reports.scss';
 
@@ -109,7 +110,7 @@ function Reports() {
 
 
   if (isLoading)
-    return <p className='no-items-warn'>Buscando dados...</p>
+    return <Loading title="Buscando dados" style={{ marginTop: "15rem" }} />;
 
   if ((data?.searchReports?.length === 0 && data?.salesReports?.length === 0) || error)
     return <p className='no-items-warn'>Desculpe, parece que nenhum relatório foi encontrado.</p>

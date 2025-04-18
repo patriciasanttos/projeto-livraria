@@ -11,6 +11,7 @@ import AdminAddButton from "../../../Components/AdminAddButton/AdminAddButton";
 
 import { useCategoriesData } from "../../../hooks/useCategories";
 import { useDeleteProduct } from "../../../hooks/useProducts";
+import Loading from "../../../Components/PageProcessing/Loading/Loading";
 
 const currency = new Intl.NumberFormat("pt-BR", {
   style: "currency",
@@ -124,7 +125,7 @@ function Products() {
   }
 
   if (isLoading)
-    return <h1>Buscando dados...</h1>
+    return <Loading title="Buscando produtos" style={{marginTop: "15rem"}}/>
 
   if (error)
     return <h1>Erro ao carregar dados.</h1>

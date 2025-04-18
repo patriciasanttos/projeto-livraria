@@ -4,6 +4,7 @@ import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import AsideBar from '../Components/AsideBar/AsideBar';
 import HeaderAdmin from '../components/HeaderAdmin/HeaderAdmin';
 import { validate } from '../service/api/admins';
+import Loading from '../Components/PageProcessing/Loading/Loading';
 
 function PrivateRoutesLayout() {
   const { pathname } = useLocation();
@@ -46,7 +47,7 @@ function PrivateRoutesLayout() {
   };
   const page = pagesObj[pathname];
 
-  if (isLoading) return <p>Carregando...</p>;
+  if (isLoading) <Loading title="Carregando" style={{ marginTop: "15rem" }} />;
 
   return (
     <div style={{
