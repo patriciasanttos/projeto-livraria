@@ -15,7 +15,7 @@ const FooterMobile = () => {
         <footer className="footer-mobile">
             <div className="first-footer-section">
                 <Link to="/">
-                    <img className="logo" src={logo} alt="logo" />
+                    <img className="logo-footer" src={logo} alt="logo" />
                 </Link>
 
                 <div>

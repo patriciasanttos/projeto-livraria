@@ -2,7 +2,7 @@
     width: 100dvw;
     height: 20%;
 
-    background-image: url('../../../assets/images/desktop-bg-header.svg');
+    background-image: url('../../../assets/images/bg-header.png');
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -12,7 +12,7 @@
         position: relative;
         display: flex;
         flex-direction: column;
-        height: 16dvh;
+        // height: 16dvh;
 
         padding: 1% 5%;
 
@@ -22,7 +22,7 @@
             justify-content: space-between;
             align-items: center;
 
-            height: 12dvh;
+            // height: 12dvh;
 
             .header-logo-link .header-logo {
                 width: 8dvw;
@@ -102,7 +102,8 @@
         }
 
         .header-content-bottom {
-            margin-top: 1.2em;
+            margin-top: 1.5em;
+            align-items: center;
         }
     }
 }
