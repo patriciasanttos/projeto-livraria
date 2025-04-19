@@ -103,7 +103,7 @@ export class AdminsService {
         HttpStatus.NOT_FOUND,
       );
 
-    return;
+    return { id: admin.id };
   }
 
   async create(data: CreateAdminBody) {

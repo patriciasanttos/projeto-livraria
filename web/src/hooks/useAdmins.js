@@ -1,5 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { createAdmin, deleteAdmin, getAllAdmins } from "../service/api/admins";
+import {
+  createAdmin,
+  deleteAdmin,
+  getAllAdmins,
+  updateAdmin,
+} from "../service/api/admins";
 
 export const useAdminsData = () =>
   useQuery({
@@ -18,6 +23,20 @@ export const useCreateAdmin = () => {
     },
     onError: (error) => {
       console.error("Error creating admin: ", error);
+    },
+  });
+};
+
+export const useUpdateAdmin = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (data) => updateAdmin(data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["admins"] });
+    },
+    onError: (error) => {
+      console.error("Error updating admin: ", error);
     },
   });
 };

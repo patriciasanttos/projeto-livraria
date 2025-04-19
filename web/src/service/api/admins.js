@@ -34,6 +34,12 @@ export const createAdmin = async (newData) => {
   return data;
 };
 
+export const updateAdmin = async (updatedData) => {
+  const { data } = await api.put("/admins", updatedData);
+
+  return data;
+};
+
 export const deleteAdmin = async (id) => {
   const { data } = await api.delete(`/admins/${id}`);
 

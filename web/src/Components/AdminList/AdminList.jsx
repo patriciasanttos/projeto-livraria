@@ -28,7 +28,6 @@ function AdminList({ type, tableLayout, listData, onEdit, onDelete }) {
 
   useEffect(() => {
     if (type !== "adminAccounts") return setAcionsLoaded(true);
-
     loadCurrentAdmin();
   }, [type, listData]);
 
@@ -65,8 +64,8 @@ function AdminList({ type, tableLayout, listData, onEdit, onDelete }) {
       <table>
         <thead>
           <tr>
-            {tableLayout.map((title) => (
-              <th key={title.key}>{title.label}</th>
+            {tableLayout.map((title, index) => (
+              <th key={index}>{title.label}</th>
             ))}
             <th className="actions">Ações</th>
           </tr>
@@ -87,9 +86,8 @@ function AdminList({ type, tableLayout, listData, onEdit, onDelete }) {
                   data-tooltip-id="tooltip"
                   data-tooltip-content="Editar"
                 />
-                {type === "adminAccounts" &&
-                  currentAdmin !== row.id &&
-                  actionsLoaded && (
+                {
+                  (type === 'adminAccounts' && currentAdmin !== row.id && actionsLoaded) && (
                     <img
                       src={DeleteIcon}
                       className="icon-deletar"
@@ -97,16 +95,19 @@ function AdminList({ type, tableLayout, listData, onEdit, onDelete }) {
                       data-tooltip-id="tooltip"
                       data-tooltip-content="Excluir"
                     />
-                  )}
-                {type !== "adminAccounts" && (
-                  <img
-                    src={DeleteIcon}
-                    className="icon-deletar"
-                    onClick={() => handleConfirmDelete(row)}
-                    data-tooltip-id="tooltip"
-                    data-tooltip-content="Excluir"
-                  />
-                )}
+                  )
+                }
+                {
+                  type !== 'adminAccounts' && (
+                    <img
+                      src={DeleteIcon}
+                      className="icon-deletar"
+                      onClick={() => handleConfirmDelete(row)}
+                      data-tooltip-id="tooltip"
+                      data-tooltip-content="Excluir"
+                    />
+                  )
+                }
               </td>
             </tr>
           ))}

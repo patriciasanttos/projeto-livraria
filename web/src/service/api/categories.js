@@ -23,3 +23,11 @@ export const deleteCategory = async (id) => {
 
   return data;
 };
+
+export const addProductToCategory = async (categoryId, productId) => {
+  const { data } = await api.patch(
+    `/categories/${categoryId}/items/${productId}/add`
+  );
+
+  return data;
+};

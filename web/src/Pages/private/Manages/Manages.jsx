@@ -62,6 +62,7 @@ function Manages() {
       email: '',
       phone: '',
       password: '',
+      newPassword: '',
       passwordConfirmation: '',
     });
     setIsModalOpen(true);
@@ -69,7 +70,12 @@ function Manages() {
   };
 
   const onClickUpdate = (row) => {
-    setFormData(row);
+    setFormData({
+      ...row,
+      password: '',
+      newPassword: '',
+      passwordConfirmation: '',
+    });
     setIsModalOpen(true);
     setIsCreateAdmin(false);
   };

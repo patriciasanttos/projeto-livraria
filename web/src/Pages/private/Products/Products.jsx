@@ -110,7 +110,16 @@ function Products() {
   }, []);
 
   const onClickCreate = () => {
-    setFormData({})
+    setFormData({
+      name: '',
+      description: '',
+      price: '',
+      available: true,
+      mainImage: '',
+      image_1: '',
+      image_2: '',
+      image_3: ''
+    })
     setIsModalOpen(true);
     setIsCreateItem(true);
   };

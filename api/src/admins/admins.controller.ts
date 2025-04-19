@@ -111,7 +111,7 @@ export class AdminsController {
   })
   //-----
   async validate(@Req() { cookies: { user } }: Request) {
-    await this.adminsService.validate(user);
+    return this.adminsService.validate(user);
   }
 
   @Post()

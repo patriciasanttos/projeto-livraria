@@ -1,10 +1,12 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 
 import ModalAdmin from "../../../Components/ModalAdmin/ModalAdmin";
 import SearchInputAdmin from "../../../Components/SearchInputAdmin/SearchInputAdmin";
 import DropdownAdmin from "../../../Components/DropdownAdmin/DropdownAdmin";
 import ProductThumb from "./ProductThumb";
-import { useUpdateProduct } from "../../../hooks/useProducts";
+import { useCreateProduct, useUpdateProduct } from "../../../hooks/useProducts";
+import { toast } from "react-toastify";
+import { useAddProductToCategory } from "../../../hooks/useCategories";
 
 export const ProductsModal = ({
   isCreateItem,
@@ -13,9 +15,11 @@ export const ProductsModal = ({
   setFormData,
   setIsModalOpen,
 }) => {
-  const [mainImageIndex, setMainImageIndex] = useState(formData.images.findIndex(img => img.isMain));
+  const [mainImageIndex, setMainImageIndex] = useState(formData?.images?.findIndex(img => img.isMain) || 0);
 
   const { mutate: updateProduct } = useUpdateProduct();
+  const { mutateAsync: createProduct } = useCreateProduct();
+  const { mutateAsync: addProductToCategory } = useAddProductToCategory();
 
   const onClickDeleteImage = (index) => {
     const imageList = formData?.images.splice(index, 1);
@@ -30,27 +34,85 @@ export const ProductsModal = ({
     }));
   };
 
-  const onConfirmSaveProduct = useCallback(() => {
-    const getImageFile = (index) => {
-      const image = formData.images?.[index];
+  const onConfirmSaveProduct = useCallback(async () => {
+    if (isCreateItem) {
+      const creatingDataToast = toast.loading('Criando produto...', {
+        autoClose: false
+      });
 
-      return image instanceof File ? image : undefined;
-    };
+      const getImageFile = (index) => {
+        const image = formData.images?.[index];
 
-    const updatedFormData = new FormData();
-    updatedFormData.append('id', formData.id);
-    updatedFormData.append('name', formData.name);
-    updatedFormData.append('description', formData.description);
-    updatedFormData.append('price', formData.price);
-    updatedFormData.append('available', formData.available);
-    updatedFormData.append('mainCategory', formData.mainCategory);
-    updatedFormData.append('mainImage', formData.mainImage);
-    updatedFormData.append('image_1', getImageFile(0));
-    updatedFormData.append('image_2', getImageFile(1));
-    updatedFormData.append('image_3', getImageFile(2));
+        return image instanceof File ? image : undefined;
+      };
 
-    updateProduct(updatedFormData);
-    setIsModalOpen(false);
+      const newDataForm = new FormData();
+      newDataForm.append('id', formData.id);
+      newDataForm.append('name', formData.name);
+      newDataForm.append('description', formData.description);
+      newDataForm.append('price', formData.price);
+      newDataForm.append('available', formData.available);
+      newDataForm.append('main_category', formData.categories[0]);
+      newDataForm.append('main_image', formData.mainImage);
+      newDataForm.append('image_1', getImageFile(0));
+      newDataForm.append('image_2', getImageFile(1));
+      newDataForm.append('image_3', getImageFile(2));
+
+      try {
+        const newProduct = await createProduct(newDataForm);
+
+        for (let category of formData.categories) {
+          if (category === formData.categories[0])
+            continue;
+
+          await addProductToCategory({
+            categoryId: String(category),
+            productId: String(newProduct.id),
+          });
+        }
+
+        setIsModalOpen(false);
+        toast.dismiss(creatingDataToast);
+        toast.success('Produto criado com sucesso!');
+      } catch (err) {
+        console.log(err);
+
+        toast.dismiss(creatingDataToast);
+        toast.error('Erro ao criar produto.');
+      }
+    } else if (!isCreateItem) {
+      const updatingDataToast = toast.loading('Atualizando produto...', {
+        autoClose: false
+      });
+
+      const getImageFile = (index) => {
+        const image = formData.images?.[index];
+
+        return image instanceof File ? image : undefined;
+      };
+
+      const updatedFormData = new FormData();
+      updatedFormData.append('id', formData.id);
+      updatedFormData.append('name', formData.name);
+      updatedFormData.append('description', formData.description);
+      updatedFormData.append('price', formData.price);
+      updatedFormData.append('available', formData.available);
+      updatedFormData.append('mainCategory', formData.mainCategory);
+      updatedFormData.append('mainImage', formData.mainImage);
+      updatedFormData.append('image_1', getImageFile(0));
+      updatedFormData.append('image_2', getImageFile(1));
+      updatedFormData.append('image_3', getImageFile(2));
+
+      try {
+        updateProduct(updatedFormData);
+        setIsModalOpen(false);
+        toast.dismiss(updatingDataToast);
+        toast.success('Produto atualizado com sucesso!');
+      } catch (err) {
+        toast.dismiss(updatingDataToast);
+        toast.error('Erro ao atualizar produto.');
+      }
+    }
   }, [formData, mainImageIndex]);
 
   const handleFormChange = (evt) => {
@@ -120,14 +182,14 @@ export const ProductsModal = ({
 
           <DropdownAdmin
             className="modal-select"
-            name="category"
-            value={formData.category}
+            name="categories"
+            value={formData.categories}
             onChange={handleFormChange}
             multiple={true}
             placeholder="Categorias"
             options={[
               ...categories.map((category) => ({
-                value: category.name,
+                value: category.id,
                 text: category.name,
               })),
             ]}
