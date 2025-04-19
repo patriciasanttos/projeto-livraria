@@ -1,6 +1,6 @@
 import React from "react";
 
-const CategoryThumb = React.memo(({ name, image, onClickDeleteImage }) => {
+const CategoryThumb = React.memo(({ name, image, onClickDeleteImage, ...props }) => {
   const imageUrl = React.useMemo(() => {
     if (image instanceof File) {
       return URL.createObjectURL(image);
@@ -13,6 +13,7 @@ const CategoryThumb = React.memo(({ name, image, onClickDeleteImage }) => {
     <div
       style={{
         backgroundImage: `url(${imageUrl})`,
+        ...props.style
       }}
       className="image-preview"
     >
