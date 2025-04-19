@@ -27,3 +27,15 @@ export const getAllAdmins = async () => {
 
   return data;
 };
+
+export const createAdmin = async (newData) => {
+  const { data } = await api.post("/admins", newData);
+
+  return data;
+};
+
+export const deleteAdmin = async (id) => {
+  const { data } = await api.delete(`/admins/${id}`);
+
+  return data;
+};

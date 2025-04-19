@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import { useAdminsData } from "../../../hooks/useAdmins";
+import { useAdminsData, useDeleteAdmin } from "../../../hooks/useAdmins";
 
 //-----Components
 import SearchInputAdmin from "../../../Components/SearchInputAdmin/SearchInputAdmin";
@@ -10,9 +10,12 @@ import Loading from "../../../Components/PageProcessing/Loading/Loading";
 import ErrorFinding from "../../../Components/PageProcessing/ErrorFinding/ErrorFinding";
 
 import "./Manages.scss";
+import { Description } from "@mui/icons-material";
+import { toast } from "react-toastify";
 
 function Manages() {
   const { data, isLoading, error } = useAdminsData();
+  const { mutate: deleteAdmin } = useDeleteAdmin();
 
   const [filters, setFilters] = useState({});
   const [formData, setFormData] = useState({});
@@ -53,19 +56,38 @@ function Manages() {
     }));
   }, []);
 
-  const onClickUpdate = (row) => {
+  const onClickCreate = () => {
     setFormData({
-      ...row,
+      name: '',
+      email: '',
+      phone: '',
+      password: '',
+      passwordConfirmation: '',
     });
+    setIsModalOpen(true);
+    setIsCreateAdmin(true);
+  };
+
+  const onClickUpdate = (row) => {
+    setFormData(row);
     setIsModalOpen(true);
     setIsCreateAdmin(false);
   };
 
-  const onClickCreate = () => {
-    setFormData({});
-    setIsModalOpen(true);
-    setIsCreateAdmin(true);
-  };
+  const onClickDelete = (data) => {
+    const deletingDataToast = toast.loading('Deletando administrador...', {
+      autoClose: false
+    });
+
+    try {
+      deleteAdmin(data.id)
+      toast.dismiss(deletingDataToast);
+      toast.success('Administrador deletado com sucesso!');
+    } catch (err) {
+      toast.dismiss(deletingDataToast);
+      toast.error('Erro ao deletar Administrador.');
+    }
+  }
 
   if (isLoading)
     return (
@@ -106,12 +128,14 @@ function Manages() {
             label: "E-mail",
           },
           {
-            key: "contact",
+            key: "phone",
             label: "Contato",
           },
         ]}
         listData={getFilteredData()}
         onEdit={onClickUpdate}
+        onDelete={onClickDelete}
+        type='adminAccounts'
       ></AdminList>
 
       {isModalOpen && (

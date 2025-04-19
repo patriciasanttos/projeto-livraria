@@ -1,13 +1,34 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
+import { jwtDecode } from 'jwt-decode';
 
-import "./AdminList.scss";
-import ModalAdmin from "../ModalAdmin/ModalAdmin";
+//-----Icons
 import EditIcon from "../../assets/icons/editIcon.svg";
 import DeleteIcon from "../../assets/icons/deleteIcon.svg";
 
-function AdminList({ tableLayout, listData, onEdit, onDelete }) {
+//-----Component
+import ModalAdmin from "../ModalAdmin/ModalAdmin";
+
+import "./AdminList.scss";
+import { validate as validateAdmin } from "../../service/api/admins";
+
+
+function AdminList({ type, tableLayout, listData, onEdit, onDelete }) {
   const [isConfirmDeleteModalOpen, setIsConfirmDeleteModalOpen] = useState(false);
   const [confirmDelteteProp, setConfirmDelteteProp] = useState();
+
+  const [currentAdmin, setCurrentAdmin] = useState(false);
+  const [actionsLoaded, setAcionsLoaded] = useState(false)
+
+  const loadCurrentAdmin = useCallback(async () => {
+    const currentAdminData = await validateAdmin();
+
+    setCurrentAdmin(currentAdminData?.data?.id);
+    setAcionsLoaded(true);
+  }, [type, listData]);
+
+  useEffect(() => {
+    loadCurrentAdmin();
+  }, [type, listData]);
 
   const handleConfirmDelete = (row) => {
     setConfirmDelteteProp(row);
@@ -38,6 +59,7 @@ function AdminList({ tableLayout, listData, onEdit, onDelete }) {
           buttonConfirmText="Excluir"
         />
       )}
+
       <table>
         <thead>
           <tr>
@@ -56,20 +78,26 @@ function AdminList({ tableLayout, listData, onEdit, onDelete }) {
               ))}
 
               <td className="actions">
-                <img
-                  src={EditIcon}
-                  className="icon-editar"
-                  onClick={() => onEdit(row)}
-                  data-tooltip-id="tooltip"
-                  data-tooltip-content="Editar"
-                />
-                <img
-                  src={DeleteIcon}
-                  className="icon-deletar"
-                  onClick={() => handleConfirmDelete(row)}
-                  data-tooltip-id="tooltip"
-                  data-tooltip-content="Excluir"
-                />
+                {
+                  (type === 'adminAccounts' && currentAdmin !== row.id && actionsLoaded) && (
+                    <>
+                      <img
+                        src={EditIcon}
+                        className="icon-editar"
+                        onClick={() => onEdit(row)}
+                        data-tooltip-id="tooltip"
+                        data-tooltip-content="Editar"
+                      />
+                      <img
+                        src={DeleteIcon}
+                        className="icon-deletar"
+                        onClick={() => handleConfirmDelete(row)}
+                        data-tooltip-id="tooltip"
+                        data-tooltip-content="Excluir"
+                      />
+                    </>
+                  )
+                }
               </td>
             </tr>
           ))}
