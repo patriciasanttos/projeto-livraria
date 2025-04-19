@@ -6,10 +6,9 @@ import SearchInputAdmin from "../../../Components/SearchInputAdmin/SearchInputAd
 import AdminAddButton from "../../../Components/AdminAddButton/AdminAddButton";
 import AdminList from "../../../Components/AdminList/AdminList";
 import { ManagesModal } from "./ManagesModal";
+import { toast } from "react-toastify";
 
 import "./Manages.scss";
-import { Description } from "@mui/icons-material";
-import { toast } from "react-toastify";
 
 function Manages() {
   const { data, isLoading } = useAdminsData();
@@ -59,6 +58,7 @@ function Manages() {
       email: '',
       phone: '',
       password: '',
+      newPassword: '',
       passwordConfirmation: '',
     });
     setIsModalOpen(true);
@@ -66,7 +66,12 @@ function Manages() {
   };
 
   const onClickUpdate = (row) => {
-    setFormData(row);
+    setFormData({
+      ...row,
+      password: '',
+      newPassword: '',
+      passwordConfirmation: '',
+    });
     setIsModalOpen(true);
     setIsCreateAdmin(false);
   };

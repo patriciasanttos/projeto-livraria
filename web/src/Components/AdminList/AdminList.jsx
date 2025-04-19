@@ -27,6 +27,9 @@ function AdminList({ type, tableLayout, listData, onEdit, onDelete }) {
   }, [type, listData]);
 
   useEffect(() => {
+    if (type !== 'adminAccounts')
+      return setAcionsLoaded(true);
+
     loadCurrentAdmin();
   }, [type, listData]);
 
@@ -78,24 +81,33 @@ function AdminList({ type, tableLayout, listData, onEdit, onDelete }) {
               ))}
 
               <td className="actions">
+                <img
+                  src={EditIcon}
+                  className="icon-editar"
+                  onClick={() => onEdit(row)}
+                  data-tooltip-id="tooltip"
+                  data-tooltip-content="Editar"
+                />
                 {
                   (type === 'adminAccounts' && currentAdmin !== row.id && actionsLoaded) && (
-                    <>
-                      <img
-                        src={EditIcon}
-                        className="icon-editar"
-                        onClick={() => onEdit(row)}
-                        data-tooltip-id="tooltip"
-                        data-tooltip-content="Editar"
-                      />
-                      <img
-                        src={DeleteIcon}
-                        className="icon-deletar"
-                        onClick={() => handleConfirmDelete(row)}
-                        data-tooltip-id="tooltip"
-                        data-tooltip-content="Excluir"
-                      />
-                    </>
+                    <img
+                      src={DeleteIcon}
+                      className="icon-deletar"
+                      onClick={() => handleConfirmDelete(row)}
+                      data-tooltip-id="tooltip"
+                      data-tooltip-content="Excluir"
+                    />
+                  )
+                }
+                {
+                  type !== 'adminAccounts' && (
+                    <img
+                      src={DeleteIcon}
+                      className="icon-deletar"
+                      onClick={() => handleConfirmDelete(row)}
+                      data-tooltip-id="tooltip"
+                      data-tooltip-content="Excluir"
+                    />
                   )
                 }
               </td>
