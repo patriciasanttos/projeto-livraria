@@ -147,7 +147,7 @@ export const CategoriesModal = ({
         <div className="modal-column">
           <div className="input-name">
             <SearchInputAdmin
-              className="modal-field"
+              className="modal-field name-category"
               placeholder="Nome da categoria"
               name="name"
               value={formData.name}
@@ -158,7 +158,7 @@ export const CategoriesModal = ({
           <div className="input-name">
             <TextAreaAdmin
               className="modal-field"
-              placeholder="Nome da categoria"
+              placeholder="Descrição da categoria"
               name="description"
               value={formData.description}
               onChange={handleFormChange}
