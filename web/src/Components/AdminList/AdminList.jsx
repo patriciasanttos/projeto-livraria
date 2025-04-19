@@ -27,6 +27,8 @@ function AdminList({ type, tableLayout, listData, onEdit, onDelete }) {
   }, [type, listData]);
 
   useEffect(() => {
+    if (type !== "adminAccounts") return setAcionsLoaded(true);
+
     loadCurrentAdmin();
   }, [type, listData]);
 
@@ -52,8 +54,8 @@ function AdminList({ type, tableLayout, listData, onEdit, onDelete }) {
           title={`Deseja mesmo deletar "${confirmDelteteProp.name}"?`}
           onClose={() => setIsConfirmDeleteModalOpen(false)}
           onConfirm={() => {
-            setIsConfirmDeleteModalOpen(false)
-            onDelete(confirmDelteteProp)
+            setIsConfirmDeleteModalOpen(false);
+            onDelete(confirmDelteteProp);
           }}
           isButtonConfirmRed={true}
           buttonConfirmText="Excluir"
@@ -71,33 +73,40 @@ function AdminList({ type, tableLayout, listData, onEdit, onDelete }) {
         </thead>
 
         <tbody>
-          {listData.map(row => (
+          {listData.map((row) => (
             <tr key={row.id}>
               {tableLayout.map(({ key }) => (
                 <td key={key}>{getCellValue(row, key)}</td>
               ))}
 
               <td className="actions">
-                {
-                  (type === 'adminAccounts' && currentAdmin !== row.id && actionsLoaded) && (
-                    <>
-                      <img
-                        src={EditIcon}
-                        className="icon-editar"
-                        onClick={() => onEdit(row)}
-                        data-tooltip-id="tooltip"
-                        data-tooltip-content="Editar"
-                      />
-                      <img
-                        src={DeleteIcon}
-                        className="icon-deletar"
-                        onClick={() => handleConfirmDelete(row)}
-                        data-tooltip-id="tooltip"
-                        data-tooltip-content="Excluir"
-                      />
-                    </>
-                  )
-                }
+                <img
+                  src={EditIcon}
+                  className="icon-editar"
+                  onClick={() => onEdit(row)}
+                  data-tooltip-id="tooltip"
+                  data-tooltip-content="Editar"
+                />
+                {type === "adminAccounts" &&
+                  currentAdmin !== row.id &&
+                  actionsLoaded && (
+                    <img
+                      src={DeleteIcon}
+                      className="icon-deletar"
+                      onClick={() => handleConfirmDelete(row)}
+                      data-tooltip-id="tooltip"
+                      data-tooltip-content="Excluir"
+                    />
+                  )}
+                {type !== "adminAccounts" && (
+                  <img
+                    src={DeleteIcon}
+                    className="icon-deletar"
+                    onClick={() => handleConfirmDelete(row)}
+                    data-tooltip-id="tooltip"
+                    data-tooltip-content="Excluir"
+                  />
+                )}
               </td>
             </tr>
           ))}
