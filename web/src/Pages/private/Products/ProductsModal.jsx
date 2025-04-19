@@ -163,7 +163,7 @@ export const ProductsModal = ({
       }
     >
       <section className="modal-row">
-        <div className="modal-column">
+        <div className="modal-column-product">
           <SearchInputAdmin
             className="modal-field"
             placeholder="Nome"
@@ -203,8 +203,8 @@ export const ProductsModal = ({
           ></textarea>
         </div>
 
-        <div className="modal-column">
-          <div className="image-preview-row">
+        <div className="modal-column-product">
+          <div className="image-preview-row-product">
             {formData?.images?.map((image, index) => (
               <ProductThumb
                 key={index}

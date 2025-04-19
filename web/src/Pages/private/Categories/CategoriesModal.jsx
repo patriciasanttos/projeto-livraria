@@ -144,8 +144,8 @@ export const CategoriesModal = ({
       }
     >
       <div className="modal-row">
-        <div className="modal-column">
-          <div className="input-name">
+        <div className="modal-column-category">
+          <div>
             <SearchInputAdmin
               className="modal-field name-category"
               placeholder="Nome da categoria"
@@ -155,7 +155,7 @@ export const CategoriesModal = ({
             />
           </div>
 
-          <div className="input-name">
+          <div>
             <TextAreaAdmin
               className="modal-field"
               placeholder="Descrição da categoria"
@@ -171,7 +171,7 @@ export const CategoriesModal = ({
           
         </div>
 
-        <div className="modal-column">
+        <div className="modal-column-category">
           <div>
           <div className="image-preview-row">
             {formData?.image && (
@@ -242,7 +242,7 @@ export const CategoriesModal = ({
         </div>
         
       </div>
-      <div className="modal-column">
+      <div className="modal-column-category">
       <div className="image-preview-row">
             {formData?.banner && (
               <CategoryThumb
