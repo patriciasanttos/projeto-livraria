@@ -2,6 +2,8 @@ import React, { useCallback } from "react";
 
 import ModalAdmin from "../../../Components/ModalAdmin/ModalAdmin";
 import SearchInputAdmin from "../../../Components/SearchInputAdmin/SearchInputAdmin";
+import { useCreateAdmin } from "../../../hooks/useAdmins";
+import { toast } from "react-toastify";
 
 export const ManagesModal = ({
   isCreateAdmin,
@@ -9,8 +11,42 @@ export const ManagesModal = ({
   setFormData,
   setIsModalOpen,
 }) => {
+  const { mutate: createAdmin } = useCreateAdmin();
+
   const onConfirmSaveAdmin = useCallback(() => {
-    console.log(formData);
+    if (isCreateAdmin) {
+      try {
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email))
+          return toast.warning('Por favor, insira um e-mail válido.');
+
+        if (formData.phone.length < 1)
+          return toast.warning('A numero de contato deve ter pelo menos 9 caracteres.');
+
+        if (formData.password.length < 8)
+          return toast.warning('A senha deve ter pelo menos 8 caracteres.');
+
+        if (formData.password !== formData.passwordConfirmation)
+          return toast.warning('As senhas não coincidem.');
+
+        const creatingDataToast = toast.loading('Criando administrador...', {
+          autoClose: false
+        });
+
+        createAdmin({
+          name: formData.name,
+          phone: formData.phone,
+          email: formData.email,
+          password: formData.password,
+        });
+
+        console.log(formData);
+        toast.dismiss(creatingDataToast);
+        toast.success('Administrador criado com sucesso!');
+      } catch (err) {
+        toast.dismiss(creatingDataToast);
+        toast.error('Erro ao criar Administrador.');
+      }
+    }
   }, [formData]);
 
   const handleFormChange = (evt) => {
@@ -47,7 +83,6 @@ export const ManagesModal = ({
     }
   };
 
-
   return (
     <ModalAdmin
       title={
@@ -70,8 +105,8 @@ export const ManagesModal = ({
           <SearchInputAdmin
             className="modal-field"
             placeholder="Contato"
-            name="contact"
-            value={formData.contact}
+            name="phone"
+            value={formData.phone}
             onChange={handleFormChange}
           />
         </section>
@@ -91,15 +126,16 @@ export const ManagesModal = ({
             value={formData.password}
             onChange={handleFormChange}
           />
+
+          <SearchInputAdmin
+            className="modal-field"
+            placeholder="Confirme a senha"
+            name="passwordConfirmation"
+            value={formData.passwordConfirmation}
+            onChange={handleFormChange}
+          />
         </section>
       </section>
-      <textarea
-        name="description"
-        value={formData.description}
-        onChange={handleFormChange}
-        placeholder="Adicione informações importantes"
-        className="textarea-manages"
-      ></textarea>
     </ModalAdmin>
   );
 };
