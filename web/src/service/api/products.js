@@ -12,6 +12,12 @@ export const getAllAvailablesProducts = async () => {
   return data;
 };
 
+export const createProduct = async (neData) => {
+  const { data } = await api.post("/items", neData);
+
+  return data;
+};
+
 export const updateProduct = async (updatedData) => {
   const { data } = await api.put("/items", updatedData);
 

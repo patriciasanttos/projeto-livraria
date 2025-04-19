@@ -66,8 +66,8 @@ function AdminList({ type, tableLayout, listData, onEdit, onDelete }) {
       <table>
         <thead>
           <tr>
-            {tableLayout.map((title) => (
-              <th key={title.key}>{title.label}</th>
+            {tableLayout.map((title, index) => (
+              <th key={index}>{title.label}</th>
             ))}
             <th className="actions">Ações</th>
           </tr>

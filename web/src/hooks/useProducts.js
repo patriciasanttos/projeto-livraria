@@ -4,6 +4,7 @@ import {
   getAllAvailablesProducts,
   deleteProduct,
   updateProduct,
+  createProduct,
 } from "../service/api/products";
 
 export const useAllProductsData = () =>
@@ -19,6 +20,21 @@ export const useAvailableProductsData = () =>
     queryFn: getAllAvailablesProducts,
     staleTime: 1000 * 60 * 5,
   });
+
+export const useCreateProduct = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (data) => createProduct(data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["products"] });
+      queryClient.invalidateQueries({ queryKey: ["categories"] });
+    },
+    onError: (error) => {
+      console.error("Error creating product: ", error);
+    },
+  });
+};
 
 export const useUpdateProduct = () => {
   const queryClient = useQueryClient();
