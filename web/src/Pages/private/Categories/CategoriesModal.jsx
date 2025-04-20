@@ -23,7 +23,6 @@ export const CategoriesModal = ({
 
       const createItemFormData = new FormData();
       createItemFormData.append('name', formData.name);
-      createItemFormData.append('description', formData.description);
       createItemFormData.append('available', formData.available);
       createItemFormData.append('image', formData.image);
       createItemFormData.append('banner', formData.banner);
@@ -45,7 +44,6 @@ export const CategoriesModal = ({
       const updatedFormData = new FormData();
       updatedFormData.append('id', formData.id);
       updatedFormData.append('name', formData.name);
-      updatedFormData.append('description', formData.description);
       updatedFormData.append('available', formData.available);
 
       if (formData.image === null)

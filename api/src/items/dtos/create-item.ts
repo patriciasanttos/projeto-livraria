@@ -21,7 +21,7 @@ export default class CreateItemBody {
 
   @ApiProperty()
   @IsString()
-  @Length(5, 100)
+  @Length(0, 100)
   @IsOptional()
   description?: string;
 

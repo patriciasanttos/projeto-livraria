@@ -64,21 +64,11 @@ function Categories() {
       name: item.name,
       description: item.description,
       price: item.price,
-      image: item.image,
+      image: item.mainImage || item.images[0]?.url,
     }));
 
-    const multipliedItems = [];
-    for (let i = 0; i < 40; i++) {
-      multipliedItems.push(...categoryItems.map(item => ({
-        ...item,
-        id: item.id,
-        name: item.name
-      })));
-    }
-
-    return multipliedItems;
+    return categoryItems;
   }, [categoriesData, categoryName, navigate]);
-
 
   useEffect(() => {
     if (isLoading)
@@ -111,7 +101,7 @@ function Categories() {
             key={`${option.id}-${index}`}
             id={option.id}
             name={option.name}
-            image={kitCanetas}
+            image={option.image || option.mainImage || kitCanetas}
             price={option.price}
             color='pink'
             isCategory={categoryName ? false : true}

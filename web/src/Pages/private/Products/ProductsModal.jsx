@@ -53,7 +53,7 @@ export const ProductsModal = ({
       newDataForm.append('price', formData.price);
       newDataForm.append('available', formData.available);
       newDataForm.append('main_category', formData.categories[0]);
-      newDataForm.append('main_image', formData.mainImage);
+      newDataForm.append('main_image', formData.mainImage || 0);
       newDataForm.append('image_1', getImageFile(0));
       newDataForm.append('image_2', getImageFile(1));
       newDataForm.append('image_3', getImageFile(2));
@@ -91,6 +91,8 @@ export const ProductsModal = ({
         return image instanceof File ? image : undefined;
       };
 
+      console.log(formData);
+
       const updatedFormData = new FormData();
       updatedFormData.append('id', formData.id);
       updatedFormData.append('name', formData.name);
@@ -98,7 +100,7 @@ export const ProductsModal = ({
       updatedFormData.append('price', formData.price);
       updatedFormData.append('available', formData.available);
       updatedFormData.append('mainCategory', formData.mainCategory);
-      updatedFormData.append('mainImage', formData.mainImage);
+      updatedFormData.append('mainImage', formData.mainImage || 0);
       updatedFormData.append('image_1', getImageFile(0));
       updatedFormData.append('image_2', getImageFile(1));
       updatedFormData.append('image_3', getImageFile(2));
@@ -196,7 +198,7 @@ export const ProductsModal = ({
           />
           <textarea
             name="description"
-            value={formData.description}
+            value={formData.description === null ? '' : formData.description}
             onChange={handleFormChange}
             placeholder="Descrição do produto"
             className="textarea-product"
