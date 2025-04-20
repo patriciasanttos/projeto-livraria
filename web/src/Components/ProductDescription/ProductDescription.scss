@@ -126,11 +126,25 @@
                 border-radius: 5px;
                 font-size: 1rem;
                 color: #F6F9E6;
-                transition: background-color 0.5s;
+                transition: background-color 0.3s;
                 cursor: pointer;
 
                 &:hover {
                     background-color: #c43a86;
+                }
+            }
+
+            .remove-cart {
+                background-color: #c0392b;
+                border: 1px solid #44463A;
+                border-radius: 5px;
+                font-size: 1rem;
+                color: #F6F9E6;
+                transition: background-color 0.3s;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: #bf1300;
                 }
             }
 
@@ -140,7 +154,7 @@
                 font-size: 1rem;
                 border: 1px solid #44463A;
                 border-radius: 5px;
-                transition: background-color 0.5s;
+                transition: background-color 0.3s;
                 cursor: pointer;
 
                 &:hover {
