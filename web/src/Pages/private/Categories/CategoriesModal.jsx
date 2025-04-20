@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import TextAreaAdmin from "../../../Components/TextAreaAdmin/TextAreaAdmin";
 
 export const CategoriesModal = ({
+  allCategories,
   isCreateItem,
   formData,
   setFormData,
@@ -16,6 +17,28 @@ export const CategoriesModal = ({
   const { mutate: createCategory, status: statusCreate, error: errorCreate } = useCreateCategory();
   const  { mutate: updateCategory, status: statusUpdate, error: errorUpdate } = useUpdateCategory();
   const [toastLoading, setToastLoading] = useState();
+
+  const isFormValid = (form) => {
+    let isValid = true
+    const requiredFields = ['name']
+
+    requiredFields.forEach((requiredField) => {
+      if(!form.get(requiredField)) {
+        isValid = false
+        toast.error(`Campo obrigatório: ${requiredField}`)
+      }
+    })
+
+    if (isValid) {
+      const results = allCategories.filter((category) => category.name.toUpperCase() === form.get('name').toUpperCase())
+      if (results.length > 0) {
+        isValid = false
+        toast.error(`Categoria já existente`)
+      }
+    }
+
+    return isValid
+  }
 
   useEffect(() => {
     if (statusUpdate === 'success') {
@@ -47,11 +70,10 @@ export const CategoriesModal = ({
 
   const onConfirmSaveProduct = useCallback(() => {
     if (isCreateItem) {
-      setToastLoading(
-        toast.loading('Criando categoria...', {
-          autoClose: false
-        })
-      )
+      const toastLoading = toast.loading('Criando categoria...', {
+        autoClose: false
+      })
+      setToastLoading(toastLoading)
 
       const createItemFormData = new FormData();
       createItemFormData.append('name', formData.name);
@@ -60,13 +82,21 @@ export const CategoriesModal = ({
       createItemFormData.append('image', formData.image);
       createItemFormData.append('banner', formData.banner);
 
-      createCategory(createItemFormData);
+      try {
+        if (isFormValid(createItemFormData)) {
+          createCategory(createItemFormData);
+        } else {
+          toast.dismiss(toastLoading)
+        }
+      } catch (err) {
+        toast.dismiss(toastLoading);
+        toast.error('Erro ao criar categoria.');
+      }
     } else if (!isCreateItem) {
-      setToastLoading(
-        toast.loading('Atualizando categoria...', {
-          autoClose: false
-        })
-      )
+      const toastLoading = toast.loading('Atualizando categoria...', {
+        autoClose: false
+      })
+      setToastLoading(toastLoading)
 
       const updatedFormData = new FormData();
       updatedFormData.append('id', formData.id);
@@ -85,7 +115,11 @@ export const CategoriesModal = ({
         updatedFormData.append('banner', formData.banner);
 
       try {
-        updateCategory(updatedFormData)
+        if (isFormValid(updatedFormData)) {
+          updateCategory(updatedFormData)
+        } else {
+          toast.dismiss(toastLoading)
+        }
       } catch (err) {
         toast.dismiss(toastLoading);
         toast.error('Erro ao atualizar categoria.');

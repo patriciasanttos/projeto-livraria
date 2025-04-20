@@ -152,9 +152,9 @@ function Categories() {
             defaultValue={filters.available}
             onChange={handleFilterChange}
             options={[
-              { value: 'all', text: "Tudo" },
-              { value: true, text: "Disponível" },
-              { value: false, text: "Indisponível" }
+              { id: 'all', name: "Tudo" },
+              { id: true, name: "Disponível" },
+              { id: false, name: "Indisponível" }
             ]}
           />
         </section>
@@ -184,6 +184,7 @@ function Categories() {
 
       {isModalOpen && (
         <CategoriesModal
+          allCategories={categoriesData}
           isCreateItem={isCreateItem}
           formData={formData}
           setFormData={setFormData}

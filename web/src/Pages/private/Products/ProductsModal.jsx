@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 
 import ModalAdmin from "../../../Components/ModalAdmin/ModalAdmin";
 import SearchInputAdmin from "../../../Components/SearchInputAdmin/SearchInputAdmin";
@@ -17,10 +17,39 @@ export const ProductsModal = ({
 }) => {
   const [mainImageIndex, setMainImageIndex] = useState(formData?.images?.findIndex(img => img.isMain) || 0);
 
-  const { mutate: updateProduct } = useUpdateProduct();
-  const { mutateAsync: createProduct } = useCreateProduct();
+  const { mutate: updateProduct, status: statusCreate, error: errorCreate } = useUpdateProduct();
+  const { mutateAsync: createProduct, status: statusUpdate, error: errorUpdate } = useCreateProduct();
   const { mutateAsync: addProductToCategory } = useAddProductToCategory();
+  const [toastLoading, setToastLoading] = useState();
 
+  useEffect(() => {
+    if (statusUpdate === 'success') {
+      setIsModalOpen(false);
+      toast.dismiss(toastLoading);
+      toast.success('Produto atualizado com sucesso!');
+    }
+
+    if (statusUpdate === 'error') {
+      const errorMessage = errorUpdate.response.data.message[0]
+      toast.dismiss(toastLoading);
+      toast.error(`Erro ao atualizar produto: ${errorMessage}`);
+    } 
+  }, [statusUpdate])
+
+  useEffect(() => {
+    if (statusCreate === 'success') {
+      setIsModalOpen(false);
+      toast.dismiss(toastLoading);
+      toast.success('Produto criado com sucesso!');
+    }
+
+    if (statusCreate === 'error') {
+      const errorMessage = errorCreate.response.data.message[0]
+      toast.dismiss(toastLoading);
+      toast.error(`Erro ao criar produto: ${errorMessage}`);
+    } 
+  }, [statusCreate])
+    
   const onClickDeleteImage = (index) => {
     const imageList = formData?.images.splice(index, 1);
 
@@ -36,9 +65,11 @@ export const ProductsModal = ({
 
   const onConfirmSaveProduct = useCallback(async () => {
     if (isCreateItem) {
-      const creatingDataToast = toast.loading('Criando produto...', {
-        autoClose: false
-      });
+      setToastLoading(
+        toast.loading('Criando produto...', {
+          autoClose: false
+        })
+      )
 
       const getImageFile = (index) => {
         const image = formData.images?.[index];
@@ -52,6 +83,7 @@ export const ProductsModal = ({
       newDataForm.append('description', formData.description);
       newDataForm.append('price', formData.price);
       newDataForm.append('available', formData.available);
+      newDataForm.append('categories', formData.categories);
       newDataForm.append('main_category', formData.categories[0]);
       newDataForm.append('main_image', formData.mainImage);
       newDataForm.append('image_1', getImageFile(0));
@@ -71,9 +103,6 @@ export const ProductsModal = ({
           });
         }
 
-        setIsModalOpen(false);
-        toast.dismiss(creatingDataToast);
-        toast.success('Produto criado com sucesso!');
       } catch (err) {
         console.log(err);
 
@@ -81,9 +110,11 @@ export const ProductsModal = ({
         toast.error('Erro ao criar produto.');
       }
     } else if (!isCreateItem) {
-      const updatingDataToast = toast.loading('Atualizando produto...', {
-        autoClose: false
-      });
+      setToastLoading(
+        toast.loading('Atualizando produto...', {
+          autoClose: false
+        })
+      )
 
       const getImageFile = (index) => {
         const image = formData.images?.[index];
@@ -97,17 +128,15 @@ export const ProductsModal = ({
       updatedFormData.append('description', formData.description);
       updatedFormData.append('price', formData.price);
       updatedFormData.append('available', formData.available);
-      updatedFormData.append('mainCategory', formData.mainCategory);
-      updatedFormData.append('mainImage', formData.mainImage);
+      updatedFormData.append('categories', formData.categories.map((item) => item.id));
+      updatedFormData.append('main_category', formData.categories[0].id);
+      updatedFormData.append('main_image', formData.mainImage);
       updatedFormData.append('image_1', getImageFile(0));
       updatedFormData.append('image_2', getImageFile(1));
       updatedFormData.append('image_3', getImageFile(2));
 
       try {
         updateProduct(updatedFormData);
-        setIsModalOpen(false);
-        toast.dismiss(updatingDataToast);
-        toast.success('Produto atualizado com sucesso!');
       } catch (err) {
         toast.dismiss(updatingDataToast);
         toast.error('Erro ao atualizar produto.');
@@ -189,8 +218,8 @@ export const ProductsModal = ({
             placeholder="Categorias"
             options={[
               ...categories.map((category) => ({
-                value: category.id,
-                text: category.name,
+                id: category.id,
+                name: category.name,
               })),
             ]}
           />

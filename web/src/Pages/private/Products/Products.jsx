@@ -10,7 +10,7 @@ import DropdownAdmin from "../../../Components/DropdownAdmin/DropdownAdmin";
 import AdminAddButton from "../../../Components/AdminAddButton/AdminAddButton";
 
 import { useCategoriesData } from "../../../hooks/useCategories";
-import { useDeleteProduct } from "../../../hooks/useProducts";
+import { useDeleteProduct, useAllProductsData } from "../../../hooks/useProducts";
 import Loading from "../../../Components/PageProcessing/Loading/Loading";
 import ErrorFinding from "../../../Components/PageProcessing/ErrorFinding/ErrorFinding";
 
@@ -31,6 +31,7 @@ const initialFormDataState = {
 }
 
 function Products() {
+  const { data: allProducts, isLoading: isLoadingProducts, error: errorProducts } = useAllProductsData()
   const { data: categoriesData, isLoading, error } = useCategoriesData();
   const { mutate: deleteProduct } = useDeleteProduct();
 
@@ -54,19 +55,11 @@ function Products() {
   }, [categoriesData]);
 
   const filteredProducts = useMemo(() => {
-    let products = categoriesData
-      ? categoriesData.reduce(
-        (acc, category) => [
-          ...acc,
-          ...category.items.map((item) => ({
-            ...item,
-            category: category.name,
-            priceFormatted: currency.format(item.price),
-          })),
-        ],
-        []
-      )
-      : [];
+    let products = allProducts ? [...allProducts.map((product) => ({
+      ...product, 
+      priceFormatted: currency.format(product.price),
+      mainCategoryName: categories.filter((category) => category.id === product.mainCategory)[0].name
+    })) ] : []
 
     if (filters.mainCategory !== "") {
       products = products.filter(
@@ -100,7 +93,7 @@ function Products() {
     }
 
     return products;
-  }, [categoriesData, filters]);
+  }, [allProducts, categoriesData, filters]);
 
 
   // Filter some results at first load to alleviate large results
@@ -150,7 +143,7 @@ function Products() {
     return deleteProduct(data.id);
   }
 
-  if (isLoading || isInitialLoad)
+  if (isLoading || isLoadingProducts || isInitialLoad)
     return <Loading title="Buscando produtos" style={{marginTop: "15rem"}}/>
 
   if (error)
@@ -193,10 +186,10 @@ function Products() {
             value={filters.mainCategory}
             onChange={handleFilterChange}
             options={[
-              { value: "", text: "Todos" },
+              { id: "", name: "Todos" },
               ...categories.map((category) => ({
-                value: category.id,
-                text: category.name,
+                id: category.id,
+                name: category.name,
               })),
             ]}
           />
@@ -207,9 +200,9 @@ function Products() {
             value={filters.available}
             onChange={handleFilterChange}
             options={[
-              { value: "", text: "Tudo" },
-              { value: true, text: "Disponível" },
-              { value: false, text: "Sem estoque" },
+              { id: "", name: "Tudo" },
+              { id: true, name: "Disponível" },
+              { id: false, name: "Sem estoque" },
             ]}
           />
           <div className="results-found">
@@ -231,7 +224,7 @@ function Products() {
             label: "Preço",
           },
           {
-            key: "category",
+            key: "mainCategoryName",
             label: "Categoria",
           },
           {
