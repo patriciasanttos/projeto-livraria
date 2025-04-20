@@ -3,8 +3,11 @@ import React, { useCallback, useEffect, useState } from "react";
 import './SearchResults.scss'
 import { useAvailableProductsData } from "../../../hooks/useProducts";
 import { useCreateReport } from "../../../hooks/useReports";
+import { useNavigate } from "react-router-dom";
 
-const SearchResults = ({ query }) => {
+const SearchResults = ({ query, setQuery }) => {
+  const navigate = useNavigate();
+
   const { data, isLoading } = useAvailableProductsData();
   const { mutate } = useCreateReport();
 
@@ -69,6 +72,18 @@ const SearchResults = ({ query }) => {
     count: 1
   }), []);
 
+  const handleNavigate = (entityType, entity) => {
+    setQuery('');
+    setResults([]);
+
+    navigate(
+      `${entityType === 'category'
+        ? '/categories'
+        : '/products'
+      }/${entity}`
+    )
+  }
+
   if (isLoading)
     return <div>Buscando...</div>
 
@@ -85,7 +100,10 @@ const SearchResults = ({ query }) => {
             return result.type === "category" ? (
               <li
                 key={result.type + '-' + result.id}
-                onClick={() => handleReport(result.type, result.id)}
+                onClick={() => {
+                  handleReport(result.type, result.id)
+                  handleNavigate(result.type, result.name)
+                }}
               >
                 <span>Categoria: </span>
                 {result.name}
@@ -93,7 +111,10 @@ const SearchResults = ({ query }) => {
             ) : (
               <li
                 key={result.type + '-' + result.id}
-                onClick={() => handleReport(result.type, result.id)}
+                onClick={() => {
+                  handleReport(result.type, result.id)
+                  handleNavigate(result.type, result.id)
+                }}
               >
                 {result.name}
               </li>

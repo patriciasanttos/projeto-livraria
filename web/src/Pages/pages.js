@@ -1,6 +1,6 @@
 import HomePage from "./public/HomePage/HomePage";
 import Categories from "./public/Categories/Categories";
-import ItemPage from "./public/ItemPage/ItemPage";
+import ProductPage from "./public/ProductPage/ProductPage";
 import Cart from "./public/Cart/Cart";
 import AboutUs from "./public/AboutUs/AboutUs";
 
@@ -14,7 +14,7 @@ import Manage from "./private/Manages/Manages";
 export const publicPages = {
   HomePage,
   Categories,
-  ItemPage,
+  ProductPage,
   Cart,
   AboutUs,
 };

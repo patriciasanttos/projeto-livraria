@@ -1,16 +1,16 @@
-import "./ItemDescription.scss";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
-
 import ModalInfoBuy from "../ModalInfoBuy/ModalInfoBuy";
 
-function ItemDescription({ product }) {
+import "./ProductDescription.scss";
+
+function ProductDescription({ product }) {
   const [modalOpen, setModalOpen] = useState(false);
   const [mainImage, setMainImage] = useState();
 
   useEffect(() => {
-    setMainImage(product?.images[0].url)
+    setMainImage(product?.images[0]?.url)
   }, [product]);
 
   const onClickAddToCart = () => {
@@ -86,4 +86,4 @@ function ItemDescription({ product }) {
   );
 }
 
-export default ItemDescription;
+export default ProductDescription;

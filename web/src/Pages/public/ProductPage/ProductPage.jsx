@@ -4,11 +4,11 @@ import { useCategoriesData } from '../../../hooks/useCategories';
 import _ from "lodash";
 
 //-----Components
-import ItemDescription from "../../../Components/ItemDescription/ItemDescription";
+import ProductDescription from "../../../Components/ProductDescription/ProductDescription";
 import Category from "../../../components/Category/Category";
 import WhatsappContact from "../../../Components/WhatsappContact/WhatsappContact";
 
-import "./ItemPage.scss";
+import "./ProductPage.scss";
 
 function ItemPage() {
   const { id } = useParams();
@@ -52,7 +52,7 @@ function ItemPage() {
 
   return (
     <div>
-      <ItemDescription product={product} />
+      <ProductDescription product={product} />
 
       <section className="item-page-categories">
         {
