@@ -3,9 +3,13 @@ import React, { useCallback, useEffect, useState } from "react";
 import ModalAdmin from "../../../Components/ModalAdmin/ModalAdmin";
 import SearchInputAdmin from "../../../Components/SearchInputAdmin/SearchInputAdmin";
 import CategoryThumb from "./CategoryThumb";
-import { useCreateCategory, useUpdateCategory } from "../../../hooks/useCategories";
+import {
+  useCreateCategory,
+  useUpdateCategory,
+} from "../../../hooks/useCategories";
 import { toast } from "react-toastify";
 import TextAreaAdmin from "../../../Components/TextAreaAdmin/TextAreaAdmin";
+import _ from 'lodash'
 
 export const CategoriesModal = ({
   allCategories,
@@ -14,115 +18,130 @@ export const CategoriesModal = ({
   setFormData,
   setIsModalOpen,
 }) => {
-  const { mutate: createCategory, status: statusCreate, error: errorCreate } = useCreateCategory();
-  const  { mutate: updateCategory, status: statusUpdate, error: errorUpdate } = useUpdateCategory();
+  const {
+    mutate: createCategory,
+    status: statusCreate,
+    error: errorCreate,
+  } = useCreateCategory();
+  const {
+    mutate: updateCategory,
+    status: statusUpdate,
+    error: errorUpdate,
+  } = useUpdateCategory();
   const [toastLoading, setToastLoading] = useState();
 
   const isFormValid = (form) => {
-    let isValid = true
-    const requiredFields = ['name']
+    let isValid = true;
+    const requiredFields = ["name"];
 
     requiredFields.forEach((requiredField) => {
-      if(!form.get(requiredField)) {
-        isValid = false
-        toast.error(`Campo obrigatório: ${requiredField}`)
+      if (!form.get(requiredField)) {
+        isValid = false;
+        toast.error(`Campo obrigatório: ${requiredField}`);
       }
-    })
+    });
 
     if (isValid) {
-      const results = allCategories.filter((category) => category.name.toUpperCase() === form.get('name').toUpperCase())
+      // Check if category already exists (same name with different id)
+      const results = allCategories.filter(
+        (category) =>
+          category.name.toUpperCase() === form.get("name").toUpperCase() &&
+          !_.isNil(form.get("id")) &&
+          category.id != form.get("id")
+      );
+
       if (results.length > 0) {
-        isValid = false
-        toast.error(`Categoria já existente`)
+        isValid = false;
+        toast.error(`Categoria já existente`);
       }
     }
 
-    return isValid
-  }
+    return isValid;
+  };
 
   useEffect(() => {
-    if (statusUpdate === 'success') {
+    if (statusUpdate === "success") {
       setIsModalOpen(false);
       toast.dismiss(toastLoading);
-      toast.success('Categoria atualizada com sucesso!');
+      toast.success("Categoria atualizada com sucesso!");
     }
 
-    if (statusUpdate === 'error') {
-      const errorMessage = errorUpdate.response.data.message[0]
+    if (statusUpdate === "error") {
+      const errorMessage = errorUpdate.response.data.message[0];
       toast.dismiss(toastLoading);
       toast.error(`Erro ao atualizar categoria: ${errorMessage}`);
-    } 
-  }, [statusUpdate])
+    }
+  }, [statusUpdate]);
 
   useEffect(() => {
-    if (statusCreate === 'success') {
+    if (statusCreate === "success") {
       setIsModalOpen(false);
       toast.dismiss(toastLoading);
-      toast.success('Categoria criada com sucesso!');
+      toast.success("Categoria criada com sucesso!");
     }
 
-    if (statusCreate === 'error') {
-      const errorMessage = errorCreate.response.data.message[0]
+    if (statusCreate === "error") {
+      const errorMessage = errorCreate.response.data.message[0];
       toast.dismiss(toastLoading);
       toast.error(`Erro ao criar categoria: ${errorMessage}`);
-    } 
-  }, [statusCreate])
+    }
+  }, [statusCreate]);
 
   const onConfirmSaveProduct = useCallback(() => {
     if (isCreateItem) {
-      const toastLoading = toast.loading('Criando categoria...', {
-        autoClose: false
-      })
-      setToastLoading(toastLoading)
+      const toastLoading = toast.loading("Criando categoria...", {
+        autoClose: false,
+      });
+      setToastLoading(toastLoading);
 
       const createItemFormData = new FormData();
-      createItemFormData.append('name', formData.name);
-      createItemFormData.append('description', formData.description);
-      createItemFormData.append('available', formData.available);
-      createItemFormData.append('image', formData.image);
-      createItemFormData.append('banner', formData.banner);
+      createItemFormData.append("name", formData.name);
+      createItemFormData.append("description", formData.description);
+      createItemFormData.append("available", formData.available);
+      createItemFormData.append("image", formData.image);
+      createItemFormData.append("banner", formData.banner);
 
       try {
         if (isFormValid(createItemFormData)) {
           createCategory(createItemFormData);
         } else {
-          toast.dismiss(toastLoading)
+          toast.dismiss(toastLoading);
         }
       } catch (err) {
         toast.dismiss(toastLoading);
-        toast.error('Erro ao criar categoria.');
+        toast.error("Erro ao criar categoria.");
       }
     } else if (!isCreateItem) {
-      const toastLoading = toast.loading('Atualizando categoria...', {
-        autoClose: false
-      })
-      setToastLoading(toastLoading)
+      const toastLoading = toast.loading("Atualizando categoria...", {
+        autoClose: false,
+      });
+      setToastLoading(toastLoading);
 
       const updatedFormData = new FormData();
-      updatedFormData.append('id', formData.id);
-      updatedFormData.append('name', formData.name);
-      updatedFormData.append('description', formData.description);
-      updatedFormData.append('available', formData.available);
+      updatedFormData.append("id", formData.id);
+      updatedFormData.append("name", formData.name);
+      updatedFormData.append("description", formData.description);
+      updatedFormData.append("available", formData.available);
 
       if (formData.image === null)
-        updatedFormData.append('deleteImage', 'true');
-      else if (formData.image)
-        updatedFormData.append('image', formData.image);
+        updatedFormData.append("deleteImage", "true");
+      else if (formData.image) updatedFormData.append("image", formData.image);
 
       if (formData.banner === null)
-        updatedFormData.append('deleteBanner', 'true');
+        updatedFormData.append("deleteBanner", "true");
       else if (formData.banner)
-        updatedFormData.append('banner', formData.banner);
+        updatedFormData.append("banner", formData.banner);
 
       try {
         if (isFormValid(updatedFormData)) {
-          updateCategory(updatedFormData)
+          updateCategory(updatedFormData);
         } else {
-          toast.dismiss(toastLoading)
+          toast.dismiss(toastLoading);
         }
       } catch (err) {
+        console.log(err)
         toast.dismiss(toastLoading);
-        toast.error('Erro ao atualizar categoria.');
+        toast.error("Erro ao atualizar categoria.");
       }
     }
   }, [formData]);
@@ -130,7 +149,7 @@ export const CategoriesModal = ({
   const onClickDeleteImage = (name) => {
     setFormData((prevFormData) => ({
       ...prevFormData,
-      [name]: null
+      [name]: null,
     }));
   };
 
@@ -156,7 +175,7 @@ export const CategoriesModal = ({
 
       setFormData((prevFormData) => ({
         ...prevFormData,
-        [name]: file
+        [name]: file,
       }));
 
       evt.target.value = null;
@@ -173,9 +192,7 @@ export const CategoriesModal = ({
       title={isCreateItem ? `Adicionar nova categoria` : `Editar categoria`}
       onClose={() => setIsModalOpen(false)}
       onConfirm={onConfirmSaveProduct}
-      buttonConfirmText={
-        isCreateItem ? `Adicionar` : `Salvar`
-      }
+      buttonConfirmText={isCreateItem ? `Adicionar` : `Salvar`}
     >
       <div className="modal-row">
         <div className="modal-column-category">
@@ -196,45 +213,41 @@ export const CategoriesModal = ({
               name="description"
               value={formData.description}
               onChange={handleFormChange}
-              style={{ height: '235px' }}
+              style={{ height: "235px" }}
             />
           </div>
-
-         
-
-          
         </div>
 
         <div className="modal-column-category">
           <div>
-          <div className="image-preview-row">
-            {formData?.image && (
-              <CategoryThumb
-                name="image"
-                image={formData.image}
-                onClickDeleteImage={onClickDeleteImage}
-              />
-            )}
-          </div>
+            <div className="image-preview-row">
+              {formData?.image && (
+                <CategoryThumb
+                  name="image"
+                  image={formData.image}
+                  onClickDeleteImage={onClickDeleteImage}
+                />
+              )}
+            </div>
 
-          <button
-            disabled={formData?.image}
-            type="button"
-            className={
-              formData?.image ? "upload-button disabled" : "upload-button"
-            }
-            onClick={() => document.getElementById("image-upload").click()}
-          >
-            Enviar Imagem
-          </button>
-          <input
-            type="file"
-            id="image-upload"
-            name="image"
-            accept="image/*"
-            style={{ display: "none" }}
-            onChange={handleFormChange}
-          />
+            <button
+              disabled={formData?.image}
+              type="button"
+              className={
+                formData?.image ? "upload-button disabled" : "upload-button"
+              }
+              onClick={() => document.getElementById("image-upload").click()}
+            >
+              Enviar Imagem
+            </button>
+            <input
+              type="file"
+              id="image-upload"
+              name="image"
+              accept="image/*"
+              style={{ display: "none" }}
+              onChange={handleFormChange}
+            />
           </div>
           <div className="status-container">
             <label className="status-title">Status:</label>
@@ -271,41 +284,38 @@ export const CategoriesModal = ({
               </div>
             </div>
           </div>
-
-         
         </div>
-        
       </div>
       <div className="modal-column-category">
-      <div className="image-preview-row">
-            {formData?.banner && (
-              <CategoryThumb
-                name="banner"
-                image={formData?.banner}
-                onClickDeleteImage={onClickDeleteImage}
-                style={{ width: '100%' }}
-              />
-            )}
-          </div>
+        <div className="image-preview-row">
+          {formData?.banner && (
+            <CategoryThumb
+              name="banner"
+              image={formData?.banner}
+              onClickDeleteImage={onClickDeleteImage}
+              style={{ width: "100%" }}
+            />
+          )}
+        </div>
 
-          <button
-            disabled={formData?.banner}
-            type="button"
-            className={
-              formData?.banner ? "upload-button disabled" : "upload-button"
-            }
-            onClick={() => document.getElementById("image-upload2").click()}
-          >
-            Enviar Banner
-          </button>
-          <input
-            type="file"
-            id="image-upload2"
-            name="banner"
-            accept="image/*"
-            style={{ display: "none" }}
-            onChange={handleFormChange}
-          />
+        <button
+          disabled={formData?.banner}
+          type="button"
+          className={
+            formData?.banner ? "upload-button disabled" : "upload-button"
+          }
+          onClick={() => document.getElementById("image-upload2").click()}
+        >
+          Enviar Banner
+        </button>
+        <input
+          type="file"
+          id="image-upload2"
+          name="banner"
+          accept="image/*"
+          style={{ display: "none" }}
+          onChange={handleFormChange}
+        />
       </div>
     </ModalAdmin>
   );
