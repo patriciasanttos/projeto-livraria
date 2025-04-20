@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useMemo } from "react";
+import React, { useCallback, useState, useMemo, useEffect } from "react";
 import _ from "lodash";
 
 import "./Products.scss";
@@ -19,18 +19,30 @@ const currency = new Intl.NumberFormat("pt-BR", {
   currency: "BRL",
 });
 
+const initialFormDataState = {
+  name: '',
+  description: '',
+  price: '',
+  available: true,
+  mainImage: '',
+  image_1: '',
+  image_2: '',
+  image_3: ''
+}
+
 function Products() {
   const { data: categoriesData, isLoading, error } = useCategoriesData();
   const { mutate: deleteProduct } = useDeleteProduct();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isCreateItem, setIsCreateItem] = useState(false);
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
 
   const [filters, setFilters] = useState({
     available: "",
-    category: "",
+    mainCategory: "",
   });
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState(initialFormDataState);
 
   const categories = useMemo(() => {
     return categoriesData
@@ -56,9 +68,9 @@ function Products() {
       )
       : [];
 
-    if (filters.category !== "") {
+    if (filters.mainCategory !== "") {
       products = products.filter(
-        (product) => product.category === filters.category
+        (product) => product.mainCategory == filters.mainCategory
       );
     }
 
@@ -90,6 +102,19 @@ function Products() {
     return products;
   }, [categoriesData, filters]);
 
+
+  // Filter some results at first load to alleviate large results
+  useEffect(() => {
+    if (categories && categories.length > 0) {
+      setIsInitialLoad(false)
+
+      setFilters((prev) => ({
+        ...prev,
+        mainCategory: categories ? categories[0].id : "",
+      }))
+    }
+  }, [categories])
+
   const handleFilterChange = useCallback((evt) => {
     const { name, value } = evt.target;
 
@@ -110,16 +135,7 @@ function Products() {
   }, []);
 
   const onClickCreate = () => {
-    setFormData({
-      name: '',
-      description: '',
-      price: '',
-      available: true,
-      mainImage: '',
-      image_1: '',
-      image_2: '',
-      image_3: ''
-    })
+    setFormData(initialFormDataState)
     setIsModalOpen(true);
     setIsCreateItem(true);
   };
@@ -134,7 +150,7 @@ function Products() {
     return deleteProduct(data.id);
   }
 
-  if (isLoading)
+  if (isLoading || isInitialLoad)
     return <Loading title="Buscando produtos" style={{marginTop: "15rem"}}/>
 
   if (error)
@@ -173,13 +189,13 @@ function Products() {
           </div>
           <DropdownAdmin
             title="Categoria"
-            name="category"
-            value={filters.category}
+            name="mainCategory"
+            value={filters.mainCategory}
             onChange={handleFilterChange}
             options={[
               { value: "", text: "Todos" },
               ...categories.map((category) => ({
-                value: category.name,
+                value: category.id,
                 text: category.name,
               })),
             ]}
