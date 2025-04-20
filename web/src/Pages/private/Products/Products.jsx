@@ -30,14 +30,14 @@ function Products() {
   });
   const [formData, setFormData] = useState({});
 
-  const categories = useMemo(() => {
-    return categoriesData
+  const categories = useMemo(() =>
+    categoriesData
       ? categoriesData.map((category) => ({
         id: category.id,
-        name: category.name,
+        name: category.name
       }))
-      : [];
-  }, [categoriesData]);
+      : [], [categoriesData]
+  );
 
   const filteredProducts = useMemo(() => {
     let products = categoriesData
@@ -123,7 +123,17 @@ function Products() {
   };
 
   const onClickUpdate = (row) => {
-    setFormData(row);
+    const productCategories = categoriesData
+      ?.filter((category) => category.items.some((item) => item.id === row.id))
+      .map((category) => ({
+        id: category.id,
+        name: category.name
+      }));
+
+    setFormData({
+      ...row,
+      categories: productCategories,
+    });
     setIsModalOpen(true);
     setIsCreateItem(false);
   };
@@ -170,10 +180,10 @@ function Products() {
             value={filters.category}
             onChange={handleFilterChange}
             options={[
-              { value: "", text: "Todos" },
+              { value: "", label: "Todos" },
               ...categories.map((category) => ({
                 value: category.name,
-                text: category.name,
+                label: category.name,
               })),
             ]}
           />
@@ -184,9 +194,9 @@ function Products() {
             value={filters.available}
             onChange={handleFilterChange}
             options={[
-              { value: "", text: "Tudo" },
-              { value: true, text: "Disponível" },
-              { value: false, text: "Sem estoque" },
+              { value: "", label: "Tudo" },
+              { value: true, label: "Disponível" },
+              { value: false, label: "Sem estoque" },
             ]}
           />
           <div className="results-found">

@@ -1,12 +1,13 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
+import { useAddProductToCategory } from "../../../hooks/useCategories";
+import { useCreateProduct, useUpdateProduct } from "../../../hooks/useProducts";
 
+//-----Components
 import ModalAdmin from "../../../Components/ModalAdmin/ModalAdmin";
 import SearchInputAdmin from "../../../Components/SearchInputAdmin/SearchInputAdmin";
 import DropdownAdmin from "../../../Components/DropdownAdmin/DropdownAdmin";
 import ProductThumb from "./ProductThumb";
-import { useCreateProduct, useUpdateProduct } from "../../../hooks/useProducts";
 import { toast } from "react-toastify";
-import { useAddProductToCategory } from "../../../hooks/useCategories";
 
 export const ProductsModal = ({
   isCreateItem,
@@ -15,24 +16,33 @@ export const ProductsModal = ({
   setFormData,
   setIsModalOpen,
 }) => {
-  const [mainImageIndex, setMainImageIndex] = useState(formData?.images?.findIndex(img => img.isMain) || 0);
+  const [mainImageIndex, setMainImageIndex] = useState(() => {
+    const index = formData?.images?.findIndex((img) => img.isMain);
+    return index !== -1 && index != null ? index : 0;
+  });
+
+  useEffect(() => {
+    console.log(formData);
+  }, [formData, categories]);
 
   const { mutate: updateProduct } = useUpdateProduct();
   const { mutateAsync: createProduct } = useCreateProduct();
   const { mutateAsync: addProductToCategory } = useAddProductToCategory();
 
-  const onClickDeleteImage = (index) => {
-    const imageList = formData?.images.splice(index, 1);
+  const onClickDeleteImage = useCallback(index => {
+    const updatedImages = formData?.images?.filter((_, i) => i !== index);
 
-    if (mainImageIndex == index) {
-      setTimeout(() => setMainImageIndex(imageList.length > 0 ? 0 : null), 0);
+    if (mainImageIndex === index) {
+      setMainImageIndex(updatedImages.length > 0 ? 0 : null);
+    } else if (mainImageIndex > index) {
+      setMainImageIndex(mainImageIndex - 1);
     }
 
     setFormData((prevFormData) => ({
       ...prevFormData,
-      [name]: imageList,
+      images: updatedImages,
     }));
-  };
+  });
 
   const onConfirmSaveProduct = useCallback(async () => {
     if (isCreateItem) {
@@ -53,7 +63,7 @@ export const ProductsModal = ({
       newDataForm.append('price', formData.price);
       newDataForm.append('available', formData.available);
       newDataForm.append('main_category', formData.categories[0]);
-      newDataForm.append('main_image', formData.mainImage || 0);
+      newDataForm.append('main_image', mainImageIndex ?? 0);
       newDataForm.append('image_1', getImageFile(0));
       newDataForm.append('image_2', getImageFile(1));
       newDataForm.append('image_3', getImageFile(2));
@@ -75,8 +85,6 @@ export const ProductsModal = ({
         toast.dismiss(creatingDataToast);
         toast.success('Produto criado com sucesso!');
       } catch (err) {
-        console.log(err);
-
         toast.dismiss(creatingDataToast);
         toast.error('Erro ao criar produto.');
       }
@@ -91,8 +99,6 @@ export const ProductsModal = ({
         return image instanceof File ? image : undefined;
       };
 
-      console.log(formData);
-
       const updatedFormData = new FormData();
       updatedFormData.append('id', formData.id);
       updatedFormData.append('name', formData.name);
@@ -100,7 +106,7 @@ export const ProductsModal = ({
       updatedFormData.append('price', formData.price);
       updatedFormData.append('available', formData.available);
       updatedFormData.append('mainCategory', formData.mainCategory);
-      updatedFormData.append('mainImage', formData.mainImage || 0);
+      updatedFormData.append('mainImage', formData.mainImage ?? mainImageIndex ?? 0);
       updatedFormData.append('image_1', getImageFile(0));
       updatedFormData.append('image_2', getImageFile(1));
       updatedFormData.append('image_3', getImageFile(2));
@@ -134,7 +140,15 @@ export const ProductsModal = ({
       }
     };
 
-    if (files && files[0]) {
+    if (name === "categories") {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        categories: value.map(v => ({
+          id: v.value,
+          name: v.label
+        })),
+      }));
+    } else if (files && files[0]) {
       const file = files[0];
 
       if (!formData?.images) {
@@ -185,20 +199,23 @@ export const ProductsModal = ({
           <DropdownAdmin
             className="modal-select"
             name="categories"
-            value={formData.categories}
+            value={formData?.categories.map(category => ({
+              value: category.id,
+              label: category.name,
+            }))}
             onChange={handleFormChange}
             multiple={true}
             placeholder="Categorias"
             options={[
               ...categories.map((category) => ({
                 value: category.id,
-                text: category.name,
+                label: category.name,
               })),
             ]}
           />
           <textarea
             name="description"
-            value={formData.description === null ? '' : formData.description}
+            value={formData.description == "null" ? '' : formData.description}
             onChange={handleFormChange}
             placeholder="Descrição do produto"
             className="textarea-product"
@@ -270,6 +287,7 @@ export const ProductsModal = ({
                     })
                   }
                 />
+
                 <p>Indisponível</p>
               </div>
             </div>

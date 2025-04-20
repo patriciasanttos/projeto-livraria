@@ -1,5 +1,5 @@
-import "./DropdownAdmin.scss";
 import Select from "react-select";
+import "./DropdownAdmin.scss";
 
 function DropdownAdmin({
   title,
@@ -16,10 +16,14 @@ function DropdownAdmin({
     onChange({
       target: {
         name,
-        value: selectedOptions.map((item) => item.value),
+        value: selectedOptions.map((item) => ({
+          value: item.value,
+          label: item.label
+        })),
       },
     });
   };
+
   return multiple ? (
     <Select
       className="dropdown-multiple-admin"
@@ -39,10 +43,8 @@ function DropdownAdmin({
       }}
       isMulti
       placeholder={placeholder}
-      options={options.map((optionItem) => ({
-        value: optionItem.value,
-        label: optionItem.text,
-      }))}
+      value={value}
+      options={options}
     />
   ) : (
     <section defaultValue={defaultValue} className="dropdown-admin-container">
@@ -50,7 +52,7 @@ function DropdownAdmin({
       <select name={name} onChange={onChange} value={value} {...props}>
         {options?.map((optionItem, index) => (
           <option key={index} value={optionItem.value}>
-            {optionItem.text}
+            {optionItem.label}
           </option>
         ))}
       </select>
