@@ -18,7 +18,7 @@ export default class CreateAdminBody {
   @ApiProperty()
   @IsString()
   @IsNotEmpty({ message: 'You must provide an admin phone' })
-  @Length(8, 11)
+  @Length(8, 15)
   phone: string;
 
   @ApiProperty()

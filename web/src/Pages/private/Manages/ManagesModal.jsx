@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
+import { IMaskInput } from "react-imask";
 import { validate as validateAdmin } from '../../../service/api/admins';
 import { useCreateAdmin, useUpdateAdmin } from "../../../hooks/useAdmins";
 
@@ -65,7 +66,7 @@ export const ManagesModal = ({
           email: formData.email,
           password: formData.newPassword,
         });
-
+        setIsModalOpen(false)
         toast.dismiss(creatingDataToast);
         toast.success('Administrador criado com sucesso!');
       } catch (err) {
@@ -107,6 +108,7 @@ export const ManagesModal = ({
 
         updateAdmin(updatedFields);
 
+        setIsModalOpen(false)
         toast.dismiss(updatingDataToast);
         toast.success('Administrador atualizado com sucesso!');
       } catch (err) {
@@ -169,12 +171,13 @@ export const ManagesModal = ({
             onChange={handleFormChange}
           />
 
-          <SearchInputAdmin
-            className="modal-field"
+          <IMaskInput
+            className="modal-field input-contact"
             placeholder="Contato"
             name="phone"
             value={formData.phone}
             onChange={handleFormChange}
+            mask={"(00) 00000-0000"}
           />
         </section>
         <section className="modal-column-admin">
