@@ -7,6 +7,8 @@ import _ from "lodash";
 import ProductDescription from "../../../Components/ProductDescription/ProductDescription";
 import Category from "../../../components/Category/Category";
 import WhatsappContact from "../../../Components/WhatsappContact/WhatsappContact";
+import ErrorFinding from "../../../Components/PageProcessing/ErrorFinding/ErrorFinding";
+import Loading from "../../../Components/PageProcessing/Loading/Loading";
 
 import "./ProductPage.scss";
 
@@ -45,10 +47,15 @@ function ItemPage() {
   }, [data, id, locationState]);
 
   if (isLoading)
-    return <h1>Buscando dados...</h1>
+    return <Loading title="Buscando produto" style={{marginTop: "4rem"}}/>
 
   if (!data || !product || error)
-    return <h1>Produto não encontrado</h1>
+    return (
+      <ErrorFinding
+        text="Produto não encontrado. Por favor, busque por outro produto"
+        style={{ marginTop: "6rem" }}
+      />
+    );
 
   return (
     <div>

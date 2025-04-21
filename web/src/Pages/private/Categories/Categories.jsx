@@ -6,13 +6,15 @@ import AdminList from "../../../Components/AdminList/AdminList";
 import SearchInputAdmin from "../../../Components/SearchInputAdmin/SearchInputAdmin";
 import DropdownAdmin from "../../../Components/DropdownAdmin/DropdownAdmin";
 import AdminAddButton from "../../../Components/AdminAddButton/AdminAddButton";
+import Loading from "../../../Components/PageProcessing/Loading/Loading";
+import ErrorFinding from "../../../Components/PageProcessing/ErrorFinding/ErrorFinding";
 
 import { useCategoriesData, useDeleteCategory } from "../../../hooks/useCategories";
 import { CategoriesModal } from "./CategoriesModal";
 import { toast } from "react-toastify";
 
 function Categories() {
-  const { data: categoriesData } = useCategoriesData();
+  const { data: categoriesData, isLoading, error } = useCategoriesData();
   const { mutate: deleteCategory } = useDeleteCategory();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -106,6 +108,17 @@ function Categories() {
     }
   }
 
+    if (isLoading)
+      return <Loading title="Buscando categorias" style={{ marginTop: "18rem" }} />
+
+    if (error)
+      return (
+        <ErrorFinding
+          text="Erro ao carregar as categorias"
+          style={{ marginTop: "13rem" }}
+        />
+      );
+
   return (
     <section className="categories-page-container">
       <section className="categories-filter-container">
@@ -171,6 +184,7 @@ function Categories() {
 
       {isModalOpen && (
         <CategoriesModal
+          allCategories={categoriesData}
           isCreateItem={isCreateItem}
           formData={formData}
           setFormData={setFormData}

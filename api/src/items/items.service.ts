@@ -314,15 +314,17 @@ export class ItemsService {
   async delete(itemId: number) {
     const item = await this.getById(itemId);
 
-    const imagePaths = item.images.map((img) => {
-      const url = new URL(img.url);
-      const path = decodeURIComponent(
-        url.pathname.replace('/storage/v1/object/public/products/', ''),
-      );
-      return path;
-    });
-
-    await this.supabase.deleteImages('products', imagePaths);
+    if (item.images.length > 0) {
+      const imagePaths = item.images.map((img) => {
+        const url = new URL(img.url);
+        const path = decodeURIComponent(
+          url.pathname.replace('/storage/v1/object/public/products/', ''),
+        );
+        return path;
+      });
+  
+      await this.supabase.deleteImages('products', imagePaths);
+    }
 
     return await this.prisma.$transaction(async (tx) => {
       await tx.item.update({
@@ -339,8 +341,8 @@ export class ItemsService {
       await tx.itemImage.deleteMany({
         where: { itemId: itemId },
       });
-
-      await tx.item.delete({ where: { id: item.id } });
+      console.log(item)
+      await tx.item.delete({ where: { id: itemId } });
 
       return { message: 'Item deleted successfully' };
     });

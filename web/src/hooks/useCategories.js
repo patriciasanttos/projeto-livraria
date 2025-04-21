@@ -72,7 +72,7 @@ export const useAddProductToCategory = () => {
   });
 };
 
-export const useRemoveProductToCategory = () => {
+export const useRemoveProductFromCategory = () => {
   const queryClient = useQueryClient();
 
   return useMutation({

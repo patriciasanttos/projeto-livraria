@@ -27,9 +27,7 @@ function AdminList({ type, tableLayout, listData, onEdit, onDelete }) {
   }, [type, listData]);
 
   useEffect(() => {
-    if (type !== 'adminAccounts')
-      return setAcionsLoaded(true);
-
+    if (type !== "adminAccounts") return setAcionsLoaded(true);
     loadCurrentAdmin();
   }, [type, listData]);
 
@@ -55,8 +53,8 @@ function AdminList({ type, tableLayout, listData, onEdit, onDelete }) {
           title={`Deseja mesmo deletar "${confirmDelteteProp.name}"?`}
           onClose={() => setIsConfirmDeleteModalOpen(false)}
           onConfirm={() => {
-            setIsConfirmDeleteModalOpen(false)
-            onDelete(confirmDelteteProp)
+            setIsConfirmDeleteModalOpen(false);
+            onDelete(confirmDelteteProp);
           }}
           isButtonConfirmRed={true}
           buttonConfirmText="Excluir"
@@ -74,7 +72,7 @@ function AdminList({ type, tableLayout, listData, onEdit, onDelete }) {
         </thead>
 
         <tbody>
-          {listData.map(row => (
+          {listData.map((row) => (
             <tr key={row.id}>
               {tableLayout.map(({ key }) => (
                 <td key={key}>{getCellValue(row, key)}</td>

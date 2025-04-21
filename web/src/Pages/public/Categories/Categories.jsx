@@ -9,6 +9,8 @@ import kitCanetas from '../../../assets/Images/kit-canetas.svg';
 import Card from '../../../components/Card/Card';
 import Pagination from '../../../components/Pagination/Pagination';
 import WhatsappContact from '../../../Components/WhatsappContact/WhatsappContact';
+import Loading from '../../../Components/PageProcessing/Loading/Loading';
+import ErrorFinding from '../../../Components/PageProcessing/ErrorFinding/ErrorFinding';
 
 import { useCategoriesData } from '../../../hooks/useCategories';
 
@@ -86,10 +88,15 @@ function Categories() {
   }, [categoryName, navigate, categoriesData, loadData]);
 
   if (isLoading)
-    return <p className='no-items-warn'>Buscando dados...</p>
+    return <Loading title="Buscando categorias"/>;
 
   if ((data && data.length <= 0) || error)
-    return <p className='no-items-warn'>Desculpe, parece que nenhum item foi adicionado nessa categoria ainda.</p>
+    return (
+      <ErrorFinding
+        text="Desculpe, parece que nenhum item foi adicionado nessa categoria ainda"
+        style={{ marginTop: "6rem" }}
+      />
+    );
 
   return (
     <div className='category-page'>

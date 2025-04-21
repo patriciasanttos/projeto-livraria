@@ -6,12 +6,15 @@ import SearchInputAdmin from "../../../Components/SearchInputAdmin/SearchInputAd
 import AdminAddButton from "../../../Components/AdminAddButton/AdminAddButton";
 import AdminList from "../../../Components/AdminList/AdminList";
 import { ManagesModal } from "./ManagesModal";
-import { toast } from "react-toastify";
+import Loading from "../../../Components/PageProcessing/Loading/Loading";
+import ErrorFinding from "../../../Components/PageProcessing/ErrorFinding/ErrorFinding";
 
 import "./Manages.scss";
+import { Description } from "@mui/icons-material";
+import { toast } from "react-toastify";
 
 function Manages() {
-  const { data, isLoading } = useAdminsData();
+  const { data, isLoading, error } = useAdminsData();
   const { mutate: deleteAdmin } = useDeleteAdmin();
 
   const [filters, setFilters] = useState({});
@@ -26,7 +29,8 @@ function Manages() {
     if (filters.name) {
       filteredData = filteredData.filter(
         (adminItem) =>
-          adminItem.name.toUpperCase().indexOf(filters.name.toUpperCase()) !== -1
+          adminItem.name.toUpperCase().indexOf(filters.name.toUpperCase()) !==
+          -1
       );
     }
 
@@ -92,7 +96,20 @@ function Manages() {
   }
 
   if (isLoading)
-    return <h1>Buscando dados...</h1>
+    return (
+      <Loading
+        title="Buscando lista de administradores"
+        style={{ marginTop: "18rem" }}
+      />
+    );     
+
+  if (error)
+    return (
+      <ErrorFinding
+        text="Erro ao carregar lista de administradores"
+        style={{ marginTop: "13rem" }}
+      />
+    );
 
   return (
     <section className="manage-page">

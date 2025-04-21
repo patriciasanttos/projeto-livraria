@@ -80,8 +80,8 @@ async function main() {
     });
   };
 
-  // const categories = await categoriesSeed();
-  // await itemsSeed(categories);
+  const categories = await categoriesSeed();
+  await itemsSeed(categories);
   await adminSeed();
 
   console.log('Done!');

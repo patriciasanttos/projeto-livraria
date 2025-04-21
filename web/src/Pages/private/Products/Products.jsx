@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useMemo } from "react";
+import React, { useCallback, useState, useMemo, useEffect } from "react";
 import _ from "lodash";
 
 import "./Products.scss";
@@ -10,7 +10,9 @@ import DropdownAdmin from "../../../Components/DropdownAdmin/DropdownAdmin";
 import AdminAddButton from "../../../Components/AdminAddButton/AdminAddButton";
 
 import { useCategoriesData } from "../../../hooks/useCategories";
-import { useDeleteProduct } from "../../../hooks/useProducts";
+import { useDeleteProduct, useAllProductsData } from "../../../hooks/useProducts";
+import Loading from "../../../Components/PageProcessing/Loading/Loading";
+import ErrorFinding from "../../../Components/PageProcessing/ErrorFinding/ErrorFinding";
 import { toast } from "react-toastify";
 
 const currency = new Intl.NumberFormat("pt-BR", {
@@ -18,18 +20,31 @@ const currency = new Intl.NumberFormat("pt-BR", {
   currency: "BRL",
 });
 
+const initialFormDataState = {
+  name: '',
+  description: '',
+  price: '',
+  available: true,
+  mainImage: '',
+  image_1: '',
+  image_2: '',
+  image_3: ''
+}
+
 function Products() {
+  const { data: allProducts, isLoading: isLoadingProducts, error: errorProducts } = useAllProductsData()
   const { data: categoriesData, isLoading, error } = useCategoriesData();
   const { mutate: deleteProduct } = useDeleteProduct();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isCreateItem, setIsCreateItem] = useState(false);
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
 
   const [filters, setFilters] = useState({
     available: "",
     category: "",
   });
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState(initialFormDataState);
 
   const categories = useMemo(() =>
     categoriesData
@@ -43,21 +58,21 @@ function Products() {
   const filteredProducts = useMemo(() => {
     let products = categoriesData
       ? categoriesData.reduce(
-        (acc, category) => [
-          ...acc,
-          ...category.items.map((item) => ({
-            ...item,
-            category: category.name,
-            priceFormatted: currency.format(item.price),
-          })),
-        ],
-        []
-      )
+          (acc, category) => [
+            ...acc,
+            ...category.items.map((item) => ({
+              ...item,
+              category: category.name,
+              priceFormatted: currency.format(item.price),
+            })),
+          ],
+          []
+        )
       : [];
 
     if (filters.category !== "") {
       products = products.filter(
-        (product) => product.category === filters.category
+        (product) => product.category == filters.category
       );
     }
 
@@ -87,7 +102,14 @@ function Products() {
     }
 
     return _.uniqBy(products, "id");
-  }, [categoriesData, filters]);
+  }, [allProducts, categoriesData, filters]);
+
+
+  useEffect(() => {
+    if (categories && categories.length > 0) {
+      return setIsInitialLoad(false)
+    }
+  }, [categories])
 
   const handleFilterChange = useCallback((evt) => {
     const { name, value } = evt.target;
@@ -109,16 +131,7 @@ function Products() {
   }, []);
 
   const onClickCreate = () => {
-    setFormData({
-      name: '',
-      description: '',
-      price: '',
-      available: true,
-      mainImage: '',
-      image_1: '',
-      image_2: '',
-      image_3: ''
-    })
+    setFormData(initialFormDataState)
     setIsModalOpen(true);
     setIsCreateItem(true);
   };
@@ -140,25 +153,30 @@ function Products() {
   };
 
   const onClickDelete = (data) => {
-    const deletingDataToast = toast.loading('Deletando produto...', {
-      autoClose: false
+    const deletingDataToast = toast.loading("Deletando produto...", {
+      autoClose: false,
     });
 
     try {
       deleteProduct(data.id);
       toast.dismiss(deletingDataToast);
-      toast.success('Produto deletado com sucesso!');
+      toast.success("Produto deletado com sucesso!");
     } catch (err) {
       toast.dismiss(deletingDataToast);
-      toast.error('Erro ao deletar produto.');
+      toast.error("Erro ao deletar produto.");
     }
-  }
+  };
 
-  if (isLoading)
-    return <h1>Buscando dados...</h1>
+  if (isLoading || isLoadingProducts || isInitialLoad)
+    return <Loading title="Buscando produtos" style={{marginTop: "15rem"}}/>
 
   if (error)
-    return <h1>Erro ao carregar dados.</h1>
+    return (
+      <ErrorFinding
+        text="Erro ao carregar os produtos"
+        style={{ marginTop: "13rem" }}
+      />
+    );
 
   return (
     <section className="item-page-container">
