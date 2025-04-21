@@ -22,10 +22,14 @@ export const ProductsModal = ({
   });
 
   const [prevCategories, setPrevCategories] = useState([]);
+  const [initialImages, setInitialImages] = useState([]);
 
   useEffect(() => {
     if (!isCreateItem && formData.categories?.length)
       setPrevCategories(formData.categories);
+
+    if (formData?.images?.length)
+      setInitialImages(formData.images.filter(img => !(img instanceof File)));
   }, []);
 
   const { mutateAsync: updateProduct, status: statusUpdate, error: errorUpdate } = useUpdateProduct();
@@ -45,8 +49,8 @@ export const ProductsModal = ({
       const errorMessage = errorUpdate.response.data.message[0]
       toast.dismiss(toastLoading);
       toast.error(`Erro ao atualizar produto: ${errorMessage}`);
-    } 
-  }, [statusUpdate])
+    }
+  }, [statusUpdate, errorUpdate, toastLoading, setIsModalOpen])
 
   useEffect(() => {
     if (statusCreate === 'success') {
@@ -59,23 +63,37 @@ export const ProductsModal = ({
       const errorMessage = errorCreate.response.data.message[0]
       toast.dismiss(toastLoading);
       toast.error(`Erro ao criar produto: ${errorMessage}`);
-    } 
-  }, [statusCreate])
+    }
+  }, [statusCreate, errorCreate, toastLoading, setIsModalOpen])
 
   const onClickDeleteImage = useCallback((index) => {
-    const updatedImages = formData?.images?.filter((_, i) => i !== index);
+    const currentImages = [...(formData?.images || [])];
+    const isOriginalImage = !(currentImages[index] instanceof File) && initialImages.includes(currentImages[index]);
 
-    if (mainImageIndex === index) {
-      setMainImageIndex(updatedImages.length > 0 ? 0 : null);
-    } else if (mainImageIndex > index) {
-      setMainImageIndex(mainImageIndex - 1);
+    let newMainImageIndex = mainImageIndex;
+    if (index === mainImageIndex) {
+      const filteredImages = currentImages.filter((img, i) => i !== index && img !== "__delete__");
+      newMainImageIndex = filteredImages.length > 0 ? 0 : null;
     }
+    else if (index < mainImageIndex)
+      newMainImageIndex = mainImageIndex - 1;
 
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      images: updatedImages,
-    }));
-  });
+    setFormData(prevFormData => {
+      const newImages = [...(prevFormData?.images || [])];
+
+      if (isOriginalImage)
+        newImages[index] = "__delete__";
+      else
+        newImages.splice(index, 1);
+
+      return {
+        ...prevFormData,
+        images: newImages,
+      };
+    });
+
+    setMainImageIndex(newMainImageIndex);
+  }, [initialImages]);
 
   const onConfirmSaveProduct = useCallback(async () => {
     if (isCreateItem) {
@@ -115,8 +133,7 @@ export const ProductsModal = ({
             productId: String(newProduct.id),
           });
         }
-      
-        setIsModalOpen(false);
+
         toast.dismiss(toastLoading);
         toast.success("Produto criado com sucesso!");
       } catch (err) {
@@ -133,7 +150,7 @@ export const ProductsModal = ({
       const getImageFile = (index) => {
         const image = formData?.images?.[index];
 
-        return image instanceof File ? image : undefined;
+        return (image instanceof File || image === '__delete__') ? image : undefined;
       };
 
       const updatedFormData = new FormData();
@@ -156,10 +173,14 @@ export const ProductsModal = ({
         );
 
         addedCategories.forEach(async (category) => {
-          await addProductToCategory({
-            categoryId: String(category.id),
-            productId: String(updatedProduct.id),
-          });
+          if (category === formData.categories[0])
+            return;
+
+          else
+            await addProductToCategory({
+              categoryId: String(category.id),
+              productId: String(updatedProduct.id),
+            });
         })
 
         const removedCategories = prevCategories.filter(
@@ -172,16 +193,15 @@ export const ProductsModal = ({
             productId: String(updatedProduct.id),
           });
         })
-
-        setIsModalOpen(false);
         toast.dismiss(toastLoading);
+
         toast.success('Produto atualizado com sucesso!');
       } catch (err) {
         toast.dismiss(toastLoading);
         toast.error('Erro ao atualizar produto.');
       }
     }
-  }, [formData, mainImageIndex]);
+  }, [formData, isCreateItem, mainImageIndex, prevCategories, createProduct, updateProduct, addProductToCategory, removeProductFromCategory]);
 
   const handleFormChange = (evt) => {
     const { name, value, files, checked, type } = evt.target;
@@ -212,14 +232,28 @@ export const ProductsModal = ({
     else if (files && files[0]) {
       const file = files[0];
 
-      if (!formData?.images) {
+      if (!formData?.images)
         setMainImageIndex(0);
-      }
 
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        [name]: formData?.images ? [...formData.images, file] : [file],
-      }));
+      setFormData((prevFormData) => {
+        const currentImages = prevFormData[name] || [];
+        const deleteIndex = currentImages.findIndex(img => img === "__delete__");
+
+        if (deleteIndex !== -1) {
+          const newImages = [...currentImages];
+          newImages[deleteIndex] = file;
+
+          return {
+            ...prevFormData,
+            [name]: newImages
+          };
+        }
+        else
+          return {
+            ...prevFormData,
+            [name]: [...currentImages, file]
+          };
+      });
 
       evt.target.value = null;
     } else {
@@ -274,7 +308,7 @@ export const ProductsModal = ({
             name="description"
             value={
               formData.description == "null" ||
-              formData.description == "undefined"
+                formData.description == "undefined"
                 ? ""
                 : formData.description
             }
@@ -299,16 +333,18 @@ export const ProductsModal = ({
           </div>
 
           <button
-            disabled={formData?.images?.length >= 3}
+            disabled={(formData?.images?.filter(img => img !== "__delete__")?.length ?? 0) >= 3}
             type="button"
             className={
-              formData?.images?.length >= 3
+              (formData?.images?.filter(img => img !== "__delete__")?.length ?? 0) >= 3
                 ? "upload-button disabled"
                 : "upload-button"
             }
             onClick={() => document.getElementById("image-upload").click()}
           >
-            Adicionar imagem ({formData?.images?.length ?? 0}/3)
+            Adicionar imagem (
+            {formData?.images?.filter(img => img !== "__delete__")?.length ?? 0}/3
+            )
           </button>
           <input
             type="file"

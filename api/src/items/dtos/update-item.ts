@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-import { ApiProperty } from '@nestjs/swagger';
-import { Transform } from 'class-transformer';
+import { ApiProperty } from "@nestjs/swagger";
+import { Transform } from "class-transformer";
 import {
   IsBoolean,
   IsNotEmpty,
@@ -8,12 +8,11 @@ import {
   IsString,
   Length,
   Matches,
-  Min,
-} from 'class-validator';
+} from "class-validator";
 
 export default class UpdateItemBody {
   @ApiProperty()
-  @IsNotEmpty({ message: 'You must provide an item ID' })
+  @IsNotEmpty({ message: "You must provide an item ID" })
   @IsString()
   id: string;
 
@@ -31,7 +30,7 @@ export default class UpdateItemBody {
 
   @ApiProperty()
   @Matches(/^\d+(\.\d{1,2})?$/, {
-    message: 'The price must have a maximum of 2 decimal places',
+    message: "The price must have a maximum of 2 decimal places",
   })
   @IsOptional()
   price?: number;
@@ -39,8 +38,8 @@ export default class UpdateItemBody {
   @ApiProperty()
   @IsBoolean()
   @Transform(({ value }) => {
-    if (typeof value === 'boolean') return value;
-    if (typeof value === 'string') return value.toLowerCase() === 'true';
+    if (typeof value === "boolean") return value;
+    if (typeof value === "string") return value.toLowerCase() === "true";
     return false;
   })
   @IsOptional()
@@ -48,33 +47,33 @@ export default class UpdateItemBody {
 
   @ApiProperty()
   @Length(1)
-  @IsString({ message: 'Main category must be an category name' })
+  @IsString({ message: "Main category must be an category name" })
   @IsOptional()
   main_category?: string;
 
   @ApiProperty({
-    type: 'string',
-    format: 'binary',
+    type: "string",
+    format: "binary",
   })
   @IsOptional()
-  image_1?: Express.Multer.File;
+  image_1?: Express.Multer.File | "__delete__";
 
   @ApiProperty({
-    type: 'string',
-    format: 'binary',
+    type: "string",
+    format: "binary",
   })
   @IsOptional()
-  image_2?: Express.Multer.File;
+  image_2?: Express.Multer.File | "__delete__";
 
   @ApiProperty({
-    type: 'string',
-    format: 'binary',
+    type: "string",
+    format: "binary",
   })
   @IsOptional()
-  image_3?: Express.Multer.File;
+  image_3?: Express.Multer.File | "__delete__";
 
   @ApiProperty({
-    type: 'number',
+    type: "number",
   })
   @IsOptional()
   @Transform(({ value }) => Number(value))

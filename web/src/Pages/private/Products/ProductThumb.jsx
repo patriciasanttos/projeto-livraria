@@ -7,8 +7,11 @@ const ProductThumb = React.memo(
         return URL.createObjectURL(image);
       }
 
-      return image?.url || "";
+      return image?.url || null;
     }, [image]);
+
+    if (imageUrl === null)
+      return null;
 
     return (
       <div
