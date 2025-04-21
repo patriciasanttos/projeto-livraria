@@ -4,21 +4,25 @@ import {
   HttpStatus,
   Inject,
   Injectable,
-} from '@nestjs/common';
-import { PrismaService } from 'src/database/prisma.service';
-import CreateItemBody from './dtos/create-item';
-import UpdateItemBody from './dtos/update-item';
-import { SupabaseService } from 'src/supabase/supabase.service';
-import { Prisma } from '@prisma/client';
-import { CategoriesService } from 'src/categories/categories.service';
+} from "@nestjs/common";
+import { PrismaService } from "src/database/prisma.service";
+import CreateItemBody from "./dtos/create-item";
+import UpdateItemBody from "./dtos/update-item";
+import { SupabaseService } from "src/supabase/supabase.service";
+import { Prisma } from "@prisma/client";
+import { CategoriesService } from "src/categories/categories.service";
 
 interface IHandleUpdateImages {
   tx: Prisma.TransactionClient;
-  itemId: number;
+  item: Prisma.ItemGetPayload<{
+    include: {
+      images: true;
+    };
+  }>;
   images: {
-    image_1?: Express.Multer.File;
-    image_2?: Express.Multer.File;
-    image_3?: Express.Multer.File;
+    image_1?: Express.Multer.File | "__delete__";
+    image_2?: Express.Multer.File | "__delete__";
+    image_3?: Express.Multer.File | "__delete__";
   };
   mainImage?: number;
 }
@@ -29,7 +33,7 @@ export class ItemsService {
     private readonly prisma: PrismaService,
     @Inject(forwardRef(() => CategoriesService))
     private readonly categoriesService: CategoriesService,
-    private readonly supabase: SupabaseService,
+    private readonly supabase: SupabaseService
   ) {}
 
   async getAll() {
@@ -81,8 +85,8 @@ export class ItemsService {
 
     if (!item)
       throw new HttpException(
-        { message: 'Item not found' },
-        HttpStatus.NOT_FOUND,
+        { message: "Item not found" },
+        HttpStatus.NOT_FOUND
       );
 
     return item;
@@ -94,12 +98,12 @@ export class ItemsService {
 
       const mainCategory = allCategories.find(
         (category) =>
-          category.name.toLowerCase() === data.main_category.toLowerCase(),
+          category.name.toLowerCase() === data.main_category.toLowerCase()
       );
       if (!mainCategory)
         throw new HttpException(
-          { message: 'Main category not found' },
-          HttpStatus.NOT_FOUND,
+          { message: "Main category not found" },
+          HttpStatus.NOT_FOUND
         );
 
       const item = await tx.item.create({
@@ -123,11 +127,11 @@ export class ItemsService {
 
         const path = `${item.id}/${image.fieldname}`;
         const url = await this.supabase.uploadImage(
-          'products',
+          "products",
           image.buffer,
           path,
           image.mimetype,
-          'image',
+          "image"
         );
 
         const isMainImage =
@@ -156,35 +160,37 @@ export class ItemsService {
 
   private async handleUpdateImages({
     tx,
-    itemId,
+    item,
     images,
     mainImage,
   }: IHandleUpdateImages) {
     let imagesInDb = await tx.itemImage.findMany({
-      where: { itemId: Number(itemId) },
+      where: { itemId: item.id },
     });
 
     for (let [newImageKey, newImage] of Object.entries(images)) {
       if (!newImage) continue;
 
       const existingImage = imagesInDb.find((img) =>
-        img.url.includes(newImageKey),
+        img.url.includes(newImageKey)
       );
 
       if (!existingImage) {
-        const newPath = `${itemId}/${newImageKey}`;
+        if (newImage === "__delete__") continue;
+
+        const newPath = `${item.id}/${newImageKey}`;
 
         const publicUrl = await this.supabase.uploadImage(
-          'products',
+          "products",
           newImage.buffer,
           newPath,
           newImage.mimetype,
-          'image',
+          "image"
         );
 
         await tx.itemImage.create({
           data: {
-            itemId,
+            itemId: item.id,
             url: publicUrl,
             isMain: false,
           },
@@ -192,32 +198,42 @@ export class ItemsService {
       } else {
         const url = new URL(existingImage.url);
         const path = decodeURIComponent(
-          url.pathname.replace('/storage/v1/object/public/products', ''),
+          url.pathname.replace("/storage/v1/object/public/products", "")
         );
 
-        await this.supabase.uploadImage(
-          'products',
-          newImage.buffer,
-          path!,
-          newImage.mimetype,
-          'image',
-        );
+        if (newImage === "__delete__") {
+          if (item.images.length <= 1)
+            throw new HttpException(
+              { message: "You must provide at least one image" },
+              HttpStatus.BAD_REQUEST
+            );
 
-        await tx.itemImage.update({
-          where: { id: existingImage.id },
-          data: { updated_at: new Date() },
-        });
+          await this.supabase.deleteImages("products", [path]);
+
+          await tx.itemImage.delete({ where: { id: existingImage.id } });
+        } else {
+          await this.supabase.uploadImage(
+            "products",
+            newImage.buffer,
+            path,
+            newImage.mimetype,
+            "image"
+          );
+
+          await tx.itemImage.update({
+            where: { id: existingImage.id },
+            data: { updated_at: new Date() },
+          });
+        }
       }
     }
-
-    console.log(mainImage);
 
     if (mainImage !== undefined && mainImage !== null) {
       const mainImageKey = `image_${mainImage}`;
 
       const mainImageInDb = await tx.itemImage.findFirst({
         where: {
-          itemId,
+          itemId: item.id,
           url: {
             contains: mainImageKey,
           },
@@ -226,12 +242,12 @@ export class ItemsService {
 
       if (!mainImageInDb)
         throw new HttpException(
-          { message: 'Main image not found' },
-          HttpStatus.BAD_REQUEST,
+          { message: "Main image not found" },
+          HttpStatus.BAD_REQUEST
         );
 
       await tx.itemImage.updateMany({
-        where: { itemId },
+        where: { itemId: item.id },
         data: { isMain: false },
       });
 
@@ -255,12 +271,12 @@ export class ItemsService {
 
         const mainCategory = allCategories.find(
           (category) =>
-            category.name.toLowerCase() === data.main_category!.toLowerCase(),
+            category.name.toLowerCase() === data.main_category!.toLowerCase()
         );
         if (!mainCategory)
           throw new HttpException(
-            { message: 'Main category not found' },
-            HttpStatus.NOT_FOUND,
+            { message: "Main category not found" },
+            HttpStatus.NOT_FOUND
           );
 
         await tx.item.update({
@@ -302,7 +318,7 @@ export class ItemsService {
       if (hasImagesChanges || data.main_image)
         await this.handleUpdateImages({
           tx,
-          itemId: item.id,
+          item,
           images,
           mainImage: data.main_image ? Number(data.main_image) : undefined,
         });
@@ -318,12 +334,12 @@ export class ItemsService {
       const imagePaths = item.images.map((img) => {
         const url = new URL(img.url);
         const path = decodeURIComponent(
-          url.pathname.replace('/storage/v1/object/public/products/', ''),
+          url.pathname.replace("/storage/v1/object/public/products/", "")
         );
         return path;
       });
-  
-      await this.supabase.deleteImages('products', imagePaths);
+
+      await this.supabase.deleteImages("products", imagePaths);
     }
 
     return await this.prisma.$transaction(async (tx) => {
@@ -341,10 +357,10 @@ export class ItemsService {
       await tx.itemImage.deleteMany({
         where: { itemId: itemId },
       });
-      console.log(item)
+
       await tx.item.delete({ where: { id: itemId } });
 
-      return { message: 'Item deleted successfully' };
+      return { message: "Item deleted successfully" };
     });
   }
 }
