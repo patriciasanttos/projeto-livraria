@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useAddProductToCategory, useRemoveProductToCategory } from "../../../hooks/useCategories";
 import { useCreateProduct, useUpdateProduct } from "../../../hooks/useProducts";
 
@@ -17,7 +17,7 @@ export const ProductsModal = ({
   setIsModalOpen,
 }) => {
   const [mainImageIndex, setMainImageIndex] = useState(() => {
-    const index = formData?.images?.findIndex((img) => img.isMain);
+    const index = formData?.gallery?.findIndex((img) => img.isMain);
     return index !== -1 && index != null ? index : 0;
   });
 
@@ -28,8 +28,8 @@ export const ProductsModal = ({
       setPrevCategories(formData.categories);
   }, []);
 
-  const { mutateAsync: updateProduct, status: statusCreate, error: errorCreate } = useUpdateProduct();
-  const { mutateAsync: createProduct, status: statusUpdate, error: errorUpdate } = useCreateProduct();
+  const { mutateAsync: updateProduct, status: statusUpdate, error: errorUpdate } = useUpdateProduct();
+  const { mutateAsync: createProduct, status: statusCreate, error: errorCreate } = useCreateProduct();
   const { mutateAsync: addProductToCategory } = useAddProductToCategory();
   const [toastLoading, setToastLoading] = useState();
 
@@ -63,7 +63,7 @@ export const ProductsModal = ({
       const { mutateAsync: removeProductFromCategory } = useRemoveProductToCategory();
 
   const onClickDeleteImage = useCallback(index => {
-    const updatedImages = formData?.images?.filter((_, i) => i !== index);
+    const updatedImages = formData?.gallery?.filter((_, i) => i !== index);
 
     if (mainImageIndex === index) {
       setMainImageIndex(updatedImages.length > 0 ? 0 : null);
@@ -73,7 +73,7 @@ export const ProductsModal = ({
 
     setFormData((prevFormData) => ({
       ...prevFormData,
-      images: updatedImages,
+      gallery: updatedImages,
     }));
   });
 
@@ -86,7 +86,7 @@ export const ProductsModal = ({
       )
 
       const getImageFile = (index) => {
-        const image = formData.images?.[index];
+        const image = formData?.gallery?.[index];
 
         return image instanceof File ? image : undefined;
       };
@@ -98,7 +98,7 @@ export const ProductsModal = ({
       newDataForm.append('price', formData.price);
       newDataForm.append('available', formData.available);
       newDataForm.append('categories', formData.categories);
-      newDataForm.append('main_category', formData.categories?.[0]?.name);
+      newDataForm.append('main_category', formData.categories?.[0]?.id);
       newDataForm.append('main_image', mainImageIndex ?? 0);
       newDataForm.append('image_1', getImageFile(0));
       newDataForm.append('image_2', getImageFile(1));
@@ -118,7 +118,7 @@ export const ProductsModal = ({
         }
 
       } catch (err) {
-        toast.dismiss(creatingDataToast);
+        toast.dismiss(toastLoading);
         toast.error('Erro ao criar produto.');
       }
     } else if (!isCreateItem) {
@@ -129,7 +129,7 @@ export const ProductsModal = ({
       )
 
       const getImageFile = (index) => {
-        const image = formData.images?.[index];
+        const image = formData?.gallery?.[index];
 
         return image instanceof File ? image : undefined;
       };
@@ -137,10 +137,10 @@ export const ProductsModal = ({
       const updatedFormData = new FormData();
       updatedFormData.append('id', formData.id);
       updatedFormData.append('name', formData.name);
-      updatedFormData.append('description', formData.description?.[0].name);
+      updatedFormData.append('description', formData.description);
       updatedFormData.append('price', formData.price);
       updatedFormData.append('available', formData.available);
-      updatedFormData.append('mainCategory', formData.categories[0]);
+      updatedFormData.append('main_category', formData.mainCategory ? Number(formData.mainCategory) : '');
       updatedFormData.append('mainImage', formData.mainImage ?? mainImageIndex ?? 0);
       updatedFormData.append('image_1', getImageFile(0));
       updatedFormData.append('image_2', getImageFile(1));
@@ -153,36 +153,29 @@ export const ProductsModal = ({
           cat => !prevCategories.some(prev => prev.id === cat.id)
         );
 
-        if (addedCategories.length > 0) {
-          for (let category of addedCategories) {
-            if (category === formData.categories[0])
-              continue;
-
-            await addProductToCategory({
-              categoryId: String(category.id),
-              productId: String(updatedProduct.id),
-            });
-          }
-        }
+        addedCategories.forEach(async (category) => {
+          await addProductToCategory({
+            categoryId: String(category.id),
+            productId: String(updatedProduct.id),
+          });
+        })
 
         const removedCategories = prevCategories.filter(
           prevCat => !formData.categories.some(cat => cat.id === prevCat.id)
         );
 
-        if (removedCategories.length > 0) {
-          for (let category of removedCategories) {
-            await removeProductFromCategory({
-              categoryId: String(category.id),
-              productId: String(updatedProduct.id),
-            });
-          }
-        }
+        removedCategories.forEach(async (category) => {
+          await removeProductFromCategory({
+            categoryId: String(category.id),
+            productId: String(updatedProduct.id),
+          });
+        })
 
         setIsModalOpen(false);
-        toast.dismiss(updatingDataToast);
+        toast.dismiss(toastLoading);
         toast.success('Produto atualizado com sucesso!');
       } catch (err) {
-        toast.dismiss(updatingDataToast);
+        toast.dismiss(toastLoading);
         toast.error('Erro ao atualizar produto.');
       }
     }
@@ -205,24 +198,16 @@ export const ProductsModal = ({
       }
     };
 
-    if (name === "categories") {
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        categories: value.map(v => ({
-          id: v.value,
-          name: v.label
-        })),
-      }));
-    } else if (files && files[0]) {
+    if (files && files[0]) {
       const file = files[0];
 
-      if (!formData?.images) {
+      if (!formData?.gallery) {
         setMainImageIndex(0);
       }
 
       setFormData((prevFormData) => ({
         ...prevFormData,
-        [name]: formData?.images ? [...formData.images, file] : [file],
+        [name]: formData?.gallery ? [...formData.gallery, file] : [file],
       }));
 
       evt.target.value = null;
@@ -265,8 +250,8 @@ export const ProductsModal = ({
             className="modal-select"
             name="categories"
             value={formData?.categories?.map(category => ({
-              value: category.id,
-              label: category.name,
+              id: category.id,
+              name: category.name,
             }))}
             onChange={handleFormChange}
             multiple={true}
@@ -289,7 +274,7 @@ export const ProductsModal = ({
 
         <div className="modal-column-product">
           <div className="image-preview-row-product">
-            {formData?.images?.map((image, index) => (
+            {formData?.gallery?.map((image, index) => (
               <ProductThumb
                 key={index}
                 image={image}
@@ -302,21 +287,21 @@ export const ProductsModal = ({
           </div>
 
           <button
-            disabled={formData?.images?.length >= 3}
+            disabled={formData?.gallery?.length >= 3}
             type="button"
             className={
-              formData?.images?.length >= 3
+              formData?.gallery?.length >= 3
                 ? "upload-button disabled"
                 : "upload-button"
             }
             onClick={() => document.getElementById("image-upload").click()}
           >
-            Adicionar imagem ({formData?.images?.length ?? 0}/3)
+            Adicionar imagem ({formData?.gallery?.length ?? 0}/3)
           </button>
           <input
             type="file"
             id="image-upload"
-            name="images"
+            name="gallery"
             accept="image/*"
             style={{ display: "none" }}
             onChange={handleFormChange}

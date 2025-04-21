@@ -2,13 +2,13 @@ import React from "react";
 
 const ProductThumb = React.memo(
   ({ image, index, mainImageIndex, setMainImageIndex, onClickDeleteImage }) => {
-    const imageUrl = React.useMemo(() => {
+    const imageUrl = image && image.name ? React.useMemo(() => {
       if (image instanceof File) {
         return URL.createObjectURL(image);
       }
 
       return image?.url || "";
-    }, [image]);
+    }, [image]) : image;
 
     return (
       <div
