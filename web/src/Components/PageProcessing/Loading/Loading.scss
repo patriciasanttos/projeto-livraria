@@ -72,3 +72,15 @@
         }
     }
 }
+
+@media screen and (min-width: 821px) and (max-width:993px) {
+    .loading-section {
+        margin-bottom: 13rem;
+    }
+}
+
+@media screen and (min-width: 993px) and (max-width:1201px) {
+    .loading-section {
+        margin-bottom: 10rem;
+    }
+}

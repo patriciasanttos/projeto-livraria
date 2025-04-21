@@ -88,7 +88,9 @@ function Categories() {
   }, [categoryName, navigate, categoriesData, loadData]);
 
   if (isLoading)
-    return <Loading title="Buscando categorias"/>;
+    return (
+      <Loading title="Buscando categorias" style={{ marginTop: "6rem" }} />
+    );
 
   if ((data && data.length <= 0) || error)
     return (
