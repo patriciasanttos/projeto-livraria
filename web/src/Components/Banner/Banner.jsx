@@ -52,7 +52,6 @@ const BannerSlider = () => {
   }, []);
 
   const prevSlide = useCallback(() => {
-    console.log("prevSlide")
     setIndex((prevIndex) => {
       const slides = document.querySelectorAll(".banner");
       const totalSlides = slides.length;

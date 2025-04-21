@@ -1,5 +1,5 @@
-import "./DropdownAdmin.scss";
 import Select from "react-select";
+import "./DropdownAdmin.scss";
 
 function DropdownAdmin({
   title,
@@ -33,12 +33,8 @@ function DropdownAdmin({
         name: 'mainCategory',
         value: selectedOptions && selectedOptions.length > 0 ? selectedOptions[0].value : '',
       },
-    });
-
-
-    
+    });  
   };
-
   return multiple ? (
     <Select
       className="dropdown-multiple-admin"

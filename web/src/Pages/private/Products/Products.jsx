@@ -13,6 +13,7 @@ import { useCategoriesData } from "../../../hooks/useCategories";
 import { useDeleteProduct, useAllProductsData } from "../../../hooks/useProducts";
 import Loading from "../../../Components/PageProcessing/Loading/Loading";
 import ErrorFinding from "../../../Components/PageProcessing/ErrorFinding/ErrorFinding";
+import { toast } from "react-toastify";
 
 const currency = new Intl.NumberFormat("pt-BR", {
   style: "currency",
@@ -45,14 +46,14 @@ function Products() {
   });
   const [formData, setFormData] = useState(initialFormDataState);
 
-  const categories = useMemo(() => {
-    return categoriesData
+  const categories = useMemo(() =>
+    categoriesData
       ? categoriesData.map((category) => ({
         id: category.id,
-        name: category.name,
+        name: category.name
       }))
-      : [];
-  }, [categoriesData]);
+      : [], [categoriesData]
+  );
 
   const filteredProducts = useMemo(() => {
     let products = allProducts ? [...allProducts.map((product) => ({
@@ -134,14 +135,35 @@ function Products() {
   };
 
   const onClickUpdate = (row) => {
-    setFormData(row);
+    const productCategories = categoriesData
+      ?.filter((category) => category.items.some((item) => item.id === row.id))
+      .map((category) => ({
+        id: category.id,
+        name: category.name
+      }));
+
+    setFormData({
+      ...row,
+      categories: productCategories,
+    });
     setIsModalOpen(true);
     setIsCreateItem(false);
   };
 
   const onClickDelete = (data) => {
-    return deleteProduct(data.id);
-  }
+    const deletingDataToast = toast.loading("Deletando produto...", {
+      autoClose: false,
+    });
+
+    try {
+      deleteProduct(data.id);
+      toast.dismiss(deletingDataToast);
+      toast.success("Produto deletado com sucesso!");
+    } catch (err) {
+      toast.dismiss(deletingDataToast);
+      toast.error("Erro ao deletar produto.");
+    }
+  };
 
   if (isLoading || isLoadingProducts || isInitialLoad)
     return <Loading title="Buscando produtos" style={{marginTop: "15rem"}}/>

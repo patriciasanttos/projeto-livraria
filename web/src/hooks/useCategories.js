@@ -5,6 +5,7 @@ import {
   updateCategory,
   deleteCategory,
   addProductToCategory,
+  removeProductFromCategory,
 } from "../service/api/categories";
 
 export const useCategoriesData = () =>
@@ -67,6 +68,21 @@ export const useAddProductToCategory = () => {
     },
     onError: (error) => {
       console.error("Error adding product to category: ", error);
+    },
+  });
+};
+
+export const useRemoveProductToCategory = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ categoryId, productId }) =>
+      removeProductFromCategory(categoryId, productId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["categories"] });
+    },
+    onError: (error) => {
+      console.error("Error removing product from category: ", error);
     },
   });
 };

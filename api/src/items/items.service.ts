@@ -222,6 +222,8 @@ export class ItemsService {
   }
 
   async update(data: UpdateItemBody) {
+    console.log(data);
+
     const item = await this.getById(Number(data.id));
 
     if (data.main_category)
@@ -254,7 +256,9 @@ export class ItemsService {
           tx,
           itemId: item.id,
           images,
-          mainImage: data.main_image,
+          mainImage: images[`image_${Number(data.main_image) - 1}`]
+            ? Number(data.main_image)
+            : 0,
         });
     });
 

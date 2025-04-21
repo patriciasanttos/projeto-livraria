@@ -66,7 +66,7 @@ function Card({ id, name, price, image, color, isCategory, currentCategory }) {
     if (isCategory)
       return navigate(`/categories/${name.toLowerCase()}`)
 
-    return navigate(`/item/${id}`, { state: { currentCategory } })
+    return navigate(`/products/${id}`, { state: { currentCategory } })
   }
 
   return (

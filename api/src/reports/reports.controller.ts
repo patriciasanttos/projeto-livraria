@@ -41,7 +41,6 @@ export class ReportsController {
   }
 
   @Post()
-  @UseGuards(AuthGuard)
   //----Swagger configs
   @ApiOperation({
     summary: "Set an report, or create if don't exists",

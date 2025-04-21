@@ -15,7 +15,7 @@ import "./HeaderDesktop.scss";
 import CartNumber from "../CartNumber/CartNumber";
 
 const HeaderDesktop = () => {
-  const [query, setQuery] = useState();
+  const [query, setQuery] = useState('');
 
   const containerRef = useRef(null);
 
@@ -45,8 +45,8 @@ const HeaderDesktop = () => {
             className="header-search-container"
             ref={containerRef}
           >
-            <SearchInput setQuery={setQuery} />
-            {query && <SearchResults query={query} />}
+            <SearchInput query={query} setQuery={setQuery} />
+            {query && <SearchResults query={query} setQuery={setQuery} />}
           </div>
 
           <div className="header-buttons">

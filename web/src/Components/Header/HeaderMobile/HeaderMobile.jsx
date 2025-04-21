@@ -15,7 +15,7 @@ import "./HeaderMobile.scss";
 import CartNumber from "../CartNumber/CartNumber";
 
 const HeaderMobile = () => {
-  const [query, setQuery] = useState();
+  const [query, setQuery] = useState('');
   const [isMenuOpen, setIsMenuOpen] = useState();
   const cartCookie = JSON.parse(localStorage.getItem("cart")) || {};
   const cartItems = Object.keys(cartCookie).length;
@@ -53,8 +53,8 @@ const HeaderMobile = () => {
 
         <div className="row-bottom">
           <div className="search-container">
-            <SearchInput setQuery={setQuery} />
-            {query && <SearchResults query={query} />}
+            <SearchInput query={query} setQuery={setQuery} />
+            {query && <SearchResults query={query} setQuery={setQuery} />}
           </div>
         </div>
       </header>

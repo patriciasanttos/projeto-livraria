@@ -1,24 +1,50 @@
-import "./ItemDescription.scss";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
-
 import ModalInfoBuy from "../ModalInfoBuy/ModalInfoBuy";
 
-function ItemDescription({ product }) {
+import "./ProductDescription.scss";
+
+function ProductDescription({ product }) {
   const [modalOpen, setModalOpen] = useState(false);
   const [mainImage, setMainImage] = useState();
 
+  const cartCookie = JSON.parse(localStorage.getItem("cart")) || {};
+
+  const [isProductInCart, setIsProductInCart] = useState(false);
+
   useEffect(() => {
-    setMainImage(product?.images[0].url)
+    setMainImage(product?.images[0]?.url)
+
+    setIsProductInCart(cartCookie[product.id] ? true : false);
   }, [product]);
 
   const onClickAddToCart = () => {
-    const cartCookie = JSON.parse(localStorage.getItem("cart")) || {};
     cartCookie[product.id] = (cartCookie[product.id] || 0) + 1;
     localStorage.setItem("cart", JSON.stringify(cartCookie));
 
-    return toast.success('Item adicionado ao seu carrinho', {
+    setIsProductInCart(true);
+
+    return toast.success('Produto adicionado ao seu carrinho', {
+      autoClose: 3000,
+      closeOnClick: true,
+      pauseOnHover: false,
+      pauseOnFocusLoss: false,
+      draggable: true
+    })
+  }
+
+  const onClickRemoveFromCart = () => {
+    delete cartCookie[product.id];
+
+    if (Object.keys(cartCookie).length === 0)
+      localStorage.removeItem("cart");
+    else
+      localStorage.setItem("cart", JSON.stringify(cartCookie));
+
+    setIsProductInCart(false);
+
+    return toast.success('Produto removido de seu carrinho', {
       autoClose: 3000,
       closeOnClick: true,
       pauseOnHover: false,
@@ -63,12 +89,21 @@ function ItemDescription({ product }) {
           <p className="description-title">Descrição do produto:</p>
           <p className="description-text">{product.description}</p>
           <div className="item-description-buttons">
-            <button
-              className="add-cart description-btn"
-              onClick={onClickAddToCart}
-            >
-              ADICIONAR AO CARRINHO
-            </button>
+            {!isProductInCart ? (
+              <button
+                className="add-cart description-btn"
+                onClick={onClickAddToCart}
+              >
+                ADICIONAR AO CARRINHO
+              </button>
+            ) : (
+              <button
+                className="remove-cart description-btn"
+                onClick={onClickRemoveFromCart}
+              >
+                REMOVER DO CARRINHO
+              </button>
+            )}
             <button
               className="info-buy description-btn"
               onClick={onClickOpenModal}
@@ -86,4 +121,4 @@ function ItemDescription({ product }) {
   );
 }
 
-export default ItemDescription;
+export default ProductDescription;
