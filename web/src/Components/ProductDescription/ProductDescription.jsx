@@ -94,7 +94,11 @@ function ProductDescription({ product }) {
           <h1>{product.name}</h1>
           <h2>{currency.format(product.price)}</h2>
           <p>até xxxxxx no cartão de crédito</p>
-          <p className="description-text">{product.description}</p>
+          <p className="description-text">
+            {product.description == "null" || product.description == "undefined"
+              ? ""
+              : product.description}
+          </p>
           <div className="item-description-buttons">
             {!isProductInCart ? (
               <button
