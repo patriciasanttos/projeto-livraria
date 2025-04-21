@@ -79,6 +79,11 @@ export const ProductsModal = ({
 
   const onConfirmSaveProduct = useCallback(async () => {
     if (isCreateItem) {
+      
+      if (formData.images.length < 1) {
+        return toast.error("Você precisa adicionar pelo menos 1 imagem");
+      }
+
       setToastLoading(
         toast.loading('Criando produto...', {
           autoClose: false
@@ -124,6 +129,10 @@ export const ProductsModal = ({
         toast.error('Erro ao criar produto.');
       }
     } else if (!isCreateItem) {
+      if (formData.images.length < 1) {
+        return toast.error('Você precisa adicionar pelo menos 1 imagem')
+      }
+      
       setToastLoading(
         toast.loading('Atualizando produto...', {
           autoClose: false

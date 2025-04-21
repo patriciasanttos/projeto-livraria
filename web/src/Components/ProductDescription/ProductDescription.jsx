@@ -19,6 +19,11 @@ function ProductDescription({ product }) {
     setIsProductInCart(cartCookie[product.id] ? true : false);
   }, [product]);
 
+    const currency = new Intl.NumberFormat("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    });
+
   const onClickAddToCart = () => {
     cartCookie[product.id] = (cartCookie[product.id] || 0) + 1;
     localStorage.setItem("cart", JSON.stringify(cartCookie));
@@ -75,7 +80,10 @@ function ProductDescription({ product }) {
                 alt=""
                 onClick={() => setMainImage(image.url)}
                 style={{
-                  border: mainImage === image.url ? '3px solid var(--button-pink)' : 'none'
+                  border:
+                    mainImage === image.url
+                      ? "3px solid var(--button-pink)"
+                      : "none",
                 }}
               />
             ))}
@@ -84,9 +92,8 @@ function ProductDescription({ product }) {
 
         <div className="item-description-text-container">
           <h1>{product.name}</h1>
-          <h2>R$ {product.price}</h2>
+          <h2>{currency.format(product.price)}</h2>
           <p>até xxxxxx no cartão de crédito</p>
-          <p className="description-title">Descrição do produto:</p>
           <p className="description-text">{product.description}</p>
           <div className="item-description-buttons">
             {!isProductInCart ? (

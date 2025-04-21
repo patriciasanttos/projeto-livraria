@@ -20,6 +20,10 @@ function Card({ id, name, price, image, color, isCategory, currentCategory }) {
       setIsInCart(true);
   }, [id, isInCart]);
 
+  const currency = new Intl.NumberFormat("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+  });
 
   const addToCart = () => {
     const cartCookie = JSON.parse(localStorage.getItem('cart')) || {};
@@ -70,38 +74,41 @@ function Card({ id, name, price, image, color, isCategory, currentCategory }) {
   }
 
   return (
-    <div className={`card ${isCategory ? 'category-card' : 'item-card'}`}>
-      <div
-        className="card-image"
-        onClick={handleOpenPage}
-      >
+    <div className={`card ${isCategory ? "category-card" : "item-card"}`}>
+      <div className="card-image" onClick={handleOpenPage}>
         <img src={image} alt={name} />
       </div>
 
-      <div className='card-data'>
+      <div className="card-data">
         <p
-          className={isCategory ? color : ''}
+          className={isCategory ? color : ""}
           title={name}
           onClick={handleOpenPage}
         >
           {name}
         </p>
-        {
-          !isCategory && (
-            <>
-              <p className="price">{`R$${price},00`}</p>
-              <p className="installment">Até xxxx no cartão de crédito</p>
+        {!isCategory && (
+          <>
+            <p className="price">{currency.format(price)}</p>
+            <p className="installment">Até xxxx no cartão de crédito</p>
 
-              <div className='cart-buttons'>
-                {!isInCart ? (
-                  <img src={addToCartIcon} alt="Adicionar ao carrinho" onClick={addToCart} />
-                ) : (
-                  <img src={addedToCart} alt="Remover do carrinho" onClick={removeFromCart} />
-                )}
-              </div>
-            </>
-          )
-        }
+            <div className="cart-buttons">
+              {!isInCart ? (
+                <img
+                  src={addToCartIcon}
+                  alt="Adicionar ao carrinho"
+                  onClick={addToCart}
+                />
+              ) : (
+                <img
+                  src={addedToCart}
+                  alt="Remover do carrinho"
+                  onClick={removeFromCart}
+                />
+              )}
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
