@@ -228,17 +228,43 @@ export class CategoriesService {
     categoryId: number;
     itemId: number;
   }) {
-    await this.getById(categoryId);
-    await this.itemsService.getById(itemId);
+    const category = await this.getById(categoryId);
+    const item = await this.itemsService.getById(itemId);
+
+    if (item.mainCategory.toLowerCase() === category.name.toLowerCase()) {
+      if (item.categories.length > 1) {
+        const newMainCategory = item.categories.find(
+          (cat) => cat.id !== categoryId,
+        );
+
+        await this.prisma.item.update({
+          where: {
+            id: item.id,
+          },
+          data: {
+            mainCategory: newMainCategory?.name || '',
+          },
+        });
+      } else {
+        await this.prisma.item.update({
+          where: {
+            id: item.id,
+          },
+          data: {
+            mainCategory: '',
+          },
+        });
+      }
+    }
 
     await this.prisma.category.update({
       where: {
-        id: categoryId,
+        id: category.id,
       },
       data: {
         items: {
           disconnect: {
-            id: itemId,
+            id: item.id,
           },
         },
       },

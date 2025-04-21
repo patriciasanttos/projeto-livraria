@@ -52,7 +52,7 @@ async function main() {
           name: item['Descrição'],
           price: item['$Venda'],
           available: item['Situação'] === 'DISPONÍVEL' ? true : false,
-          mainCategory: category.id,
+          mainCategory: category.name,
           categories: {
             connect: {
               id: category.id,
@@ -80,8 +80,8 @@ async function main() {
     });
   };
 
-  const categories = await categoriesSeed();
-  await itemsSeed(categories);
+  // const categories = await categoriesSeed();
+  // await itemsSeed(categories);
   await adminSeed();
 
   console.log('Done!');
