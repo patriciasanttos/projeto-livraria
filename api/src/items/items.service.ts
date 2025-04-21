@@ -1,16 +1,9 @@
-import {
-  forwardRef,
-  HttpException,
-  HttpStatus,
-  Inject,
-  Injectable,
-} from "@nestjs/common";
+import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { PrismaService } from "src/database/prisma.service";
 import CreateItemBody from "./dtos/create-item";
 import UpdateItemBody from "./dtos/update-item";
 import { SupabaseService } from "src/supabase/supabase.service";
 import { Prisma } from "@prisma/client";
-import { CategoriesService } from "src/categories/categories.service";
 
 interface IHandleUpdateImages {
   tx: Prisma.TransactionClient;
@@ -31,34 +24,44 @@ interface IHandleUpdateImages {
 export class ItemsService {
   constructor(
     private readonly prisma: PrismaService,
-    @Inject(forwardRef(() => CategoriesService))
-    private readonly categoriesService: CategoriesService,
     private readonly supabase: SupabaseService
   ) {}
 
   async getAll() {
     const items = await this.prisma.item.findMany({
-      include: {
-        categories: true,
-        images: true,
+      select: {
+        id: true,
+        name: true,
+        price: true,
+        description: true,
+        available: true,
+        mainCategory: true,
+
+        images: {
+          select: {
+            id: true,
+            url: true,
+            isMain: true,
+            itemId: true,
+          },
+        },
+
+        categories: {
+          select: {
+            id: true,
+            name: true,
+            available: true,
+            image: true,
+            banner: true,
+          },
+        },
       },
     });
 
     return items.map((item) => ({
-      id: item.id,
-      name: item.name,
-      description: item?.description,
-      price: item.price,
-      available: item.available,
+      ...item,
       mainImage: item.images.find((img) => img.isMain)?.url ?? null,
-      gallery: item.images.map((img) => img.url),
-      mainCategory: item.mainCategory,
-      categories: item.categories.map((category) => ({
-        id: category.id,
-        name: category.name,
-      })),
-      created_at: item.created_at,
-      updated_at: item.updated_at,
+      images: item.images.map((img) => img.url),
     }));
   }
 

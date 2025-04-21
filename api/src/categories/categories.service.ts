@@ -1,31 +1,44 @@
-import {
-  forwardRef,
-  HttpException,
-  HttpStatus,
-  Inject,
-  Injectable,
-} from '@nestjs/common';
-import { PrismaService } from 'src/database/prisma.service';
-import CreateCategoryBody from './dtos/create-category';
-import UpdateCategoryBody from './dtos/update-category';
-import { ItemsService } from 'src/items/items.service';
-import { SupabaseService } from 'src/supabase/supabase.service';
+import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
+import { PrismaService } from "src/database/prisma.service";
+import CreateCategoryBody from "./dtos/create-category";
+import UpdateCategoryBody from "./dtos/update-category";
+import { ItemsService } from "src/items/items.service";
+import { SupabaseService } from "src/supabase/supabase.service";
 
 @Injectable()
 export class CategoriesService {
   constructor(
     private readonly prisma: PrismaService,
-    @Inject(forwardRef(() => ItemsService))
     private readonly itemsService: ItemsService,
-    private readonly supabase: SupabaseService,
+    private readonly supabase: SupabaseService
   ) {}
 
   async getAll() {
     return await this.prisma.category.findMany({
-      include: {
+      select: {
+        id: true,
+        name: true,
+        available: true,
+        image: true,
+        banner: true,
+
         items: {
-          include: {
-            images: true,
+          select: {
+            id: true,
+            name: true,
+            price: true,
+            description: true,
+            available: true,
+            mainCategory: true,
+
+            images: {
+              select: {
+                id: true,
+                url: true,
+                isMain: true,
+                itemId: true,
+              },
+            },
           },
         },
       },
@@ -39,8 +52,8 @@ export class CategoriesService {
 
     if (!category)
       throw new HttpException(
-        { message: 'Category not found' },
-        HttpStatus.NOT_FOUND,
+        { message: "Category not found" },
+        HttpStatus.NOT_FOUND
       );
 
     return category;
@@ -57,18 +70,18 @@ export class CategoriesService {
 
     if (data.image) {
       if (!Buffer.isBuffer(data.image.buffer)) {
-        console.error('Invalid image buffer');
-        throw new Error('Invalid image buffer');
+        console.error("Invalid image buffer");
+        throw new Error("Invalid image buffer");
       }
 
       const path = `${category.id}/image`;
 
       const imageUrl = await this.supabase.uploadImage(
-        'categories',
+        "categories",
         data.image.buffer,
         path,
         data.image.mimetype,
-        'image',
+        "image"
       );
 
       category = await this.prisma.category.update({
@@ -80,11 +93,11 @@ export class CategoriesService {
     if (data.banner) {
       const path = `${category.id}/banner`;
       const bannerUrl = await this.supabase.uploadImage(
-        'categories',
+        "categories",
         data.banner.buffer,
         path,
         data.banner.mimetype,
-        'banner',
+        "banner"
       );
 
       category = await this.prisma.category.update({
@@ -101,12 +114,12 @@ export class CategoriesService {
 
     const updatedCategoryData: Record<string, any> = {};
 
-    if (typeof data.name !== 'undefined') updatedCategoryData.name = data.name;
+    if (typeof data.name !== "undefined") updatedCategoryData.name = data.name;
 
-    if (typeof data.description !== 'undefined')
+    if (typeof data.description !== "undefined")
       updatedCategoryData.description = data.description;
 
-    if (typeof data.available !== 'undefined')
+    if (typeof data.available !== "undefined")
       updatedCategoryData.available = data.available;
 
     if (category.image && data.deleteImage) {
@@ -114,18 +127,18 @@ export class CategoriesService {
 
       const url = new URL(category.image);
       const path = decodeURIComponent(
-        url.pathname.replace('/storage/v1/object/public/categories/', ''),
+        url.pathname.replace("/storage/v1/object/public/categories/", "")
       );
 
-      await this.supabase.deleteImages('categories', [path]);
+      await this.supabase.deleteImages("categories", [path]);
     } else if (data.image) {
       const path = `${category.id}/image`;
       updatedCategoryData.image = await this.supabase.uploadImage(
-        'categories',
+        "categories",
         data.image.buffer,
         path,
         data.image.mimetype,
-        'image',
+        "image"
       );
     }
 
@@ -134,19 +147,19 @@ export class CategoriesService {
 
       const url = new URL(category.banner);
       const path = decodeURIComponent(
-        url.pathname.replace('/storage/v1/object/public/categories/', ''),
+        url.pathname.replace("/storage/v1/object/public/categories/", "")
       );
 
-      await this.supabase.deleteImages('categories', [path]);
+      await this.supabase.deleteImages("categories", [path]);
     }
     if (data.banner) {
       const path = `${category.id}/banner`;
       updatedCategoryData.banner = await this.supabase.uploadImage(
-        'categories',
+        "categories",
         data.banner.buffer,
         path,
         data.banner.mimetype,
-        'banner',
+        "banner"
       );
     }
 
@@ -174,24 +187,24 @@ export class CategoriesService {
       if (category.image) {
         const url = new URL(category.image);
         const path = decodeURIComponent(
-          url.pathname.replace('/storage/v1/object/public/categories/', ''),
+          url.pathname.replace("/storage/v1/object/public/categories/", "")
         );
 
-        await this.supabase.deleteImages('categories', [path]);
+        await this.supabase.deleteImages("categories", [path]);
       }
 
       if (category.banner) {
         const url = new URL(category.banner);
         const path = decodeURIComponent(
-          url.pathname.replace('/storage/v1/object/public/categories/', ''),
+          url.pathname.replace("/storage/v1/object/public/categories/", "")
         );
 
-        await this.supabase.deleteImages('categories', [path]);
+        await this.supabase.deleteImages("categories", [path]);
       }
 
       await tx.category.delete({ where: { id: categoryId } });
 
-      return { message: 'Category deleted successfully' };
+      return { message: "Category deleted successfully" };
     });
   }
 
@@ -218,7 +231,7 @@ export class CategoriesService {
       },
     });
 
-    return { message: 'Item added to category successfully' };
+    return { message: "Item added to category successfully" };
   }
 
   async removeItemFromCategory({
@@ -234,7 +247,7 @@ export class CategoriesService {
     if (item.mainCategory.toLowerCase() === category.name.toLowerCase()) {
       if (item.categories.length > 1) {
         const newMainCategory = item.categories.find(
-          (cat) => cat.id !== categoryId,
+          (cat) => cat.id !== categoryId
         );
 
         await this.prisma.item.update({
@@ -242,7 +255,7 @@ export class CategoriesService {
             id: item.id,
           },
           data: {
-            mainCategory: newMainCategory?.name || '',
+            mainCategory: newMainCategory?.name || "",
           },
         });
       } else {
@@ -251,7 +264,7 @@ export class CategoriesService {
             id: item.id,
           },
           data: {
-            mainCategory: '',
+            mainCategory: "",
           },
         });
       }
@@ -270,6 +283,6 @@ export class CategoriesService {
       },
     });
 
-    return { message: 'Item removed from category' };
+    return { message: "Item removed from category" };
   }
 }

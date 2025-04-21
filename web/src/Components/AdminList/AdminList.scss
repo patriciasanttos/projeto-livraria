@@ -1,7 +1,7 @@
-.admin-list {
-  margin: 1dvh 3dvw;
-  height: 70dvh;
-  overflow-y: auto;
+.admin-table {
+  font-family: sans-serif;
+  display: flex;
+  justify-content: center;
 
   .confirm-delete-modal {
     position: fixed;
@@ -73,98 +73,61 @@
     }
   }
 
-  table {
+  .table {
+    width: 90%;
     border-collapse: collapse;
-    width: 100%;
 
-    thead {
-      position: sticky;
-      top: 0;
-      background-color: #fff;
-      z-index: 100;
+    .table-header,
+    .table-row {
+      display: flex;
+    }
+    
+    .table-header {
+      font-weight: bold;
+    }
+    
+    .table-row {
+      border-bottom: 1px solid var(--button-lime-green);
+    }
+    
+    .table-cell {
+      flex: 1;
+      padding: 1em 0em 0 0em;
+      margin-inline: 1em;
+      
+      display: flex;
+      align-items: center;
 
-      tr th {
-        color: #2D2D33;
-        font-size: 1.3rem;
-        font-weight: 500;
-        text-align: left;
-        padding: 0.4em;
-      }
-
-      th.actions {
-        text-align: center;
-      }
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+    
+    .table-actions-header {
+      margin-right: 2%;
     }
 
-    tbody {
-      tr {
-        width: 10em;
-
-        &:hover {
-          background-color: #f1f1f1;
-        }
-
-        td {
-          border-bottom: 1px solid var(--button-lime-green);
-          font-size: 1.2rem;
-          font-weight: normal;
-          color: #2D2D33;
-          text-align: left;
-          padding: 0.2em 0.8em;
-
-          max-width: 10dvw;
-          overflow: hidden;
-          white-space: nowrap;
-          text-overflow: ellipsis;
-        }
-
-        td.actions {
-          text-align: center;
-
-          img {
-            cursor: pointer;
-          }
-        }
-
-        .icon-editar, .icon-deletar {
-          padding: 10px 0px;
-        }
-
-        .icon-deletar {
-          width: 40px;
-          margin-left: 5px;
-        }
-
-        .btn-editar {
-          width: 40%;
-          margin: 10px 0;
-          padding: 10px;
-          background-color: var(--button-lime-green);
-          color: white;
-          border: none;
-          border-radius: 4px;
-          cursor: pointer;
-        
-          &:hover {
-            background-color: #005f73;
-          }
-        }
-        
-        .btn-deletar {
-          width: 40%;
-          margin: 10px 0;
-          padding: 10px;
-          background-color: #e74c3c;
-          color: white;
-          border: none;
-          border-radius: 4px;
-          cursor: pointer;
-          
-          &:hover {
-            background-color: red;
-          }
-        }
-      }
+    .table-actions-header,
+    .table-actions {
+      flex: 0 0 7.5em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5em;
     }
+  
+    
+    .table-body {
+      height: 500px;
+      overflow-y: auto;
+
+      .icon-edit, .icon-delete {
+        width: 2.2em;
+        height: 2.2em;
+
+        cursor: pointer;
+      }
+    } 
+
   }
 }
