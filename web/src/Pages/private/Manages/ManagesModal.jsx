@@ -14,8 +14,8 @@ export const ManagesModal = ({
   setFormData,
   setIsModalOpen,
 }) => {
-  const { mutate: createAdmin } = useCreateAdmin();
-  const { mutate: updateAdmin } = useUpdateAdmin();
+  const { mutateAsync: createAdmin, status: statusCreate, error: errorCreate } = useCreateAdmin();
+  const { mutateAsync: updateAdmin, status: statusUpdate, error: errorUpdate } = useUpdateAdmin();
 
   const [initialAdminData, setInitialAdminData] = useState();
 
@@ -26,6 +26,35 @@ export const ManagesModal = ({
 
     setCurrentAdmin(currentAdminData?.data?.id);
   }, [formData]);
+
+useEffect(() => {
+    if (statusUpdate === 'success') {
+      setIsModalOpen(false);
+      // toast.dismiss(toastLoading);
+      toast.success("Administrador atualizado com sucesso!");
+    }
+
+    if (statusUpdate === 'error') {
+      const errorMessage = errorUpdate.response.data.message[0]
+      // toast.dismiss(toastLoading);
+      toast.error(`Erro ao atualizar administrador: ${errorMessage}`);
+    }
+  }, [statusUpdate, errorUpdate, setIsModalOpen])
+
+  useEffect(() => {
+    console.log(">>> statusCreate", statusCreate);
+    if (statusCreate === 'success') {
+      setIsModalOpen(false);
+      // toast.dismiss(toastLoading);
+      toast.success('Administrador criado com sucesso!');
+    }
+
+    if (statusCreate === 'error') {
+      const errorMessage = errorCreate.response.data.message[0]
+      // toast.dismiss(toastLoading);
+      toast.error(`Erro ao criar administrador: ${errorMessage}`);
+    }
+  }, [statusCreate, errorCreate, setIsModalOpen])
 
   useEffect(() => {
     if (!formData)
@@ -60,6 +89,8 @@ export const ManagesModal = ({
       });
 
       try {
+console.log(">>>> createAdmin");
+
         createAdmin({
           name: formData.name,
           phone: formData.phone,
@@ -79,7 +110,7 @@ export const ManagesModal = ({
         return toast.warning('Por favor, insira um e-mail válido.');
 
       if (formData.phone.length < 1)
-        return toast.warning('A numero de contato deve ter pelo menos 9 caracteres.');
+        return toast.warning('O numero de contato deve ter pelo menos 9 caracteres.');
 
       if (formData.newPassword) {
         if (formData.newPassword.length < 8)
@@ -94,7 +125,11 @@ export const ManagesModal = ({
       });
 
       try {
-        if (!initialAdminData) return;
+        if (!initialAdminData) {
+          toast.dismiss(updatingDataToast);
+          toast.error("Não houve nenhuma alteração.");
+          return
+        }
 
         const updatedFields = { id: formData.id };
 
