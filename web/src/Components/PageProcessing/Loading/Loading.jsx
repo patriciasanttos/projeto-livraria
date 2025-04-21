@@ -3,7 +3,7 @@ import './Loading.scss'
 function Loading({title, ...props}) {
     return (
       <section className='loading-section'>
-        <div class="loader" {...props}></div>
+        <div className="loader" {...props}></div>
         <h1>
             {title}
         </h1>

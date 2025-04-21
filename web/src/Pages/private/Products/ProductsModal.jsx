@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { useAddProductToCategory, useRemoveProductToCategory } from "../../../hooks/useCategories";
+import { useAddProductToCategory, useRemoveProductFromCategory } from "../../../hooks/useCategories";
 import { useCreateProduct, useUpdateProduct } from "../../../hooks/useProducts";
 
 //-----Components
@@ -17,7 +17,7 @@ export const ProductsModal = ({
   setIsModalOpen,
 }) => {
   const [mainImageIndex, setMainImageIndex] = useState(() => {
-    const index = formData?.gallery?.findIndex((img) => img.isMain);
+    const index = formData?.images?.findIndex((img) => img.isMain);
     return index !== -1 && index != null ? index : 0;
   });
 
@@ -31,6 +31,7 @@ export const ProductsModal = ({
   const { mutateAsync: updateProduct, status: statusUpdate, error: errorUpdate } = useUpdateProduct();
   const { mutateAsync: createProduct, status: statusCreate, error: errorCreate } = useCreateProduct();
   const { mutateAsync: addProductToCategory } = useAddProductToCategory();
+  const { mutateAsync: removeProductFromCategory } = useRemoveProductFromCategory();
   const [toastLoading, setToastLoading] = useState();
 
   useEffect(() => {
@@ -60,10 +61,9 @@ export const ProductsModal = ({
       toast.error(`Erro ao criar produto: ${errorMessage}`);
     } 
   }, [statusCreate])
-      const { mutateAsync: removeProductFromCategory } = useRemoveProductToCategory();
 
-  const onClickDeleteImage = useCallback(index => {
-    const updatedImages = formData?.gallery?.filter((_, i) => i !== index);
+  const onClickDeleteImage = useCallback((index) => {
+    const updatedImages = formData?.images?.filter((_, i) => i !== index);
 
     if (mainImageIndex === index) {
       setMainImageIndex(updatedImages.length > 0 ? 0 : null);
@@ -73,7 +73,7 @@ export const ProductsModal = ({
 
     setFormData((prevFormData) => ({
       ...prevFormData,
-      gallery: updatedImages,
+      images: updatedImages,
     }));
   });
 
@@ -86,7 +86,7 @@ export const ProductsModal = ({
       )
 
       const getImageFile = (index) => {
-        const image = formData?.gallery?.[index];
+        const image = formData?.images?.[index];
 
         return image instanceof File ? image : undefined;
       };
@@ -97,8 +97,7 @@ export const ProductsModal = ({
       newDataForm.append('description', formData.description);
       newDataForm.append('price', formData.price);
       newDataForm.append('available', formData.available);
-      newDataForm.append('categories', formData.categories);
-      newDataForm.append('main_category', formData.categories?.[0]?.id);
+      newDataForm.append('main_category', formData.categories?.[0]?.name);
       newDataForm.append('main_image', mainImageIndex ?? 0);
       newDataForm.append('image_1', getImageFile(0));
       newDataForm.append('image_2', getImageFile(1));
@@ -116,7 +115,10 @@ export const ProductsModal = ({
             productId: String(newProduct.id),
           });
         }
-
+      
+        setIsModalOpen(false);
+        toast.dismiss(toastLoading);
+        toast.success("Produto criado com sucesso!");
       } catch (err) {
         toast.dismiss(toastLoading);
         toast.error('Erro ao criar produto.');
@@ -129,7 +131,7 @@ export const ProductsModal = ({
       )
 
       const getImageFile = (index) => {
-        const image = formData?.gallery?.[index];
+        const image = formData?.images?.[index];
 
         return image instanceof File ? image : undefined;
       };
@@ -140,7 +142,7 @@ export const ProductsModal = ({
       updatedFormData.append('description', formData.description);
       updatedFormData.append('price', formData.price);
       updatedFormData.append('available', formData.available);
-      updatedFormData.append('main_category', formData.mainCategory ? Number(formData.mainCategory) : '');
+      updatedFormData.append('main_category', formData.categories?.[0]?.name);
       updatedFormData.append('mainImage', formData.mainImage ?? mainImageIndex ?? 0);
       updatedFormData.append('image_1', getImageFile(0));
       updatedFormData.append('image_2', getImageFile(1));
@@ -198,16 +200,25 @@ export const ProductsModal = ({
       }
     };
 
-    if (files && files[0]) {
+    if (name === "categories") {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        categories: value.map(v => ({
+          id: v.value,
+          name: v.label
+        })),
+      }));
+    }
+    else if (files && files[0]) {
       const file = files[0];
 
-      if (!formData?.gallery) {
+      if (!formData?.images) {
         setMainImageIndex(0);
       }
 
       setFormData((prevFormData) => ({
         ...prevFormData,
-        [name]: formData?.gallery ? [...formData.gallery, file] : [file],
+        [name]: formData?.images ? [...formData.images, file] : [file],
       }));
 
       evt.target.value = null;
@@ -224,9 +235,7 @@ export const ProductsModal = ({
       title={isCreateItem ? `Adicionar novo produto` : `Editar produto`}
       onClose={() => setIsModalOpen(false)}
       onConfirm={onConfirmSaveProduct}
-      buttonConfirmText={
-        isCreateItem ? `Adicionar` : `Salvar`
-      }
+      buttonConfirmText={isCreateItem ? `Adicionar` : `Salvar`}
     >
       <section className="modal-row">
         <div className="modal-column-product">
@@ -249,23 +258,26 @@ export const ProductsModal = ({
           <DropdownAdmin
             className="modal-select"
             name="categories"
-            value={formData?.categories?.map(category => ({
-              id: category.id,
-              name: category.name,
+            value={formData?.categories?.map((category) => ({
+              value: category.id,
+              label: category.name,
             }))}
             onChange={handleFormChange}
             multiple={true}
             placeholder="Categorias"
-            options={[
-              ...categories.map((category) => ({
-                id: category.id,
-                name: category.name,
-              })),
-            ]}
+            options={categories?.map((category) => ({
+              value: category.id,
+              label: category.name,
+            }))}
           />
           <textarea
             name="description"
-            value={formData.description == "null" ? '' : formData.description}
+            value={
+              formData.description == "null" ||
+              formData.description == "undefined"
+                ? ""
+                : formData.description
+            }
             onChange={handleFormChange}
             placeholder="Descrição do produto"
             className="textarea-product"
@@ -274,7 +286,7 @@ export const ProductsModal = ({
 
         <div className="modal-column-product">
           <div className="image-preview-row-product">
-            {formData?.gallery?.map((image, index) => (
+            {formData?.images?.map((image, index) => (
               <ProductThumb
                 key={index}
                 image={image}
@@ -287,21 +299,21 @@ export const ProductsModal = ({
           </div>
 
           <button
-            disabled={formData?.gallery?.length >= 3}
+            disabled={formData?.images?.length >= 3}
             type="button"
             className={
-              formData?.gallery?.length >= 3
+              formData?.images?.length >= 3
                 ? "upload-button disabled"
                 : "upload-button"
             }
             onClick={() => document.getElementById("image-upload").click()}
           >
-            Adicionar imagem ({formData?.gallery?.length ?? 0}/3)
+            Adicionar imagem ({formData?.images?.length ?? 0}/3)
           </button>
           <input
             type="file"
             id="image-upload"
-            name="gallery"
+            name="images"
             accept="image/*"
             style={{ display: "none" }}
             onChange={handleFormChange}

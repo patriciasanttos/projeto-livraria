@@ -152,9 +152,9 @@ function Categories() {
             defaultValue={filters.available}
             onChange={handleFilterChange}
             options={[
-              { id: 'all', name: "Tudo" },
-              { id: true, name: "Disponível" },
-              { id: false, name: "Indisponível" }
+              { value: 'all', label: "Tudo" },
+              { value: true, label: "Disponível" },
+              { value: false, label: "Indisponível" }
             ]}
           />
         </section>

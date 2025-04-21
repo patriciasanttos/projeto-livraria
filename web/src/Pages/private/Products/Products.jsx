@@ -42,7 +42,7 @@ function Products() {
 
   const [filters, setFilters] = useState({
     available: "",
-    mainCategory: "",
+    category: "",
   });
   const [formData, setFormData] = useState(initialFormDataState);
 
@@ -56,15 +56,23 @@ function Products() {
   );
 
   const filteredProducts = useMemo(() => {
-    let products = allProducts ? [...allProducts.map((product) => ({
-      ...product, 
-      priceFormatted: currency.format(product.price),
-      mainCategoryName: categories.filter((category) => category.id === product.mainCategory)[0].name
-    })) ] : []
+    let products = categoriesData
+      ? categoriesData.reduce(
+          (acc, category) => [
+            ...acc,
+            ...category.items.map((item) => ({
+              ...item,
+              category: category.name,
+              priceFormatted: currency.format(item.price),
+            })),
+          ],
+          []
+        )
+      : [];
 
-    if (filters.mainCategory !== "") {
+    if (filters.category !== "") {
       products = products.filter(
-        (product) => product.mainCategory == filters.mainCategory
+        (product) => product.category == filters.category
       );
     }
 
@@ -93,19 +101,13 @@ function Products() {
       );
     }
 
-    return products;
+    return _.uniqBy(products, "id");
   }, [allProducts, categoriesData, filters]);
 
 
-  // Filter some results at first load to alleviate large results
   useEffect(() => {
     if (categories && categories.length > 0) {
-      setIsInitialLoad(false)
-
-      setFilters((prev) => ({
-        ...prev,
-        mainCategory: categories ? categories[0].id : "",
-      }))
+      return setIsInitialLoad(false)
     }
   }, [categories])
 
@@ -204,14 +206,14 @@ function Products() {
           </div>
           <DropdownAdmin
             title="Categoria"
-            name="mainCategory"
-            value={filters.mainCategory}
+            name="category"
+            value={filters.category}
             onChange={handleFilterChange}
             options={[
-              { id: "", name: "Todos" },
+              { value: "", label: "Todos" },
               ...categories.map((category) => ({
-                id: category.id,
-                name: category.name,
+                value: category.name,
+                label: category.name,
               })),
             ]}
           />
@@ -222,9 +224,9 @@ function Products() {
             value={filters.available}
             onChange={handleFilterChange}
             options={[
-              { id: "", name: "Tudo" },
-              { id: true, name: "Disponível" },
-              { id: false, name: "Sem estoque" },
+              { value: "", label: "Tudo" },
+              { value: true, label: "Disponível" },
+              { value: false, label: "Sem estoque" },
             ]}
           />
           <div className="results-found">
@@ -246,7 +248,7 @@ function Products() {
             label: "Preço",
           },
           {
-            key: "mainCategoryName",
+            key: "category",
             label: "Categoria",
           },
           {
