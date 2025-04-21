@@ -33,10 +33,9 @@ export default class CreateItemBody {
   price: number;
 
   @ApiProperty()
-  @Transform(({ value }) => Number(value))
-  @Min(1)
-  @IsNotEmpty({ message: 'You must provide a main category id' })
-  main_category: number;
+  @Length(1)
+  @IsString({ message: 'Main category must be an category name' })
+  main_category: string;
 
   @ApiProperty({
     type: 'string',

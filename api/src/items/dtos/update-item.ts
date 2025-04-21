@@ -3,7 +3,6 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
 import {
   IsBoolean,
-  IsInt,
   IsNotEmpty,
   IsOptional,
   IsString,
@@ -48,10 +47,10 @@ export default class UpdateItemBody {
   available?: boolean;
 
   @ApiProperty()
-  @IsInt({ message: 'Main category must be an id' })
-  @Min(1)
+  @Length(1)
+  @IsString({ message: 'Main category must be an category name' })
   @IsOptional()
-  main_category?: number;
+  main_category?: string;
 
   @ApiProperty({
     type: 'string',

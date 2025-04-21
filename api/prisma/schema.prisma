@@ -37,7 +37,7 @@ model Item {
   description    String?
   price          Decimal
   available      Boolean            @default(true)
-  mainCategory   Int
+  mainCategory   String
   categories     Category[]         @relation("CategoryItems")
   sales_reports  SaleItemReport[]
   search_reports SearchItemReport[]

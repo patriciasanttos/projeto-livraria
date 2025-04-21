@@ -75,6 +75,7 @@ export class ItemsService {
       where: { id: itemId },
       include: {
         images: true,
+        categories: true,
       },
     });
 
@@ -89,17 +90,27 @@ export class ItemsService {
 
   async create(data: CreateItemBody) {
     return await this.prisma.$transaction(async (tx) => {
-      await this.categoriesService.getById(Number(data.main_category));
+      const allCategories = await tx.category.findMany();
+
+      const mainCategory = allCategories.find(
+        (category) =>
+          category.name.toLowerCase() === data.main_category.toLowerCase(),
+      );
+      if (!mainCategory)
+        throw new HttpException(
+          { message: 'Main category not found' },
+          HttpStatus.NOT_FOUND,
+        );
 
       const item = await tx.item.create({
         data: {
           name: data.name,
           description: data.description,
           price: data.price,
-          mainCategory: Number(data.main_category),
+          mainCategory: mainCategory.name,
           categories: {
             connect: {
-              id: Number(data.main_category),
+              id: mainCategory.id,
             },
           },
         },
@@ -199,10 +210,20 @@ export class ItemsService {
       }
     }
 
-    if (mainImage) {
+    console.log(mainImage);
+
+    if (mainImage !== undefined && mainImage !== null) {
+      const mainImageKey = `image_${mainImage}`;
+
       const mainImageInDb = await tx.itemImage.findFirst({
-        where: { itemId },
+        where: {
+          itemId,
+          url: {
+            contains: mainImageKey,
+          },
+        },
       });
+
       if (!mainImageInDb)
         throw new HttpException(
           { message: 'Main image not found' },
@@ -215,21 +236,48 @@ export class ItemsService {
       });
 
       await tx.itemImage.update({
-        where: { url: mainImageInDb.url },
+        where: { id: mainImageInDb.id },
         data: { isMain: true },
       });
     }
+
+    return;
   }
 
   async update(data: UpdateItemBody) {
-    console.log(data);
-
     const item = await this.getById(Number(data.id));
 
-    if (data.main_category)
-      await this.categoriesService.getById(Number(data.main_category));
-
     await this.prisma.$transaction(async (tx) => {
+      let mainCategory: any;
+
+      if (data.main_category) {
+        const allCategories = await tx.category.findMany();
+
+        const mainCategory = allCategories.find(
+          (category) =>
+            category.name.toLowerCase() === data.main_category!.toLowerCase(),
+        );
+        if (!mainCategory)
+          throw new HttpException(
+            { message: 'Main category not found' },
+            HttpStatus.NOT_FOUND,
+          );
+
+        await tx.item.update({
+          where: {
+            id: item.id,
+          },
+          data: {
+            mainCategory: mainCategory?.name || item.mainCategory,
+            categories: {
+              connect: {
+                id: mainCategory.id,
+              },
+            },
+          },
+        });
+      }
+
       await tx.item.update({
         where: {
           id: item.id,
@@ -239,7 +287,7 @@ export class ItemsService {
           description: data.description,
           price: data.price,
           available: data.available,
-          mainCategory: Number(data.main_category) || item.mainCategory,
+          mainCategory: mainCategory?.name || item.mainCategory,
         },
       });
 
@@ -256,9 +304,7 @@ export class ItemsService {
           tx,
           itemId: item.id,
           images,
-          mainImage: images[`image_${Number(data.main_image) - 1}`]
-            ? Number(data.main_image)
-            : 0,
+          mainImage: data.main_image ? Number(data.main_image) : undefined,
         });
     });
 
