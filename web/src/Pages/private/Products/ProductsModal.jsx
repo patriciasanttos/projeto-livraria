@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { useAddProductToCategory } from "../../../hooks/useCategories";
+import { useAddProductToCategory, useRemoveProductToCategory } from "../../../hooks/useCategories";
 import { useCreateProduct, useUpdateProduct } from "../../../hooks/useProducts";
 
 //-----Components
@@ -21,13 +21,17 @@ export const ProductsModal = ({
     return index !== -1 && index != null ? index : 0;
   });
 
-  useEffect(() => {
-    console.log(formData);
-  }, [formData, categories]);
+  const [prevCategories, setPrevCategories] = useState([]);
 
-  const { mutate: updateProduct } = useUpdateProduct();
+  useEffect(() => {
+    if (!isCreateItem && formData.categories?.length)
+      setPrevCategories(formData.categories);
+  }, []);
+
+  const { mutateAsync: updateProduct } = useUpdateProduct();
   const { mutateAsync: createProduct } = useCreateProduct();
   const { mutateAsync: addProductToCategory } = useAddProductToCategory();
+  const { mutateAsync: removeProductFromCategory } = useRemoveProductToCategory();
 
   const onClickDeleteImage = useCallback(index => {
     const updatedImages = formData?.images?.filter((_, i) => i !== index);
@@ -62,7 +66,7 @@ export const ProductsModal = ({
       newDataForm.append('description', formData.description);
       newDataForm.append('price', formData.price);
       newDataForm.append('available', formData.available);
-      newDataForm.append('main_category', formData.categories[0]);
+      newDataForm.append('main_category', formData.categories?.[0]?.name);
       newDataForm.append('main_image', mainImageIndex ?? 0);
       newDataForm.append('image_1', getImageFile(0));
       newDataForm.append('image_2', getImageFile(1));
@@ -76,7 +80,7 @@ export const ProductsModal = ({
             continue;
 
           await addProductToCategory({
-            categoryId: String(category),
+            categoryId: String(category.id),
             productId: String(newProduct.id),
           });
         }
@@ -102,17 +106,47 @@ export const ProductsModal = ({
       const updatedFormData = new FormData();
       updatedFormData.append('id', formData.id);
       updatedFormData.append('name', formData.name);
-      updatedFormData.append('description', formData.description);
+      updatedFormData.append('description', formData.description?.[0].name);
       updatedFormData.append('price', formData.price);
       updatedFormData.append('available', formData.available);
-      updatedFormData.append('mainCategory', formData.mainCategory);
+      updatedFormData.append('mainCategory', formData.categories[0]);
       updatedFormData.append('mainImage', formData.mainImage ?? mainImageIndex ?? 0);
       updatedFormData.append('image_1', getImageFile(0));
       updatedFormData.append('image_2', getImageFile(1));
       updatedFormData.append('image_3', getImageFile(2));
 
       try {
-        updateProduct(updatedFormData);
+        const updatedProduct = await updateProduct(updatedFormData);
+
+        const addedCategories = formData.categories.filter(
+          cat => !prevCategories.some(prev => prev.id === cat.id)
+        );
+
+        if (addedCategories.length > 0) {
+          for (let category of addedCategories) {
+            if (category === formData.categories[0])
+              continue;
+
+            await addProductToCategory({
+              categoryId: String(category.id),
+              productId: String(updatedProduct.id),
+            });
+          }
+        }
+
+        const removedCategories = prevCategories.filter(
+          prevCat => !formData.categories.some(cat => cat.id === prevCat.id)
+        );
+
+        if (removedCategories.length > 0) {
+          for (let category of removedCategories) {
+            await removeProductFromCategory({
+              categoryId: String(category.id),
+              productId: String(updatedProduct.id),
+            });
+          }
+        }
+
         setIsModalOpen(false);
         toast.dismiss(updatingDataToast);
         toast.success('Produto atualizado com sucesso!');
@@ -199,7 +233,7 @@ export const ProductsModal = ({
           <DropdownAdmin
             className="modal-select"
             name="categories"
-            value={formData?.categories.map(category => ({
+            value={formData?.categories?.map(category => ({
               value: category.id,
               label: category.name,
             }))}
@@ -207,7 +241,7 @@ export const ProductsModal = ({
             multiple={true}
             placeholder="Categorias"
             options={[
-              ...categories.map((category) => ({
+              ...categories?.map((category) => ({
                 value: category.id,
                 label: category.name,
               })),

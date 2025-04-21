@@ -31,3 +31,11 @@ export const addProductToCategory = async (categoryId, productId) => {
 
   return data;
 };
+
+export const removeProductFromCategory = async (categoryId, productId) => {
+  const { data } = await api.patch(
+    `/categories/${categoryId}/items/${productId}/remove`
+  );
+
+  return data;
+};

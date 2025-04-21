@@ -11,6 +11,7 @@ import AdminAddButton from "../../../Components/AdminAddButton/AdminAddButton";
 
 import { useCategoriesData } from "../../../hooks/useCategories";
 import { useDeleteProduct } from "../../../hooks/useProducts";
+import { toast } from "react-toastify";
 
 const currency = new Intl.NumberFormat("pt-BR", {
   style: "currency",
@@ -85,7 +86,7 @@ function Products() {
       );
     }
 
-    return products;
+    return _.uniqBy(products, "id");
   }, [categoriesData, filters]);
 
   const handleFilterChange = useCallback((evt) => {
@@ -139,7 +140,18 @@ function Products() {
   };
 
   const onClickDelete = (data) => {
-    return deleteProduct(data.id);
+    const deletingDataToast = toast.loading('Deletando produto...', {
+      autoClose: false
+    });
+
+    try {
+      deleteProduct(data.id);
+      toast.dismiss(deletingDataToast);
+      toast.success('Produto deletado com sucesso!');
+    } catch (err) {
+      toast.dismiss(deletingDataToast);
+      toast.error('Erro ao deletar produto.');
+    }
   }
 
   if (isLoading)
