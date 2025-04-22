@@ -31,7 +31,6 @@ export const CategoriesModal = ({
   const [toastLoading, setToastLoading] = useState();
 
   const isFormValid = (form) => {
-    console.log('>>> form', form)
     let isValid = true;
     const requiredFields = ["name", "image"];
 
@@ -137,7 +136,6 @@ export const CategoriesModal = ({
           toast.dismiss(toastLoading);
         }
       } catch (err) {
-        console.log(err)
         toast.dismiss(toastLoading);
         toast.error("Erro ao atualizar categoria.");
       }
