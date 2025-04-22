@@ -11,8 +11,8 @@ import AdminAddButton from "../../../components/AdminAddButton/AdminAddButton";
 
 import { useCategoriesData } from "../../../hooks/useCategories";
 import { useDeleteProduct, useAllProductsData } from "../../../hooks/useProducts";
-import Loading from "../../../Components/PageProcessing/Loading/Loading";
-import ErrorFinding from "../../../Components/PageProcessing/ErrorFinding/ErrorFinding";
+import Loading from "../../../components/PageProcessing/Loading/Loading";
+import ErrorFinding from "../../../components/PageProcessing/ErrorFinding/ErrorFinding";
 import { toast } from "react-toastify";
 
 const currency = new Intl.NumberFormat("pt-BR", {
@@ -32,7 +32,7 @@ const initialFormDataState = {
 }
 
 function Products() {
-  const { data: allProducts, isLoading: isLoadingProducts, error: errorProducts } = useAllProductsData()
+  const { data: allProducts, isLoading: isLoadingProducts } = useAllProductsData()
   const { data: categoriesData, isLoading, error } = useCategoriesData();
   const { mutate: deleteProduct } = useDeleteProduct();
 
