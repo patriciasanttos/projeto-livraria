@@ -1,7 +1,7 @@
 .admin-header {
     background-color: var(--button-lime-green);
-
     height: 12dvh;
+    position: relative;
 
     display: flex;
     align-items: center;
@@ -11,10 +11,13 @@
         color: #FFFFFF;
         font-weight: 500;
         font-size: 24pt;
-        margin: 0 0 0 20rem;
+        margin: 0;
     }
 
     .logout-container {
+        position: absolute;
+        right: 4rem;
+
         cursor: pointer;
 
         p {
@@ -22,6 +25,4 @@
             font-weight: 600;
         }
     }
-
-
 }

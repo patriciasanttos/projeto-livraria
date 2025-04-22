@@ -63,10 +63,10 @@ yarn install
 
 ```bash
 Usando npm:
-npm run db:init
+npm run db:setup
 
 Usando yarn:
-yarn db:init
+yarn db:setup
 ```
 
 6. Inicie a aplicação:

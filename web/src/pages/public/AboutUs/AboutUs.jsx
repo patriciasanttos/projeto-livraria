@@ -75,7 +75,7 @@ function AboutUs() {
             </div>
 
             <div className="wpp-number">
-              <a href={`https://wa.me/${import.meta.env.VITE_WHATSAPP_NUMBER}`} className="info-number">
+              <a target='_blank' href={`https://wa.me/${import.meta.env.VITE_WHATSAPP_NUMBER}`} className="info-number">
                 (12) 98229-4420
               </a>
             </div>
@@ -93,6 +93,7 @@ function AboutUs() {
 
             <div className="instagram-info">
               <a
+                target='_blank'
                 href={import.meta.env.VITE_INSTAGRAM_URL}
                 className="info-instagram"
               >

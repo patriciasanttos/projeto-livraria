@@ -8,12 +8,13 @@
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "start": "nest start",
+    "start": "node dist/src/main.js",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
-    "db:init": "prisma migrate dev --name init && ts-node prisma/seed.ts"
+    "db:init": "prisma migrate deploy && ts-node prisma/seed.ts",
+    "db:setup": "npx prisma generate && npm run db:init"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.11",

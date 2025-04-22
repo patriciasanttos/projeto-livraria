@@ -1,112 +1,164 @@
-:building_construction:**# Construção de site para melhoramento de atendimento**
 
-:world_map:**## Visão Geral**
+# 🧱 **Desenvolvimento de Plataforma Web para Papelaria e Livraria com Integração via WhatsApp**
 
-Este projeto consiste na criação de um site para uma loja de papelaria e livraria. O site foi contruído utilizando ferramentas e tecnologias atuais no mercado como bibliotecas em JavaScript como React, linguagem de marcações HTML, linguagem de estilos SCSS, entre outras. Mais informações nos tópicos abaixo.
+## 🌐 **Resumo**
 
-:pushpin:**## Objetivo**
+Este projeto tem como objetivo o desenvolvimento de uma plataforma web moderna para uma loja de papelaria e livraria. A proposta busca otimizar o atendimento ao cliente, oferecendo uma navegação intuitiva por categorias de produtos, permitindo a seleção de itens e a finalização da compra via WhatsApp com um atendente. A plataforma também conta com um painel administrativo completo para a gestão de produtos, categorias e promoções.
 
-    O objetivo desse projeto é melhorar o atendimento das lojas, para isso foi proposto a criação do site, melhorando o acesso do usuário do site ao acervo de produtos das loja, podendo fazer finalização da compra online via Whatsapp com os atendentes. Os pontos principais do projeto é a plataforma para escolha dos produtos e a finalização da compra com um atendente via Whatsapp.
+---
 
-:newspaper: - #### Plataforma
+## 🗺️ **Visão Geral**
 
-    A plataforma conta com uma grande gama de ações e funções que são executadas pelo usuário, seja como usuário final ou administrador da plataforma. O usuário final:
-    Pode acessar uma variedade de categorias, desde "Mais vendidos" até "Promoções", adicionar produtos ao carrinho que acumula todos os produtos selecionados e ao finalizar a seleção dos mesmos ir para o Whatsapp para finalizar a compra com um atendente. O administrador:
-    Pode fazer a atualização, o cadastro e a exclusão dos produtos, ele pode também fazer a atualização, o cadastro e a exclusão das categorias e promoções. 
+O site foi desenvolvido utilizando tecnologias atuais amplamente utilizadas no mercado, como React, HTML, SCSS e diversas bibliotecas do ecossistema JavaScript. A proposta valoriza a experiência do usuário, proporcionando uma navegação fluida, responsiva e integrada com canais diretos de atendimento.
 
-:woman_office_worker: - #### Atendimento
+---
 
-    O atendimento será iniciado após o usuário final finalizar a seleção dos produtos e adicionar ao carrinho, ademais, ao clicar no botão de comprar o usuário será direcionado para o Whatsapp para finalizar a compra.
+## 🎯 **Objetivo**
 
-:computer:**## Tecnologias Utilizadas**
+Melhorar a experiência de compra do cliente ao oferecer:
 
-**- HTML:** Linguagem de marcação utilizada para estruturar o conteúdo da aplicação.
-**- SCSS:** É uma linguagem de estilo que é uma extensão do CSS3. Criada para tornar o CSS mais fácil de escrever e manter. Ela é uma linguagem de pré-processamento, que significa que ela é convertida em CSS antes de ser interpretada.
-**- JavaScript:** Linguagem de programação utilizada para adicionar interatividade e funcionalidades à aplicação.
-**- React:** Biblioteca JavaScript utilizada para construir a interface do usuário e permite criar componentes reutilizáveis.
-**- Axios:** O Axios é uma biblioteca de JavaScript utilizadas para fazer requisições HTTP. Ele é uma alternativa popular ao fetch API e é amplamente utilizado em aplicaçoes web para fazer requisições a APIs.
-**- React Query:** É uma biblioteca de JavaScript utilizada para gerenciar o estado de dados em aplicações React. Foi projetado para ajudar a gerenciar o estado de dados em aplicações complexas e é amplamente utilizado em conjunto com o Axios.
-**- React Router Dom:** É uma biblioteca de JavaScript utilizada para gerenciar as rotas em aplicações React. Ele é uma ferramenta popular para criar aplicações web com múltiplas páginas e rotas.
-**- Material UI:** É uma biblioteca de componentes de interface do usuário (UI) para React, desenvolvida pelo Google. Ele é baseado no design Material Design, que é uma linguagem de design visual criada pelo Google para fornecer uma experiência de usuário consistente e intuitiva em todas as plataformas.
-**- Toastify:** É uma biblioteca de JavaScript para criar notificações de toast em aplicações web. As notificações toast são mensagens curtas que aparecem na tela do usuário por um período de tempo determinado, geralmente para informar que uma ação ou evento está acontecendo ou aconteceu.
+- Uma vitrine online com categorias organizadas (ex: Mais vendidos, Promoções);
+- Um carrinho de compras funcional para selecionar múltiplos produtos;
+- Um fluxo simplificado de finalização de compra via WhatsApp;
+- Um painel administrativo para gerenciar o conteúdo do site com facilidade.
 
-:exclamation:
-:heavy_exclamation_mark:**## Dependências**
+---
 
-:clipboard:**#### Requisitos**
+## 🖥️ **Funcionalidades da Plataforma**
 
-    Node.js (versão recomendada: 16.x ou superior)
-    NPM ou Yarn
+### 👤 Usuário Final
 
-:arrow_down:**#### Instalação e Execução-WEB**
+- Navegação por categorias e destaques;
+- Adição de produtos ao carrinho;
+- Integração com WhatsApp para finalização da compra;
+- Interface responsiva para dispositivos móveis.
 
-    1. Clone o repositório:
-    ```bash
-    git clone https://github.com/patriciasanttos/projeto-livraria.git
-    ```
-    2. Abra o resisitório, e a pasta do frontend:
-    ```bash
-    cd projeto-livraria/web
-    ```
-    3. Instale as dependências:
-    ```bash
-    Usando npm:
-    npm install
+### 👩‍💼 Administrador
 
-    Usando yarn:
-    yarn install
-    ```
-    4. Configure as variáveis de ambiente conforme o arquivo .env.example
-    5. Inicie a aplicação:
-    ```bash
-    Usando npm:
-    npm run dev
+- Cadastro, atualização e exclusão de produtos;
+- Gestão de categorias e promoções;
+- Interface de fácil uso para gerenciamento dos dados.
 
-    Usando yarn:
-    yarn dev
-    ```
+---
 
-    Mais informações em [api/README.md](https://github.com/patriciasanttos/projeto-livraria/blob/develop/api/README.md)
-:arrow_down:**#### Instalação e Execução-API**
+## 💬 **Atendimento**
 
-    1. Clone o repositório:
-    ```bash
-    git clone https://github.com/patriciasanttos/projeto-livraria.git
-    ```
-    2. Abra o resisitório, e a pasta do frontend:
-    ```bash
-    cd projeto-livraria/api
-    ```
-    3. Instale as dependências:
-    ```bash
-    Usando npm:
-    npm install
+O atendimento é iniciado após o usuário finalizar a seleção de produtos no carrinho. Ao clicar no botão de compra, ele será redirecionado automaticamente para o WhatsApp, onde poderá concluir a transação com um atendente da loja.
 
-    Usando yarn:
-    yarn install
-    ```
-    4. Configure as variáveis de ambiente conforme o arquivo .env.example
-    ```bash
-    Usando npm:
-    npm run db:init
+---
 
-    Usando yarn:
-    yarn db:init
-    ```
-    5. Inicie a aplicação:
-    ```bash
-    Usando npm:
-    npm run dev
+## 🛠️ **Principais Tecnologias Utilizadas**
 
-    Usando yarn:
-    yarn dev
-    ```
+### ***Front-end***
+- **HTML**: Estruturação do conteúdo da aplicação.
+- **SCSS**: Estilização com pré-processamento CSS, facilitando manutenção e escalabilidade.
+- **JavaScript**: Interatividade e funcionalidades da aplicação.
+- **React**: Criação de componentes reutilizáveis e reativos.
+- **Axios**: Realização de requisições HTTP de forma simples e eficiente.
+- **React Query**: Gerenciamento de estado assíncrono e cache de dados.
+- **React Router DOM**: Gerenciamento de rotas e navegação entre páginas.
+- **Material UI**: Componentes visuais baseados em Material Design.
+- **Toastify**: Notificações amigáveis para o usuário.
+- **Chart.js**: Gráfico para exibição de relatórios.
+- **React window**: Para melhor performance em exibição de grande quantidade de dados.
 
-    Mais informações em [web/README.md](https://github.com/patriciasanttos/projeto-livraria/blob/develop/web/README.md)
+### ***Back-end***
+- **TypeScript**: Linguagem de desenvolvimento da API.
+- **NestJS**: Framework web utilizado.
+- **Swagger**: Utilizado para documentar endpoints, corpos de requisições, etc.
+- **SQLite**: Banco de dados utilizado.
+- **Prisma**: ORM utilizada para tratar do banco de dados.
+- **Supabase**: Salvamento de imagens.
+- **Sharp**: Compressão de imagens.
+- **JSON Web Token**: Geração de tokens de autenticação.
+- **Bcrypt**: Criptografica de senhas.
 
-:ballot_box_with_check:**## Conclusaõ**
+---
 
-    Este documento é apenas uma introdução prévia das informações contidas nesse repositório, querendo mais informações sobre APIs, Back-end e Front-end acesse os links abaixo.
+## 📦 **Dependências**
 
-    [Front-end](https://github.com/patriciasanttos/projeto-livraria/blob/develop/web/README.md)
-    [Back-end](https://github.com/patriciasanttos/projeto-livraria/blob/develop/api/README.md)
+### Requisitos:
+
+- Node.js (recomendado: versão 16.x ou superior)
+- NPM ou Yarn
+
+---
+
+## 🚀 **Instalação e Execução - Frontend**
+
+1. Clone o repositório:
+   ```bash
+   git clone https://github.com/patriciasanttos/projeto-livraria.git
+   ```
+2. Acesse a pasta do frontend:
+   ```bash
+   cd projeto-livraria/web
+   ```
+3. Instale as dependências:
+   ```bash
+   # Usando npm
+   npm install
+
+   # Ou usando yarn
+   yarn install
+   ```
+4. Configure as variáveis de ambiente com base no arquivo `.env.example`
+5. Inicie a aplicação:
+   ```bash
+   # Usando npm
+   npm run dev
+
+   # Ou usando yarn
+   yarn dev
+   ```
+
+📎 Mais informações: [web/README.md](https://github.com/patriciasanttos/projeto-livraria/blob/develop/web/README.md)
+
+---
+
+## 🔧 **Instalação e Execução - API (Backend)**
+
+1. Clone o repositório:
+   ```bash
+   git clone https://github.com/patriciasanttos/projeto-livraria.git
+   ```
+2. Acesse a pasta da API:
+   ```bash
+   cd projeto-livraria/api
+   ```
+3. Instale as dependências:
+   ```bash
+   # Usando npm
+   npm install
+
+   # Ou usando yarn
+   yarn install
+   ```
+4. Configure as variáveis de ambiente com base no arquivo `.env.example`
+5. Inicialize o banco de dados:
+   ```bash
+   # Usando npm
+   npm run db:setup
+
+   # Ou usando yarn
+   yarn db:setup
+   ```
+6. Inicie a aplicação:
+   ```bash
+   # Usando npm
+   npm run start
+
+   # Ou usando yarn
+   yarn start
+   ```
+
+📎 Mais informações: [api/README.md](https://github.com/patriciasanttos/projeto-livraria/blob/develop/api/README.md)
+
+---
+
+## ✅ **Conclusão**
+
+Esta documentação apresenta uma visão geral do projeto e os principais passos para execução local do frontend e backend. Para detalhes técnicos sobre cada parte da aplicação, acesse os links abaixo:
+
+- 🔗 [Documentação do Front-end](https://github.com/patriciasanttos/projeto-livraria/blob/develop/web/README.md)
+- 🔗 [Documentação do Back-end](https://github.com/patriciasanttos/projeto-livraria/blob/develop/api/README.md)

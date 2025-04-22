@@ -57,6 +57,5 @@ report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
 #Database data
 /prisma/dev.db
-/prisma/migrations
 
 .early.coverage
