@@ -13,6 +13,15 @@ export const login = async (email, password) => {
   return response;
 };
 
+export const logout = async () => {
+  const response = await api
+    .get("/admins/logout")
+    .then((res) => res)
+    .catch((err) => err);
+
+  return response;
+};
+
 export const validate = async () => {
   const response = await api
     .get("/admins/auth/me")
