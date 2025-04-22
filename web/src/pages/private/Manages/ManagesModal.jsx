@@ -101,17 +101,12 @@ export const ManagesModal = ({
         })
       );
 
-      try {
-        await createAdmin({
-          name: formData.name,
-          phone: formData.phone,
-          email: formData.email,
-          password: formData.newPassword,
-        })
-      } catch (err) {
-        toast.dismiss(toastLoading);
-        toast.error("Erro ao criar Administrador.");
-      }
+      await createAdmin({
+        name: formData.name,
+        phone: formData.phone,
+        email: formData.email,
+        password: formData.newPassword,
+      })
     } else if (!isCreateAdmin) {
       if (formData.name.length < 5)
         return toast.warning("Você precisa adicionar um nome.");
