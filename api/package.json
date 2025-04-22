@@ -19,7 +19,7 @@
     "@nestjs/common": "^11.0.11",
     "@nestjs/core": "^11.0.1",
     "@nestjs/mapped-types": "*",
-    "@nestjs/platform-express": "^11.0.11",
+    "@nestjs/platform-express": "^11.0.20",
     "@nestjs/swagger": "^11.0.6",
     "@prisma/client": "^6.5.0",
     "@supabase/supabase-js": "^2.49.4",
