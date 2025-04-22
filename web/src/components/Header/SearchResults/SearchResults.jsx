@@ -89,7 +89,7 @@ const SearchResults = ({ query, setQuery }) => {
     return <div className="searching-results"><Loading title="Buscando" style={{ marginTop: "2rem" }} /></div>
 
   if (!results)
-    return <div>Nenhum resultado encontrado.</div>
+    return <p className="no-results">Nenhum resultado encontrado.</p>
 
   return (
     <div className="search-wrapper">
