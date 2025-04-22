@@ -4,13 +4,24 @@
     height: 12dvh;
 
     display: flex;
-    justify-content: center;
     align-items: center;
-}
+    justify-content: space-around;
 
-.admin-header h2 {
-    color: #FFFFFF;
-    font-weight: 500;
-    font-size: 24pt;
-    margin: 0;
+    h2 {
+        color: #FFFFFF;
+        font-weight: 500;
+        font-size: 24pt;
+        margin: 0 0 0 20rem;
+    }
+
+    .logout-container {
+        cursor: pointer;
+
+        p {
+            margin: 0;
+            font-weight: 600;
+        }
+    }
+
+
 }
