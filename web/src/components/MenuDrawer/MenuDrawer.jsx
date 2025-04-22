@@ -14,18 +14,18 @@ const MenuDrawer = ({ isOpen, setMenuOpen }) => {
 
   const listLinks = [
     { text: "Home", link: "/", category: null },
-    { text: "Presentes", link: "/categories", category: "presentes" },
+    { text: "Presentes", link: "/categories/presente", category: "presentes" },
     {
       text: "Livros Infantis",
-      link: "/categories",
+      link: "/categories/livros%20infantis",
       category: "livros infantis",
     },
-    { text: "Canetas", link: "/categories", category: "canetas" },
+    { text: "Papelaria", link: "/categories/papelaria", category: "papelaria" },
     { text: "Cadernos", link: "/categories", category: "cadernos" },
     {
-      text: "Materiais para colorir",
-      link: "/categories",
-      category: "materiais para colorir",
+      text: "Atividades",
+      link: "/categories/atividades",
+      category: "atividades",
     },
     { text: "Ver tudo", link: "/categories", category: null },
   ];
