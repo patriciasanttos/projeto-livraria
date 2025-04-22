@@ -60,3 +60,45 @@
         }
     }
 }
+
+@media screen and (min-width: 1100px) and (max-width: 1300px) {
+    .category-component {
+        .category-component-container .arrows {
+            &:first-child {
+                left: 12%;
+            }
+
+            &:last-child {
+                right: 12%;
+            }
+        }
+    }
+}
+
+@media screen and (min-width: 1300px) and (max-width: 1480px) {
+    .category-component {
+        .category-component-container .arrows {
+            &:first-child {
+                left: 18%;
+            }
+
+            &:last-child {
+                right: 18%;
+            }
+        }
+    }
+}
+
+@media screen and (min-width: 1480px) {
+    .category-component {
+        .category-component-container .arrows {
+            &:first-child {
+                left: 18%;
+            }
+
+            &:last-child {
+                right: 23%;
+            }
+        }
+    }
+}
