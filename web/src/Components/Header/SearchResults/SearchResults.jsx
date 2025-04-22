@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 
 import './SearchResults.scss'
-import { useAvailableProductsData } from "../../../hooks/useProducts";
+import { useAllProductsData } from "../../../hooks/useProducts";
 import { useCreateReport } from "../../../hooks/useReports";
 import Loading from "../../PageProcessing/Loading/Loading";
 import { useNavigate } from "react-router-dom";
@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 const SearchResults = ({ query, setQuery }) => {
   const navigate = useNavigate();
 
-  const { data, isLoading } = useAvailableProductsData();
+  const { data, isLoading } = useAllProductsData();
   const { mutate } = useCreateReport();
 
   const [results, setResults] = useState(data);
@@ -86,7 +86,7 @@ const SearchResults = ({ query, setQuery }) => {
   }
 
   if (isLoading)
-    return <div className="searching-results"><Loading title="Buscando" style={{marginTop: "2rem"}}/></div>
+    return <div className="searching-results"><Loading title="Buscando" style={{ marginTop: "2rem" }} /></div>
 
   if (!results)
     return <div>Nenhum resultado encontrado.</div>

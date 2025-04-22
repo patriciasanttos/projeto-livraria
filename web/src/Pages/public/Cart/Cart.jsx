@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ItemList from '../../../Components/ItemList/ItemList';
+import ItemList from '../../../components/ItemList/ItemList';
 
 import './Cart.scss';
 

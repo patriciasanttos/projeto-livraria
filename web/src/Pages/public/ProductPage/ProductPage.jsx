@@ -4,11 +4,11 @@ import { useCategoriesData } from '../../../hooks/useCategories';
 import _ from "lodash";
 
 //-----Components
-import ProductDescription from "../../../Components/ProductDescription/ProductDescription";
+import ProductDescription from "../../../components/ProductDescription/ProductDescription";
 import Category from "../../../components/Category/Category";
-import WhatsappContact from "../../../Components/WhatsappContact/WhatsappContact";
-import ErrorFinding from "../../../Components/PageProcessing/ErrorFinding/ErrorFinding";
-import Loading from "../../../Components/PageProcessing/Loading/Loading";
+import WhatsappContact from "../../../components/WhatsappContact/WhatsappContact";
+import ErrorFinding from "../../../components/PageProcessing/ErrorFinding/ErrorFinding";
+import Loading from "../../../components/PageProcessing/Loading/Loading";
 
 import "./ProductPage.scss";
 
@@ -47,7 +47,7 @@ function ItemPage() {
   }, [data, id, locationState]);
 
   if (isLoading)
-    return <Loading title="Buscando produto" style={{marginTop: "4rem"}}/>
+    return <Loading title="Buscando produto" style={{ marginTop: "4rem" }} />
 
   if (!data || !product || error)
     return (

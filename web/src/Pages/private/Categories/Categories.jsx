@@ -2,12 +2,12 @@ import React, { useMemo, useState, useCallback, useEffect } from "react";
 
 import "./Categories.scss";
 
-import AdminList from "../../../Components/AdminList/AdminList";
-import SearchInputAdmin from "../../../Components/SearchInputAdmin/SearchInputAdmin";
-import DropdownAdmin from "../../../Components/DropdownAdmin/DropdownAdmin";
-import AdminAddButton from "../../../Components/AdminAddButton/AdminAddButton";
-import Loading from "../../../Components/PageProcessing/Loading/Loading";
-import ErrorFinding from "../../../Components/PageProcessing/ErrorFinding/ErrorFinding";
+import AdminList from "../../../components/AdminList/AdminList";
+import SearchInputAdmin from "../../../components/SearchInputAdmin/SearchInputAdmin";
+import DropdownAdmin from "../../../components/DropdownAdmin/DropdownAdmin";
+import AdminAddButton from "../../../components/AdminAddButton/AdminAddButton";
+import Loading from "../../../components/PageProcessing/Loading/Loading";
+import ErrorFinding from "../../../components/PageProcessing/ErrorFinding/ErrorFinding";
 
 import { useCategoriesData, useDeleteCategory } from "../../../hooks/useCategories";
 import { CategoriesModal } from "./CategoriesModal";
@@ -108,16 +108,16 @@ function Categories() {
     }
   }
 
-    if (isLoading)
-      return <Loading title="Buscando categorias" style={{ marginTop: "18rem" }} />
+  if (isLoading)
+    return <Loading title="Buscando categorias" style={{ marginTop: "18rem" }} />
 
-    if (error)
-      return (
-        <ErrorFinding
-          text="Erro ao carregar as categorias"
-          style={{ marginTop: "13rem" }}
-        />
-      );
+  if (error)
+    return (
+      <ErrorFinding
+        text="Erro ao carregar as categorias"
+        style={{ marginTop: "13rem" }}
+      />
+    );
 
   return (
     <section className="categories-page-container">

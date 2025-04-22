@@ -1,12 +1,9 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { jwtDecode } from 'jwt-decode';
-
-//-----Icons
-import EditIcon from "../../assets/icons/editIcon.svg";
-import DeleteIcon from "../../assets/icons/deleteIcon.svg";
 
 //-----Component
 import ModalAdmin from "../ModalAdmin/ModalAdmin";
+import { FixedSizeList as List } from "react-window";
+import Row from './Row.jsx';
 
 import "./AdminList.scss";
 import { validate as validateAdmin } from "../../service/api/admins";
@@ -36,18 +33,8 @@ function AdminList({ type, tableLayout, listData, onEdit, onDelete }) {
     setIsConfirmDeleteModalOpen(true);
   };
 
-  const getCellValue = (row, key) => {
-    if (row[key] === undefined || row[key] === "") {
-      return "Indisponível";
-    } else if (key === "available") {
-      return row.available ? "Disponível" : "Sem estoque";
-    } else {
-      return row[key];
-    }
-  };
-
   return (
-    <div className="admin-list">
+    <div className="admin-table">
       {isConfirmDeleteModalOpen && (
         <ModalAdmin
           title={`Deseja mesmo deletar "${confirmDelteteProp.name}"?`}
@@ -61,58 +48,34 @@ function AdminList({ type, tableLayout, listData, onEdit, onDelete }) {
         />
       )}
 
-      <table>
-        <thead>
-          <tr>
-            {tableLayout.map((title, index) => (
-              <th key={index}>{title.label}</th>
-            ))}
-            <th className="actions">Ações</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          {listData.map((row) => (
-            <tr key={row.id}>
-              {tableLayout.map(({ key }) => (
-                <td key={key}>{getCellValue(row, key)}</td>
-              ))}
-
-              <td className="actions">
-                <img
-                  src={EditIcon}
-                  className="icon-editar"
-                  onClick={() => onEdit(row)}
-                  data-tooltip-id="tooltip"
-                  data-tooltip-content="Editar"
-                />
-                {
-                  (type === 'adminAccounts' && currentAdmin !== row.id && actionsLoaded) && (
-                    <img
-                      src={DeleteIcon}
-                      className="icon-deletar"
-                      onClick={() => handleConfirmDelete(row)}
-                      data-tooltip-id="tooltip"
-                      data-tooltip-content="Excluir"
-                    />
-                  )
-                }
-                {
-                  type !== 'adminAccounts' && (
-                    <img
-                      src={DeleteIcon}
-                      className="icon-deletar"
-                      onClick={() => handleConfirmDelete(row)}
-                      data-tooltip-id="tooltip"
-                      data-tooltip-content="Excluir"
-                    />
-                  )
-                }
-              </td>
-            </tr>
+      <div className="table">
+        <div className="table-header">
+          {tableLayout.map((title, index) => (
+            <div className="table-cell" key={index}>{title.label}</div>
           ))}
-        </tbody>
-      </table>
+          <div className="table-cell table-actions-header">Ações</div>
+        </div>
+
+        <div className="table-body">
+          <List
+            height={500}
+            itemCount={listData.length}
+            itemSize={60}
+            width="100%"
+            itemData={{
+              listData,
+              tableLayout,
+              type,
+              currentAdmin,
+              actionsLoaded,
+              onEdit,
+              handleConfirmDelete,
+            }}
+          >
+            {Row}
+          </List>
+        </div>
+      </div>
     </div>
   );
 }

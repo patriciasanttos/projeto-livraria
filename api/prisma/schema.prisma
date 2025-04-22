@@ -20,7 +20,6 @@ model Admin {
 model Category {
   id                   Int                    @id @default(autoincrement())
   name                 String
-  description          String?
   available            Boolean                @default(true)
   image                String?
   banner               String?

@@ -4,7 +4,7 @@ import { Outlet } from 'react-router-dom';
 //-----Components
 import Header from '../components/Header/Header';
 import WhatsappPopup from '../components/WhatsappPopup/WhatsappPopup';
-import Footer from '../Components/Footer/Footer';
+import Footer from '../components/Footer/Footer';
 
 function PublicRoutesLayout() {
   return (

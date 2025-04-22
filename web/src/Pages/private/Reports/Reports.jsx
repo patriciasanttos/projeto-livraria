@@ -7,11 +7,11 @@ import { useReportsData } from '../../../hooks/useReports';
 import reloadIcon from '../../../assets/icons/reload.svg';
 
 //-----Components
-import ReportsChart from '../../../Components/ReportsChart/ReportsChart';
-import Loading from '../../../Components/PageProcessing/Loading/Loading';
+import ReportsChart from '../../../components/ReportsChart/ReportsChart';
+import Loading from '../../../components/PageProcessing/Loading/Loading';
 
 import './Reports.scss';
-import ErrorFinding from '../../../Components/PageProcessing/ErrorFinding/ErrorFinding';
+import ErrorFinding from '../../../components/PageProcessing/ErrorFinding/ErrorFinding';
 
 function Reports() {
   const { data, isLoading, error, refetch } = useReportsData();
@@ -114,12 +114,12 @@ function Reports() {
     return <Loading title="Buscando dados" style={{ marginTop: "15rem" }} />;
 
   if ((data?.searchReports?.length === 0 && data?.salesReports?.length === 0) || error)
-    return 
-      <ErrorFinding
-        text="Desculpe, parece que nenhum relatório foi encontrado"
-        style={{ marginTop: "12rem" }}
-      />
-    
+    return
+  <ErrorFinding
+    text="Desculpe, parece que nenhum relatório foi encontrado"
+    style={{ marginTop: "12rem" }}
+  />
+
 
   return (
     <div className='reports-page'>
