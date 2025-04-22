@@ -24,7 +24,7 @@ export default async function bootstrap() {
 
   initSwagger(app);
 
-  return await app.listen(process.env.PORT ?? 3000);
+  return await app.listen(process.env.PORT ?? 3000, "0.0.0.0");
 }
 
 bootstrap().catch((error) => {
