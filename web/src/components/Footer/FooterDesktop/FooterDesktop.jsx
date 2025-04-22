@@ -40,10 +40,10 @@ const FooterDesktop = () => {
           <div>
             <Link to="/categories/presentes">Presentes</Link>
             <Link to="/categories/livros%20infantis">Livros Infantis</Link>
-            <Link to="/categories/canetas">Canetas</Link>
+            <Link to="/categories/papelaria">Papelaria</Link>
             <Link to="/categories/cadernos">Cadernos</Link>
-            <Link to="/categories/materiais%20para%20colorir">
-              Materiais para colorir
+            <Link to="/categories/atividades">
+              Atividades
             </Link>
             <Link to="/categories">Ver tudo</Link>
           </div>
