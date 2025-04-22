@@ -8,6 +8,7 @@ import { useCreateReport } from '../../hooks/useReports';
 //-----Images and icons
 import DeleteIcon from "../../assets/icons/deleteIcon.svg";
 import CartEmpty from "../../assets/images/cart-empty.svg";
+import kitCanetas from '../../assets/images/kit-canetas.svg';
 
 //-----Components
 import QuantityInput from "./QuantityInput";
@@ -216,7 +217,7 @@ function ItemList() {
                 <tr key={index}>
                   <td className="product-item">
                     <img
-                      src={product.image}
+                      src={product.image ?? kitCanetas}
                       alt="Imagem do item"
                       width="120px"
                       className="item-list-image"

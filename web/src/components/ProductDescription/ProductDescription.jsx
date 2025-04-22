@@ -3,6 +3,9 @@ import { toast } from "react-toastify";
 
 import ModalInfoBuy from "../ModalInfoBuy/ModalInfoBuy";
 
+//-----Images
+import kitCanetas from '../../assets/images/kit-canetas.svg';
+
 import "./ProductDescription.scss";
 
 function ProductDescription({ product }) {
@@ -70,7 +73,7 @@ function ProductDescription({ product }) {
     product && (
       <section className="item-description-container">
         <div className="item-description-images-container">
-          <img className="main-product" src={mainImage} alt="" />
+          <img className="main-product" src={mainImage ?? kitCanetas} alt="" />
 
           <div className="item-description-images">
             {product.images.map((image, index) => (
