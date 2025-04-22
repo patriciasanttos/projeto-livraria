@@ -12,22 +12,22 @@ import {
   Res,
   UseGuards,
   UseInterceptors,
-} from '@nestjs/common';
-import { FileInterceptor } from '@nestjs/platform-express';
+} from "@nestjs/common";
+import { FileInterceptor } from "@nestjs/platform-express";
 import {
   ApiCreatedResponse,
   ApiOkResponse,
   ApiOperation,
   ApiParam,
-} from '@nestjs/swagger';
-import { AdminsService } from './admins.service';
-import CreateAdminBody from './dtos/create-admin';
-import UpdateAdminBody from './dtos/update-admin';
-import { Request, Response } from 'express';
-import { AuthGuard } from 'src/auth.guard';
-import { DecodedUserTokenType } from 'src/@types/decodedUserToken.type';
+} from "@nestjs/swagger";
+import { AdminsService } from "./admins.service";
+import CreateAdminBody from "./dtos/create-admin";
+import UpdateAdminBody from "./dtos/update-admin";
+import { Request, Response } from "express";
+import { AuthGuard } from "src/auth.guard";
+import { DecodedUserTokenType } from "src/@types/decodedUserToken.type";
 
-@Controller('admins')
+@Controller("admins")
 export class AdminsController {
   constructor(private readonly adminsService: AdminsService) {}
 
@@ -35,79 +35,79 @@ export class AdminsController {
   @UseGuards(AuthGuard)
   //----Swagger configs
   @ApiOperation({
-    summary: 'Get all admins',
-    description: 'Get all admins with a name, email and phone.',
-    tags: ['admins'],
+    summary: "Get all admins",
+    description: "Get all admins with a name, email and phone.",
+    tags: ["admins"],
   })
   @ApiOkResponse({
-    description: 'A list of all admins',
+    description: "A list of all admins",
   })
   //-----
   getAll() {
     return this.adminsService.getAll();
   }
 
-  @Get('/login')
+  @Get("/login")
   //----Swagger configs
   @ApiOperation({
-    summary: 'Login in a admin account',
-    description: 'Login in a admin account with a email and a password.',
-    tags: ['admins'],
+    summary: "Login in a admin account",
+    description: "Login in a admin account with a email and a password.",
+    tags: ["admins"],
   })
   @ApiOkResponse({
-    description: 'User logged in successfully',
+    description: "User logged in successfully",
   })
   //-----
   async login(
-    @Headers('authorization') authHeader: string,
-    @Res() response: Response,
+    @Headers("authorization") authHeader: string,
+    @Res() response: Response
   ) {
-    const [email, password] = authHeader.split(':');
+    const [email, password] = authHeader.split(":");
 
     const token = await this.adminsService.login(email, password);
 
-    response.cookie('user', token, {
+    response.cookie("user", token, {
       httpOnly: true,
-      secure: false, // Change this to true when app is in production
+      secure: true,
       maxAge: 24 * 60 * 60 * 1000,
-      sameSite: 'strict',
-      path: '/',
+      sameSite: "none",
+      path: "/",
     });
 
-    response.send({ message: 'User logged in successfully' });
+    response.send({ message: "User logged in successfully" });
   }
 
-  @Get('/logout')
+  @Get("/logout")
   @UseGuards(AuthGuard)
   //----Swagger configs
   @ApiOperation({
-    summary: 'Logout a admin account',
-    tags: ['admins'],
+    summary: "Logout a admin account",
+    tags: ["admins"],
   })
   @ApiOkResponse({
-    description: 'User logged out successfully',
+    description: "User logged out successfully",
   })
   //-----
   logout(@Res() response: Response) {
-    response.clearCookie('user', {
+    response.clearCookie("user", {
       httpOnly: true,
-      secure: false, // Change this to true when app is in production
-      sameSite: 'strict',
-      path: '/',
+      secure: true,
+      sameSite: "none",
+      path: "/",
     });
 
-    response.send({ message: 'User logged out successfully' });
+    response.send({ message: "User logged out successfully" });
   }
 
-  @Get('/auth/me')
+  @Get("/auth/me")
   //----Swagger configs
   @ApiOperation({
-    summary: 'Validate an admin account',
-    description: 'Validate an admin account with a cookie.',
-    tags: ['admins'],
+    summary: "Validate an admin account",
+    description: "Validate an admin account with a cookie.",
+    tags: ["admins"],
   })
   @ApiOkResponse({
-    description: 'User validated successfully',
+    description: "User validated successfully",
   })
   //-----
   async validate(@Req() { cookies: { user } }: Request) {
@@ -118,12 +118,12 @@ export class AdminsController {
   @UseGuards(AuthGuard)
   //----Swagger configs
   @ApiOperation({
-    summary: 'Create a new admin',
-    description: 'Create a new admin with a name, email, phone and password.',
-    tags: ['admins'],
+    summary: "Create a new admin",
+    description: "Create a new admin with a name, email, phone and password.",
+    tags: ["admins"],
   })
   @ApiCreatedResponse({
-    description: 'Admin created successfully',
+    description: "Admin created successfully",
   })
   //-----
   createAdmin(@Body() data: CreateAdminBody) {
@@ -132,73 +132,73 @@ export class AdminsController {
 
   @Put()
   @UseGuards(AuthGuard)
-  @UseInterceptors(FileInterceptor('image'))
+  @UseInterceptors(FileInterceptor("image"))
   //----Swagger configs
   @ApiOperation({
-    summary: 'Update a admin',
-    description: 'Update an admin with a name, email, phone or password.',
-    tags: ['admins'],
+    summary: "Update a admin",
+    description: "Update an admin with a name, email, phone or password.",
+    tags: ["admins"],
   })
   @ApiOkResponse({
-    description: 'Admin updated successfully',
+    description: "Admin updated successfully",
   })
   //-----
   async updateAdmin(
     @Req() request: Request,
     @Res() response: Response,
-    @Body() data: UpdateAdminBody,
+    @Body() data: UpdateAdminBody
   ) {
     const updatedAdmin = await this.adminsService.update(
       request.token as DecodedUserTokenType,
-      data,
+      data
     );
 
     if (updatedAdmin.token)
-      response.cookie('user', updatedAdmin.token, {
+      response.cookie("user", updatedAdmin.token, {
         httpOnly: true,
-        secure: false, // Change this to true when app is in production
+        secure: true,
         maxAge: 24 * 60 * 60 * 1000,
-        sameSite: 'strict',
-        path: '/',
+        sameSite: "none",
+        path: "/",
       });
 
     response.send({ message: updatedAdmin.message });
   }
 
-  @Delete(':adminId')
+  @Delete(":adminId")
   @UseGuards(AuthGuard)
   //----Swagger configs
   @ApiParam({
-    name: 'adminId',
+    name: "adminId",
     required: true,
-    description: 'Admin ID',
+    description: "Admin ID",
     example: 1,
   })
   @ApiOperation({
-    summary: 'Delete a admin',
-    description: 'Delete an admin with a id',
-    tags: ['admins'],
+    summary: "Delete a admin",
+    description: "Delete an admin with a id",
+    tags: ["admins"],
   })
   @ApiOkResponse({
-    description: 'Admin deleted successfully',
+    description: "Admin deleted successfully",
   })
   //-----
   async deleteAdmin(
     @Req() request: Request,
-    @Param('adminId', ParseIntPipe) adminId: number,
-    @Res() response: Response,
+    @Param("adminId", ParseIntPipe) adminId: number,
+    @Res() response: Response
   ) {
     const deletedAdmin = await this.adminsService.delete(
       request.token as DecodedUserTokenType,
-      adminId,
+      adminId
     );
 
     if (deletedAdmin.logout)
-      response.clearCookie('user', {
+      response.clearCookie("user", {
         httpOnly: true,
-        secure: false, // Change this to true when app is in production
-        sameSite: 'strict',
-        path: '/',
+        secure: true,
+        sameSite: "none",
+        path: "/",
       });
 
     return response.send({ message: deletedAdmin.message });

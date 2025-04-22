@@ -1,12 +1,12 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { PrismaService } from 'src/database/prisma.service';
-import * as bcrypt from 'bcrypt';
-import * as jwt from 'jsonwebtoken';
-import { JwtPayload as DefaultJwtPayload } from 'jsonwebtoken';
+import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
+import { PrismaService } from "src/database/prisma.service";
+import * as bcrypt from "bcrypt";
+import * as jwt from "jsonwebtoken";
+import { JwtPayload as DefaultJwtPayload } from "jsonwebtoken";
 
-import CreateAdminBody from './dtos/create-admin';
-import UpdateAdminBody from './dtos/update-admin';
-import { DecodedUserTokenType } from 'src/@types/decodedUserToken.type';
+import CreateAdminBody from "./dtos/create-admin";
+import UpdateAdminBody from "./dtos/update-admin";
+import { DecodedUserTokenType } from "src/@types/decodedUserToken.type";
 
 interface JwtPayload extends DefaultJwtPayload {
   id: number;
@@ -38,8 +38,8 @@ export class AdminsService {
 
     if (!admin)
       throw new HttpException(
-        { message: 'Admin not found' },
-        HttpStatus.NOT_FOUND,
+        { message: "Admin not found" },
+        HttpStatus.NOT_FOUND
       );
 
     return admin;
@@ -51,15 +51,15 @@ export class AdminsService {
     });
     if (!admin)
       throw new HttpException(
-        { message: 'Admin not found' },
-        HttpStatus.NOT_FOUND,
+        { message: "Admin not found" },
+        HttpStatus.NOT_FOUND
       );
 
     const isPasswordValid = await bcrypt.compare(password, admin.password);
     if (!isPasswordValid)
       throw new HttpException(
-        { message: 'Invalid password' },
-        HttpStatus.UNAUTHORIZED,
+        { message: "Invalid password" },
+        HttpStatus.UNAUTHORIZED
       );
 
     const token = jwt.sign(
@@ -68,7 +68,7 @@ export class AdminsService {
         name: admin.name,
         email: admin.email,
       },
-      process.env.JWT_KEY as string,
+      process.env.JWT_KEY as string
     );
 
     return token;
@@ -77,20 +77,20 @@ export class AdminsService {
   async validate(cookie: string | undefined) {
     if (!cookie)
       throw new HttpException(
-        { message: 'No token provided' },
-        HttpStatus.UNAUTHORIZED,
+        { message: "No token provided" },
+        HttpStatus.UNAUTHORIZED
       );
 
     let decodedUserCookie: JwtPayload;
     try {
       decodedUserCookie = jwt.verify(
         cookie,
-        process.env.JWT_KEY as string,
+        process.env.JWT_KEY as string
       ) as JwtPayload;
     } catch (e) {
       throw new HttpException(
-        { message: 'Invalid token' },
-        HttpStatus.UNAUTHORIZED,
+        { message: "Invalid token" },
+        HttpStatus.UNAUTHORIZED
       );
     }
 
@@ -99,8 +99,8 @@ export class AdminsService {
     });
     if (!admin)
       throw new HttpException(
-        { message: 'Admin not found' },
-        HttpStatus.NOT_FOUND,
+        { message: "Admin not found" },
+        HttpStatus.NOT_FOUND
       );
 
     return { id: admin.id };
@@ -114,8 +114,8 @@ export class AdminsService {
     });
     if (adminExists)
       throw new HttpException(
-        { message: 'Admin with the same email or phone already exists' },
-        HttpStatus.CONFLICT,
+        { message: "Admin with the same email or phone already exists" },
+        HttpStatus.CONFLICT
       );
 
     const salt = await bcrypt.genSalt(12);
@@ -131,7 +131,7 @@ export class AdminsService {
     });
 
     return {
-      message: 'Admin created successfully',
+      message: "Admin created successfully",
     };
   }
 
@@ -146,8 +146,8 @@ export class AdminsService {
     });
     if (adminExists)
       throw new HttpException(
-        { message: 'Admin with the same email or phone already exists' },
-        HttpStatus.CONFLICT,
+        { message: "Admin with the same email or phone already exists" },
+        HttpStatus.CONFLICT
       );
 
     let hashedPassword = admin.password;
@@ -170,7 +170,7 @@ export class AdminsService {
     });
 
     const response: { token?: string; message: string } = {
-      message: 'Admin updated successfully',
+      message: "Admin updated successfully",
     };
     if (updatedUser.id === token.id) {
       const newToken = jwt.sign(
@@ -179,7 +179,7 @@ export class AdminsService {
           name: admin.name,
           email: admin.email,
         },
-        process.env.JWT_KEY as string,
+        process.env.JWT_KEY as string
       );
 
       response.token = newToken;
@@ -194,7 +194,7 @@ export class AdminsService {
     await this.prisma.admin.delete({ where: { id: adminId } });
 
     const response: { message: string; logout?: boolean } = {
-      message: 'Admin deleted successfully',
+      message: "Admin deleted successfully",
     };
     if (adminId === token.id) response.logout = true;
 
