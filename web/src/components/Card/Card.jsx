@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 //-----Icons
 import addToCartIcon from '../../assets/icons/addToCart.svg';
 import addedToCart from '../../assets/icons/addedToCart.svg';
 
-import './Card.scss';
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+
+import './Card.scss';
 
 function Card({ id, name, price, image, color, isCategory, currentCategory }) {
   const navigate = useNavigate();

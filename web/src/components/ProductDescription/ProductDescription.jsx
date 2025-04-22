@@ -19,10 +19,10 @@ function ProductDescription({ product }) {
     setIsProductInCart(cartCookie[product.id] ? true : false);
   }, [product]);
 
-    const currency = new Intl.NumberFormat("pt-BR", {
-      style: "currency",
-      currency: "BRL",
-    });
+  const currency = new Intl.NumberFormat("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+  });
 
   const onClickAddToCart = () => {
     cartCookie[product.id] = (cartCookie[product.id] || 0) + 1;

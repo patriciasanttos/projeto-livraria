@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Link } from "react-router-dom";
 
 import { useAllProductsData } from '../../hooks/useProducts';
+import { useCreateReport } from '../../hooks/useReports';
 
 //-----Images and icons
 import DeleteIcon from "../../assets/icons/deleteIcon.svg";
@@ -17,6 +18,8 @@ import ErrorFinding from "../PageProcessing/ErrorFinding/ErrorFinding";
 import "./ItemList.scss";
 
 function ItemList() {
+  const { mutate } = useCreateReport();
+
   const isMobile = useMediaQuery({ maxWidth: 821 });
   const [modalDelete, setModalDelete] = useState(false);
 
@@ -47,6 +50,15 @@ function ItemList() {
   useEffect(() => {
     setProductList(loadProducts());
   }, [data]);
+
+  const handleSaveCart = useCallback(() => {
+    let newCookie = {};
+    for (const product of productList) {
+      newCookie[product.id] = product.quantity;
+    }
+
+    localStorage.setItem("cart", JSON.stringify(newCookie))
+  }, [productList]);
 
   const formatValues = (value) => {
     const formattedValue = Number(value).toFixed(2).replace(".", ",");
@@ -81,6 +93,7 @@ function ItemList() {
 
       setProductList(products);
       setLastUpdatedIndex(index);
+      handleSaveCart();
     }
   };
 
@@ -91,8 +104,10 @@ function ItemList() {
       products[index].quantity = products[index].quantity + 1;
       products[index].subtotal =
         products[index].price * products[index].quantity;
+
       setProductList(products);
       setLastUpdatedIndex(index);
+      handleSaveCart();
     }
   };
 
@@ -130,6 +145,7 @@ function ItemList() {
         products[index].price * products[index].quantity;
       setProductList(products);
       setLastUpdatedIndex(index);
+      handleSaveCart();
     }
   };
 
@@ -141,6 +157,15 @@ function ItemList() {
       url += `%0A%E2%80%A2${product.quantity}x+${product.name}+(R$${product.price})`;
     });
     url += `%0A%0ATotal da compra: ${formatValues(calculateTotal())}`;
+
+    for (const product of productList) {
+      mutate({
+        type: 'sale',
+        entityType: 'item',
+        entityId: product.id,
+        count: product.quantity
+      });
+    };
 
     window.open(url, "_blank").focus();
   };
