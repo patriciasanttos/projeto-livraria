@@ -1,36 +1,12 @@
-import { NestFactory } from "@nestjs/core";
-import { AppModule } from "./app.module";
-import { ValidationPipe } from "@nestjs/common";
-import initSwagger from "./swagger";
-import * as cookieParser from "cookie-parser";
+import createApp from "./bootstrap";
 
-async function bootstrap(): Promise<void> {
-  const app = await NestFactory.create(AppModule);
+async function start() {
+  const app = await createApp();
 
-  app.enableCors({
-    origin: process.env.CORS_ORIGIN_URL,
-    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
-    credentials: true,
-    allowedHeaders: ["Authorization", "Content-Type"],
-  });
-
-  app.use(cookieParser());
-
-  app.useGlobalPipes(
-    new ValidationPipe({
-      transform: true,
-    })
-  );
-
-  initSwagger(app);
-
-  //Only for deployment, coment the row below if is in development
-  return app.getHttpAdapter().getInstance();
-  //Uncoment the row below if is in development
-  // return await app.listen(process.env.PORT ?? 3000);
+  app.listen(process.env.PORT ?? 3000);
 }
 
-bootstrap().catch((error) => {
+start().catch((error) => {
   console.error("Error starting app:", error);
   process.exit(1);
 });
