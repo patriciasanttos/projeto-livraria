@@ -73,6 +73,20 @@
     }
 }
 
+@media screen and (min-width: 319px) and (max-width:493px) {
+    .loading-section {
+            margin: 1rem 0 0 0;
+        .loader {
+            width: 30px;
+        }
+
+        .loading-title {
+            font-size: 1rem;
+        }
+
+    }
+}
+
 @media screen and (min-width: 821px) and (max-width:993px) {
     .loading-section {
         margin-bottom: 13rem;
