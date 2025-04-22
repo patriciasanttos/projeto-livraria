@@ -4,7 +4,7 @@ import { ValidationPipe } from "@nestjs/common";
 import initSwagger from "./swagger";
 import * as cookieParser from "cookie-parser";
 
-export default async function bootstrap() {
+async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   app.enableCors({
