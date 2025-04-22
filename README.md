@@ -47,17 +47,31 @@ O atendimento é iniciado após o usuário finalizar a seleção de produtos no 
 
 ---
 
-## 🛠️ **Tecnologias Utilizadas**
+## 🛠️ **Principais Tecnologias Utilizadas**
 
-- **HTML**: Estruturação do conteúdo da aplicação;
-- **SCSS**: Estilização com pré-processamento CSS, facilitando manutenção e escalabilidade;
-- **JavaScript**: Interatividade e funcionalidades da aplicação;
-- **React**: Criação de componentes reutilizáveis e reativos;
-- **Axios**: Realização de requisições HTTP de forma simples e eficiente;
-- **React Query**: Gerenciamento de estado assíncrono e cache de dados;
-- **React Router DOM**: Gerenciamento de rotas e navegação entre páginas;
-- **Material UI**: Componentes visuais baseados em Material Design;
+### ***Front-end***
+- **HTML**: Estruturação do conteúdo da aplicação.
+- **SCSS**: Estilização com pré-processamento CSS, facilitando manutenção e escalabilidade.
+- **JavaScript**: Interatividade e funcionalidades da aplicação.
+- **React**: Criação de componentes reutilizáveis e reativos.
+- **Axios**: Realização de requisições HTTP de forma simples e eficiente.
+- **React Query**: Gerenciamento de estado assíncrono e cache de dados.
+- **React Router DOM**: Gerenciamento de rotas e navegação entre páginas.
+- **Material UI**: Componentes visuais baseados em Material Design.
 - **Toastify**: Notificações amigáveis para o usuário.
+- **Chart.js**: Gráfico para exibição de relatórios.
+- **React window**: Para melhor performance em exibição de grande quantidade de dados.
+
+### ***Back-end***
+- **TypeScript**: Linguagem de desenvolvimento da API.
+- **NestJS**: Framework web utilizado.
+- **Swagger**: Utilizado para documentar endpoints, corpos de requisições, etc.
+- **SQLite**: Banco de dados utilizado.
+- **Prisma**: ORM utilizada para tratar do banco de dados.
+- **Supabase**: Salvamento de imagens.
+- **Sharp**: Compressão de imagens.
+- **JSON Web Token**: Geração de tokens de autenticação.
+- **Bcrypt**: Criptografica de senhas.
 
 ---
 
@@ -124,18 +138,18 @@ O atendimento é iniciado após o usuário finalizar a seleção de produtos no 
 5. Inicialize o banco de dados:
    ```bash
    # Usando npm
-   npm run db:init
+   npm run db:setup
 
    # Ou usando yarn
-   yarn db:init
+   yarn db:setup
    ```
 6. Inicie a aplicação:
    ```bash
    # Usando npm
-   npm run dev
+   npm run start
 
    # Ou usando yarn
-   yarn dev
+   yarn start
    ```
 
 📎 Mais informações: [api/README.md](https://github.com/patriciasanttos/projeto-livraria/blob/develop/api/README.md)
