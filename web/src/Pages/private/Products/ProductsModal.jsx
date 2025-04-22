@@ -95,8 +95,32 @@ export const ProductsModal = ({
     setMainImageIndex(newMainImageIndex);
   }, [initialImages]);
 
+  const validateForm = (form) => {
+    if (!form.images || formData.images.length < 1) {
+      return toast.error("Você precisa adicionar pelo menos 1 imagem");
+    }
+
+    if (!form.name) {
+      return toast.error("Você precisa adicionar um nome");
+    }
+
+    if (!form.price) {
+      return toast.error("Você precisa adicionar um preço");
+    }
+
+    if (!form.categories) {
+      return toast.error("Você precisa adicionar o produto a uma categoria");
+    }
+
+    return null
+  }
   const onConfirmSaveProduct = useCallback(async () => {
     if (isCreateItem) {
+      const hasError = validateForm(formData)
+      if (hasError) {
+        return hasError
+      }
+      
       setToastLoading(
         toast.loading('Criando produto...', {
           autoClose: false
@@ -141,6 +165,11 @@ export const ProductsModal = ({
         toast.error('Erro ao criar produto.');
       }
     } else if (!isCreateItem) {
+      const hasError = validateForm(formData);
+      if (hasError) {
+        return hasError;
+      }
+           
       setToastLoading(
         toast.loading('Atualizando produto...', {
           autoClose: false

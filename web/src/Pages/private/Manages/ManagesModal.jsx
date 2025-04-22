@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { validate as validateAdmin } from '../../../service/api/admins';
+import { IMaskInput } from "react-imask";
+import { validate as validateAdmin } from "../../../service/api/admins";
 import { useCreateAdmin, useUpdateAdmin } from "../../../hooks/useAdmins";
 
 //-----Components
@@ -13,11 +14,19 @@ export const ManagesModal = ({
   setFormData,
   setIsModalOpen,
 }) => {
-  const { mutate: createAdmin } = useCreateAdmin();
-  const { mutate: updateAdmin } = useUpdateAdmin();
+  const {
+    mutateAsync: createAdmin,
+    status: statusCreate,
+    error: errorCreate,
+  } = useCreateAdmin();
 
+  const {
+    mutateAsync: updateAdmin,
+    status: statusUpdate,
+    error: errorUpdate,
+  } = useUpdateAdmin();
+  const [toastLoading, setToastLoading] = useState();
   const [initialAdminData, setInitialAdminData] = useState();
-
   const [currentAdmin, setCurrentAdmin] = useState(false);
 
   const loadCurrentAdmin = useCallback(async () => {
@@ -27,8 +36,35 @@ export const ManagesModal = ({
   }, [formData]);
 
   useEffect(() => {
-    if (!formData)
-      return;
+    if (statusUpdate === "success") {
+      setIsModalOpen(false);
+      toast.dismiss(toastLoading);
+      toast.success("Administrador atualizado com sucesso!");
+    }
+
+    if (statusUpdate === "error") {
+      const errorMessage = errorUpdate.response.data.message[0];
+      toast.dismiss(toastLoading);
+      toast.error(`Erro ao atualizar administrador: ${errorMessage}`);
+    }
+  }, [statusUpdate, errorUpdate, toastLoading, setIsModalOpen]);
+
+  useEffect(() => {
+    if (statusCreate === "success") {
+      setIsModalOpen(false);
+      toast.dismiss(toastLoading);
+      toast.success("Administrador criado com sucesso!");
+    }
+
+    if (statusCreate === "error") {
+      const errorMessage = errorCreate.response.data.message[0];
+      toast.dismiss(toastLoading);
+      toast.error(`Erro ao criar administrador: ${errorMessage}`);
+    }
+  }, [statusCreate, errorCreate, toastLoading, setIsModalOpen]);
+
+  useEffect(() => {
+    if (!formData) return;
 
     loadCurrentAdmin();
 
@@ -40,78 +76,94 @@ export const ManagesModal = ({
       });
   }, [formData]);
 
-  const onConfirmSaveAdmin = useCallback(() => {
+  const onConfirmSaveAdmin = useCallback(async () => {
     if (isCreateAdmin) {
+     if (formData.name.length < 5)
+       return toast.warning(
+         "Você precisa adicionar um nome."
+       );   
+
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email))
-        return toast.warning('Por favor, insira um e-mail válido.');
+        return toast.warning("Por favor, insira um e-mail válido.");
 
       if (formData.phone.length < 1)
-        return toast.warning('A numero de contato deve ter pelo menos 9 caracteres.');
+        return toast.warning(
+          "O numero de contato deve ter pelo menos 9 caracteres."
+        );
 
       if (formData.newPassword.length < 8)
-        return toast.warning('A senha deve ter pelo menos 8 caracteres.');
+        return toast.warning("A senha deve ter pelo menos 8 caracteres.");
 
       if (formData.newPassword !== formData.passwordConfirmation)
-        return toast.warning('As senhas não coincidem.');
+        return toast.warning("As senhas não coincidem.");
 
-      const creatingDataToast = toast.loading('Criando administrador...', {
-        autoClose: false
-      });
+      setToastLoading(
+        toast.loading("Criando administrador...", {
+          autoClose: false,
+        })
+      );
 
       try {
-        createAdmin({
+        await createAdmin({
           name: formData.name,
           phone: formData.phone,
           email: formData.email,
           password: formData.newPassword,
-        });
-
-        toast.dismiss(creatingDataToast);
-        toast.success('Administrador criado com sucesso!');
+        })
       } catch (err) {
-        toast.dismiss(creatingDataToast);
-        toast.error('Erro ao criar Administrador.');
+        toast.dismiss(toastLoading);
+        toast.error("Erro ao criar Administrador.");
       }
-    }
-    else if (!isCreateAdmin) {
+    } else if (!isCreateAdmin) {
+     if (formData.name.length < 5)
+       return toast.warning("Você precisa adicionar um nome.");   
+
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email))
-        return toast.warning('Por favor, insira um e-mail válido.');
+        return toast.warning("Por favor, insira um e-mail válido.");
 
       if (formData.phone.length < 1)
-        return toast.warning('A numero de contato deve ter pelo menos 9 caracteres.');
+        return toast.warning(
+          "O numero de contato deve ter pelo menos 9 caracteres."
+        );
 
       if (formData.newPassword) {
         if (formData.newPassword.length < 8)
-          return toast.warning('A senha deve ter pelo menos 8 caracteres.');
+          return toast.warning("A senha deve ter pelo menos 8 caracteres.");
 
         if (formData.newPassword !== formData.passwordConfirmation)
-          return toast.warning('As senhas não coincidem.');
+          return toast.warning("As senhas não coincidem.");
       }
 
-      const updatingDataToast = toast.loading('Atualizando administrador...', {
-        autoClose: false
-      });
+      const updatingDataToast = toast.loading("Atualizando administrador...", {
+        autoClose: false,
+      })
+      setToastLoading(updatingDataToast);
 
       try {
-        if (!initialAdminData) return;
+        if (!initialAdminData) {
+          toast.dismiss(updatingDataToast);
+          toast.error("Não houve nenhuma alteração.");
+          return;
+        }
 
         const updatedFields = { id: formData.id };
 
-        if (formData.name !== initialAdminData.name) updatedFields.name = formData.name;
-        if (formData.phone !== initialAdminData.phone) updatedFields.phone = formData.phone;
-        if (formData.email !== initialAdminData.email) updatedFields.email = formData.email;
-        if (formData.newPassword) updatedFields.newPassword = formData.newPassword;
+        if (formData.name !== initialAdminData.name)
+          updatedFields.name = formData.name;
+        if (formData.phone !== initialAdminData.phone)
+          updatedFields.phone = formData.phone;
+        if (formData.email !== initialAdminData.email)
+          updatedFields.email = formData.email;
+        if (formData.newPassword)
+          updatedFields.newPassword = formData.newPassword;
 
         if (Object.keys(updatedFields).length <= 1)
-          return toast.info('Nenhuma alteração foi feita.');
+          return toast.info("Nenhuma alteração foi feita.");
 
-        updateAdmin(updatedFields);
-
-        toast.dismiss(updatingDataToast);
-        toast.success('Administrador atualizado com sucesso!');
+        await updateAdmin(updatedFields);
       } catch (err) {
         toast.dismiss(updatingDataToast);
-        toast.error('Erro ao atualizar Administrador.');
+        toast.error("Erro ao atualizar Administrador.");
       }
     }
   }, [formData]);
@@ -138,7 +190,7 @@ export const ManagesModal = ({
 
       setFormData((prevFormData) => ({
         ...prevFormData,
-        [name]: file
+        [name]: file,
       }));
 
       evt.target.value = null;
@@ -169,12 +221,13 @@ export const ManagesModal = ({
             onChange={handleFormChange}
           />
 
-          <SearchInputAdmin
-            className="modal-field"
+          <IMaskInput
+            className="modal-field input-contact"
             placeholder="Contato"
             name="phone"
             value={formData.phone}
             onChange={handleFormChange}
+            mask={"(00) 00000-0000"}
           />
         </section>
         <section className="modal-column-admin">

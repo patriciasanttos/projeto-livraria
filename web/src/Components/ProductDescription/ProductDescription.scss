@@ -1,6 +1,7 @@
 .item-description-container {
     display: flex;
     justify-content: center;
+    gap: 2rem;
     margin: 5% 5% 5% 12%;
     
     @media (max-width: 1024px) {
@@ -16,7 +17,6 @@
         display: flex;
         flex-direction: column;
         gap: 10px;
-        margin-right: 20px;
         width: 30%;
         
         @media (max-width: 768px) {
@@ -47,6 +47,7 @@
     }
 
     .item-description-text-container {
+        width: 45%;
         @media (max-width: 768px) {
             width: 100%;
             text-align: center;
@@ -55,7 +56,7 @@
         h1 {
             color: var(--title-blue);
             font-size: 2rem;
-            width: 80%;
+            width: 100%;
             
             @media (max-width: 1024px) {
                 font-size: 1.8rem;
@@ -72,17 +73,8 @@
             color: var(--text-primary-color);
         }
 
-        .description-title {
-            font-size: 1.3rem;
-            font-weight: 600;
-            
-            @media (max-width: 480px) {
-                font-size: 1.1rem;
-            }
-        }
-
         .description-text {
-            font-size: 1.1rem;
+            font-size: 1.4rem;
             width: 80%;
             
             @media (max-width: 1024px) {
@@ -98,7 +90,7 @@
             display: flex;
             flex-direction: column;
             gap: 15px;
-            width: 50%;
+            width: 20rem;
             margin-top: 5%;
             
             @media (max-width: 1024px) {

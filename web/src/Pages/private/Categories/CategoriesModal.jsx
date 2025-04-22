@@ -31,18 +31,18 @@ export const CategoriesModal = ({
   const [toastLoading, setToastLoading] = useState();
 
   const isFormValid = (form) => {
+    console.log('>>> form', form)
     let isValid = true;
-    const requiredFields = ["name"];
+    const requiredFields = ["name", "image"];
 
     requiredFields.forEach((requiredField) => {
-      if (!form.get(requiredField)) {
+      if (!form.get(requiredField) || form.get(requiredField) === "null" || form.get(requiredField) === "undefined") {
         isValid = false;
         toast.error(`Campo obrigatório: ${requiredField}`);
       }
     });
 
     if (isValid) {
-      // Check if category already exists (same name with different id)
       const results = allCategories.filter(
         (category) =>
           category.name.toUpperCase() === form.get("name").toUpperCase() &&
@@ -96,7 +96,6 @@ export const CategoriesModal = ({
 
       const createItemFormData = new FormData();
       createItemFormData.append("name", formData.name);
-      createItemFormData.append("description", formData.description);
       createItemFormData.append("available", formData.available);
       createItemFormData.append("image", formData.image);
       createItemFormData.append("banner", formData.banner);
@@ -120,7 +119,6 @@ export const CategoriesModal = ({
       const updatedFormData = new FormData();
       updatedFormData.append("id", formData.id);
       updatedFormData.append("name", formData.name);
-      updatedFormData.append("description", formData.description);
       updatedFormData.append("available", formData.available);
 
       if (formData.image === null)
@@ -206,49 +204,6 @@ export const CategoriesModal = ({
             />
           </div>
 
-          <div>
-            <TextAreaAdmin
-              className="modal-field"
-              placeholder="Descrição da categoria"
-              name="description"
-              value={formData.description}
-              onChange={handleFormChange}
-              style={{ height: "235px" }}
-            />
-          </div>
-        </div>
-
-        <div className="modal-column-category">
-          <div>
-            <div className="image-preview-row">
-              {formData?.image && (
-                <CategoryThumb
-                  name="image"
-                  image={formData.image}
-                  onClickDeleteImage={onClickDeleteImage}
-                />
-              )}
-            </div>
-
-            <button
-              disabled={formData?.image}
-              type="button"
-              className={
-                formData?.image ? "upload-button disabled" : "upload-button"
-              }
-              onClick={() => document.getElementById("image-upload").click()}
-            >
-              Enviar Imagem
-            </button>
-            <input
-              type="file"
-              id="image-upload"
-              name="image"
-              accept="image/*"
-              style={{ display: "none" }}
-              onChange={handleFormChange}
-            />
-          </div>
           <div className="status-container">
             <label className="status-title">Status:</label>
 
@@ -283,6 +238,39 @@ export const CategoriesModal = ({
                 <p>Desabilitado</p>
               </div>
             </div>
+          </div>
+        </div>
+
+        <div className="modal-column-category">
+          <div>
+            <div className="image-preview-row">
+              {formData?.image && (
+                <CategoryThumb
+                  name="image"
+                  image={formData.image}
+                  onClickDeleteImage={onClickDeleteImage}
+                />
+              )}
+            </div>
+
+            <button
+              disabled={formData?.image}
+              type="button"
+              className={
+                formData?.image ? "upload-button disabled" : "upload-button"
+              }
+              onClick={() => document.getElementById("image-upload").click()}
+            >
+              Enviar Imagem
+            </button>
+            <input
+              type="file"
+              id="image-upload"
+              name="image"
+              accept="image/*"
+              style={{ display: "none" }}
+              onChange={handleFormChange}
+            />
           </div>
         </div>
       </div>
