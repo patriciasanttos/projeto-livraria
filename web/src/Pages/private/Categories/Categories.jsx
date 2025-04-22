@@ -1,29 +1,34 @@
-import React, { useMemo, useState, useCallback } from "react";
+import React, { useMemo, useState, useCallback, useEffect } from "react";
 
 import "./Categories.scss";
 
-import AdminList from "../../../Components/AdminList/AdminList";
-import SearchInputAdmin from "../../../Components/SearchInputAdmin/SearchInputAdmin";
-import DropdownAdmin from "../../../Components/DropdownAdmin/DropdownAdmin";
-import AdminAddButton from "../../../Components/AdminAddButton/AdminAddButton";
+import AdminList from "../../../components/AdminList/AdminList";
+import SearchInputAdmin from "../../../components/SearchInputAdmin/SearchInputAdmin";
+import DropdownAdmin from "../../../components/DropdownAdmin/DropdownAdmin";
+import AdminAddButton from "../../../components/AdminAddButton/AdminAddButton";
+import Loading from "../../../components/PageProcessing/Loading/Loading";
+import ErrorFinding from "../../../components/PageProcessing/ErrorFinding/ErrorFinding";
 
-import { useAllCagegoriesData } from "../../../hooks/useCategoriesData";
+import { useCategoriesData, useDeleteCategory } from "../../../hooks/useCategories";
 import { CategoriesModal } from "./CategoriesModal";
+import { toast } from "react-toastify";
 
 function Categories() {
-  const { data: categoriesData } = useAllCagegoriesData();
+  const { data: categoriesData, isLoading, error } = useCategoriesData();
+  const { mutate: deleteCategory } = useDeleteCategory();
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isCreateItem, setIsCreateItem] = useState(false);
 
-  const [filters, setFilters] = useState({});
+  const [filters, setFilters] = useState({ available: 'all' });
   const [formData, setFormData] = useState({});
 
   const filteredCategories = useMemo(() => {
     let categories = categoriesData
       ? categoriesData?.map((category) => ({
-          ...category,
-          itemsQuantity: category.items.length,
-        }))
+        ...category,
+        itemsQuantity: category.items.length,
+      }))
       : [];
 
     if (filters.name) {
@@ -42,6 +47,12 @@ function Categories() {
     if (filters.quantityTo) {
       categories = categories.filter(
         (category) => Number(category.itemsQuantity) <= filters.quantityTo
+      );
+    }
+
+    if (filters.available !== 'all') {
+      categories = categories.filter(
+        (category) => category.available === filters.available
       );
     }
 
@@ -67,19 +78,46 @@ function Categories() {
     }));
   }, []);
 
-  const onClickUpdate = (row) => {
+  const onClickCreate = () => {
     setFormData({
-      ...row,
+      name: '',
+      available: true
     });
+    setIsModalOpen(true);
+    setIsCreateItem(true);
+  };
+
+  const onClickUpdate = (row) => {
+    setFormData(row);
     setIsModalOpen(true);
     setIsCreateItem(false);
   };
 
-  const onClickCreate = () => {
-    setFormData({});
-    setIsModalOpen(true);
-    setIsCreateItem(true);
-  };
+  const onClickDelete = (data) => {
+    const deletingDataToast = toast.loading('Deletando categoria...', {
+      autoClose: false
+    });
+
+    try {
+      deleteCategory(data.id)
+      toast.dismiss(deletingDataToast);
+      toast.success('Categoria deletada com sucesso!');
+    } catch (err) {
+      toast.dismiss(deletingDataToast);
+      toast.error('Erro ao deletar categoria.');
+    }
+  }
+
+  if (isLoading)
+    return <Loading title="Buscando categorias" style={{ marginTop: "18rem" }} />
+
+  if (error)
+    return (
+      <ErrorFinding
+        text="Erro ao carregar as categorias"
+        style={{ marginTop: "13rem" }}
+      />
+    );
 
   return (
     <section className="categories-page-container">
@@ -107,20 +145,23 @@ function Categories() {
             />
           </div>
 
-          <DropdownAdmin title="Status" name="available">
-            <option name="available" value="">
-              Tudo
-            </option>
-            <option name="available" value={true}>
-              Habilitado
-            </option>
-            <option name="available" value={false}>
-              Desabilitado
-            </option>
-          </DropdownAdmin>
+          <DropdownAdmin
+            title="Status"
+            name="available"
+            value={filters.available}
+            defaultValue={filters.available}
+            onChange={handleFilterChange}
+            options={[
+              { value: 'all', label: "Tudo" },
+              { value: true, label: "Disponível" },
+              { value: false, label: "Indisponível" }
+            ]}
+          />
         </section>
+
         <AdminAddButton title="Adicionar" onClick={onClickCreate} />
       </section>
+
       <AdminList
         tableLayout={[
           {
@@ -138,10 +179,12 @@ function Categories() {
         ]}
         listData={filteredCategories}
         onEdit={onClickUpdate}
+        onDelete={onClickDelete}
       ></AdminList>
 
       {isModalOpen && (
         <CategoriesModal
+          allCategories={categoriesData}
           isCreateItem={isCreateItem}
           formData={formData}
           setFormData={setFormData}

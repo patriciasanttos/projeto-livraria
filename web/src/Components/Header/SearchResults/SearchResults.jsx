@@ -1,11 +1,18 @@
-import React, { useEffect, useState } from "react";
-
-import mock from '../../../mocks/categoriesMocks.json';
+import React, { useCallback, useEffect, useState } from "react";
 
 import './SearchResults.scss'
+import { useAllProductsData } from "../../../hooks/useProducts";
+import { useCreateReport } from "../../../hooks/useReports";
+import Loading from "../../PageProcessing/Loading/Loading";
+import { useNavigate } from "react-router-dom";
 
-const SearchResults = ({ query }) => {
-  const [results, setResults] = useState([]);
+const SearchResults = ({ query, setQuery }) => {
+  const navigate = useNavigate();
+
+  const { data, isLoading } = useAllProductsData();
+  const { mutate } = useCreateReport();
+
+  const [results, setResults] = useState(data);
 
   const [debouncedQuery, setDebouncedQuery] = useState(query);
 
@@ -15,33 +22,36 @@ const SearchResults = ({ query }) => {
     return () => clearTimeout(handler);
   }, [query]);
 
-  useEffect(() => {
+  const loadResults = useCallback(() => {
     if (!debouncedQuery) {
       setResults([]);
       return;
     }
 
+    if (!data)
+      return;
+
     const filteredResults = new Map();
 
-    Object.entries(mock.data).forEach(([, value]) => {
+    Object.entries(data).forEach(([, value]) => {
       const queryString = debouncedQuery.trim().toLowerCase()
 
-      const categoryKey = `category-${value.id}`;
+      const itemKey = `item-${value.id}`;
 
       if (
         value.name.toLowerCase().includes(queryString.toLowerCase()) ||
-        value.description.toLowerCase().includes(queryString.toLowerCase())
+        value.description?.toLowerCase().includes(queryString.toLowerCase())
       )
-        filteredResults.set(categoryKey, { ...value, type: "category" });
+        filteredResults.set(itemKey, { ...value, type: "item" });
 
-      value.items.forEach(item => {
-        const itemKey = `item-${item.id}`;
+      value.categories.forEach(category => {
+        const categoryKey = `category-${category.id}`;
 
         if (
-          item.name.toLowerCase().includes(queryString.toLowerCase()) ||
-          item.description.toLowerCase().includes(queryString.toLowerCase())
+          category.name.toLowerCase().includes(queryString.toLowerCase()) ||
+          category.description?.toLowerCase().includes(queryString.toLowerCase())
         )
-          filteredResults.set(itemKey, { ...item, type: "item" });
+          filteredResults.set(categoryKey, { ...category, type: "category" });
       });
     });
 
@@ -50,7 +60,36 @@ const SearchResults = ({ query }) => {
 
     else
       setResults([])
-  }, [debouncedQuery]);
+  }, [data, debouncedQuery]);
+
+  useEffect(() => {
+    loadResults()
+  }, [data, debouncedQuery]);
+
+  const handleReport = useCallback((entityType, entityId) => mutate({
+    type: 'search',
+    entityType,
+    entityId,
+    count: 1
+  }), []);
+
+  const handleNavigate = (entityType, entity) => {
+    setQuery('');
+    setResults([]);
+
+    navigate(
+      `${entityType === 'category'
+        ? '/categories'
+        : '/products'
+      }/${entity}`
+    )
+  }
+
+  if (isLoading)
+    return <div className="searching-results"><Loading title="Buscando" style={{ marginTop: "2rem" }} /></div>
+
+  if (!results)
+    return <div>Nenhum resultado encontrado.</div>
 
   return (
     <div className="search-wrapper">
@@ -60,17 +99,31 @@ const SearchResults = ({ query }) => {
         ) : (
           results.map(result => {
             return result.type === "category" ? (
-              <li key={result.type + '-' + result.id}>
+              <li
+                key={result.type + '-' + result.id}
+                onClick={() => {
+                  handleReport(result.type, result.id)
+                  handleNavigate(result.type, result.name)
+                }}
+              >
                 <span>Categoria: </span>
                 {result.name}
               </li>
             ) : (
-              <li key={result.type + '-' + result.id}>{result.name}</li>
+              <li
+                key={result.type + '-' + result.id}
+                onClick={() => {
+                  handleReport(result.type, result.id)
+                  handleNavigate(result.type, result.id)
+                }}
+              >
+                {result.name}
+              </li>
             );
           })
         )}
       </ul>
-    </div>
+    </div >
   );
 };
 

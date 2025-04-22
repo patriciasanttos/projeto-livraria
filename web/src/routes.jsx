@@ -1,11 +1,10 @@
 import React, { useEffect } from "react";
-import { Routes, Route, BrowserRouter, useLocation } from "react-router-dom";
+import { Routes, Route, BrowserRouter, useLocation, Navigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
-// eslint-disable-next-line no-unused-vars
-import { privatePages, publicPages } from "./pages/pages";
-import PublicRoutesTemplate from "./templates/PublicRoutesTemplate";
-import PrivateRoutesTemplate from "./templates/PrivateRoutesTemplate";
+import { privatePages, publicPages } from "./pages/pages.js";
+import PublicRoutesLayout from "./layouts/PublicRoutesLayout";
+import PrivateRoutesLayout from "./layouts/PrivateRoutesLayout";
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -24,21 +23,24 @@ export default function MainRoutes() {
       <ToastContainer />
 
       <Routes>
-        <Route element={<PublicRoutesTemplate />}>
+        <Route element={<PublicRoutesLayout />}>
           <Route path="/" element={<publicPages.HomePage />} />
           <Route path="categories" element={<publicPages.Categories />} />
           <Route path="categories/:categoryName" element={<publicPages.Categories />} />
-          <Route path="item/:id" element={<publicPages.ItemPage />} />
+          <Route path="products/:id" element={<publicPages.ProductPage />} />
           <Route path="cart" element={<publicPages.Cart />} />
           <Route path="aboutus" element={<publicPages.AboutUs />} />
         </Route>
 
-        <Route element={<PrivateRoutesTemplate />}>
-          <Route path="admin/login" element={<privatePages.Login />} />
-          <Route path="admin/control_panel" element={<privatePages.ControlPanel />} />
-          <Route path="admin/products" element={<privatePages.Products />} />
-          <Route path="admin/categories" element={<privatePages.AdminCategoriesPage />} />
-          <Route path="admin/manage" element={<privatePages.Manage />} />
+        <Route path="admin" element={<PrivateRoutesLayout />}>
+          <Route index element={<Navigate to="/admin/login" />} />
+
+          <Route path="login" element={<privatePages.Login />} />
+          <Route path="control_panel" element={<privatePages.ControlPanel />} />
+          <Route path="products" element={<privatePages.Products />} />
+          <Route path="categories" element={<privatePages.AdminCategoriesPage />} />
+          <Route path="reports" element={<privatePages.Reports />} />
+          <Route path="manage" element={<privatePages.Manage />} />
         </Route>
       </Routes>
     </BrowserRouter>

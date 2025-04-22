@@ -1,78 +1,81 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
+
+//-----Component
+import ModalAdmin from "../ModalAdmin/ModalAdmin";
+import { FixedSizeList as List } from "react-window";
+import Row from './Row.jsx';
 
 import "./AdminList.scss";
-import ModalAdmin from "../ModalAdmin/ModalAdmin";
-import EditIcon from "../../assets/icons/editIcon.svg";
-import DeleteIcon from "../../assets/icons/deleteIcon.svg";
+import { validate as validateAdmin } from "../../service/api/admins";
 
-function AdminList({ tableLayout, listData, onEdit, onDelete }) {
-  const [isConfirmDeleteModalOpen, setIsConfirmDeleteModalOpen] =
-    useState(false);
-  const [confirmDeltetePropName, setConfirmDeltetePropName] = useState(null);
 
-  const handleConfirmDelete = (name) => {
-    setConfirmDeltetePropName(name);
+function AdminList({ type, tableLayout, listData, onEdit, onDelete }) {
+  const [isConfirmDeleteModalOpen, setIsConfirmDeleteModalOpen] = useState(false);
+  const [confirmDelteteProp, setConfirmDelteteProp] = useState();
+
+  const [currentAdmin, setCurrentAdmin] = useState(false);
+  const [actionsLoaded, setAcionsLoaded] = useState(false)
+
+  const loadCurrentAdmin = useCallback(async () => {
+    const currentAdminData = await validateAdmin();
+
+    setCurrentAdmin(currentAdminData?.data?.id);
+    setAcionsLoaded(true);
+  }, [type, listData]);
+
+  useEffect(() => {
+    if (type !== "adminAccounts") return setAcionsLoaded(true);
+    loadCurrentAdmin();
+  }, [type, listData]);
+
+  const handleConfirmDelete = (row) => {
+    setConfirmDelteteProp(row);
     setIsConfirmDeleteModalOpen(true);
   };
 
-  const getCellValue = (row, key) => {
-    if (row[key] === undefined || row[key] === "") {
-      return "Indisponível";
-    } else if (key === "available") {
-      return row.available ? "Disponível" : "Sem estoque";
-    } else {
-      return row[key];
-    }
-  };
-
   return (
-    <div className="admin-list">
+    <div className="admin-table">
       {isConfirmDeleteModalOpen && (
         <ModalAdmin
-          title={`Deseja mesmo deletar "${confirmDeltetePropName}"?`}
+          title={`Deseja mesmo deletar "${confirmDelteteProp.name}"?`}
           onClose={() => setIsConfirmDeleteModalOpen(false)}
-          onConfirm={() => onDelete(category.name, index)}
+          onConfirm={() => {
+            setIsConfirmDeleteModalOpen(false);
+            onDelete(confirmDelteteProp);
+          }}
           isButtonConfirmRed={true}
           buttonConfirmText="Excluir"
         />
       )}
-      <table>
-        <thead>
-          <tr>
-            {tableLayout.map((title) => (
-              <th key={title.key}>{title.label}</th>
-            ))}
-            <th className="actions">Ações</th>
-          </tr>
-        </thead>
 
-        <tbody>
-          {listData.map((row, index) => (
-            <tr key={row.id}>
-              {tableLayout.map(({ key }) => (
-                <td key={key}>{getCellValue(row, key)}</td>
-              ))}
-
-              <td className="actions">
-                <img
-                  src={EditIcon}
-                  className="icon-editar"
-                  onClick={() => onEdit(row, index)}
-                  data-tooltip-id="tooltip"
-                  data-tooltip-content="Editar"
-                />
-                <img
-                  src={DeleteIcon}
-                  className="icon-deletar"
-                  onClick={() => handleConfirmDelete(row.name, index)}
-                  data-tooltip-id="tooltip"
-                  data-tooltip-content="Excluir"
-                />
-              </td>
-            </tr>
+      <div className="table">
+        <div className="table-header">
+          {tableLayout.map((title, index) => (
+            <div className="table-cell" key={index}>{title.label}</div>
           ))}
-        </tbody>
-      </table>
+          <div className="table-cell table-actions-header">Ações</div>
+        </div>
+
+        <div className="table-body">
+          <List
+            height={500}
+            itemCount={listData.length}
+            itemSize={60}
+            width="100%"
+            itemData={{
+              listData,
+              tableLayout,
+              type,
+              currentAdmin,
+              actionsLoaded,
+              onEdit,
+              handleConfirmDelete,
+            }}
+          >
+            {Row}
+          </List>
+        </div>
+      </div>
     </div>
   );
 }

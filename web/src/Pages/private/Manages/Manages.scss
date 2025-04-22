@@ -1,24 +1,39 @@
-.modal-row-admin {
-    display: flex;
-    gap: 2rem;
-
-    .modal-column-admin {
+.manage-page {
+    .manage-page-inputs {
         display: flex;
-        flex-direction: column;
-        gap: 1rem;
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 2em 6.4em 2em 3.3em;
     }
-}
 
-.textarea-manages {
-    margin: 2rem 0 3rem 0;
-    width: 95%;
-    height: 10rem;
-    padding: 0.5rem;
+    .modal-row-admin {
+        display: flex;
+        gap: 2rem;
+        padding-bottom: 2em;
 
-    border: 1px solid #6BA57D;
-    border-radius: 5px;
+        .modal-column-admin {
+            display: flex;
+            flex-direction: column;
+            gap: 1em;
+        }
+    }
 
-    &:focus {
-        outline: #6BA57D;
+    .input-contact {
+        border: 1px solid #6BA57D;
+        border-radius: 5px;
+
+        height: 1.5rem;
+        padding-left: 0.5rem;
+
+        &:focus {
+            outline: none;
+        }
+
+        h3 {
+            margin: 0 0 0.5rem 0;
+            font-weight: 500;
+            font-size: 12pt;
+        }
+
     }
 }

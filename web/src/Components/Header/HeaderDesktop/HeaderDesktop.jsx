@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 
 //-----Icons & images
@@ -15,7 +15,20 @@ import "./HeaderDesktop.scss";
 import CartNumber from "../CartNumber/CartNumber";
 
 const HeaderDesktop = () => {
-  const [query, setQuery] = useState();
+  const [query, setQuery] = useState('');
+
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (containerRef.current && !containerRef.current.contains(event.target))
+        setQuery("");
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside)
+  }, []);
+
   const cartCookie = JSON.parse(localStorage.getItem("cart")) || {};
   const cartItems = Object.keys(cartCookie).length
   const [quantity, setQuantity] = useState(cartItems);
@@ -30,13 +43,10 @@ const HeaderDesktop = () => {
 
           <div
             className="header-search-container"
-            onBlur={(e) => {
-              setQuery("");
-              e.target.value = "";
-            }}
+            ref={containerRef}
           >
-            <SearchInput setQuery={setQuery} />
-            {query && <SearchResults query={query} />}
+            <SearchInput query={query} setQuery={setQuery} />
+            {query && <SearchResults query={query} setQuery={setQuery} />}
           </div>
 
           <div className="header-buttons">

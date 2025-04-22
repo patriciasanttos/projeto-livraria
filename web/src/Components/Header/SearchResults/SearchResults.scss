@@ -36,3 +36,17 @@
     }
   }
 }
+
+.searching-results {
+  position: absolute;
+  top: 47px;
+  z-index: 9999;
+  background-color: #f4f4f4;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 0 0 8px 8px;
+
+  height: 20dvh;
+  width: 100%;
+  padding: 0;
+
+}

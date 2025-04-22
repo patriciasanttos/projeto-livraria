@@ -1,41 +1,52 @@
-import "./ItemList.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Link } from "react-router-dom";
 
-import ItemImage from "../../assets/Images/itemImage.svg";
+import { useAllProductsData } from '../../hooks/useProducts';
+
+//-----Images and icons
 import DeleteIcon from "../../assets/icons/deleteIcon.svg";
 import CartEmpty from "../../assets/Images/cart-empty.svg";
 
-import categoriesMock from "../../mocks/categoriesMocks.json";
+//-----Components
 import QuantityInput from "./QuantityInput";
 import ModalDelete from "../ModalDelete/ModalDelete";
+import Loading from "../PageProcessing/Loading/Loading";
+import ErrorFinding from "../PageProcessing/ErrorFinding/ErrorFinding";
+
+import "./ItemList.scss";
 
 function ItemList() {
   const isMobile = useMediaQuery({ maxWidth: 821 });
   const [modalDelete, setModalDelete] = useState(false);
 
-  const getProductById = (id) => {
-    const products = categoriesMock.data.reduce(
-      (acc, category) => [...acc, ...category.items],
-      []
-    );
-    const results = products.filter((item) => item.id == id);
-
-    return results.length > 0
-      ? {
-        ...results[0],
-        quantity: 1,
-        subtotal: Number(results[0].price),
-      }
-      : null;
-  };
+  const { data, isLoading, error } = useAllProductsData()
 
   const cartCookie = JSON.parse(localStorage.getItem("cart")) || {};
-  const [productList, setProductList] = useState(
-    Object.keys(cartCookie).map(getProductById)
-  );
+  const [productList, setProductList] = useState([]);
   const [lastUpdatedIndex, setLastUpdatedIndex] = useState(null);
+
+  const loadProducts = () => {
+    if (!data)
+      return [];
+
+    return Object.entries(cartCookie).map(([productId, quantity]) => {
+      const product = data.find(p => p.id == productId);
+
+      return {
+        id: product?.id,
+        name: product?.name,
+        image: product?.mainImage,
+        price: product?.price,
+        quantity,
+        subtotal: product?.price * quantity
+      }
+    })
+  }
+
+  useEffect(() => {
+    setProductList(loadProducts());
+  }, [data]);
 
   const formatValues = (value) => {
     const formattedValue = Number(value).toFixed(2).replace(".", ",");
@@ -51,8 +62,12 @@ function ItemList() {
     let total = 0;
 
     for (let i = 0; i < productList.length; i++) {
-      total += productList[i].subtotal;
+      const product = productList[i]
+
+      if (product?.id)
+        total += product.subtotal;
     }
+
     return total;
   };
 
@@ -63,6 +78,7 @@ function ItemList() {
       products[index].quantity = products[index].quantity - 1;
       products[index].subtotal =
         products[index].price * products[index].quantity;
+
       setProductList(products);
       setLastUpdatedIndex(index);
     }
@@ -121,7 +137,6 @@ function ItemList() {
     let url =
       `https://wa.me/${import.meta.env.VITE_WHATSAPP_NUMBER}?text=Lista+de+compras+no+carrinho%3A%0A`;
 
-    console.log(productList);
     productList.forEach((product) => {
       url += `%0A%E2%80%A2${product.quantity}x+${product.name}+(R$${product.price})`;
     });
@@ -129,6 +144,17 @@ function ItemList() {
 
     window.open(url, "_blank").focus();
   };
+
+  if (isLoading)
+    return <Loading title="Buscando lista de compras" style={{marginTop: "4rem"}}/>;
+
+  if (error)
+    return (
+      <ErrorFinding
+        text="Erro ao carregar a lista de compras"
+        style={{ marginTop: "6rem" }}
+      />
+    );
 
   const NoItems = () => {
     return (
@@ -159,79 +185,81 @@ function ItemList() {
         </thead>
 
         <tbody>
-          {productList.map((product, index) => {
-            return (
-              <tr>
-                <td className="product-item">
-                  <img src={ItemImage} alt="Imagem do item" width="120px" />
-                  <p className="product-text">{product.name}</p>
-                </td>
-                <td className="right">{formatValues(product.price)}</td>
-                <td className="right">
-                  <QuantityInput
-                    quantity={product.quantity}
-                    index={index}
-                    onClickLess={onClickLess}
-                    onClickMore={onClickMore}
-                    onChangeQuantity={onChangeQuantity}
-                    lastUpdatedIndex={lastUpdatedIndex}
-                  />
-                </td>
-                <td className="right">{formatValues(product.subtotal)}</td>
-                <td>
-                  <img
-                    className="icon-remove"
-                    src={DeleteIcon}
-                    onClick={() => onClickRemoveItem(index)}
-                    alt="Excluir"
-                  />
-                </td>
-              </tr>
-            );
-          })}
+          {productList.map(
+            (product, index) =>
+              product?.id && (
+                <tr key={index}>
+                  <td className="product-item">
+                    <img
+                      src={product.image}
+                      alt="Imagem do item"
+                      width="120px"
+                      className="item-list-image"
+                    />
+                    <p className="product-text">{product.name}</p>
+                  </td>
+                  <td className="right">{formatValues(product.price)}</td>
+                  <td className="right">
+                    <QuantityInput
+                      quantity={product.quantity}
+                      index={index}
+                      onClickLess={onClickLess}
+                      onClickMore={onClickMore}
+                      onChangeQuantity={onChangeQuantity}
+                      lastUpdatedIndex={lastUpdatedIndex}
+                    />
+                  </td>
+                  <td className="right">{formatValues(product.subtotal)}</td>
+                  <td>
+                    <img
+                      className="icon-remove"
+                      src={DeleteIcon}
+                      onClick={() => onClickRemoveItem(index)}
+                      alt="Excluir"
+                    />
+                  </td>
+                </tr>
+              )
+          )}
         </tbody>
       </table>
     </section>
   );
 
-  const TableMobile = () => (
-    <section className="table-container">
-      {productList.map((product, index) => {
-        return (
-          <section className="mobile-row" key={index}>
-            <img src={ItemImage} alt="Imagem do item" width="120px" />
+  const TableMobile = () => {
+    return productList.map((product, index) => product?.id && (
+      <section className="mobile-row" key={index}>
+        <img src={product.image} alt="Imagem do item" className="item-list-image" width="120px" />
 
-            <div className="column">
-              <div className="mobile-row">
-                <p className="product-text">{product.name}</p>
-                <div className="right">{formatValues(product.price)}</div>
-              </div>
+        <div className="column">
+          <div className="mobile-row">
+            <p className="product-text">{product.name}</p>
+            <div className="right">{formatValues(product.price)}</div>
+          </div>
 
-              <div className="mobile-row">
-                <QuantityInput
-                  quantity={product.quantity}
-                  index={index}
-                  onClickLess={onClickLess}
-                  onClickMore={onClickMore}
-                  onChangeQuantity={onChangeQuantity}
-                  lastUpdatedIndex={lastUpdatedIndex}
-                />
-
-                <div className="right">{formatValues(product.subtotal)}</div>
-              </div>
-            </div>
-
-            <img
-              className="icon-remove"
-              src={DeleteIcon}
-              onClick={() => onClickRemoveItem(index)}
-              alt="Excluir"
+          <div className="mobile-row">
+            <QuantityInput
+              quantity={product.quantity}
+              index={index}
+              onClickLess={onClickLess}
+              onClickMore={onClickMore}
+              onChangeQuantity={onChangeQuantity}
+              lastUpdatedIndex={lastUpdatedIndex}
             />
-          </section>
-        );
-      })}
-    </section>
-  );
+
+            <div className="right">{formatValues(product.subtotal)}</div>
+          </div>
+        </div>
+
+        <img
+          className="icon-remove"
+          src={DeleteIcon}
+          onClick={() => onClickRemoveItem(index)}
+          alt="Excluir"
+        />
+      </section>
+    ));
+  };
 
   return (
     <main
@@ -261,7 +289,7 @@ function ItemList() {
           </section>
 
           <section className="buy">
-            <div finish-info>
+            <div>
               <button className="finish" onClick={onClickCompletePurchase}>
                 FINALIZAR COMPRA
               </button>

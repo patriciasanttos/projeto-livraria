@@ -1,15 +1,18 @@
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/database/prisma.service';
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
+import { JwtPayload as DefaultJwtPayload } from 'jsonwebtoken';
 
 import CreateAdminBody from './dtos/create-admin';
 import UpdateAdminBody from './dtos/update-admin';
 import { DecodedUserTokenType } from 'src/@types/decodedUserToken.type';
+
+interface JwtPayload extends DefaultJwtPayload {
+  id: number;
+  name: string;
+  email: string;
+}
 
 @Injectable()
 export class AdminsService {
@@ -69,6 +72,38 @@ export class AdminsService {
     );
 
     return token;
+  }
+
+  async validate(cookie: string | undefined) {
+    if (!cookie)
+      throw new HttpException(
+        { message: 'No token provided' },
+        HttpStatus.UNAUTHORIZED,
+      );
+
+    let decodedUserCookie: JwtPayload;
+    try {
+      decodedUserCookie = jwt.verify(
+        cookie,
+        process.env.JWT_KEY as string,
+      ) as JwtPayload;
+    } catch (e) {
+      throw new HttpException(
+        { message: 'Invalid token' },
+        HttpStatus.UNAUTHORIZED,
+      );
+    }
+
+    const admin = await this.prisma.admin.findFirst({
+      where: { email: decodedUserCookie.email },
+    });
+    if (!admin)
+      throw new HttpException(
+        { message: 'Admin not found' },
+        HttpStatus.NOT_FOUND,
+      );
+
+    return { id: admin.id };
   }
 
   async create(data: CreateAdminBody) {

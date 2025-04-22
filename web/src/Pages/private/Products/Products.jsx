@@ -1,60 +1,78 @@
-import React, { useCallback, useState, useMemo } from "react";
+import React, { useCallback, useState, useMemo, useEffect } from "react";
 import _ from "lodash";
 
 import "./Products.scss";
 import { ProductsModal } from "./ProductsModal";
 
-import AdminList from "../../../Components/AdminList/AdminList";
-import SearchInputAdmin from "../../../Components/SearchInputAdmin/SearchInputAdmin";
-import DropdownAdmin from "../../../Components/DropdownAdmin/DropdownAdmin";
-import AdminAddButton from "../../../Components/AdminAddButton/AdminAddButton";
+import AdminList from "../../../components/AdminList/AdminList";
+import SearchInputAdmin from "../../../components/SearchInputAdmin/SearchInputAdmin";
+import DropdownAdmin from "../../../components/DropdownAdmin/DropdownAdmin";
+import AdminAddButton from "../../../components/AdminAddButton/AdminAddButton";
 
-import { useAllCagegoriesData } from "../../../hooks/useCategoriesData";
+import { useCategoriesData } from "../../../hooks/useCategories";
+import { useDeleteProduct, useAllProductsData } from "../../../hooks/useProducts";
+import Loading from "../../../Components/PageProcessing/Loading/Loading";
+import ErrorFinding from "../../../Components/PageProcessing/ErrorFinding/ErrorFinding";
+import { toast } from "react-toastify";
 
 const currency = new Intl.NumberFormat("pt-BR", {
   style: "currency",
   currency: "BRL",
 });
 
+const initialFormDataState = {
+  name: '',
+  description: '',
+  price: '',
+  available: true,
+  mainImage: '',
+  image_1: '',
+  image_2: '',
+  image_3: ''
+}
+
 function Products() {
-  const { data: categoriesData, isLoading, error } = useAllCagegoriesData();
+  const { data: allProducts, isLoading: isLoadingProducts, error: errorProducts } = useAllProductsData()
+  const { data: categoriesData, isLoading, error } = useCategoriesData();
+  const { mutate: deleteProduct } = useDeleteProduct();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isCreateItem, setIsCreateItem] = useState(false);
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
 
   const [filters, setFilters] = useState({
     available: "",
-    category: "BROCHURA",
+    category: "",
   });
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState(initialFormDataState);
 
-  const categories = useMemo(() => {
-    return categoriesData
+  const categories = useMemo(() =>
+    categoriesData
       ? categoriesData.map((category) => ({
-          id: category.id,
-          name: category.name,
-        }))
-      : [];
-  }, [categoriesData]);
+        id: category.id,
+        name: category.name
+      }))
+      : [], [categoriesData]
+  );
 
   const filteredProducts = useMemo(() => {
     let products = categoriesData
       ? categoriesData.reduce(
-          (acc, category) => [
-            ...acc,
-            ...category.items.map((item) => ({
-              ...item,
-              category: category.name,
-              priceFormatted: currency.format(item.price),
-            })),
-          ],
-          []
-        )
+        (acc, category) => [
+          ...acc,
+          ...category.items.map((item) => ({
+            ...item,
+            category: category.name,
+            priceFormatted: currency.format(item.price),
+          })),
+        ],
+        []
+      )
       : [];
 
     if (filters.category !== "") {
       products = products.filter(
-        (product) => product.category === filters.category
+        (product) => product.category == filters.category
       );
     }
 
@@ -83,8 +101,15 @@ function Products() {
       );
     }
 
-    return products;
-  }, [categoriesData, filters]);
+    return _.uniqBy(products, "id");
+  }, [allProducts, categoriesData, filters]);
+
+
+  useEffect(() => {
+    if (categories && categories.length > 0) {
+      return setIsInitialLoad(false)
+    }
+  }, [categories])
 
   const handleFilterChange = useCallback((evt) => {
     const { name, value } = evt.target;
@@ -105,19 +130,53 @@ function Products() {
     }));
   }, []);
 
+  const onClickCreate = () => {
+    setFormData(initialFormDataState)
+    setIsModalOpen(true);
+    setIsCreateItem(true);
+  };
+
   const onClickUpdate = (row) => {
+    const productCategories = categoriesData
+      ?.filter((category) => category.items.some((item) => item.id === row.id))
+      .map((category) => ({
+        id: category.id,
+        name: category.name
+      }));
+
     setFormData({
       ...row,
+      categories: productCategories,
     });
     setIsModalOpen(true);
     setIsCreateItem(false);
   };
 
-  const onClickCreate = () => {
-    setFormData({})
-    setIsModalOpen(true);
-    setIsCreateItem(true);
+  const onClickDelete = (data) => {
+    const deletingDataToast = toast.loading("Deletando produto...", {
+      autoClose: false,
+    });
+
+    try {
+      deleteProduct(data.id);
+      toast.dismiss(deletingDataToast);
+      toast.success("Produto deletado com sucesso!");
+    } catch (err) {
+      toast.dismiss(deletingDataToast);
+      toast.error("Erro ao deletar produto.");
+    }
   };
+
+  if (isLoading || isLoadingProducts || isInitialLoad)
+    return <Loading title="Buscando produtos" style={{ marginTop: "15rem" }} />
+
+  if (error)
+    return (
+      <ErrorFinding
+        text="Erro ao carregar os produtos"
+        style={{ marginTop: "13rem" }}
+      />
+    );
 
   return (
     <section className="item-page-container">
@@ -151,10 +210,10 @@ function Products() {
             value={filters.category}
             onChange={handleFilterChange}
             options={[
-              { value: "", text: "Todos" },
+              { value: "", label: "Todos" },
               ...categories.map((category) => ({
                 value: category.name,
-                text: category.name,
+                label: category.name,
               })),
             ]}
           />
@@ -165,9 +224,9 @@ function Products() {
             value={filters.available}
             onChange={handleFilterChange}
             options={[
-              { value: "", text: "Tudo" },
-              { value: true, text: "Disponível" },
-              { value: false, text: "Sem estoque" },
+              { value: "", label: "Tudo" },
+              { value: true, label: "Disponível" },
+              { value: false, label: "Sem estoque" },
             ]}
           />
           <div className="results-found">
@@ -199,6 +258,7 @@ function Products() {
         ]}
         listData={filteredProducts}
         onEdit={onClickUpdate}
+        onDelete={onClickDelete}
       ></AdminList>
 
       {isModalOpen && (

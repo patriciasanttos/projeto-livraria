@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 //-- Icons and Images
 import bannerOne from "../../assets/Images/BannerSection/banner-1.svg";
@@ -8,9 +8,23 @@ import prev from "../../assets/Images/BannerSection/prev.svg";
 
 //-- Components
 import "./Banner.scss";
+import { useCategoriesData } from "../../hooks/useCategories";
 
 const BannerSlider = () => {
+  const { data } = useCategoriesData();
+
   const [index, setIndex] = React.useState(0);
+  const [slides, setSlides] = useState([bannerOne, bannerTwo]);
+
+  useEffect(() => {
+    if (data)
+      setSlides(prev => ([
+        ...prev,
+        ...data
+          .filter(category => category.banner !== null)
+          .map(category => category.banner)
+      ]));
+  }, [data]);
 
   useEffect(() => {
     const interval = setInterval(nextSlide, 6000);
@@ -38,7 +52,6 @@ const BannerSlider = () => {
   }, []);
 
   const prevSlide = useCallback(() => {
-    console.log("prevSlide")
     setIndex((prevIndex) => {
       const slides = document.querySelectorAll(".banner");
       const totalSlides = slides.length;
@@ -52,14 +65,15 @@ const BannerSlider = () => {
       <button className="prev arrow" onClick={prevSlide}>
         <img src={prev} alt="Banner Anterior" />
       </button>
+
       <div className="banner-container">
-        <div className="banner banner-one">
-          <img src={bannerOne} alt="Banner 1" />
-        </div>
-        <div className="banner banner-two">
-          <img src={bannerTwo} alt="Banner 2" />
-        </div>
+        {slides.map((banner, index) => (
+          <div key={index} className="banner banner-one">
+            <img src={banner} alt={`Banner ${index}`} />
+          </div>
+        ))}
       </div>
+
       <button className="next arrow" onClick={nextSlide}>
         <img src={next} alt="Próximo Banner" />
       </button>

@@ -1,8 +1,3 @@
-/* eslint-disable @typescript-eslint/no-redundant-type-constituents */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-
 import {
   Body,
   Controller,
@@ -12,51 +7,56 @@ import {
   ParseIntPipe,
   Post,
   Put,
-  UploadedFile,
+  UploadedFiles,
+  UseGuards,
   UseInterceptors,
-} from '@nestjs/common';
-import { FileInterceptor } from '@nestjs/platform-express';
+} from "@nestjs/common";
+import {
+  FileFieldsInterceptor,
+  FileInterceptor,
+} from "@nestjs/platform-express";
 import {
   ApiConsumes,
   ApiCreatedResponse,
   ApiOkResponse,
   ApiOperation,
   ApiParam,
-} from '@nestjs/swagger';
+} from "@nestjs/swagger";
 
-import { ItemsService } from './items.service';
-import CreateItemBody from './dtos/create-item';
-import UpdateItemBody from './dtos/update-item';
+import { ItemsService } from "./items.service";
+import CreateItemBody from "./dtos/create-item";
+import UpdateItemBody from "./dtos/update-item";
+import { AuthGuard } from "src/auth.guard";
 
-@Controller('items')
+@Controller("items")
 export class ItemsController {
   constructor(private readonly itemsService: ItemsService) {}
 
   @Get()
   //----Swagger configs
   @ApiOperation({
-    summary: 'Get all items',
-    description: 'Get all items with a name, description, price and image.',
-    tags: ['items'],
+    summary: "Get all items",
+    description: "Get all items with a name, description, price and image.",
+    tags: ["items"],
   })
   @ApiOkResponse({
-    description: 'A list of all items',
+    description: "A list of all items",
   })
   //-----
   getAll() {
     return this.itemsService.getAll();
   }
 
-  @Get('available')
+  @Get("available")
   //----Swagger configs
   @ApiOperation({
-    summary: 'Get all available items',
+    summary: "Get all available items",
     description:
-      'Get all available items with a name, description, price and image.',
-    tags: ['items'],
+      "Get all available items with a name, description, price and image.",
+    tags: ["items"],
   })
   @ApiOkResponse({
-    description: 'A list of all available items',
+    description: "A list of all available items",
   })
   //-----
   getAllAvailables() {
@@ -64,70 +64,101 @@ export class ItemsController {
   }
 
   @Post()
-  @UseInterceptors(FileInterceptor('image'))
+  @UseGuards(AuthGuard)
+  @UseInterceptors(
+    FileFieldsInterceptor([
+      { name: "image_1", maxCount: 1 },
+      { name: "image_2", maxCount: 1 },
+      { name: "image_3", maxCount: 1 },
+    ])
+  )
   //----Swagger configs
-  @ApiConsumes('multipart/form-data')
+  @ApiConsumes("multipart/form-data")
   @ApiOperation({
-    summary: 'Create a new item',
-    description: 'Create a new item with a name, description, price and image.',
-    tags: ['items'],
+    summary: "Create a new item",
+    description: "Create a new item with a name, description, price and image.",
+    tags: ["items"],
   })
   @ApiCreatedResponse({
-    description: 'Item created successfully',
+    description: "Item created successfully",
   })
   //-----
   createItem(
     @Body() data: CreateItemBody,
-    @UploadedFile() file: Express.Multer.File | undefined,
+    @UploadedFiles()
+    images: {
+      image_1: Express.Multer.File;
+      image_2?: Express.Multer.File;
+      image_3?: Express.Multer.File;
+    }
   ) {
     return this.itemsService.create({
       ...data,
-      image: file ? file.buffer.toString('base64') : '',
+      image_1: images.image_1[0],
+      image_2: images.image_2?.[0],
+      image_3: images.image_3?.[0],
     });
   }
 
   @Put()
-  @UseInterceptors(FileInterceptor('image'))
+  @UseGuards(AuthGuard)
+  @UseInterceptors(
+    FileFieldsInterceptor([
+      { name: "image_1", maxCount: 1 },
+      { name: "image_2", maxCount: 1 },
+      { name: "image_3", maxCount: 1 },
+    ])
+  )
   //----Swagger configs
-  @ApiConsumes('multipart/form-data')
+  @ApiConsumes("multipart/form-data")
   @ApiOperation({
-    summary: 'Update a item',
-    description: 'Update an item with a name, description, price and image.',
-    tags: ['items'],
+    summary: "Update a item",
+    description: "Update an item with a name, description, price and image.",
+    tags: ["items"],
   })
   @ApiOkResponse({
-    description: 'Item updated successfully',
+    description: "Item updated successfully",
   })
   //-----
   updateItem(
     @Body() data: UpdateItemBody,
-    @UploadedFile() file: Express.Multer.File | undefined,
+    @UploadedFiles()
+    images: {
+      image_1: Express.Multer.File[];
+      image_2?: Express.Multer.File[];
+      image_3?: Express.Multer.File[];
+    }
   ) {
-    const updateData = { ...data };
-
-    if (file) updateData.image = file.buffer.toString('base64');
-
-    return this.itemsService.update(updateData);
+    return this.itemsService.update({
+      ...data,
+      image_1:
+        data.image_1 === "__delete__" ? "__delete__" : images.image_1?.[0],
+      image_2:
+        data.image_2 === "__delete__" ? "__delete__" : images.image_2?.[0],
+      image_3:
+        data.image_3 === "__delete__" ? "__delete__" : images.image_3?.[0],
+    });
   }
 
-  @Delete(':itemId')
+  @Delete(":itemId")
+  @UseGuards(AuthGuard)
   //----Swagger configs
   @ApiParam({
-    name: 'itemId',
+    name: "itemId",
     required: true,
-    description: 'Item ID',
+    description: "Item ID",
     example: 1,
   })
   @ApiOperation({
-    summary: 'Delete a item',
-    description: 'Delete an item with an id',
-    tags: ['items'],
+    summary: "Delete a item",
+    description: "Delete an item with an id",
+    tags: ["items"],
   })
   @ApiOkResponse({
-    description: 'Item deleted successfully',
+    description: "Item deleted successfully",
   })
   //-----
-  deleteItem(@Param('itemId', ParseIntPipe) itemId: number) {
+  deleteItem(@Param("itemId", ParseIntPipe) itemId: number) {
     return this.itemsService.delete(itemId);
   }
 }

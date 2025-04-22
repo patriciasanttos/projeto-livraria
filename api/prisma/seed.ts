@@ -1,4 +1,6 @@
 import { PrismaClient } from '@prisma/client';
+import * as bcrypt from 'bcrypt';
+
 import seedData from './seedData';
 
 const prisma = new PrismaClient();
@@ -50,6 +52,7 @@ async function main() {
           name: item['Descrição'],
           price: item['$Venda'],
           available: item['Situação'] === 'DISPONÍVEL' ? true : false,
+          mainCategory: category.name,
           categories: {
             connect: {
               id: category.id,
@@ -60,8 +63,26 @@ async function main() {
     }
   };
 
+  const adminSeed = async () => {
+    const salt = await bcrypt.genSalt(12);
+    const hashPassword = await bcrypt.hash(
+      process.env.INITIAL_ADMIN_PASSWORD as string,
+      salt,
+    );
+
+    await prisma.admin.create({
+      data: {
+        name: 'M&C Books',
+        email: 'mcbooks@gmail.com',
+        phone: '12345678901',
+        password: hashPassword,
+      },
+    });
+  };
+
   const categories = await categoriesSeed();
   await itemsSeed(categories);
+  await adminSeed();
 
   console.log('Done!');
 }

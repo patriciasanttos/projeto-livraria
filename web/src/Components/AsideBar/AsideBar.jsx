@@ -36,7 +36,7 @@ function AsideBar() {
                 </li>
 
                 <li>
-                    <Link to="/admin/control_panel">
+                    <Link to="/admin/reports">
                         <img src={reports} alt="Relatórios" />
                         <p>Relatórios</p>
                     </Link>

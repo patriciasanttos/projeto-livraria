@@ -1,8 +1,3 @@
-/* eslint-disable @typescript-eslint/no-redundant-type-constituents */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-
 import {
   Body,
   Controller,
@@ -13,10 +8,11 @@ import {
   Patch,
   Post,
   Put,
-  UploadedFile,
+  UploadedFiles,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { FileInterceptor } from '@nestjs/platform-express';
+import { FileFieldsInterceptor } from '@nestjs/platform-express';
 import {
   ApiConsumes,
   ApiCreatedResponse,
@@ -28,6 +24,7 @@ import {
 import { CategoriesService } from './categories.service';
 import CreateCategoryBody from './dtos/create-category';
 import UpdateCategoryBody from './dtos/update-category';
+import { AuthGuard } from 'src/auth.guard';
 
 @Controller('categories')
 export class CategoriesController {
@@ -49,7 +46,13 @@ export class CategoriesController {
   }
 
   @Post()
-  @UseInterceptors(FileInterceptor('image'))
+  @UseGuards(AuthGuard)
+  @UseInterceptors(
+    FileFieldsInterceptor([
+      { name: 'image', maxCount: 1 },
+      { name: 'banner', maxCount: 1 },
+    ]),
+  )
   //----Swagger configs
   @ApiConsumes('multipart/form-data')
   @ApiOperation({
@@ -63,16 +66,27 @@ export class CategoriesController {
   //-----
   createCategory(
     @Body() data: CreateCategoryBody,
-    @UploadedFile() file: Express.Multer.File | undefined,
+    @UploadedFiles()
+    images: {
+      image?: Express.Multer.File[];
+      banner?: Express.Multer.File[];
+    },
   ) {
     return this.categoriesService.create({
       ...data,
-      image: file ? file.buffer.toString('base64') : '',
+      image: images.image?.[0],
+      banner: images.banner?.[0],
     });
   }
 
   @Put()
-  @UseInterceptors(FileInterceptor('image'))
+  @UseGuards(AuthGuard)
+  @UseInterceptors(
+    FileFieldsInterceptor([
+      { name: 'image', maxCount: 1 },
+      { name: 'banner', maxCount: 1 },
+    ]),
+  )
   //----Swagger configs
   @ApiConsumes('multipart/form-data')
   @ApiOperation({
@@ -86,16 +100,21 @@ export class CategoriesController {
   //-----
   updateCategory(
     @Body() data: UpdateCategoryBody,
-    @UploadedFile() file: Express.Multer.File | undefined,
+    @UploadedFiles()
+    images: {
+      image?: Express.Multer.File[];
+      banner?: Express.Multer.File[];
+    },
   ) {
-    const updateData = { ...data };
-
-    if (file) updateData.image = file.buffer.toString('base64');
-
-    return this.categoriesService.update(updateData);
+    return this.categoriesService.update({
+      ...data,
+      image: images.image?.[0],
+      banner: images.banner?.[0],
+    });
   }
 
   @Delete(':categoryId')
+  @UseGuards(AuthGuard)
   //----Swagger configs
   @ApiParam({
     name: 'categoryId',
@@ -117,6 +136,7 @@ export class CategoriesController {
   }
 
   @Patch(':categoryId/items/:itemId/add')
+  @UseGuards(AuthGuard)
   //----Swagger configs
   @ApiParam({
     name: 'categoryId',
@@ -151,6 +171,7 @@ export class CategoriesController {
   }
 
   @Patch(':categoryId/items/:itemId/remove')
+  @UseGuards(AuthGuard)
   //----Swagger configs
   @ApiParam({
     name: 'categoryId',

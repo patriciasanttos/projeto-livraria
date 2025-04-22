@@ -40,6 +40,12 @@
         align-items: center;
     }
 
+    .item-list-image {
+        width: 100px;
+        border-radius: 5px;
+        margin: 0.8rem 1rem 0.7rem 0;
+    }
+
     .td-quantify {
         display: flex;
         flex-direction: row;

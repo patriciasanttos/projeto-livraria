@@ -1,19 +1,26 @@
 import React from "react";
 
-const CategoryThumb = React.memo(({ name, image, onClickDeleteImage }) => {
-  const imageUrl = React.useMemo(() => URL.createObjectURL(image), [image]);
+const CategoryThumb = React.memo(({ name, image, onClickDeleteImage, ...props }) => {
+  const imageUrl = React.useMemo(() => {
+    if (image instanceof File) {
+      return URL.createObjectURL(image);
+    }
+
+    return image || "";
+  }, [image]);
 
   return (
     <div
       style={{
         backgroundImage: `url(${imageUrl})`,
+        ...props.style
       }}
       className="image-preview"
     >
       <div
         className="image-delete"
         onClick={(e) => {
-          e.stopPropagation(); // Prevent triggering the onClick for setting main image
+          e.stopPropagation();
           onClickDeleteImage(name);
         }}
       >

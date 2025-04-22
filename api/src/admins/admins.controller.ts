@@ -1,9 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-redundant-type-constituents */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-
 import {
   Body,
   Controller,
@@ -103,6 +97,21 @@ export class AdminsController {
     });
 
     response.send({ message: 'User logged out successfully' });
+  }
+
+  @Get('/auth/me')
+  //----Swagger configs
+  @ApiOperation({
+    summary: 'Validate an admin account',
+    description: 'Validate an admin account with a cookie.',
+    tags: ['admins'],
+  })
+  @ApiOkResponse({
+    description: 'User validated successfully',
+  })
+  //-----
+  async validate(@Req() { cookies: { user } }: Request) {
+    return this.adminsService.validate(user);
   }
 
   @Post()

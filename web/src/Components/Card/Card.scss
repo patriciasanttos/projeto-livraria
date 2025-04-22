@@ -39,6 +39,10 @@
       line-clamp: 2;
       overflow: hidden;
       text-overflow: ellipsis;
+
+      &:first-of-type {
+        cursor: pointer;
+      }
     }
 
     .price {

@@ -28,7 +28,7 @@ export default class UpdateAdminBody {
 
   @ApiProperty()
   @IsString()
-  @Length(8, 11)
+  @Length(8, 15)
   @IsOptional()
   phone?: string;
 

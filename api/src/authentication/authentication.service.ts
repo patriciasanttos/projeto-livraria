@@ -10,8 +10,6 @@ export class AuthService {
       if (!decodedJwt) return null;
 
       return decodedJwt as DecodedUserTokenType;
-
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (err) {
       return null;
     }

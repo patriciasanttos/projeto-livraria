@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 //-----Images
@@ -8,16 +8,21 @@ import kitCanetas from '../../../assets/Images/kit-canetas.svg';
 //-----Components
 import Card from '../../../components/Card/Card';
 import Pagination from '../../../components/Pagination/Pagination';
+import WhatsappContact from '../../../components/WhatsappContact/WhatsappContact';
+import Loading from '../../../components/PageProcessing/Loading/Loading';
+import ErrorFinding from '../../../components/PageProcessing/ErrorFinding/ErrorFinding';
+
+import { useCategoriesData } from '../../../hooks/useCategories';
 
 import './Categories.scss';
-import { useAllCagegoriesData } from '../../../hooks/useCategoriesData';
-import WhatsappContact from '../../../Components/WhatsappContact/WhatsappContact';
+
 
 function Categories() {
   const navigate = useNavigate();
+  const { pathname } = useLocation();
   const { categoryName } = useParams();
 
-  const { data: categoriesData, isLoading, error } = useAllCagegoriesData();
+  const { data: categoriesData, isLoading, error } = useCategoriesData();
 
   const [data, setData] = useState([]);
   const [displayedItems, setDisplayedItems] = useState([]);
@@ -61,21 +66,11 @@ function Categories() {
       name: item.name,
       description: item.description,
       price: item.price,
-      image: item.image,
+      image: item.mainImage || item.images[0]?.url,
     }));
 
-    const multipliedItems = [];
-    for (let i = 0; i < 40; i++) {
-      multipliedItems.push(...categoryItems.map(item => ({
-        ...item,
-        id: `${item.id}-${i}`,
-        name: item.name
-      })));
-    }
-
-    return multipliedItems;
+    return categoryItems;
   }, [categoriesData, categoryName, navigate]);
-
 
   useEffect(() => {
     if (isLoading)
@@ -92,28 +87,32 @@ function Categories() {
     setDisplayedItems(newData.slice(0, 9));
   }, [categoryName, navigate, categoriesData, loadData]);
 
-
   if (isLoading)
-    return <p className='no-items-warn'>Buscando dados...</p>
+    return <Loading title="Buscando categorias" style={{ marginTop: "6rem" }} />;
 
   if ((data && data.length <= 0) || error)
-    return <p className='no-items-warn'>Desculpe, parece que nenhum item foi adicionado nessa categoria ainda.</p>
-
+    return (
+      <ErrorFinding
+        text="Desculpe, parece que nenhum item foi adicionado nessa categoria ainda"
+        style={{ marginTop: "6rem" }}
+      />
+    );
 
   return (
     <div className='category-page'>
       {categoryName && <h1>{categoryName.charAt(0).toUpperCase() + categoryName.slice(1)}</h1>}
 
       <div className='category-page-items'>
-        {displayedItems.map(option => (
+        {displayedItems.map((option, index) => (
           <Card
-            key={option.id}
+            key={`${option.id}-${index}`}
             id={option.id}
             name={option.name}
-            image={kitCanetas}
+            image={option.image || option.mainImage || kitCanetas}
             price={option.price}
             color='pink'
             isCategory={categoryName ? false : true}
+            currentCategory={pathname.split('/')[2]}
           />
         ))}
       </div>

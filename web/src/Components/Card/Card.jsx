@@ -8,7 +8,7 @@ import './Card.scss';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 
-function Card({ id, name, price, image, color, isCategory }) {
+function Card({ id, name, price, image, color, isCategory, currentCategory }) {
   const navigate = useNavigate();
 
   const [isInCart, setIsInCart] = useState(false);
@@ -20,6 +20,10 @@ function Card({ id, name, price, image, color, isCategory }) {
       setIsInCart(true);
   }, [id, isInCart]);
 
+  const currency = new Intl.NumberFormat("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+  });
 
   const addToCart = () => {
     const cartCookie = JSON.parse(localStorage.getItem('cart')) || {};
@@ -62,35 +66,49 @@ function Card({ id, name, price, image, color, isCategory }) {
     });
   }
 
+  const handleOpenPage = () => {
+    if (isCategory)
+      return navigate(`/categories/${name.toLowerCase()}`)
+
+    return navigate(`/products/${id}`, { state: { currentCategory } })
+  }
+
   return (
-    <div
-      className={`card ${isCategory ? 'category-card' : 'item-card'}`}
-      onClick={() =>
-        isCategory && navigate(`/categories/${name.toLowerCase()}`)
-      }
-    >
-      <div className="card-image" onClick={() => !isCategory && navigate(`/item/${id}`)}>
+    <div className={`card ${isCategory ? "category-card" : "item-card"}`}>
+      <div className="card-image" onClick={handleOpenPage}>
         <img src={image} alt={name} />
       </div>
 
-      <div className='card-data'>
-        <p className={isCategory ? color : ''} title={name}>{name}</p>
-        {
-          !isCategory && (
-            <>
-              <p className="price">{`R$${price},00`}</p>
-              <p className="installment">Até xxxx no cartão de crédito</p>
+      <div className="card-data">
+        <p
+          className={isCategory ? color : ""}
+          title={name}
+          onClick={handleOpenPage}
+        >
+          {name}
+        </p>
+        {!isCategory && (
+          <>
+            <p className="price">{currency.format(price)}</p>
+            <p className="installment">Até xxxx no cartão de crédito</p>
 
-              <div className='cart-buttons'>
-                {!isInCart ? (
-                  <img src={addToCartIcon} alt="Adicionar ao carrinho" onClick={addToCart} />
-                ) : (
-                  <img src={addedToCart} alt="Remover do carrinho" onClick={removeFromCart} />
-                )}
-              </div>
-            </>
-          )
-        }
+            <div className="cart-buttons">
+              {!isInCart ? (
+                <img
+                  src={addToCartIcon}
+                  alt="Adicionar ao carrinho"
+                  onClick={addToCart}
+                />
+              ) : (
+                <img
+                  src={addedToCart}
+                  alt="Remover do carrinho"
+                  onClick={removeFromCart}
+                />
+              )}
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

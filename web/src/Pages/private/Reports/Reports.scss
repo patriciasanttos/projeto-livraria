@@ -1,0 +1,72 @@
+.reports-page {
+  padding: 2em 2em;
+
+  .chart-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+
+    width: 80dvw;
+    height: 70dvh;
+
+    .reports-filters {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 0.5em;
+
+      width: 60%;
+
+      .reports-search-bar {
+        width: 24%;
+        height: 3dvh;
+
+        border: 1px solid var(--button-lime-green);
+        border-radius: 8px;
+        padding: 0 0.5em;
+        outline: none;
+      }
+
+      select {
+        width: 24%;
+        height: 3dvh;
+  
+        font-size: 1dvw;
+        border-radius: 8px;
+        border: 1px solid var(--button-lime-green);
+        outline: none;
+
+        cursor: pointer;
+      }
+  
+      .reload-button {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+
+        width: 15%;
+        height: 3dvh;
+
+        border-radius: 8px;
+        border: 1px solid var(--button-lime-green);
+        
+        transition: background-color 0.3s ease;
+        cursor: pointer;
+
+        &:hover {
+          background-color: #d9d9d9;
+        }
+
+        p {
+          font-size: 1dvw;
+          margin: 0;
+        }
+      }
+    }
+
+    .charts {
+      height: 90%;
+    }
+  }
+}

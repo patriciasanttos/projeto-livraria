@@ -1,21 +1,26 @@
 import React, { useCallback, useState } from "react";
+import { useAdminsData, useDeleteAdmin } from "../../../hooks/useAdmins";
+
+//-----Components
+import SearchInputAdmin from "../../../components/SearchInputAdmin/SearchInputAdmin";
+import AdminAddButton from "../../../components/AdminAddButton/AdminAddButton";
+import AdminList from "../../../components/AdminList/AdminList";
+import { ManagesModal } from "./ManagesModal";
+import Loading from "../../../components/PageProcessing/Loading/Loading";
+import ErrorFinding from "../../../components/PageProcessing/ErrorFinding/ErrorFinding";
+import { toast } from "react-toastify";
 
 import "./Manages.scss";
-import { ManagesModal } from "./ManagesModal";
-
-import SearchInputAdmin from "../../../Components/SearchInputAdmin/SearchInputAdmin";
-import AdminAddButton from "../../../Components/AdminAddButton/AdminAddButton";
-import mock from "../../../mocks/adminsMock.json";
-import AdminList from "../../../Components/AdminList/AdminList";
 
 function Manages() {
+  const { data, isLoading, error } = useAdminsData();
+  const { mutate: deleteAdmin } = useDeleteAdmin();
+
   const [filters, setFilters] = useState({});
   const [formData, setFormData] = useState({});
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isCreateAdmin, setIsCreateAdmin] = useState(false);
-
-  const data = mock.data;
 
   const getFilteredData = () => {
     let filteredData = [...data];
@@ -50,23 +55,64 @@ function Manages() {
     }));
   }, []);
 
+  const onClickCreate = () => {
+    setFormData({
+      name: '',
+      email: '',
+      phone: '',
+      password: '',
+      newPassword: '',
+      passwordConfirmation: '',
+    });
+    setIsModalOpen(true);
+    setIsCreateAdmin(true);
+  };
+
   const onClickUpdate = (row) => {
     setFormData({
       ...row,
+      password: '',
+      newPassword: '',
+      passwordConfirmation: '',
     });
     setIsModalOpen(true);
     setIsCreateAdmin(false);
   };
 
-  const onClickCreate = () => {
-    setFormData({});
-    setIsModalOpen(true);
-    setIsCreateAdmin(true);
-  };
+  const onClickDelete = (data) => {
+    const deletingDataToast = toast.loading('Deletando administrador...', {
+      autoClose: false
+    });
+
+    try {
+      deleteAdmin(data.id)
+      toast.dismiss(deletingDataToast);
+      toast.success('Administrador deletado com sucesso!');
+    } catch (err) {
+      toast.dismiss(deletingDataToast);
+      toast.error('Erro ao deletar Administrador.');
+    }
+  }
+
+  if (isLoading)
+    return (
+      <Loading
+        title="Buscando lista de administradores"
+        style={{ marginTop: "18rem" }}
+      />
+    );
+
+  if (error)
+    return (
+      <ErrorFinding
+        text="Erro ao carregar lista de administradores"
+        style={{ marginTop: "13rem" }}
+      />
+    );
 
   return (
-    <section className="manages">
-      <div className="inputs-manages">
+    <section className="manage-page">
+      <div className="manage-page-inputs">
         <SearchInputAdmin
           title="Nome"
           placeholder="Pessoa 1"
@@ -87,12 +133,14 @@ function Manages() {
             label: "E-mail",
           },
           {
-            key: "contact",
+            key: "phone",
             label: "Contato",
           },
         ]}
         listData={getFilteredData()}
         onEdit={onClickUpdate}
+        onDelete={onClickDelete}
+        type='adminAccounts'
       ></AdminList>
 
       {isModalOpen && (

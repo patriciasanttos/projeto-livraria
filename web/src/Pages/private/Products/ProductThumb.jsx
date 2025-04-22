@@ -2,7 +2,16 @@ import React from "react";
 
 const ProductThumb = React.memo(
   ({ image, index, mainImageIndex, setMainImageIndex, onClickDeleteImage }) => {
-    const imageUrl = React.useMemo(() => URL.createObjectURL(image), [image]);
+    const imageUrl = React.useMemo(() => {
+      if (image instanceof File) {
+        return URL.createObjectURL(image);
+      }
+
+      return image?.url || null;
+    }, [image]);
+
+    if (imageUrl === null)
+      return null;
 
     return (
       <div
@@ -16,7 +25,7 @@ const ProductThumb = React.memo(
         <div
           className="image-delete"
           onClick={(e) => {
-            e.stopPropagation(); // Prevent triggering the onClick for setting main image
+            e.stopPropagation();
             onClickDeleteImage(index);
           }}
         >
