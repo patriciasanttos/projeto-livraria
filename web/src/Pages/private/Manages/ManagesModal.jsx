@@ -3,8 +3,8 @@ import { validate as validateAdmin } from '../../../service/api/admins';
 import { useCreateAdmin, useUpdateAdmin } from "../../../hooks/useAdmins";
 
 //-----Components
-import ModalAdmin from "../../../Components/ModalAdmin/ModalAdmin";
-import SearchInputAdmin from "../../../Components/SearchInputAdmin/SearchInputAdmin";
+import ModalAdmin from "../../../components/ModalAdmin/ModalAdmin";
+import SearchInputAdmin from "../../../components/SearchInputAdmin/SearchInputAdmin";
 import { toast } from "react-toastify";
 
 export const ManagesModal = ({

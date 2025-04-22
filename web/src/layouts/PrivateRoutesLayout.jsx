@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 
-import AsideBar from '../Components/AsideBar/AsideBar';
+import AsideBar from '../components/AsideBar/AsideBar';
 import HeaderAdmin from '../components/HeaderAdmin/HeaderAdmin';
 import { validate } from '../service/api/admins';
-import Loading from '../Components/PageProcessing/Loading/Loading';
+import Loading from '../components/PageProcessing/Loading/Loading';
 
 function PrivateRoutesLayout() {
   const { pathname } = useLocation();

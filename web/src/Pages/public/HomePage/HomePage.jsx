@@ -4,8 +4,8 @@ import mock from '../../../mocks/categoriesMocks.json'
 
 //-----Components
 import Category from '../../../components/Category/Category';
-import BannerSlider from '../../../Components/Banner/Banner';
-import WhatsappContact from '../../../Components/WhatsappContact/WhatsappContact';
+import BannerSlider from '../../../components/Banner/Banner';
+import WhatsappContact from '../../../components/WhatsappContact/WhatsappContact';
 
 import './HomePage.scss';
 

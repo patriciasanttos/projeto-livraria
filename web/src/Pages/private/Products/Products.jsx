@@ -4,10 +4,10 @@ import _ from "lodash";
 import "./Products.scss";
 import { ProductsModal } from "./ProductsModal";
 
-import AdminList from "../../../Components/AdminList/AdminList";
-import SearchInputAdmin from "../../../Components/SearchInputAdmin/SearchInputAdmin";
-import DropdownAdmin from "../../../Components/DropdownAdmin/DropdownAdmin";
-import AdminAddButton from "../../../Components/AdminAddButton/AdminAddButton";
+import AdminList from "../../../components/AdminList/AdminList";
+import SearchInputAdmin from "../../../components/SearchInputAdmin/SearchInputAdmin";
+import DropdownAdmin from "../../../components/DropdownAdmin/DropdownAdmin";
+import AdminAddButton from "../../../components/AdminAddButton/AdminAddButton";
 
 import { useCategoriesData } from "../../../hooks/useCategories";
 import { useDeleteProduct, useAllProductsData } from "../../../hooks/useProducts";
@@ -58,16 +58,16 @@ function Products() {
   const filteredProducts = useMemo(() => {
     let products = categoriesData
       ? categoriesData.reduce(
-          (acc, category) => [
-            ...acc,
-            ...category.items.map((item) => ({
-              ...item,
-              category: category.name,
-              priceFormatted: currency.format(item.price),
-            })),
-          ],
-          []
-        )
+        (acc, category) => [
+          ...acc,
+          ...category.items.map((item) => ({
+            ...item,
+            category: category.name,
+            priceFormatted: currency.format(item.price),
+          })),
+        ],
+        []
+      )
       : [];
 
     if (filters.category !== "") {
@@ -168,7 +168,7 @@ function Products() {
   };
 
   if (isLoading || isLoadingProducts || isInitialLoad)
-    return <Loading title="Buscando produtos" style={{marginTop: "15rem"}}/>
+    return <Loading title="Buscando produtos" style={{ marginTop: "15rem" }} />
 
   if (error)
     return (

@@ -3,9 +3,9 @@ import { useAddProductToCategory, useRemoveProductFromCategory } from "../../../
 import { useCreateProduct, useUpdateProduct } from "../../../hooks/useProducts";
 
 //-----Components
-import ModalAdmin from "../../../Components/ModalAdmin/ModalAdmin";
-import SearchInputAdmin from "../../../Components/SearchInputAdmin/SearchInputAdmin";
-import DropdownAdmin from "../../../Components/DropdownAdmin/DropdownAdmin";
+import ModalAdmin from "../../../components/ModalAdmin/ModalAdmin";
+import SearchInputAdmin from "../../../components/SearchInputAdmin/SearchInputAdmin";
+import DropdownAdmin from "../../../components/DropdownAdmin/DropdownAdmin";
 import ProductThumb from "./ProductThumb";
 import { toast } from "react-toastify";
 

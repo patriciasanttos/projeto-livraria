@@ -2,16 +2,15 @@ import React, { useCallback, useState } from "react";
 import { useAdminsData, useDeleteAdmin } from "../../../hooks/useAdmins";
 
 //-----Components
-import SearchInputAdmin from "../../../Components/SearchInputAdmin/SearchInputAdmin";
-import AdminAddButton from "../../../Components/AdminAddButton/AdminAddButton";
-import AdminList from "../../../Components/AdminList/AdminList";
+import SearchInputAdmin from "../../../components/SearchInputAdmin/SearchInputAdmin";
+import AdminAddButton from "../../../components/AdminAddButton/AdminAddButton";
+import AdminList from "../../../components/AdminList/AdminList";
 import { ManagesModal } from "./ManagesModal";
-import Loading from "../../../Components/PageProcessing/Loading/Loading";
-import ErrorFinding from "../../../Components/PageProcessing/ErrorFinding/ErrorFinding";
+import Loading from "../../../components/PageProcessing/Loading/Loading";
+import ErrorFinding from "../../../components/PageProcessing/ErrorFinding/ErrorFinding";
+import { toast } from "react-toastify";
 
 import "./Manages.scss";
-import { Description } from "@mui/icons-material";
-import { toast } from "react-toastify";
 
 function Manages() {
   const { data, isLoading, error } = useAdminsData();
@@ -101,7 +100,7 @@ function Manages() {
         title="Buscando lista de administradores"
         style={{ marginTop: "18rem" }}
       />
-    );     
+    );
 
   if (error)
     return (

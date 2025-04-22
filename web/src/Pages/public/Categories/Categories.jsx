@@ -8,9 +8,9 @@ import kitCanetas from '../../../assets/Images/kit-canetas.svg';
 //-----Components
 import Card from '../../../components/Card/Card';
 import Pagination from '../../../components/Pagination/Pagination';
-import WhatsappContact from '../../../Components/WhatsappContact/WhatsappContact';
-import Loading from '../../../Components/PageProcessing/Loading/Loading';
-import ErrorFinding from '../../../Components/PageProcessing/ErrorFinding/ErrorFinding';
+import WhatsappContact from '../../../components/WhatsappContact/WhatsappContact';
+import Loading from '../../../components/PageProcessing/Loading/Loading';
+import ErrorFinding from '../../../components/PageProcessing/ErrorFinding/ErrorFinding';
 
 import { useCategoriesData } from '../../../hooks/useCategories';
 
@@ -88,7 +88,7 @@ function Categories() {
   }, [categoryName, navigate, categoriesData, loadData]);
 
   if (isLoading)
-    return <Loading title="Buscando categorias"/>;
+    return <Loading title="Buscando categorias" />;
 
   if ((data && data.length <= 0) || error)
     return (

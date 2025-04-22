@@ -1,14 +1,14 @@
 import React, { useCallback, useEffect, useState } from "react";
 
-import ModalAdmin from "../../../Components/ModalAdmin/ModalAdmin";
-import SearchInputAdmin from "../../../Components/SearchInputAdmin/SearchInputAdmin";
+import ModalAdmin from "../../../components/ModalAdmin/ModalAdmin";
+import SearchInputAdmin from "../../../components/SearchInputAdmin/SearchInputAdmin";
 import CategoryThumb from "./CategoryThumb";
 import {
   useCreateCategory,
   useUpdateCategory,
 } from "../../../hooks/useCategories";
 import { toast } from "react-toastify";
-import TextAreaAdmin from "../../../Components/TextAreaAdmin/TextAreaAdmin";
+import TextAreaAdmin from "../../../components/TextAreaAdmin/TextAreaAdmin";
 import _ from 'lodash'
 
 export const CategoriesModal = ({
