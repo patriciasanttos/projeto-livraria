@@ -1,10 +1,10 @@
 import React from 'react';
 
 import './AboutUs.scss';
-import aboutUsImg from '../../../assets/Images/aboutUsImg.svg';
-import instagramIcon from '../../../assets/Images/aboutUsInstagramIcon.svg';
-import whatsappIcon from '../../../assets/Images/aboutUsWppIcon.svg';
-import locationIcon from '../../../assets/Images/aboutUsLocationIcon.svg';
+import aboutUsImg from '../../../assets/images/aboutUsImg.svg';
+import instagramIcon from '../../../assets/images/aboutUsInstagramIcon.svg';
+import whatsappIcon from '../../../assets/images/aboutUsWppIcon.svg';
+import locationIcon from '../../../assets/images/aboutUsLocationIcon.svg';
 
 function AboutUs() {
   return (

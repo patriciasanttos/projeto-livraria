@@ -6,7 +6,7 @@ import logo from '../../assets/images/logo.svg'
 import products from '../../assets/icons/products.svg'
 import categories from '../../assets/icons/categories.svg'
 import reports from '../../assets/icons/reports.svg'
-// import clients from '../../assets/icons/clients.svg'
+
 import manage from '../../assets/icons/manage.svg'
 
 import './AsideBar.scss';

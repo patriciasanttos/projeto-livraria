@@ -6,7 +6,7 @@ import { useAllProductsData } from '../../hooks/useProducts';
 
 //-----Images and icons
 import DeleteIcon from "../../assets/icons/deleteIcon.svg";
-import CartEmpty from "../../assets/Images/cart-empty.svg";
+import CartEmpty from "../../assets/images/cart-empty.svg";
 
 //-----Components
 import QuantityInput from "./QuantityInput";
@@ -146,7 +146,7 @@ function ItemList() {
   };
 
   if (isLoading)
-    return <Loading title="Buscando lista de compras" style={{marginTop: "4rem"}}/>;
+    return <Loading title="Buscando lista de compras" style={{ marginTop: "4rem" }} />;
 
   if (error)
     return (

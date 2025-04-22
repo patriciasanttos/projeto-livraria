@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useState } from "react";
 
 //-- Icons and Images
-import bannerOne from "../../assets/Images/BannerSection/banner-1.svg";
-import bannerTwo from "../../assets/Images/BannerSection/banner-2.svg";
-import next from "../../assets/Images/BannerSection/next.svg";
-import prev from "../../assets/Images/BannerSection/prev.svg";
+import bannerOne from "../../assets/images/BannerSection/banner-1.svg";
+import bannerTwo from "../../assets/images/BannerSection/banner-2.svg";
+import next from "../../assets/images/BannerSection/next.svg";
+import prev from "../../assets/images/BannerSection/prev.svg";
 
 //-- Components
 import "./Banner.scss";

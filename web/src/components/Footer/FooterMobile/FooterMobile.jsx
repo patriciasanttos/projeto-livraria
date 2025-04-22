@@ -1,7 +1,7 @@
 import React from "react";
 
 //-- Icons and Images
-import logo from "../../../assets/Images/logo.svg";
+import logo from "../../../assets/images/logo.svg";
 import instagram from "../../../assets/icons/instagram-blue.svg";
 import flags from "../../../assets/icons/card-flags.svg";
 import location from "../../../assets/icons/location-blue.svg";

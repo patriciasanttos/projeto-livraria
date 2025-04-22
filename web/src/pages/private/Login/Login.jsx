@@ -7,7 +7,7 @@ import IconButton from '@mui/material/IconButton';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
-import Logo from '../../../assets/Images/logo.svg';
+import Logo from '../../../assets/images/logo.svg';
 
 import './Login.scss';
 import { login } from '../../../service/api/admins';

@@ -3,7 +3,7 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 //-----Images
-import kitCanetas from '../../../assets/Images/kit-canetas.svg';
+import kitCanetas from '../../../assets/images/kit-canetas.svg';
 
 //-----Components
 import Card from '../../../components/Card/Card';

@@ -1,8 +1,8 @@
 import React from 'react';
 
 //-----Images
-import whatsappContactImage from '../../assets/Images/whatsapp-contact.svg'
-import whatsappContactImageMobile from '../../assets/Images/whatsapp-contact-mobile.svg'
+import whatsappContactImage from '../../assets/images/whatsapp-contact.svg'
+import whatsappContactImageMobile from '../../assets/images/whatsapp-contact-mobile.svg'
 
 import './WhatsappContact.scss';
 
