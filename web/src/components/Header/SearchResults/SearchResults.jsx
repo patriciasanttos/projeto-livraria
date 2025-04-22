@@ -9,8 +9,10 @@ import { useNavigate } from "react-router-dom";
 const SearchResults = ({ query, setQuery }) => {
   const navigate = useNavigate();
 
-  const { data, isLoading } = useAllProductsData();
+  const { data } = useAllProductsData();
   const { mutate } = useCreateReport();
+
+  const [isLoading, setIsLoading] = useState(true);
 
   const [results, setResults] = useState(data);
 
@@ -60,7 +62,9 @@ const SearchResults = ({ query, setQuery }) => {
 
     else
       setResults([])
-  }, [data, debouncedQuery]);
+
+    return setIsLoading(false);
+  }, [data, debouncedQuery, setIsLoading]);
 
   useEffect(() => {
     loadResults()
@@ -91,7 +95,7 @@ const SearchResults = ({ query, setQuery }) => {
   return (
     <div className="search-wrapper">
       <ul className="search-results">
-        {(!results || results.length === 0) ? (
+        {results?.length === 0 ? (
           <p className="no-results">Nenhum resultado encontrado.</p>
         ) : (
           results.map(result => {
