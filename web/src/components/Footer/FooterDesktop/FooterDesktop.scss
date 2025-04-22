@@ -1,0 +1,120 @@
+.footer {
+    display: flex;
+    justify-content: space-between;
+    gap: 4dvw;
+
+    height: 35%;
+    background-image: url("../../../assets/Images/bg-footer.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 3% 5%;
+    margin-top: 5em;
+
+    a {
+        text-decoration: none;
+        color: var(--text-primary-color);
+        font-size: 1.1dvw;
+    }
+
+    p {
+        font-size: 1.1dvw;
+    }
+
+    .flex-field-title {
+        font-size: 1.3dvw;
+        font-weight: 600;
+        margin: 0 0 1em 0;
+    }
+
+    div:not(.about) {
+        margin-top: 2%;
+    }
+
+
+    .about {
+        display: flex;
+        flex-direction: column;
+
+        .logo-footer {
+            width: 10vw;
+        }
+
+        a .flex-field-title {
+            margin: 0.5em 0 1.2em 0;
+        }
+
+        .flex-field-title {
+            margin: 0;
+        }
+
+        .social-media {
+            display: flex;
+            flex-direction: row;
+            gap: 0.5em;
+            font-weight: 600;
+            
+            img {
+                width: 1.7dvw;
+            }
+
+            p {       
+                padding: 0.1em 0 0 0;
+            }
+        }
+    }
+
+    .category {
+        display: flex;
+        flex-direction: column;
+
+        div {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3dvh;
+        }
+    }
+
+    .time {
+        display: flex;
+        flex-direction: column;
+        gap: 5dvh;
+
+        .business-hour {
+            div {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+
+                p {
+                    margin: 0;
+                }
+            }
+        }
+
+        .card-flags {
+            .flex-field-title {
+                margin-bottom: 0.5em;
+            }
+
+            .flags {
+                width: 17dvw;
+            }
+        }
+    }
+
+    .location {
+        div {
+            display: flex;
+            align-items: center;
+            gap: 0.3dvh;
+
+            .location-img {
+                width: 2.5dvw;
+            }
+
+            .flex-field-title {
+                margin: 0;
+            }
+        }
+    }
+}

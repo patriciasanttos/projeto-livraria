@@ -1,0 +1,135 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "name": "Agendas",
+      "description": "Agendas em Espanhol",
+      "image": "",
+      "created_at": "2025-03-14T16:43:18.126Z",
+      "updated_at": "2025-03-14T16:43:18.126Z",
+      "items": [
+        {
+          "id": 1,
+          "name": "Agenda Ben 10 Ultimate Edition Plus",
+          "description": "Agenda Ben 10 Ultimate Edition Plus",
+          "price": "20",
+          "image": "https://down-br.img.susercontent.com/file/br-11134207-7r98o-lpfi27limwmqea",
+          "status": true,
+          "created_at": "2025-03-14T16:45:53.714Z",
+          "updated_at": "2025-03-14T16:45:53.714Z"
+        },
+        {
+          "id": 123,
+          "name": "Agenda Ben 10 Ultimate Edition Plus Ultra Max",
+          "description": "Agenda Ben 10 Ultimate Edition Plus Ultra Max",
+          "price": "50",
+          "image": "https://images.tcdn.com.br/img/img_prod/1217404/agenda_costurada_ano_2012_112_folhas_grafons_ben_10_600172_vintage_117_1_23c357d5826a6010f7a0d545d6027e53.jpg",
+          "created_at": "2025-03-14T16:45:53.714Z",
+          "updated_at": "2025-03-14T16:45:53.714Z"
+        },
+        {
+          "id": 523,
+          "name": "Agenda Ben 10 Ultimate Edition Plus Ultra Max Revoluton Pro",
+          "description": "Agenda Ben 10 Ultimate Edition Plus Ultra Max Revoluton Pro",
+          "price": "100",
+          "image": "https://images.tcdn.com.br/img/img_prod/1217404/agenda_costurada_ano_2012_112_folhas_grafons_ben_10_600172_vintage_117_1_23c357d5826a6010f7a0d545d6027e53.jpg",
+          "created_at": "2025-03-14T16:45:53.714Z",
+          "updated_at": "2025-03-14T16:45:53.714Z"
+        },
+        {
+          "id": 525,
+          "name": "Agenda Ben 10 Ultimate Edition Plus Ultra Max Revoluton Pro V12 Pocket Edition",
+          "description": "Agenda Ben 10 Ultimate Edition Plus Ultra Max Revoluton Pro V12 Pocket Edition",
+          "price": "150",
+          "image": "https://images.tcdn.com.br/img/img_prod/996738/caderno_brochurao_80_folhas_capa_dura_ben_10_tilibra_69_4_81d9fa692a397f4315c37ac375946948.jpg",
+          "created_at": "2025-03-14T16:45:53.714Z",
+          "updated_at": "2025-03-14T16:45:53.714Z"
+        },
+        {
+          "id": 521,
+          "name": "Agenda Ben 10 Ultimate Edition Plus Ultra Max Revoluton Pro V12 Pocket Edition Premium",
+          "description": "Agenda Ben 10 Ultimate Edition Plus Ultra Max Revoluton Pro V12 Pocket Edition Premium",
+          "price": "190",
+          "image": "https://m.media-amazon.com/images/I/71-ScTSTDrL._AC_UF894,1000_QL80_.jpg",
+          "created_at": "2025-03-14T16:45:53.714Z",
+          "updated_at": "2025-03-14T16:45:53.714Z"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Presentes",
+      "description": "Presentes Infantis",
+      "image": "",
+      "created_at": "2025-03-14T16:43:18.126Z",
+      "updated_at": "2025-03-14T16:43:18.126Z",
+      "items": [
+        {
+          "id": 2,
+          "name": "Chaveiro Winx Ultimate Edition Plus",
+          "description": "Chaveiro Winx Ultimate Edition Plus",
+          "price": "30",
+          "image": "",
+          "created_at": "2025-03-14T16:45:53.714Z",
+          "updated_at": "2025-03-14T16:45:53.714Z"
+        },
+        {
+          "id": 412,
+          "name": "Chaveiro Winx Ultimate Edition Plus Ultra Max",
+          "description": "Chaveiro Winx Ultimate Edition Plus Ultra Max",
+          "price": "60",
+          "image": "",
+          "created_at": "2025-03-14T16:45:53.714Z",
+          "updated_at": "2025-03-14T16:45:53.714Z"
+        },
+        {
+          "id": 242,
+          "name": "Chaveiro Winx Ultimate Edition Plus Ultra Max Revoluton Pro",
+          "description": "Chaveiro Winx Ultimate Edition Plus Ultra Max Revoluton Pro",
+          "price": "120",
+          "image": "",
+          "created_at": "2025-03-14T16:45:53.714Z",
+          "updated_at": "2025-03-14T16:45:53.714Z"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Canetas",
+      "description": "Canetas Infantis",
+      "image": "",
+      "created_at": "2025-03-14T16:43:18.126Z",
+      "updated_at": "2025-03-14T16:43:18.126Z",
+      "items": [
+        {
+          "id": 3,
+          "name": "Chaveiro Winx Ultimate Edition Plus Ultra Max Revoluton Pro",
+          "description": "Chaveiro Winx Ultimate Edition Plus Ultra Max Revoluton Pro",
+          "price": "40",
+          "image": "",
+          "created_at": "2025-03-14T16:45:53.714Z",
+          "updated_at": "2025-03-14T16:45:53.714Z"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Lápis",
+      "description": "Lápis Labra Colorido",
+      "image": "",
+      "created_at": "2025-03-14T16:43:18.126Z",
+      "updated_at": "2025-03-14T16:43:18.126Z",
+      "items": [
+        {
+          "id": 4,
+          "name": "Chaveiro Winx Ultimate Edition Plus Ultra Max Revoluton Pro",
+          "description": "Chaveiro Winx Ultimate Edition Plus Ultra Max Revoluton Pro",
+          "price": "5000",
+          "image": "",
+          "created_at": "2025-03-14T16:45:53.714Z",
+          "updated_at": "2025-03-14T16:45:53.714Z"
+        }
+      ]
+    }
+  ]
+}

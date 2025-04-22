@@ -1,0 +1,115 @@
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  max-width: 20rem;
+  width: 100%;
+  margin: 0 auto;
+  overflow: hidden;
+  
+  background-color: var(--card-background);
+
+  .card-image {
+    width: 100%;
+    height: 250px;
+    cursor: pointer;
+    
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .card-data {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5em;
+    
+    p {
+      margin: 0.3em 0;
+      font-size: 13pt;
+      font-weight: 600;
+
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      &:first-of-type {
+        cursor: pointer;
+      }
+    }
+
+    .price {
+      color: #333;
+      font-weight: bold;
+    }
+
+    .installment {
+      color: #666;
+      font-size: 12pt;
+      margin-bottom: 0.3em;
+    }
+
+    .cart-buttons {
+      text-align: right;
+      margin: 0.5em 0.5em 0 0;
+
+      cursor: pointer;
+    
+      img {
+        width: 2em;
+        transition: transform 0.3s ease;
+      }
+    
+      &:hover {
+        img {
+          transform: scale(1.1);
+        }
+      }
+    }
+  }
+}
+
+.category-card {
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+
+  max-width: 15rem;
+  width: 100%;
+  min-width: 10rem;
+
+  max-height: 15rem;
+  height: auto;
+
+  .card-image {
+    img {
+      width: 12em;
+      max-width: 100%;
+      height: auto;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      border-radius: 50%;
+
+      cursor: pointer;
+    }
+  }
+
+  .card-data p {
+    font-size: 1.5rem;
+
+    cursor: pointer;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .card {
+    margin: 0 1em;
+  }
+}

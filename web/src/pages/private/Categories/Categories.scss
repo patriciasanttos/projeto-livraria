@@ -1,0 +1,146 @@
+.categories-page-container {
+    .categories-filter-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        margin: 1rem 7.5rem 2rem 3.8rem;
+
+        .categories-page-filter {
+            display: flex;
+            gap: 5.5rem;
+        }
+
+        .input-quantity {
+            display: flex;
+            width: 20%;
+
+            .quantity {
+                width: 70%;
+            }
+
+            .until-quantity {
+                margin-top: 1.2rem;
+            }
+        }
+    }
+
+
+}
+
+
+.modal-column-category {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 2rem;
+    gap: 0.3rem;
+
+    .modal-field {
+        width: 97%;
+    }
+
+    .name-category {
+        height: 1.8rem;
+    }
+
+    .modal-select {
+        width: 100%;
+    }
+
+    .textarea-category {
+        border: 1px solid #6BA57D;
+        border-radius: 5px;
+
+        height: 10rem;
+        width: 10%;
+        padding: 0.5rem 0.5rem;
+
+        &:focus {
+            outline: #6BA57D;
+        }
+    }
+
+    .image-preview-row {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+
+        .image-preview {
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 5px;
+            width: 205px;
+            height: 205px;
+            background-size: cover;
+
+            .image-delete {
+                background-color: red;
+                color: white;
+                width: 20px;
+                border-radius: 10px;
+                position: relative;
+                left: 92%;
+                top: 2px;
+                cursor: pointer;
+            }
+        }
+    }
+
+    .upload-button {
+        background-color: var(--button-blue);
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+            background-color: var(--button-dark-blue-hover);
+        }
+
+        &.disabled {
+            background-color: grey;
+            margin-top: 0.5rem;
+        }
+    }
+
+    .status-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+        height: 50px;
+        margin-top: 2rem;
+
+        .status-radio {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-around;
+            width: 100%;
+            height: 15px;
+        }
+
+        .status-title {
+            position: relative;
+            bottom: 2px;
+        }
+
+        .status-input {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+
+            input {
+                position: relative;
+                bottom: 4px;
+                accent-color: var(--button-lime-green);
+            }
+        }
+    }
+}
