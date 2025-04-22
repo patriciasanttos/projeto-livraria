@@ -63,7 +63,6 @@ export class CategoriesService {
     let category = await this.prisma.category.create({
       data: {
         name: data.name,
-        description: data.description,
         available: data.available,
       },
     });
@@ -115,9 +114,6 @@ export class CategoriesService {
     const updatedCategoryData: Record<string, any> = {};
 
     if (typeof data.name !== "undefined") updatedCategoryData.name = data.name;
-
-    if (typeof data.description !== "undefined")
-      updatedCategoryData.description = data.description;
 
     if (typeof data.available !== "undefined")
       updatedCategoryData.available = data.available;
