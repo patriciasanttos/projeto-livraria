@@ -33,13 +33,7 @@ function ProductDescription({ product }) {
 
     setIsProductInCart(true);
 
-    return toast.success('Produto adicionado ao seu carrinho', {
-      autoClose: 3000,
-      closeOnClick: true,
-      pauseOnHover: false,
-      pauseOnFocusLoss: false,
-      draggable: true
-    })
+    return toast.success('Produto adicionado ao seu carrinho')
   }
 
   const onClickRemoveFromCart = () => {
@@ -52,13 +46,7 @@ function ProductDescription({ product }) {
 
     setIsProductInCart(false);
 
-    return toast.success('Produto removido de seu carrinho', {
-      autoClose: 3000,
-      closeOnClick: true,
-      pauseOnHover: false,
-      pauseOnFocusLoss: false,
-      draggable: true
-    })
+    return toast.success('Produto removido de seu carrinho')
   }
 
   const onClickOpenModal = () => {
