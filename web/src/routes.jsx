@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Routes, Route, BrowserRouter, useLocation, Navigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
-import { privatePages, publicPages } from "./pages/pages";
+import { privatePages, publicPages } from "./pages/pages.js";
 import PublicRoutesLayout from "./layouts/PublicRoutesLayout";
 import PrivateRoutesLayout from "./layouts/PrivateRoutesLayout";
 
