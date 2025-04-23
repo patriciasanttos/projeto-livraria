@@ -28,6 +28,7 @@
         .main-product {
             width: 100%;
             height: auto;
+            border-radius: 5px
         }
 
         .item-description-images {
@@ -74,7 +75,7 @@
         }
 
         .description-text {
-            font-size: 1.4rem;
+            font-size: 1.2rem;
             width: 80%;
             
             @media (max-width: 1024px) {
