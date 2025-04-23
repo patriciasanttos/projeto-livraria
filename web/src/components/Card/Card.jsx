@@ -34,13 +34,7 @@ function Card({ id, name, price, image, color, isCategory, currentCategory }) {
     localStorage.setItem('cart', JSON.stringify(cartCookie));
     setIsInCart(true);
 
-    return toast.success('Item adicionado ao seu carrinho', {
-      autoClose: 3000,
-      closeOnClick: true,
-      pauseOnHover: false,
-      pauseOnFocusLoss: false,
-      draggable: true
-    })
+    return toast.success('Item adicionado ao seu carrinho')
   }
 
   const removeFromCart = () => {
@@ -58,13 +52,7 @@ function Card({ id, name, price, image, color, isCategory, currentCategory }) {
 
     setIsInCart(false);
 
-    return toast.success('Item removido de seu carrinho', {
-      autoClose: 3000,
-      closeOnClick: true,
-      pauseOnHover: false,
-      pauseOnFocusLoss: false,
-      draggable: true
-    });
+    return toast.success('Item removido de seu carrinho');
   }
 
   const handleOpenPage = () => {

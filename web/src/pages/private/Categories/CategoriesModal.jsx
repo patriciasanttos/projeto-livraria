@@ -18,20 +18,11 @@ export const CategoriesModal = ({
   setFormData,
   setIsModalOpen,
 }) => {
-  const {
-    mutate: createCategory,
-    status: statusCreate,
-    error: errorCreate,
-  } = useCreateCategory();
-  const {
-    mutate: updateCategory,
-    status: statusUpdate,
-    error: errorUpdate,
-  } = useUpdateCategory();
+  const { mutate: createCategory, status: statusCreate, error: errorCreate } = useCreateCategory();
+  const { mutate: updateCategory, status: statusUpdate, error: errorUpdate } = useUpdateCategory();
   const [toastLoading, setToastLoading] = useState();
 
   const isFormValid = (form) => {
-    console.log('>>> form', form)
     let isValid = true;
     const requiredFields = ["name", "image"];
 
@@ -89,10 +80,9 @@ export const CategoriesModal = ({
 
   const onConfirmSaveProduct = useCallback(() => {
     if (isCreateItem) {
-      const toastLoading = toast.loading("Criando categoria...", {
+      setToastLoading(toast.loading("Criando categoria...", {
         autoClose: false,
-      });
-      setToastLoading(toastLoading);
+      }));
 
       const createItemFormData = new FormData();
       createItemFormData.append("name", formData.name);
@@ -100,21 +90,12 @@ export const CategoriesModal = ({
       createItemFormData.append("image", formData.image);
       createItemFormData.append("banner", formData.banner);
 
-      try {
-        if (isFormValid(createItemFormData)) {
-          createCategory(createItemFormData);
-        } else {
-          toast.dismiss(toastLoading);
-        }
-      } catch (err) {
-        toast.dismiss(toastLoading);
-        toast.error("Erro ao criar categoria.");
-      }
+      if (isFormValid(createItemFormData))
+        return createCategory(createItemFormData);
     } else if (!isCreateItem) {
-      const toastLoading = toast.loading("Atualizando categoria...", {
+      setToastLoading(toast.loading("Atualizando categoria...", {
         autoClose: false,
-      });
-      setToastLoading(toastLoading);
+      }));
 
       const updatedFormData = new FormData();
       updatedFormData.append("id", formData.id);
@@ -123,24 +104,18 @@ export const CategoriesModal = ({
 
       if (formData.image === null)
         updatedFormData.append("deleteImage", "true");
-      else if (formData.image) updatedFormData.append("image", formData.image);
+      else if (formData.image)
+        updatedFormData.append("image", formData.image);
 
       if (formData.banner === null)
         updatedFormData.append("deleteBanner", "true");
       else if (formData.banner)
         updatedFormData.append("banner", formData.banner);
 
-      try {
-        if (isFormValid(updatedFormData)) {
-          updateCategory(updatedFormData);
-        } else {
-          toast.dismiss(toastLoading);
-        }
-      } catch (err) {
-        console.log(err)
-        toast.dismiss(toastLoading);
-        toast.error("Erro ao atualizar categoria.");
-      }
+      if (!isFormValid(updatedFormData))
+        return toast.error('A categoria precisa ter um nome, e uma imagem!')
+      else
+        updateCategory(updatedFormData);
     }
   }, [formData]);
 

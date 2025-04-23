@@ -96,31 +96,27 @@ export const ProductsModal = ({
   }, [initialImages]);
 
   const validateForm = (form) => {
-    if (!form.images || formData.images.length < 1) {
-      return toast.error("Você precisa adicionar pelo menos 1 imagem");
-    }
-
-    if (!form.name) {
+    if (!form.name)
       return toast.error("Você precisa adicionar um nome");
-    }
 
-    if (!form.price) {
+    if (!form.price)
       return toast.error("Você precisa adicionar um preço");
-    }
 
-    if (!form.categories) {
+    if (!form.categories)
       return toast.error("Você precisa adicionar o produto a uma categoria");
-    }
+
+    if (!form.images || formData.images.length < 1)
+      return toast.error("Você precisa adicionar pelo menos 1 imagem");
 
     return null
   }
   const onConfirmSaveProduct = useCallback(async () => {
     if (isCreateItem) {
       const hasError = validateForm(formData)
-      if (hasError) {
+
+      if (hasError)
         return hasError
-      }
-      
+
       setToastLoading(
         toast.loading('Criando produto...', {
           autoClose: false
@@ -145,9 +141,9 @@ export const ProductsModal = ({
       newDataForm.append('image_2', getImageFile(1));
       newDataForm.append('image_3', getImageFile(2));
 
-      try {
-        const newProduct = await createProduct(newDataForm);
+      const newProduct = await createProduct(newDataForm);
 
+      try {
         for (let category of formData.categories) {
           if (category === formData.categories[0])
             continue;
@@ -157,19 +153,15 @@ export const ProductsModal = ({
             productId: String(newProduct.id),
           });
         }
-
-        toast.dismiss(toastLoading);
-        toast.success("Produto criado com sucesso!");
       } catch (err) {
-        toast.dismiss(toastLoading);
-        toast.error('Erro ao criar produto.');
+        toast.error('Erro ao adicionar produta as categorias.');
       }
     } else if (!isCreateItem) {
       const hasError = validateForm(formData);
       if (hasError) {
         return hasError;
       }
-           
+
       setToastLoading(
         toast.loading('Atualizando produto...', {
           autoClose: false
@@ -194,9 +186,9 @@ export const ProductsModal = ({
       updatedFormData.append('image_2', getImageFile(1));
       updatedFormData.append('image_3', getImageFile(2));
 
-      try {
-        const updatedProduct = await updateProduct(updatedFormData);
+      const updatedProduct = await updateProduct(updatedFormData);
 
+      try {
         const addedCategories = formData.categories.filter(
           cat => !prevCategories.some(prev => prev.id === cat.id)
         );
@@ -221,13 +213,9 @@ export const ProductsModal = ({
             categoryId: String(category.id),
             productId: String(updatedProduct.id),
           });
-        })
-        toast.dismiss(toastLoading);
-
-        toast.success('Produto atualizado com sucesso!');
+        });
       } catch (err) {
-        toast.dismiss(toastLoading);
-        toast.error('Erro ao atualizar produto.');
+        toast.error('Erro ao atualizar categorias do produto.');
       }
     }
   }, [formData, isCreateItem, mainImageIndex, prevCategories, createProduct, updateProduct, addProductToCategory, removeProductFromCategory]);

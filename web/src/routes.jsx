@@ -20,7 +20,14 @@ export default function MainRoutes() {
   return (
     <BrowserRouter>
       <ScrollToTop />
-      <ToastContainer />
+      <ToastContainer
+        autoClose={3000}
+        closeOnClick={true}
+        pauseOnHover={false}
+        pauseOnFocusLoss={false}
+        draggable={true}
+        position="top-right"
+      />
 
       <Routes>
         <Route element={<PublicRoutesLayout />}>

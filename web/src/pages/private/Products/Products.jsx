@@ -104,7 +104,6 @@ function Products() {
     return _.uniqBy(products, "id");
   }, [allProducts, categoriesData, filters]);
 
-
   useEffect(() => {
     if (categories && categories.length > 0) {
       return setIsInitialLoad(false)

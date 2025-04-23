@@ -16,7 +16,6 @@ import { useCategoriesData } from '../../../hooks/useCategories';
 
 import './Categories.scss';
 
-
 function Categories() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
@@ -49,13 +48,7 @@ function Categories() {
 
     const category = categoriesData.find(category => category.name.toLowerCase() === categoryName.toLowerCase());
     if (!category) {
-      toast.error('Opa, parece que essa categoria não foi encontrada!', {
-        autoClose: 3000,
-        closeOnClick: true,
-        pauseOnHover: false,
-        pauseOnFocusLoss: false,
-        draggable: true
-      });
+      toast.error('Opa, parece que essa categoria não foi encontrada!');
 
       navigate('/categories');
       return [];

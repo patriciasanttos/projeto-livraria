@@ -54,8 +54,10 @@ function ItemList() {
 
   const handleSaveCart = useCallback(() => {
     let newCookie = {};
+
     for (const product of productList) {
-      newCookie[product.id] = product.quantity;
+      if (product.quantity > 0)
+        newCookie[product.id] = product.quantity;
     }
 
     localStorage.setItem("cart", JSON.stringify(newCookie))
@@ -86,15 +88,30 @@ function ItemList() {
 
   const onClickLess = (index) => {
     const products = [...productList];
+    const currentProduct = products[index]
 
-    if (products[index].quantity > 0) {
-      products[index].quantity = products[index].quantity - 1;
-      products[index].subtotal =
-        products[index].price * products[index].quantity;
+    if (currentProduct.quantity > 0) {
+      currentProduct.quantity -= 1;
 
+      if (currentProduct.quantity <= 0) {
+        products.splice(index, 1);
+        delete cartCookie[currentProduct.id];
+
+        if (Object.keys(cartCookie).length === 0)
+          localStorage.removeItem("cart");
+        else
+          localStorage.setItem("cart", JSON.stringify(cartCookie));
+
+        setProductList(products);
+        return handleSaveCart();
+      }
+
+      currentProduct.subtotal = currentProduct.price * currentProduct.quantity;
+
+      products[index] = currentProduct;
       setProductList(products);
       setLastUpdatedIndex(index);
-      handleSaveCart();
+      return handleSaveCart();
     }
   };
 
@@ -102,9 +119,8 @@ function ItemList() {
     const products = [...productList];
 
     if (products[index].quantity < 99) {
-      products[index].quantity = products[index].quantity + 1;
-      products[index].subtotal =
-        products[index].price * products[index].quantity;
+      products[index].quantity += 1;
+      products[index].subtotal = products[index].price * products[index].quantity;
 
       setProductList(products);
       setLastUpdatedIndex(index);
@@ -117,7 +133,6 @@ function ItemList() {
     products.splice(index, 1);
     setProductList(products);
 
-    const cartCookie = JSON.parse(localStorage.getItem("cart"));
     delete cartCookie[productList[index].id];
 
     if (Object.keys(cartCookie).length === 0) localStorage.removeItem("cart");

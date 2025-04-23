@@ -78,10 +78,8 @@ export const ManagesModal = ({
 
   const onConfirmSaveAdmin = useCallback(async () => {
     if (isCreateAdmin) {
-     if (formData.name.length < 5)
-       return toast.warning(
-         "Você precisa adicionar um nome."
-       );   
+      if (formData.name.length < 5)
+        return toast.warning("Você precisa adicionar um nome.");
 
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email))
         return toast.warning("Por favor, insira um e-mail válido.");
@@ -103,28 +101,21 @@ export const ManagesModal = ({
         })
       );
 
-      try {
-        await createAdmin({
-          name: formData.name,
-          phone: formData.phone,
-          email: formData.email,
-          password: formData.newPassword,
-        })
-      } catch (err) {
-        toast.dismiss(toastLoading);
-        toast.error("Erro ao criar Administrador.");
-      }
+      await createAdmin({
+        name: formData.name,
+        phone: formData.phone,
+        email: formData.email,
+        password: formData.newPassword,
+      })
     } else if (!isCreateAdmin) {
-     if (formData.name.length < 5)
-       return toast.warning("Você precisa adicionar um nome.");   
+      if (formData.name.length < 5)
+        return toast.warning("Você precisa adicionar um nome.");
 
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email))
         return toast.warning("Por favor, insira um e-mail válido.");
 
       if (formData.phone.length < 1)
-        return toast.warning(
-          "O numero de contato deve ter pelo menos 9 caracteres."
-        );
+        return toast.warning("O numero de contato deve ter pelo menos 9 caracteres.");
 
       if (formData.newPassword) {
         if (formData.newPassword.length < 8)
