@@ -12,7 +12,7 @@ import WhatsappContact from '../../../components/WhatsappContact/WhatsappContact
 import Loading from '../../../components/PageProcessing/Loading/Loading';
 import ErrorFinding from '../../../components/PageProcessing/ErrorFinding/ErrorFinding';
 
-import { useCategoriesData } from '../../../hooks/useCategories';
+import { useAvailableCategoriesData } from '../../../hooks/useCategories';
 
 import './Categories.scss';
 
@@ -21,7 +21,7 @@ function Categories() {
   const { pathname } = useLocation();
   const { categoryName } = useParams();
 
-  const { data: categoriesData, isLoading, error } = useCategoriesData();
+  const { data: categoriesData, isLoading, error } = useAvailableCategoriesData();
 
   const [data, setData] = useState([]);
   const [displayedItems, setDisplayedItems] = useState([]);
