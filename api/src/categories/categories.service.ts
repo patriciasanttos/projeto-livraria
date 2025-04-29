@@ -45,6 +45,44 @@ export class CategoriesService {
     });
   }
 
+  async getAllAvailable() {
+    return await this.prisma.category.findMany({
+      where: {
+        available: true,
+      },
+      select: {
+        id: true,
+        name: true,
+        available: true,
+        image: true,
+        banner: true,
+
+        items: {
+          where: {
+            available: true,
+          },
+          select: {
+            id: true,
+            name: true,
+            price: true,
+            description: true,
+            available: true,
+            mainCategory: true,
+
+            images: {
+              select: {
+                id: true,
+                url: true,
+                isMain: true,
+                itemId: true,
+              },
+            },
+          },
+        },
+      },
+    });
+  }
+
   async getById(categoryId: number) {
     const category = await this.prisma.category.findUnique({
       where: { id: categoryId },
