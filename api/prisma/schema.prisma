@@ -58,7 +58,7 @@ model ItemImage {
 model SaleItemReport {
   id         Int      @id @default(autoincrement())
   itemId     Int      @unique
-  item       Item     @relation(fields: [itemId], references: [id])
+  item       Item     @relation(fields: [itemId], references: [id], onDelete: Cascade)
   count      Int
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
@@ -67,7 +67,7 @@ model SaleItemReport {
 model SearchItemReport {
   id         Int      @id @default(autoincrement())
   itemId     Int      @unique
-  item       Item     @relation(fields: [itemId], references: [id])
+  item       Item     @relation(fields: [itemId], references: [id], onDelete: Cascade)
   count      Int
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt

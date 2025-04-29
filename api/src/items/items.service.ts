@@ -353,6 +353,14 @@ export class ItemsService {
         },
       });
 
+      await tx.saleItemReport.deleteMany({
+        where: { itemId: itemId },
+      });
+
+      await tx.searchItemReport.deleteMany({
+        where: { itemId: itemId },
+      });
+
       await tx.itemImage.deleteMany({
         where: { itemId: itemId },
       });
