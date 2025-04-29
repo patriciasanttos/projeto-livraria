@@ -194,6 +194,14 @@ export class CategoriesService {
         },
       });
 
+      await tx.saleCategoryReport.deleteMany({
+        where: { categoryId: categoryId },
+      });
+
+      await tx.searchCategoryReport.deleteMany({
+        where: { categoryId: categoryId },
+      });
+
       if (category.image) {
         const url = new URL(category.image);
         const path = decodeURIComponent(
