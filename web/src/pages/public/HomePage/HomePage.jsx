@@ -6,14 +6,18 @@ import mock from '../../../mocks/categoriesMocks.json'
 import Category from '../../../components/Category/Category';
 import BannerSlider from '../../../components/Banner/Banner';
 import WhatsappContact from '../../../components/WhatsappContact/WhatsappContact';
+import { useCategoriesData, useDeleteCategory } from "../../../hooks/useCategories";
 
 import './HomePage.scss';
 
 function HomePage() {
-  const category1 = mock.data[0];
-  const category2 = mock.data[1];
-  const allCategories = mock.data;
+  const { data: categoriesData, isLoading, error } = useCategoriesData();
 
+  const category1 = categoriesData && categoriesData.length > 0 ? categoriesData[0] : mock.data[0];
+  const category2 = categoriesData && categoriesData.length > 0 ? categoriesData[1] : mock.data[1];
+  const allCategories = categoriesData && categoriesData.length > 0 ? categoriesData : mock.data;
+
+  console.log('>>>> category1', category1)
   return (
     <div className='home-page'>
       <BannerSlider />
