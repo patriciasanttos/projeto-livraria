@@ -102,17 +102,33 @@
     }
 }
 
-@media screen and (min-width: 1480px) {
+@media screen and (min-width: 1480px) and (max-width: 1680px){
     .category-component {
         padding-inline: 0;
 
         .category-component-container .arrows {
             &:first-child {
-                left: 10%;
+                left: 12%;
             }
 
             &:last-child {
-                right: 10%;
+                right: 12%;
+            }
+        }
+    }
+}
+
+@media screen and (min-width: 1680px) {
+    .category-component {
+        padding-inline: 0;
+
+        .category-component-container .arrows {
+            &:first-child {
+                left: 15%;
+            }
+
+            &:last-child {
+                right: 15%;
             }
         }
     }

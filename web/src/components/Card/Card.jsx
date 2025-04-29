@@ -79,7 +79,6 @@ function Card({ id, name, price, image, color, isCategory, currentCategory }) {
         {!isCategory && (
           <>
             <p className="price">{currency.format(price)}</p>
-            <p className="installment">Até xxxx no cartão de crédito</p>
 
             <div className="cart-buttons">
               {!isInCart ? (
