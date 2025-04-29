@@ -13,8 +13,9 @@ export class CategoriesService {
     private readonly supabase: SupabaseService
   ) {}
 
-  async getAll() {
-    return await this.prisma.category.findMany({
+  async getAll({ availableCategories }: { availableCategories: boolean }) {
+    let queryData = {
+      where: {},
       select: {
         id: true,
         name: true,
@@ -23,6 +24,7 @@ export class CategoriesService {
         banner: true,
 
         items: {
+          where: {},
           select: {
             id: true,
             name: true,
@@ -42,45 +44,19 @@ export class CategoriesService {
           },
         },
       },
-    });
-  }
+    };
 
-  async getAllAvailable() {
-    return await this.prisma.category.findMany({
-      where: {
+    if (availableCategories) {
+      queryData.where = {
         available: true,
-      },
-      select: {
-        id: true,
-        name: true,
+      };
+
+      queryData.select.items.where = {
         available: true,
-        image: true,
-        banner: true,
+      };
+    }
 
-        items: {
-          where: {
-            available: true,
-          },
-          select: {
-            id: true,
-            name: true,
-            price: true,
-            description: true,
-            available: true,
-            mainCategory: true,
-
-            images: {
-              select: {
-                id: true,
-                url: true,
-                isMain: true,
-                itemId: true,
-              },
-            },
-          },
-        },
-      },
-    });
+    return await this.prisma.category.findMany(queryData);
   }
 
   async getById(categoryId: number) {

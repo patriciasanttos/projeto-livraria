@@ -27,8 +27,9 @@ export class ItemsService {
     private readonly supabase: SupabaseService
   ) {}
 
-  async getAll() {
-    const items = await this.prisma.item.findMany({
+  async getAll({ availableItems }: { availableItems: boolean }) {
+    let queryData = {
+      where: {},
       select: {
         id: true,
         name: true,
@@ -56,25 +57,20 @@ export class ItemsService {
           },
         },
       },
-    });
+    };
+
+    if (availableItems)
+      queryData.where = {
+        available: true,
+      };
+
+    const items = await this.prisma.item.findMany(queryData);
 
     return items.map((item) => ({
       ...item,
       mainImage: item.images.find((img) => img.isMain)?.url ?? null,
       images: item.images.map((img) => img.url),
     }));
-  }
-
-  async getAllAvailables() {
-    return await this.prisma.item.findMany({
-      where: {
-        available: true,
-      },
-      include: {
-        categories: true,
-        images: true,
-      },
-    });
   }
 
   async getById(itemId: number) {

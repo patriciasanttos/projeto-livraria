@@ -44,7 +44,7 @@ export class ItemsController {
   })
   //-----
   getAll() {
-    return this.itemsService.getAll();
+    return this.itemsService.getAll({ availableItems: false });
   }
 
   @Get("available")
@@ -60,7 +60,7 @@ export class ItemsController {
   })
   //-----
   getAllAvailables() {
-    return this.itemsService.getAllAvailables();
+    return this.itemsService.getAll({ availableItems: true });
   }
 
   @Post()

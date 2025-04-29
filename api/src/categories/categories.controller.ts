@@ -42,7 +42,7 @@ export class CategoriesController {
   })
   //-----
   getAll() {
-    return this.categoriesService.getAll();
+    return this.categoriesService.getAll({ availableCategories: false });
   }
 
   @Get("available")
@@ -58,7 +58,7 @@ export class CategoriesController {
   })
   //-----
   getAllAvailable() {
-    return this.categoriesService.getAllAvailable();
+    return this.categoriesService.getAll({ availableCategories: true });
   }
 
   @Post()
