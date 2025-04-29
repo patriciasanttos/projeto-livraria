@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Link } from "react-router-dom";
 
-import { useAllProductsData } from '../../hooks/useProducts';
+import { useAvailableProductsData } from '../../hooks/useProducts';
 import { useCreateReport } from '../../hooks/useReports';
 
 //-----Images and icons
@@ -24,7 +24,7 @@ function ItemList() {
   const isMobile = useMediaQuery({ maxWidth: 821 });
   const [modalDelete, setModalDelete] = useState(false);
 
-  const { data, isLoading, error } = useAllProductsData()
+  const { data, isLoading, error } = useAvailableProductsData()
 
   const cartCookie = JSON.parse(localStorage.getItem("cart")) || {};
   const [productList, setProductList] = useState([]);
@@ -34,22 +34,30 @@ function ItemList() {
     if (!data)
       return [];
 
-    return Object.entries(cartCookie).map(([productId, quantity]) => {
+    const productsData = [];
+
+    for (let [productId, quantity] of Object.entries(cartCookie)) {
       const product = data.find(p => p.id == productId);
 
-      return {
+      if (!product?.id)
+        continue;
+
+      productsData.push({
         id: product?.id,
         name: product?.name,
-        image: product?.mainImage,
+        image: product?.mainImage || product?.images[0],
         price: product?.price,
         quantity,
         subtotal: product?.price * quantity
-      }
-    })
+      });
+    };
+
+    return productsData;
   }
 
   useEffect(() => {
     setProductList(loadProducts());
+    console.log(productList);
   }, [data]);
 
   const handleSaveCart = useCallback(() => {
