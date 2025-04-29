@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
-import { useCategoriesData } from '../../../hooks/useCategories';
+import { useAvailableCategoriesData } from '../../../hooks/useCategories';
 import _ from "lodash";
 
 //-----Components
@@ -16,7 +16,7 @@ function ItemPage() {
   const { id } = useParams();
   const { state: locationState } = useLocation();
 
-  const { data, isLoading, error } = useCategoriesData()
+  const { data, isLoading, error } = useAvailableCategoriesData()
 
   const [product, setProduct] = useState();
   const [productsOfSameCategory, setProductsOfSameCategory] = useState([]);
