@@ -5,6 +5,7 @@
 
 Este projeto tem como objetivo o desenvolvimento de uma plataforma web moderna para uma loja de papelaria e livraria. A proposta busca otimizar o atendimento ao cliente, oferecendo uma navegação intuitiva por categorias de produtos, permitindo a seleção de itens e a finalização da compra via WhatsApp com um atendente. A plataforma também conta com um painel administrativo completo para a gestão de produtos, categorias e promoções.
 
+
 ---
 
 ## 🗺️ **Visão Geral**
