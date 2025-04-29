@@ -6,6 +6,12 @@ export const getAllCategories = async () => {
   return data;
 };
 
+export const getAllAvailableCategories = async () => {
+  const { data } = await api.get("/categories/available");
+
+  return data;
+};
+
 export const createCategory = async (newData) => {
   const { data } = await api.post("/categories", newData);
 

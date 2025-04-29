@@ -6,12 +6,20 @@ import {
   deleteCategory,
   addProductToCategory,
   removeProductFromCategory,
+  getAllAvailableCategories,
 } from "../service/api/categories";
 
 export const useCategoriesData = () =>
   useQuery({
     queryKey: ["categories"],
     queryFn: getAllCategories,
+    staleTime: 1000 * 60 * 5,
+  });
+
+export const useAvailableCategoriesData = () =>
+  useQuery({
+    queryKey: ["availableCategories"],
+    queryFn: getAllAvailableCategories,
     staleTime: 1000 * 60 * 5,
   });
 

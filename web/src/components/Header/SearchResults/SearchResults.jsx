@@ -1,15 +1,17 @@
 import React, { useCallback, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+import { useAvailableCategoriesData } from "../../../hooks/useCategories";
+import { useCreateReport } from "../../../hooks/useReports";
+
+import Loading from "../../PageProcessing/Loading/Loading";
 
 import './SearchResults.scss'
-import { useAllProductsData } from "../../../hooks/useProducts";
-import { useCreateReport } from "../../../hooks/useReports";
-import Loading from "../../PageProcessing/Loading/Loading";
-import { useNavigate } from "react-router-dom";
 
 const SearchResults = ({ query, setQuery }) => {
   const navigate = useNavigate();
 
-  const { data } = useAllProductsData();
+  const { data } = useAvailableCategoriesData();
   const { mutate } = useCreateReport();
 
   const [isLoading, setIsLoading] = useState(true);
@@ -35,25 +37,22 @@ const SearchResults = ({ query, setQuery }) => {
 
     const filteredResults = new Map();
 
-    Object.entries(data).forEach(([, value]) => {
+    Object.entries(data).forEach(([, category]) => {
       const queryString = debouncedQuery.trim().toLowerCase()
 
-      const itemKey = `item-${value.id}`;
+      const categoryKey = `category-${category.id}`;
 
-      if (
-        value.name.toLowerCase().includes(queryString.toLowerCase()) ||
-        value.description?.toLowerCase().includes(queryString.toLowerCase())
-      )
-        filteredResults.set(itemKey, { ...value, type: "item" });
+      if (category.name.toLowerCase().includes(queryString.toLowerCase()))
+        filteredResults.set(categoryKey, { ...category, type: "category" });
 
-      value.categories.forEach(category => {
-        const categoryKey = `category-${category.id}`;
+      category.items.forEach(product => {
+        const productKey = `product-${product.id}`;
 
         if (
-          category.name.toLowerCase().includes(queryString.toLowerCase()) ||
-          category.description?.toLowerCase().includes(queryString.toLowerCase())
+          product.name.toLowerCase().includes(queryString.toLowerCase()) ||
+          product.description?.toLowerCase().includes(queryString.toLowerCase())
         )
-          filteredResults.set(categoryKey, { ...category, type: "category" });
+          filteredResults.set(productKey, { ...product, type: "product" });
       });
     });
 

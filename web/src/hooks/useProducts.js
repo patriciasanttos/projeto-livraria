@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   getAllProducts,
-  getAllAvailablesProducts,
+  getAllAvailableProducts,
   deleteProduct,
   updateProduct,
   createProduct,
@@ -17,7 +17,7 @@ export const useAllProductsData = () =>
 export const useAvailableProductsData = () =>
   useQuery({
     queryKey: ["availableProducts"],
-    queryFn: getAllAvailablesProducts,
+    queryFn: getAllAvailableProducts,
     staleTime: 1000 * 60 * 5,
   });
 
