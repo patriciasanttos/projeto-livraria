@@ -18,12 +18,13 @@ const BannerSlider = () => {
 
   useEffect(() => {
     if (data)
-      setSlides(prev => ([
-        ...prev,
+      setSlides([
+        bannerOne,
+        bannerTwo,
         ...data
-          .filter(category => category.banner !== null)
+          .filter(category => category.banner)
           .map(category => category.banner)
-      ]));
+      ]);
   }, [data]);
 
   useEffect(() => {

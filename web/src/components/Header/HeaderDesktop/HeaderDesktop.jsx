@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 
 //-----Icons & images
-import logo from "../../../assets/images/logoV2.svg";
+
 import instagramGreenIcon from "../../../assets/icons/instagramGreenIcon.svg";
 import locationGreenIcon from "../../../assets/icons/locationGreenIcon.svg";
 import shoppingCartIcon from "../../../assets/icons/shoppingCartIcon.svg";
@@ -38,7 +38,7 @@ const HeaderDesktop = () => {
       <div className="header-content">
         <div className="header-content-top">
           <Link to="/" className="header-logo-link">
-            <img className="header-logo" src={logo} alt="Logo DNC" />
+            <span className="header-logo" style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--text-primary-color)' }}>LOGO</span>
           </Link>
 
           <div

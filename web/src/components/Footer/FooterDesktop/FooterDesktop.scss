@@ -1,35 +1,35 @@
 .footer {
     display: flex;
     justify-content: space-between;
-    gap: 4dvw;
+    gap: 2em;
 
-    height: 35%;
     background-image: url("../../../assets/images/bg-footer.png");
     background-repeat: no-repeat;
     background-size: cover;
-    padding: 3% 5%;
-    margin-top: 5em;
+    padding: 2.5em 5%;
+    margin-top: auto;
 
     a {
         text-decoration: none;
         color: var(--text-primary-color);
-        font-size: 1.1dvw;
+        font-size: 0.9rem;
+        line-height: 1.6;
     }
 
     p {
-        font-size: 1.1dvw;
+        font-size: 0.9rem;
+        line-height: 1.6;
     }
 
     .flex-field-title {
-        font-size: 1.3dvw;
-        font-weight: 600;
-        margin: 0 0 1em 0;
+        font-size: 1.05rem;
+        font-weight: 700;
+        margin: 0 0 0.6em 0;
     }
 
     div:not(.about) {
         margin-top: 2%;
     }
-
 
     .about {
         display: flex;
@@ -40,7 +40,7 @@
         }
 
         a .flex-field-title {
-            margin: 0.5em 0 1.2em 0;
+            margin: 0.4em 0 0.8em 0;
         }
 
         .flex-field-title {
@@ -50,15 +50,18 @@
         .social-media {
             display: flex;
             flex-direction: row;
-            gap: 0.5em;
+            align-items: center;
+            gap: 0.4em;
             font-weight: 600;
-            
+
             img {
-                width: 1.7dvw;
+                width: 20px;
+                height: 20px;
             }
 
-            p {       
-                padding: 0.1em 0 0 0;
+            p {
+                padding: 0;
+                margin: 0;
             }
         }
     }
@@ -70,20 +73,20 @@
         div {
             display: flex;
             flex-direction: column;
-            gap: 0.3dvh;
+            gap: 0.25em;
         }
     }
 
     .time {
         display: flex;
         flex-direction: column;
-        gap: 5dvh;
+        gap: 1.5em;
 
         .business-hour {
             div {
                 display: flex;
                 flex-direction: column;
-                gap: 10px;
+                gap: 4px;
 
                 p {
                     margin: 0;
@@ -93,11 +96,12 @@
 
         .card-flags {
             .flex-field-title {
-                margin-bottom: 0.5em;
+                margin-bottom: 0.4em;
             }
 
             .flags {
-                width: 17dvw;
+                width: 200px;
+                max-width: 100%;
             }
         }
     }
@@ -106,15 +110,44 @@
         div {
             display: flex;
             align-items: center;
-            gap: 0.3dvh;
+            gap: 0.3em;
 
             .location-img {
-                width: 2.5dvw;
+                width: 24px;
+                height: 24px;
             }
 
             .flex-field-title {
                 margin: 0;
             }
+        }
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .footer {
+        a, p {
+            font-size: 0.95rem;
+        }
+
+        .flex-field-title {
+            font-size: 1.1rem;
+        }
+
+        .time .card-flags .flags {
+            width: 220px;
+        }
+    }
+}
+
+@media screen and (min-width: 1440px) {
+    .footer {
+        a, p {
+            font-size: 1rem;
+        }
+
+        .flex-field-title {
+            font-size: 1.15rem;
         }
     }
 }

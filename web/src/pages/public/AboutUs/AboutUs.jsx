@@ -17,18 +17,13 @@ function AboutUs() {
 
         <div className="aboutus-text-container">
           <p className="aboutus-text">
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Laborum
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laborum
             beatae dolorem dignissimos, pariatur amet possimus deserunt iste
             accusantium nesciunt nobis magnam culpa explicabo ex est,
             consectetur ipsa? Officiis aperiam doloribus eligendi inventore.
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Laborum
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laborum
             beatae dolorem dignissimos, pariatur amet possimus deserunt iste
-            accusantium nesciunt nobis magnam culpa explicabo ex est,
-            consectetur ipsa? Officiis aperiam doloribus eligendi inventore.
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Laborum
-            beatae dolorem dignissimos, pariatur amet possimus deserunt iste
-            accusantium nesciunt nobis magnam culpa explicabo ex est,
-            consectetur ipsa? Officiis aperiam doloribus eligendi inventore.
+            accusantium nesciunt nobis magnam culpa explicabo ex est.
           </p>
         </div>
       </section>
@@ -49,14 +44,14 @@ function AboutUs() {
 
             <div className="address-location">
               <p>
-                R. Andorra, 500 - Jardim America, São José dos Campos - SP,
-                12235-050
+                R. Exemplo, 123 - Centro, Cidade Exemplo - SP,
+                00000-000
               </p>
             </div>
           </div>
 
           <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3666.14969880942!2d-45.8978927!3d-23.237638999999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94cc4aa30bf55685%3A0x9a8b6fe5f74882f2!2sShopping%20Jardim%20Oriente!5e0!3m2!1spt-BR!2sbr!4v1742417598628!5m2!1spt-BR!2sbr"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3657.106!2d-46.633!3d-23.550!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1sExemplo!5e0!3m2!1spt-BR!2sbr"
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
             title="Localização da loja no mapa"
@@ -76,7 +71,7 @@ function AboutUs() {
 
             <div className="wpp-number">
               <a target='_blank' href={`https://wa.me/${import.meta.env.VITE_WHATSAPP_NUMBER}`} className="info-number">
-                (12) 98229-4420
+                (00) 00000-0000
               </a>
             </div>
           </div>
@@ -97,7 +92,7 @@ function AboutUs() {
                 href={import.meta.env.VITE_INSTAGRAM_URL}
                 className="info-instagram"
               >
-                @ciadaeducacaosjc
+                @lorem_ipsum
               </a>
             </div>
           </div>

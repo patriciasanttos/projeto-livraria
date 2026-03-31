@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 //-- Icons and Images
-import logo from "../../../assets/images/logo.svg";
+
 import instagram from "../../../assets/icons/instagram-blue.svg";
 import flags from "../../../assets/icons/card-flags.svg";
 import location from "../../../assets/icons/location-blue.svg";
@@ -14,8 +14,8 @@ const FooterDesktop = () => {
     return (
       <footer className="footer">
         <div className="about">
-          <Link to="/">
-            <img className="logo-footer" src={logo} alt="logo" />
+          <Link to="/" style={{ textDecoration: 'none' }}>
+            <span className="logo-footer" style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--text-primary-color)', display: 'block' }}>LOGO</span>
           </Link>
 
           <Link to="/aboutus">
@@ -30,7 +30,7 @@ const FooterDesktop = () => {
             target="_blank"
           >
             <img src={instagram} alt="insta-logo" />
-            <p>@ciadaeducacaosjc</p>
+            <p>@lorem_ipsum</p>
           </a>
         </div>
 
@@ -74,10 +74,10 @@ const FooterDesktop = () => {
             <h2 className="flex-field-title">Como Chegar</h2>
           </div>
 
-          <a href="https://maps.app.goo.gl/KQMV5vfECNFFPpeF9" target="_blank">
-            Shopping Jardim Oriente, <br />
-            R. Andorra, 500 - Jardim America, <br />
-            São José dos Campos - SP
+          <a href="#" target="_blank">
+            Shopping Lorem Ipsum, <br />
+            R. Exemplo, 123 - Centro, <br />
+            Cidade Exemplo - SP
           </a>
         </div>
       </footer>

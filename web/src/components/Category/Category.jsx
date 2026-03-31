@@ -63,12 +63,12 @@ const Category = ({
             return setStartIndex(prev => prev - 1);
     };
     const moveRight = () => {
-        if (startIndex + cardsPerPage < data.length)
+        if (startIndex + cardsPerPage < (data || []).length)
             return setStartIndex(prev => prev + 1);
     };
 
 
-    const displayedCards = data.slice(startIndex, startIndex + cardsPerPage);
+    const displayedCards = (data || []).slice(startIndex, startIndex + cardsPerPage);
 
     return (
         <div className='category-component'>
@@ -92,7 +92,7 @@ const Category = ({
                             name={card.name}
                             description={card.description}
                             price={card?.price}
-                            image={card.images && card.images.length > 0 ? card.images[0].url : kitCanetas}
+                            image={card.images && card.images.length > 0 ? card.images[0].url : (card.image || kitCanetas)}
                             color={categoryColor}
                             isCategory={showOnlyCategories}
                             currentCategory={id ? id : 0}
@@ -100,7 +100,7 @@ const Category = ({
                     ))
                 }
 
-                {startIndex + cardsPerPage < data.length && (
+                {startIndex + cardsPerPage < (data || []).length && (
                     <img
                         className="arrows"
                         src={categoryArrow.rightArrow}

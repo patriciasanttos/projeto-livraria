@@ -1,15 +1,24 @@
 import { api } from "../api";
+import { categoriesMock } from "../../mocks/apiMocks";
 
 export const getAllCategories = async () => {
-  const { data } = await api.get("/categories");
-
-  return data;
+  try {
+    const { data } = await api.get("/categories");
+    return data;
+  } catch {
+    console.warn("API indisponível — usando dados mockeados para categorias");
+    return categoriesMock;
+  }
 };
 
 export const getAllAvailableCategories = async () => {
-  const { data } = await api.get("/categories/available");
-
-  return data;
+  try {
+    const { data } = await api.get("/categories/available");
+    return data;
+  } catch {
+    console.warn("API indisponível — usando dados mockeados para categorias");
+    return categoriesMock;
+  }
 };
 
 export const createCategory = async (newData) => {

@@ -1,15 +1,24 @@
 import { api } from "../api";
+import { productsMock } from "../../mocks/apiMocks";
 
 export const getAllProducts = async () => {
-  const { data } = await api.get("/items");
-
-  return data;
+  try {
+    const { data } = await api.get("/items");
+    return data;
+  } catch {
+    console.warn("API indisponível — usando dados mockeados para produtos");
+    return productsMock;
+  }
 };
 
 export const getAllAvailableProducts = async () => {
-  const { data } = await api.get("/items/available");
-
-  return data;
+  try {
+    const { data } = await api.get("/items/available");
+    return data;
+  } catch {
+    console.warn("API indisponível — usando dados mockeados para produtos");
+    return productsMock;
+  }
 };
 
 export const createProduct = async (neData) => {
