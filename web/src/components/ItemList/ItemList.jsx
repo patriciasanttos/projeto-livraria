@@ -45,7 +45,7 @@ function ItemList() {
       productsData.push({
         id: product?.id,
         name: product?.name,
-        image: product?.mainImage || product?.images?.[0]?.url,
+        image: product?.mainImage || product?.images[0],
         price: product?.price,
         quantity,
         subtotal: product?.price * quantity

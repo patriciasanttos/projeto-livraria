@@ -7,7 +7,7 @@ import IconButton from '@mui/material/IconButton';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
-
+import Logo from '../../../assets/images/logo.svg';
 
 import './Login.scss';
 import { login } from '../../../service/api/admins';
@@ -54,7 +54,7 @@ function Login() {
 
   return (
     <div className="login-container">
-      <span className="logo" style={{ fontSize: '3rem', fontWeight: 700, color: 'var(--text-primary-color)' }}>LOGO</span>
+      <img src={Logo} alt="Logo" className="logo" />
       <div className="login-box">
         <form onSubmit={handleSubmit}>
           <div className="input-group">

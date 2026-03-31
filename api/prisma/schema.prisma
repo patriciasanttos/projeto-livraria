@@ -1,0 +1,92 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Admin {
+  id         Int      @id @default(autoincrement())
+  name       String
+  email      String   @unique
+  phone      String   @unique
+  password   String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model Category {
+  id                   Int                    @id @default(autoincrement())
+  name                 String
+  available            Boolean                @default(true)
+  image                String?
+  banner               String?
+  items                Item[]                 @relation("CategoryItems")
+  SaleCategoryReport   SaleCategoryReport[]
+  SearchCategoryReport SearchCategoryReport[]
+  created_at           DateTime               @default(now())
+  updated_at           DateTime               @updatedAt
+}
+
+model Item {
+  id             Int                @id @default(autoincrement())
+  name           String
+  description    String?
+  price          Decimal
+  available      Boolean            @default(true)
+  mainCategory   String
+  categories     Category[]         @relation("CategoryItems")
+  sales_reports  SaleItemReport[]
+  search_reports SearchItemReport[]
+  images         ItemImage[]
+  created_at     DateTime           @default(now())
+  updated_at     DateTime           @updatedAt
+}
+
+model ItemImage {
+  id         Int      @id @default(autoincrement())
+  url        String   @unique
+  isMain     Boolean  @default(false)
+  itemId     Int
+  item       Item     @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model SaleItemReport {
+  id         Int      @id @default(autoincrement())
+  itemId     Int      @unique
+  item       Item     @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  count      Int
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model SearchItemReport {
+  id         Int      @id @default(autoincrement())
+  itemId     Int      @unique
+  item       Item     @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  count      Int
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model SaleCategoryReport {
+  id         Int      @id @default(autoincrement())
+  categoryId Int      @unique
+  category   Category @relation(fields: [categoryId], references: [id])
+  count      Int
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model SearchCategoryReport {
+  id         Int      @id @default(autoincrement())
+  categoryId Int      @unique
+  category   Category @relation(fields: [categoryId], references: [id])
+  count      Int
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
