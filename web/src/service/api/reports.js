@@ -1,13 +1,12 @@
-import { api } from "../api";
+import reportsMock from "../../mocks/reportsMock.json";
+
+const mockReports = reportsMock.data;
 
 export const getAllReports = async () => {
-  const { data } = await api.get("/reports");
-
-  return data;
+  return mockReports;
 };
 
 export const createReport = async (data) => {
-  const response = await api.post("/reports", data);
-
-  return response.data;
+  console.log("[Mock] createReport:", data);
+  return { ...data, id: Date.now() };
 };

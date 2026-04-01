@@ -1,0 +1,94 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "type": "sale",
+      "entityType": "item",
+      "entityId": 101,
+      "entityName": "Caderno Espiral Universitário 200 Folhas",
+      "count": 15,
+      "created_at": "2025-03-01T10:00:00.000Z"
+    },
+    {
+      "id": 2,
+      "type": "sale",
+      "entityType": "item",
+      "entityId": 201,
+      "entityName": "Kit Canetas Gel Coloridas 12 Cores",
+      "count": 23,
+      "created_at": "2025-03-01T10:00:00.000Z"
+    },
+    {
+      "id": 3,
+      "type": "sale",
+      "entityType": "item",
+      "entityId": 301,
+      "entityName": "Mochila Escolar Juvenil Estampada",
+      "count": 8,
+      "created_at": "2025-03-02T10:00:00.000Z"
+    },
+    {
+      "id": 4,
+      "type": "sale",
+      "entityType": "item",
+      "entityId": 401,
+      "entityName": "Coleção Contos de Fadas Ilustrados",
+      "count": 12,
+      "created_at": "2025-03-03T10:00:00.000Z"
+    },
+    {
+      "id": 5,
+      "type": "sale",
+      "entityType": "item",
+      "entityId": 502,
+      "entityName": "Lápis de Cor Profissional 48 Cores",
+      "count": 18,
+      "created_at": "2025-03-04T10:00:00.000Z"
+    },
+    {
+      "id": 6,
+      "type": "sale",
+      "entityType": "item",
+      "entityId": 601,
+      "entityName": "Planner Anual 2025 Capa Dura Premium",
+      "count": 10,
+      "created_at": "2025-03-05T10:00:00.000Z"
+    },
+    {
+      "id": 7,
+      "type": "sale",
+      "entityType": "item",
+      "entityId": 801,
+      "entityName": "Kit Presente Papelaria Completo",
+      "count": 7,
+      "created_at": "2025-03-06T10:00:00.000Z"
+    },
+    {
+      "id": 8,
+      "type": "sale",
+      "entityType": "item",
+      "entityId": 103,
+      "entityName": "Caderno Inteligente Grande Edição Especial",
+      "count": 20,
+      "created_at": "2025-03-07T10:00:00.000Z"
+    },
+    {
+      "id": 9,
+      "type": "sale",
+      "entityType": "item",
+      "entityId": 205,
+      "entityName": "Caneta Brush Pen Aquarelável 24 Cores",
+      "count": 14,
+      "created_at": "2025-03-08T10:00:00.000Z"
+    },
+    {
+      "id": 10,
+      "type": "sale",
+      "entityType": "item",
+      "entityId": 701,
+      "entityName": "Kit Washi Tape Decorativa 10 Rolos",
+      "count": 25,
+      "created_at": "2025-03-09T10:00:00.000Z"
+    }
+  ]
+}

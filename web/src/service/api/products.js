@@ -1,31 +1,26 @@
-import { api } from "../api";
+import productsMock from "../../mocks/productsMock.json";
+
+const mockProducts = productsMock.data;
 
 export const getAllProducts = async () => {
-  const { data } = await api.get("/items");
-
-  return data;
+  return mockProducts;
 };
 
 export const getAllAvailableProducts = async () => {
-  const { data } = await api.get("/items/available");
-
-  return data;
+  return mockProducts.filter(product => product.status === true);
 };
 
-export const createProduct = async (neData) => {
-  const { data } = await api.post("/items", neData);
-
-  return data;
+export const createProduct = async (newData) => {
+  console.log("[Mock] createProduct:", newData);
+  return { ...newData, id: Date.now() };
 };
 
 export const updateProduct = async (updatedData) => {
-  const { data } = await api.put("/items", updatedData);
-
-  return data;
+  console.log("[Mock] updateProduct:", updatedData);
+  return updatedData;
 };
 
 export const deleteProduct = async (id) => {
-  const { data } = await api.delete(`/items/${id}`);
-
-  return data;
+  console.log("[Mock] deleteProduct:", id);
+  return { id };
 };

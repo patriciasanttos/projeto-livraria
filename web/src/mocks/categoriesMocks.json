@@ -2,132 +2,581 @@
   "data": [
     {
       "id": 1,
-      "name": "Agendas",
-      "description": "Agendas em Espanhol",
-      "image": "",
-      "created_at": "2025-03-14T16:43:18.126Z",
-      "updated_at": "2025-03-14T16:43:18.126Z",
+      "name": "Cadernos",
+      "description": "Cadernos e blocos de notas para todas as ocasiões",
+      "image": "https://images.unsplash.com/photo-1531346878377-a5be20888e57?w=400&h=400&fit=crop",
+      "banner": null,
+      "created_at": "2025-01-10T10:00:00.000Z",
+      "updated_at": "2025-01-10T10:00:00.000Z",
       "items": [
         {
-          "id": 1,
-          "name": "Agenda Ben 10 Ultimate Edition Plus",
-          "description": "Agenda Ben 10 Ultimate Edition Plus",
-          "price": "20",
-          "image": "https://down-br.img.susercontent.com/file/br-11134207-7r98o-lpfi27limwmqea",
+          "id": 101,
+          "name": "Caderno Espiral Universitário 200 Folhas",
+          "description": "Caderno espiral universitário com capa dura, 200 folhas pautadas de alta qualidade. Ideal para estudantes e profissionais que buscam organização e durabilidade.",
+          "price": "34.90",
+          "mainImage": "https://images.unsplash.com/photo-1531346878377-a5be20888e57?w=400&h=400&fit=crop",
+          "images": [
+            { "url": "https://images.unsplash.com/photo-1531346878377-a5be20888e57?w=400&h=400&fit=crop" },
+            { "url": "https://images.unsplash.com/photo-1517842645767-c639042777db?w=400&h=400&fit=crop" }
+          ],
           "status": true,
-          "created_at": "2025-03-14T16:45:53.714Z",
-          "updated_at": "2025-03-14T16:45:53.714Z"
+          "created_at": "2025-01-10T10:00:00.000Z",
+          "updated_at": "2025-01-10T10:00:00.000Z"
         },
         {
-          "id": 123,
-          "name": "Agenda Ben 10 Ultimate Edition Plus Ultra Max",
-          "description": "Agenda Ben 10 Ultimate Edition Plus Ultra Max",
-          "price": "50",
-          "image": "https://images.tcdn.com.br/img/img_prod/1217404/agenda_costurada_ano_2012_112_folhas_grafons_ben_10_600172_vintage_117_1_23c357d5826a6010f7a0d545d6027e53.jpg",
-          "created_at": "2025-03-14T16:45:53.714Z",
-          "updated_at": "2025-03-14T16:45:53.714Z"
+          "id": 102,
+          "name": "Caderno Brochura Capa Dura 96 Folhas",
+          "description": "Caderno brochura com capa dura resistente, 96 folhas. Perfeito para anotações do dia a dia e uso escolar.",
+          "price": "18.50",
+          "mainImage": "https://images.unsplash.com/photo-1517842645767-c639042777db?w=400&h=400&fit=crop",
+          "images": [
+            { "url": "https://images.unsplash.com/photo-1517842645767-c639042777db?w=400&h=400&fit=crop" },
+            { "url": "https://images.unsplash.com/photo-1531346878377-a5be20888e57?w=400&h=400&fit=crop" }
+          ],
+          "status": true,
+          "created_at": "2025-01-10T10:00:00.000Z",
+          "updated_at": "2025-01-10T10:00:00.000Z"
         },
         {
-          "id": 523,
-          "name": "Agenda Ben 10 Ultimate Edition Plus Ultra Max Revoluton Pro",
-          "description": "Agenda Ben 10 Ultimate Edition Plus Ultra Max Revoluton Pro",
-          "price": "100",
-          "image": "https://images.tcdn.com.br/img/img_prod/1217404/agenda_costurada_ano_2012_112_folhas_grafons_ben_10_600172_vintage_117_1_23c357d5826a6010f7a0d545d6027e53.jpg",
-          "created_at": "2025-03-14T16:45:53.714Z",
-          "updated_at": "2025-03-14T16:45:53.714Z"
+          "id": 103,
+          "name": "Caderno Inteligente Grande Edição Especial",
+          "description": "Caderno inteligente com sistema de discos removíveis, tamanho grande. Personalize suas páginas e reorganize como quiser.",
+          "price": "89.90",
+          "mainImage": "https://images.unsplash.com/photo-1544816155-12df9643f363?w=400&h=400&fit=crop",
+          "images": [
+            { "url": "https://images.unsplash.com/photo-1544816155-12df9643f363?w=400&h=400&fit=crop" },
+            { "url": "https://images.unsplash.com/photo-1531346878377-a5be20888e57?w=400&h=400&fit=crop" }
+          ],
+          "status": true,
+          "created_at": "2025-01-10T10:00:00.000Z",
+          "updated_at": "2025-01-10T10:00:00.000Z"
         },
         {
-          "id": 525,
-          "name": "Agenda Ben 10 Ultimate Edition Plus Ultra Max Revoluton Pro V12 Pocket Edition",
-          "description": "Agenda Ben 10 Ultimate Edition Plus Ultra Max Revoluton Pro V12 Pocket Edition",
-          "price": "150",
-          "image": "https://images.tcdn.com.br/img/img_prod/996738/caderno_brochurao_80_folhas_capa_dura_ben_10_tilibra_69_4_81d9fa692a397f4315c37ac375946948.jpg",
-          "created_at": "2025-03-14T16:45:53.714Z",
-          "updated_at": "2025-03-14T16:45:53.714Z"
+          "id": 104,
+          "name": "Bloco de Notas Adesivas Colorido 400 Folhas",
+          "description": "Bloco com 400 folhas adesivas em 4 cores vibrantes. Ótimo para lembretes, marcações e organização visual.",
+          "price": "12.90",
+          "mainImage": "https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=400&h=400&fit=crop",
+          "images": [
+            { "url": "https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=400&h=400&fit=crop" }
+          ],
+          "status": true,
+          "created_at": "2025-01-10T10:00:00.000Z",
+          "updated_at": "2025-01-10T10:00:00.000Z"
         },
         {
-          "id": 521,
-          "name": "Agenda Ben 10 Ultimate Edition Plus Ultra Max Revoluton Pro V12 Pocket Edition Premium",
-          "description": "Agenda Ben 10 Ultimate Edition Plus Ultra Max Revoluton Pro V12 Pocket Edition Premium",
-          "price": "190",
-          "image": "https://m.media-amazon.com/images/I/71-ScTSTDrL._AC_UF894,1000_QL80_.jpg",
-          "created_at": "2025-03-14T16:45:53.714Z",
-          "updated_at": "2025-03-14T16:45:53.714Z"
+          "id": 105,
+          "name": "Caderno Sketchbook A4 Sem Pauta",
+          "description": "Sketchbook tamanho A4 com papel de alta gramatura, sem pauta. Ideal para desenhos, esboços e projetos artísticos.",
+          "price": "45.00",
+          "mainImage": "https://images.unsplash.com/photo-1456735190827-d1262f71b8a3?w=400&h=400&fit=crop",
+          "images": [
+            { "url": "https://images.unsplash.com/photo-1456735190827-d1262f71b8a3?w=400&h=400&fit=crop" },
+            { "url": "https://images.unsplash.com/photo-1544816155-12df9643f363?w=400&h=400&fit=crop" }
+          ],
+          "status": true,
+          "created_at": "2025-01-10T10:00:00.000Z",
+          "updated_at": "2025-01-10T10:00:00.000Z"
         }
       ]
     },
     {
       "id": 2,
-      "name": "Presentes",
-      "description": "Presentes Infantis",
-      "image": "",
-      "created_at": "2025-03-14T16:43:18.126Z",
-      "updated_at": "2025-03-14T16:43:18.126Z",
+      "name": "Canetas",
+      "description": "Canetas esferográficas, gel, marcadores e muito mais",
+      "image": "https://images.unsplash.com/photo-1585336261022-680e295ce3fe?w=400&h=400&fit=crop",
+      "banner": null,
+      "created_at": "2025-01-10T10:00:00.000Z",
+      "updated_at": "2025-01-10T10:00:00.000Z",
       "items": [
         {
-          "id": 2,
-          "name": "Chaveiro Winx Ultimate Edition Plus",
-          "description": "Chaveiro Winx Ultimate Edition Plus",
-          "price": "30",
-          "image": "",
-          "created_at": "2025-03-14T16:45:53.714Z",
-          "updated_at": "2025-03-14T16:45:53.714Z"
+          "id": 201,
+          "name": "Kit Canetas Gel Coloridas 12 Cores",
+          "description": "Kit com 12 canetas gel em cores vibrantes. Escrita suave e tinta de longa duração. Perfeitas para bullet journal e anotações coloridas.",
+          "price": "29.90",
+          "mainImage": "https://images.unsplash.com/photo-1585336261022-680e295ce3fe?w=400&h=400&fit=crop",
+          "images": [
+            { "url": "https://images.unsplash.com/photo-1585336261022-680e295ce3fe?w=400&h=400&fit=crop" },
+            { "url": "https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=400&h=400&fit=crop" }
+          ],
+          "status": true,
+          "created_at": "2025-01-10T10:00:00.000Z",
+          "updated_at": "2025-01-10T10:00:00.000Z"
         },
         {
-          "id": 412,
-          "name": "Chaveiro Winx Ultimate Edition Plus Ultra Max",
-          "description": "Chaveiro Winx Ultimate Edition Plus Ultra Max",
-          "price": "60",
-          "image": "",
-          "created_at": "2025-03-14T16:45:53.714Z",
-          "updated_at": "2025-03-14T16:45:53.714Z"
+          "id": 202,
+          "name": "Caneta Esferográfica Azul Caixa com 50",
+          "description": "Caixa com 50 canetas esferográficas azuis. Ponta média 1.0mm, escrita consistente e confortável. Ideal para escritórios e escolas.",
+          "price": "42.00",
+          "mainImage": "https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=400&h=400&fit=crop",
+          "images": [
+            { "url": "https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=400&h=400&fit=crop" }
+          ],
+          "status": true,
+          "created_at": "2025-01-10T10:00:00.000Z",
+          "updated_at": "2025-01-10T10:00:00.000Z"
         },
         {
-          "id": 242,
-          "name": "Chaveiro Winx Ultimate Edition Plus Ultra Max Revoluton Pro",
-          "description": "Chaveiro Winx Ultimate Edition Plus Ultra Max Revoluton Pro",
-          "price": "120",
-          "image": "",
-          "created_at": "2025-03-14T16:45:53.714Z",
-          "updated_at": "2025-03-14T16:45:53.714Z"
+          "id": 203,
+          "name": "Marca Texto Neon Kit 6 Cores",
+          "description": "Kit com 6 marcadores de texto em cores neon fluorescentes. Ponta chanfrada para traços finos e grossos. Tinta à base de água.",
+          "price": "19.90",
+          "mainImage": "https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?w=400&h=400&fit=crop",
+          "images": [
+            { "url": "https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?w=400&h=400&fit=crop" }
+          ],
+          "status": true,
+          "created_at": "2025-01-10T10:00:00.000Z",
+          "updated_at": "2025-01-10T10:00:00.000Z"
+        },
+        {
+          "id": 204,
+          "name": "Caneta Fineliner Ponta Fina 0.4mm Preta",
+          "description": "Caneta fineliner com ponta fina de 0.4mm, cor preta. Traço preciso e uniforme, ideal para desenho técnico e escrita detalhada.",
+          "price": "8.90",
+          "mainImage": "https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=400&h=400&fit=crop",
+          "images": [
+            { "url": "https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=400&h=400&fit=crop" }
+          ],
+          "status": true,
+          "created_at": "2025-01-10T10:00:00.000Z",
+          "updated_at": "2025-01-10T10:00:00.000Z"
+        },
+        {
+          "id": 205,
+          "name": "Caneta Brush Pen Aquarelável 24 Cores",
+          "description": "Kit com 24 canetas brush pen aquareláveis. Perfeitas para lettering, aquarela e ilustrações. Ponta flexível tipo pincel.",
+          "price": "64.90",
+          "mainImage": "https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=400&h=400&fit=crop",
+          "images": [
+            { "url": "https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=400&h=400&fit=crop" },
+            { "url": "https://images.unsplash.com/photo-1585336261022-680e295ce3fe?w=400&h=400&fit=crop" }
+          ],
+          "status": true,
+          "created_at": "2025-01-10T10:00:00.000Z",
+          "updated_at": "2025-01-10T10:00:00.000Z"
         }
       ]
     },
     {
       "id": 3,
-      "name": "Canetas",
-      "description": "Canetas Infantis",
-      "image": "",
-      "created_at": "2025-03-14T16:43:18.126Z",
-      "updated_at": "2025-03-14T16:43:18.126Z",
+      "name": "Mochilas",
+      "description": "Mochilas escolares e estojos para todas as idades",
+      "image": "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&h=400&fit=crop",
+      "banner": null,
+      "created_at": "2025-01-10T10:00:00.000Z",
+      "updated_at": "2025-01-10T10:00:00.000Z",
       "items": [
         {
-          "id": 3,
-          "name": "Chaveiro Winx Ultimate Edition Plus Ultra Max Revoluton Pro",
-          "description": "Chaveiro Winx Ultimate Edition Plus Ultra Max Revoluton Pro",
-          "price": "40",
-          "image": "",
-          "created_at": "2025-03-14T16:45:53.714Z",
-          "updated_at": "2025-03-14T16:45:53.714Z"
+          "id": 301,
+          "name": "Mochila Escolar Juvenil Estampada",
+          "description": "Mochila escolar juvenil com estampa moderna, compartimento para notebook, bolsos laterais e alças acolchoadas. Resistente à água.",
+          "price": "129.90",
+          "mainImage": "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&h=400&fit=crop",
+          "images": [
+            { "url": "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&h=400&fit=crop" },
+            { "url": "https://images.unsplash.com/photo-1581605405669-fcdf81165b94?w=400&h=400&fit=crop" }
+          ],
+          "status": true,
+          "created_at": "2025-01-10T10:00:00.000Z",
+          "updated_at": "2025-01-10T10:00:00.000Z"
+        },
+        {
+          "id": 302,
+          "name": "Estojo Box Grande Duplo",
+          "description": "Estojo box grande com dois compartimentos, zíper resistente. Cabe muitas canetas, lápis e acessórios escolares.",
+          "price": "39.90",
+          "mainImage": "https://images.unsplash.com/photo-1581605405669-fcdf81165b94?w=400&h=400&fit=crop",
+          "images": [
+            { "url": "https://images.unsplash.com/photo-1581605405669-fcdf81165b94?w=400&h=400&fit=crop" }
+          ],
+          "status": true,
+          "created_at": "2025-01-10T10:00:00.000Z",
+          "updated_at": "2025-01-10T10:00:00.000Z"
+        },
+        {
+          "id": 303,
+          "name": "Mochila Infantil com Rodinhas",
+          "description": "Mochila infantil com rodinhas e alça retrátil. Design lúdico e colorido, ideal para crianças do ensino fundamental.",
+          "price": "189.90",
+          "mainImage": "https://images.unsplash.com/photo-1577401239170-897942555fb3?w=400&h=400&fit=crop",
+          "images": [
+            { "url": "https://images.unsplash.com/photo-1577401239170-897942555fb3?w=400&h=400&fit=crop" }
+          ],
+          "status": true,
+          "created_at": "2025-01-10T10:00:00.000Z",
+          "updated_at": "2025-01-10T10:00:00.000Z"
+        },
+        {
+          "id": 304,
+          "name": "Estojo Triplo Organizador",
+          "description": "Estojo triplo com divisórias organizadoras, suporte para canetas e bolso com zíper. Material resistente e lavável.",
+          "price": "54.90",
+          "mainImage": "https://images.unsplash.com/photo-1452860606245-08f8e384a845?w=400&h=400&fit=crop",
+          "images": [
+            { "url": "https://images.unsplash.com/photo-1452860606245-08f8e384a845?w=400&h=400&fit=crop" }
+          ],
+          "status": true,
+          "created_at": "2025-01-10T10:00:00.000Z",
+          "updated_at": "2025-01-10T10:00:00.000Z"
         }
       ]
     },
     {
       "id": 4,
-      "name": "Lápis",
-      "description": "Lápis Labra Colorido",
-      "image": "",
-      "created_at": "2025-03-14T16:43:18.126Z",
-      "updated_at": "2025-03-14T16:43:18.126Z",
+      "name": "Livros",
+      "description": "Livros infantis, educativos e de literatura",
+      "image": "https://images.unsplash.com/photo-1512820790803-83ca734da794?w=400&h=400&fit=crop",
+      "banner": null,
+      "created_at": "2025-01-10T10:00:00.000Z",
+      "updated_at": "2025-01-10T10:00:00.000Z",
       "items": [
         {
-          "id": 4,
-          "name": "Chaveiro Winx Ultimate Edition Plus Ultra Max Revoluton Pro",
-          "description": "Chaveiro Winx Ultimate Edition Plus Ultra Max Revoluton Pro",
-          "price": "5000",
-          "image": "",
-          "created_at": "2025-03-14T16:45:53.714Z",
-          "updated_at": "2025-03-14T16:45:53.714Z"
+          "id": 401,
+          "name": "Coleção Contos de Fadas Ilustrados",
+          "description": "Coleção com 5 livros de contos de fadas clássicos com ilustrações encantadoras. Capa dura e papel de qualidade premium.",
+          "price": "79.90",
+          "mainImage": "https://images.unsplash.com/photo-1512820790803-83ca734da794?w=400&h=400&fit=crop",
+          "images": [
+            { "url": "https://images.unsplash.com/photo-1512820790803-83ca734da794?w=400&h=400&fit=crop" },
+            { "url": "https://images.unsplash.com/photo-1524578271613-d550eacf6090?w=400&h=400&fit=crop" }
+          ],
+          "status": true,
+          "created_at": "2025-01-10T10:00:00.000Z",
+          "updated_at": "2025-01-10T10:00:00.000Z"
+        },
+        {
+          "id": 402,
+          "name": "Livro Educativo Primeiros Passos na Matemática",
+          "description": "Livro educativo interativo com atividades de matemática para crianças de 4 a 7 anos. Ilustrações coloridas e exercícios divertidos.",
+          "price": "32.90",
+          "mainImage": "https://images.unsplash.com/photo-1524578271613-d550eacf6090?w=400&h=400&fit=crop",
+          "images": [
+            { "url": "https://images.unsplash.com/photo-1524578271613-d550eacf6090?w=400&h=400&fit=crop" }
+          ],
+          "status": true,
+          "created_at": "2025-01-10T10:00:00.000Z",
+          "updated_at": "2025-01-10T10:00:00.000Z"
+        },
+        {
+          "id": 403,
+          "name": "Atlas Ilustrado do Mundo",
+          "description": "Atlas ilustrado com mapas coloridos de todos os continentes, curiosidades e informações sobre países, capitais e culturas.",
+          "price": "59.90",
+          "mainImage": "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=400&h=400&fit=crop",
+          "images": [
+            { "url": "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=400&h=400&fit=crop" }
+          ],
+          "status": true,
+          "created_at": "2025-01-10T10:00:00.000Z",
+          "updated_at": "2025-01-10T10:00:00.000Z"
+        },
+        {
+          "id": 404,
+          "name": "Dicionário Escolar Português Ilustrado",
+          "description": "Dicionário escolar completo com mais de 30.000 verbetes, ilustrações e exemplos de uso. Formato prático para estudantes.",
+          "price": "44.90",
+          "mainImage": "https://images.unsplash.com/photo-1457369804613-52c61a468e7d?w=400&h=400&fit=crop",
+          "images": [
+            { "url": "https://images.unsplash.com/photo-1457369804613-52c61a468e7d?w=400&h=400&fit=crop" }
+          ],
+          "status": true,
+          "created_at": "2025-01-10T10:00:00.000Z",
+          "updated_at": "2025-01-10T10:00:00.000Z"
+        },
+        {
+          "id": 405,
+          "name": "Livro de Colorir Antiestresse Mandalas",
+          "description": "Livro de colorir para adultos com mandalas intricadas e padrões relaxantes. 60 páginas em papel de alta gramatura.",
+          "price": "27.90",
+          "mainImage": "https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?w=400&h=400&fit=crop",
+          "images": [
+            { "url": "https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?w=400&h=400&fit=crop" }
+          ],
+          "status": true,
+          "created_at": "2025-01-10T10:00:00.000Z",
+          "updated_at": "2025-01-10T10:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Material de Arte",
+      "description": "Tudo para artistas: tintas, pincéis, telas e mais",
+      "image": "https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=400&h=400&fit=crop",
+      "banner": null,
+      "created_at": "2025-01-10T10:00:00.000Z",
+      "updated_at": "2025-01-10T10:00:00.000Z",
+      "items": [
+        {
+          "id": 501,
+          "name": "Kit Tinta Guache 12 Cores 15ml",
+          "description": "Kit com 12 cores de tinta guache em potes de 15ml cada. Cores vibrantes e de fácil mistura. Atóxica e lavável.",
+          "price": "22.90",
+          "mainImage": "https://images.unsplash.com/photo-1560448204-603b3fc33ddc?w=400&h=400&fit=crop",
+          "images": [
+            { "url": "https://images.unsplash.com/photo-1560448204-603b3fc33ddc?w=400&h=400&fit=crop" }
+          ],
+          "status": true,
+          "created_at": "2025-01-10T10:00:00.000Z",
+          "updated_at": "2025-01-10T10:00:00.000Z"
+        },
+        {
+          "id": 502,
+          "name": "Lápis de Cor Profissional 48 Cores",
+          "description": "Estojo com 48 lápis de cor profissional com pigmentos de alta qualidade. Cores intensas e boa cobertura. Mina resistente.",
+          "price": "74.90",
+          "mainImage": "https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=400&h=400&fit=crop",
+          "images": [
+            { "url": "https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=400&h=400&fit=crop" },
+            { "url": "https://images.unsplash.com/photo-1560448204-603b3fc33ddc?w=400&h=400&fit=crop" }
+          ],
+          "status": true,
+          "created_at": "2025-01-10T10:00:00.000Z",
+          "updated_at": "2025-01-10T10:00:00.000Z"
+        },
+        {
+          "id": 503,
+          "name": "Kit Pincéis Artísticos 15 Peças",
+          "description": "Kit com 15 pincéis artísticos em diferentes formatos e tamanhos. Cerdas macias naturais e sintéticas. Acompanha estojo de tecido.",
+          "price": "49.90",
+          "mainImage": "https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=400&h=400&fit=crop",
+          "images": [
+            { "url": "https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=400&h=400&fit=crop" }
+          ],
+          "status": true,
+          "created_at": "2025-01-10T10:00:00.000Z",
+          "updated_at": "2025-01-10T10:00:00.000Z"
+        },
+        {
+          "id": 504,
+          "name": "Tela para Pintura Canvas 40x50cm",
+          "description": "Tela para pintura em canvas de algodão, 40x50cm, com estrutura em madeira. Preparada com gesso acrílico. Pacote com 3 unidades.",
+          "price": "56.90",
+          "mainImage": "https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=400&h=400&fit=crop",
+          "images": [
+            { "url": "https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=400&h=400&fit=crop" }
+          ],
+          "status": true,
+          "created_at": "2025-01-10T10:00:00.000Z",
+          "updated_at": "2025-01-10T10:00:00.000Z"
+        },
+        {
+          "id": 505,
+          "name": "Canetinha Hidrográfica 24 Cores Lavável",
+          "description": "Kit com 24 canetinhas hidrográficas em cores vibrantes. Tinta lavável e atóxica. Ponta resistente que não afunda.",
+          "price": "18.90",
+          "mainImage": "https://images.unsplash.com/photo-1585336261022-680e295ce3fe?w=400&h=400&fit=crop",
+          "images": [
+            { "url": "https://images.unsplash.com/photo-1585336261022-680e295ce3fe?w=400&h=400&fit=crop" }
+          ],
+          "status": true,
+          "created_at": "2025-01-10T10:00:00.000Z",
+          "updated_at": "2025-01-10T10:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "name": "Agendas",
+      "description": "Agendas e planners para sua organização diária",
+      "image": "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?w=400&h=400&fit=crop",
+      "banner": null,
+      "created_at": "2025-01-10T10:00:00.000Z",
+      "updated_at": "2025-01-10T10:00:00.000Z",
+      "items": [
+        {
+          "id": 601,
+          "name": "Planner Anual 2025 Capa Dura Premium",
+          "description": "Planner anual 2025 com capa dura premium, divisórias mensais, espaço para metas, hábitos e notas. Design elegante e sofisticado.",
+          "price": "69.90",
+          "mainImage": "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?w=400&h=400&fit=crop",
+          "images": [
+            { "url": "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?w=400&h=400&fit=crop" },
+            { "url": "https://images.unsplash.com/photo-1544816155-12df9643f363?w=400&h=400&fit=crop" }
+          ],
+          "status": true,
+          "created_at": "2025-01-10T10:00:00.000Z",
+          "updated_at": "2025-01-10T10:00:00.000Z"
+        },
+        {
+          "id": 602,
+          "name": "Agenda Diária Executiva Couro Sintético",
+          "description": "Agenda diária executiva em couro sintético com fechamento magnético. Papel offset 80g, marcador de fita e porta-cartão.",
+          "price": "54.90",
+          "mainImage": "https://images.unsplash.com/photo-1544816155-12df9643f363?w=400&h=400&fit=crop",
+          "images": [
+            { "url": "https://images.unsplash.com/photo-1544816155-12df9643f363?w=400&h=400&fit=crop" }
+          ],
+          "status": true,
+          "created_at": "2025-01-10T10:00:00.000Z",
+          "updated_at": "2025-01-10T10:00:00.000Z"
+        },
+        {
+          "id": 603,
+          "name": "Planner Semanal Wire-O Colorido",
+          "description": "Planner semanal com encadernação wire-o, capa colorida com laminação brilho. Inclui adesivos decorativos e páginas de planejamento.",
+          "price": "42.90",
+          "mainImage": "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=400&h=400&fit=crop",
+          "images": [
+            { "url": "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=400&h=400&fit=crop" }
+          ],
+          "status": true,
+          "created_at": "2025-01-10T10:00:00.000Z",
+          "updated_at": "2025-01-10T10:00:00.000Z"
+        },
+        {
+          "id": 604,
+          "name": "Agenda Escolar Personalizada com Adesivos",
+          "description": "Agenda escolar com páginas personalizáveis, horário de aulas, lista de tarefas e cartela de adesivos decorativos inclusos.",
+          "price": "35.90",
+          "mainImage": "https://images.unsplash.com/photo-1531346878377-a5be20888e57?w=400&h=400&fit=crop",
+          "images": [
+            { "url": "https://images.unsplash.com/photo-1531346878377-a5be20888e57?w=400&h=400&fit=crop" }
+          ],
+          "status": true,
+          "created_at": "2025-01-10T10:00:00.000Z",
+          "updated_at": "2025-01-10T10:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "name": "Papelaria Criativa",
+      "description": "Acessórios de papelaria criativos e decorativos",
+      "image": "https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=400&h=400&fit=crop",
+      "banner": null,
+      "created_at": "2025-01-10T10:00:00.000Z",
+      "updated_at": "2025-01-10T10:00:00.000Z",
+      "items": [
+        {
+          "id": 701,
+          "name": "Kit Washi Tape Decorativa 10 Rolos",
+          "description": "Kit com 10 rolos de washi tape decorativa em estampas variadas. Fácil de colar e descolar sem deixar resíduos. Ideal para decoração.",
+          "price": "34.90",
+          "mainImage": "https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=400&h=400&fit=crop",
+          "images": [
+            { "url": "https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=400&h=400&fit=crop" }
+          ],
+          "status": true,
+          "created_at": "2025-01-10T10:00:00.000Z",
+          "updated_at": "2025-01-10T10:00:00.000Z"
+        },
+        {
+          "id": 702,
+          "name": "Clips Decorativos Metálicos Dourado 50un",
+          "description": "Caixa com 50 clips de papel metálicos na cor dourada. Formatos variados: coração, estrela, gato e binder clips.",
+          "price": "16.90",
+          "mainImage": "https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=400&h=400&fit=crop",
+          "images": [
+            { "url": "https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=400&h=400&fit=crop" }
+          ],
+          "status": true,
+          "created_at": "2025-01-10T10:00:00.000Z",
+          "updated_at": "2025-01-10T10:00:00.000Z"
+        },
+        {
+          "id": 703,
+          "name": "Cartela de Adesivos Decorativos 500 Peças",
+          "description": "Cartela com 500 adesivos decorativos temáticos: natureza, comida, emoticons e frases motivacionais. Vinil de alta qualidade.",
+          "price": "24.90",
+          "mainImage": "https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?w=400&h=400&fit=crop",
+          "images": [
+            { "url": "https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?w=400&h=400&fit=crop" }
+          ],
+          "status": true,
+          "created_at": "2025-01-10T10:00:00.000Z",
+          "updated_at": "2025-01-10T10:00:00.000Z"
+        },
+        {
+          "id": 704,
+          "name": "Régua Criativa Multiformas 20cm",
+          "description": "Régua criativa de 20cm com moldes de formas geométricas e símbolos. Material acrílico transparente, resistente e flexível.",
+          "price": "9.90",
+          "mainImage": "https://images.unsplash.com/photo-1452860606245-08f8e384a845?w=400&h=400&fit=crop",
+          "images": [
+            { "url": "https://images.unsplash.com/photo-1452860606245-08f8e384a845?w=400&h=400&fit=crop" }
+          ],
+          "status": true,
+          "created_at": "2025-01-10T10:00:00.000Z",
+          "updated_at": "2025-01-10T10:00:00.000Z"
+        },
+        {
+          "id": 705,
+          "name": "Organizador de Mesa Acrílico Rose Gold",
+          "description": "Organizador de mesa em acrílico na cor rose gold com 6 compartimentos. Elegante e funcional para escritório e home office.",
+          "price": "59.90",
+          "mainImage": "https://images.unsplash.com/photo-1544816155-12df9643f363?w=400&h=400&fit=crop",
+          "images": [
+            { "url": "https://images.unsplash.com/photo-1544816155-12df9643f363?w=400&h=400&fit=crop" }
+          ],
+          "status": true,
+          "created_at": "2025-01-10T10:00:00.000Z",
+          "updated_at": "2025-01-10T10:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "name": "Presentes",
+      "description": "Presentes criativos e personalizados para todas as idades",
+      "image": "https://images.unsplash.com/photo-1549465220-1a8b9238f760?w=400&h=400&fit=crop",
+      "banner": null,
+      "created_at": "2025-01-10T10:00:00.000Z",
+      "updated_at": "2025-01-10T10:00:00.000Z",
+      "items": [
+        {
+          "id": 801,
+          "name": "Kit Presente Papelaria Completo",
+          "description": "Kit presente com caderno, caneta, marca-texto, adesivos e estojo coordenados. Embalados em caixa decorativa pronta para presentear.",
+          "price": "89.90",
+          "mainImage": "https://images.unsplash.com/photo-1549465220-1a8b9238f760?w=400&h=400&fit=crop",
+          "images": [
+            { "url": "https://images.unsplash.com/photo-1549465220-1a8b9238f760?w=400&h=400&fit=crop" },
+            { "url": "https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?w=400&h=400&fit=crop" }
+          ],
+          "status": true,
+          "created_at": "2025-01-10T10:00:00.000Z",
+          "updated_at": "2025-01-10T10:00:00.000Z"
+        },
+        {
+          "id": 802,
+          "name": "Caneca Personalizada com Nome",
+          "description": "Caneca de cerâmica personalizada com nome e design exclusivo. Capacidade 350ml, lavável em máquina de lavar louças.",
+          "price": "34.90",
+          "mainImage": "https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?w=400&h=400&fit=crop",
+          "images": [
+            { "url": "https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?w=400&h=400&fit=crop" }
+          ],
+          "status": true,
+          "created_at": "2025-01-10T10:00:00.000Z",
+          "updated_at": "2025-01-10T10:00:00.000Z"
+        },
+        {
+          "id": 803,
+          "name": "Chaveiro Acrílico Personalizado",
+          "description": "Chaveiro em acrílico cristal com impressão personalizada em alta definição. Argola metálica reforçada. Diversas formas disponíveis.",
+          "price": "14.90",
+          "mainImage": "https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=400&h=400&fit=crop",
+          "images": [
+            { "url": "https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=400&h=400&fit=crop" }
+          ],
+          "status": true,
+          "created_at": "2025-01-10T10:00:00.000Z",
+          "updated_at": "2025-01-10T10:00:00.000Z"
+        },
+        {
+          "id": 804,
+          "name": "Quadro Decorativo Frase Motivacional",
+          "description": "Quadro decorativo com frase motivacional em moldura MDF. Tamanho 20x30cm, ideal para escritório, quarto ou sala de estudos.",
+          "price": "29.90",
+          "mainImage": "https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=400&h=400&fit=crop",
+          "images": [
+            { "url": "https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=400&h=400&fit=crop" }
+          ],
+          "status": true,
+          "created_at": "2025-01-10T10:00:00.000Z",
+          "updated_at": "2025-01-10T10:00:00.000Z"
         }
       ]
     }

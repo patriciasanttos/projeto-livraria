@@ -13,9 +13,9 @@ import './HomePage.scss';
 function HomePage() {
   const { data: categoriesData, isLoading, error } = useCategoriesData();
 
-  const category1 = categoriesData && categoriesData.length > 0 ? categoriesData[26] : mock.data[0];
-  const category2 = categoriesData && categoriesData.length > 0 ? categoriesData[8] : mock.data[1];
-  const category3 = categoriesData && categoriesData.length > 0 ? categoriesData[6] : mock.data[1];
+  const category1 = categoriesData && categoriesData.length > 0 ? categoriesData[0] : mock.data[0];
+  const category2 = categoriesData && categoriesData.length > 1 ? categoriesData[1] : mock.data[1];
+  const category3 = categoriesData && categoriesData.length > 2 ? categoriesData[2] : mock.data[2] || mock.data[0];
   const allCategories = categoriesData && categoriesData.length > 0 ? categoriesData : mock.data;
 
   return (

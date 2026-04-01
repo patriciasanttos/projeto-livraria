@@ -1,47 +1,36 @@
-import { api } from "../api";
+import categoriesMock from "../../mocks/categoriesMocks.json";
+
+const mockCategories = categoriesMock.data;
 
 export const getAllCategories = async () => {
-  const { data } = await api.get("/categories");
-
-  return data;
+  return mockCategories;
 };
 
 export const getAllAvailableCategories = async () => {
-  const { data } = await api.get("/categories/available");
-
-  return data;
+  return mockCategories;
 };
 
 export const createCategory = async (newData) => {
-  const { data } = await api.post("/categories", newData);
-
-  return data;
+  console.log("[Mock] createCategory:", newData);
+  return { ...newData, id: Date.now() };
 };
 
 export const updateCategory = async (updatedData) => {
-  const { data } = await api.put("/categories", updatedData);
-
-  return data;
+  console.log("[Mock] updateCategory:", updatedData);
+  return updatedData;
 };
 
 export const deleteCategory = async (id) => {
-  const { data } = await api.delete(`/categories/${id}`);
-
-  return data;
+  console.log("[Mock] deleteCategory:", id);
+  return { id };
 };
 
 export const addProductToCategory = async (categoryId, productId) => {
-  const { data } = await api.patch(
-    `/categories/${categoryId}/items/${productId}/add`
-  );
-
-  return data;
+  console.log("[Mock] addProductToCategory:", categoryId, productId);
+  return { categoryId, productId };
 };
 
 export const removeProductFromCategory = async (categoryId, productId) => {
-  const { data } = await api.patch(
-    `/categories/${categoryId}/items/${productId}/remove`
-  );
-
-  return data;
+  console.log("[Mock] removeProductFromCategory:", categoryId, productId);
+  return { categoryId, productId };
 };
