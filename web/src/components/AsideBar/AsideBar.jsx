@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 //-----Icons & images
-import logo from '../../assets/images/logo.svg'
+
 import products from '../../assets/icons/products.svg'
 import categories from '../../assets/icons/categories.svg'
 import reports from '../../assets/icons/reports.svg'
@@ -16,7 +16,7 @@ function AsideBar() {
         <div className="admin-asidebar">
             <div className="logo">
                 <Link to="/admin/control_panel">
-                    <img src={logo} alt="Home" />
+                    <span>LOGO</span>
                 </Link>
             </div>
 

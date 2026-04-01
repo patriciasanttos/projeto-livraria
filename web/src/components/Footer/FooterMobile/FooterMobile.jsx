@@ -1,7 +1,7 @@
 import React from "react";
 
 //-- Icons and Images
-import logo from "../../../assets/images/logo.svg";
+
 import instagram from "../../../assets/icons/instagram-blue.svg";
 import flags from "../../../assets/icons/card-flags.svg";
 import location from "../../../assets/icons/location-blue.svg";
@@ -15,7 +15,7 @@ const FooterMobile = () => {
       <footer className="footer-mobile">
         <div className="first-footer-section">
           <Link to="/">
-            <img className="logo-footer" src={logo} alt="logo" />
+            <span className="logo-footer">LOGO</span>
           </Link>
 
           <div>
@@ -32,7 +32,7 @@ const FooterMobile = () => {
                 target="_blank"
               >
                 <img src={instagram} alt="insta-logo" />
-                <p>@ciadaeducacaosjc</p>
+                <p>@lorem.ipsum</p>
               </a>
             </div>
 
@@ -74,10 +74,10 @@ const FooterMobile = () => {
             <h2 className="flex-field-title">Como Chegar</h2>
           </div>
 
-          <a href="https://maps.app.goo.gl/KQMV5vfECNFFPpeF9" target="_blank">
-            Shopping Jardim Oriente, <br />
-            R. Andorra, 500 - Jardim America, <br />
-            São José dos Campos - SP
+          <a href="#" target="_blank">
+            Lorem ipsum dolor sit amet, <br />
+            consectetur adipiscing elit, <br />
+            sed do eiusmod tempor
           </a>
         </div>
       </footer>

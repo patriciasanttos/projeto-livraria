@@ -6,7 +6,7 @@ import './WhatsappPopup.scss';
 
 function WhatsappPopup() {
   return (
-    <a className="whatsapp-popup" target='_blank' href={`https://wa.me/${import.meta.env.VITE_WHATSAPP_NUMBER}`}>
+    <a className="whatsapp-popup" target='_blank' href="#">
       <img src={whatsappIcon} alt="Whatsapp" />
     </a>
   );

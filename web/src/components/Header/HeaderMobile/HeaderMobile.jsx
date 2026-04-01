@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 //-----Icons & images
-import logo from "../../../assets/images/logoV2.svg";
+
 import shoppingCartIcon from "../../../assets/icons/shoppingCartIconBlue.svg";
 import menuIcon from "../../../assets/icons/menu.svg";
 
@@ -33,7 +33,7 @@ const HeaderMobile = () => {
           />
 
           <Link to="/">
-            <img className="logo" src={logo} alt="Logo DNC" />
+            <span className="logo">LOGO</span>
           </Link>
 
           <Link to="/cart" style={{ textDecoration: "none" }}>
