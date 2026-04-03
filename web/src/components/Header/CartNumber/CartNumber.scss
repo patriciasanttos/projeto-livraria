@@ -1,19 +1,20 @@
 .cart-number-desktop {
     display: flex;
-    flex-direction: row;
     align-items: center;
     justify-content: center;
-    font-size: 10pt;
-    position: relative;
-    left: 34px;
-    top: 6px;
+    font-size: 8pt;
+    font-weight: 700;
+    position: absolute;
+    top: -6px;
+    right: -8px;
     z-index: 1;
+    pointer-events: none;
 
-    background-color: white;
-    color: var(--text-primary-color);
-    border-radius: 50px;
-    width: 1.9em;
-    height: 1.8em;
+    background-color: #e74c6f;
+    color: #fff;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
 }
 
 .cart-number-mobile {

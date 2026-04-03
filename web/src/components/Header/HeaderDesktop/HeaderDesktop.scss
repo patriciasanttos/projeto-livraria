@@ -1,6 +1,6 @@
 .header-desktop {
     width: 100dvw;
-    height: 20%;
+    height: 12.3dvw;
 
     background-image: url('../../../assets/images/bg-header.png');
     background-repeat: no-repeat;
@@ -12,6 +12,7 @@
         position: relative;
         display: flex;
         flex-direction: column;
+        height: 100%;
 
         padding: 1% 5%;
 
@@ -21,35 +22,37 @@
             justify-content: space-between;
             align-items: center;
 
+            .header-logo-link {
+                text-decoration: none;
+            }
+
             .header-logo-link .header-logo {
-                width: 8dvw;
+                font-size: clamp(1.4rem, 2.5dvw, 2.2rem);
+                font-weight: 800;
+                color: var(--text-primary-color, #2c3e50);
+                letter-spacing: 0.15em;
+                white-space: nowrap;
             }
 
             .header-buttons {
                 display: flex;
                 flex-direction: row;
-                justify-content: center;
                 align-items: center;
-
-                width: 8em;
-                height: 4em;
+                gap: 0.8em;
 
                 img {
-                    width: 100%;
+                    width: 32px;
                     height: auto;
+                    cursor: pointer;
                 }
 
-                .cart-img {
+                > a,
+                > :first-child {
                     position: relative;
-                    bottom: 11px;
-                }
-
-                :nth-child(2) {
-                    margin-left: 0.6em;
-                }
-
-                :last-child {
-                    margin-left: 0.2em;
+                    display: flex;
+                    align-items: center;
+                    cursor: pointer;
+                    z-index: 2;
                 }
             }
 
@@ -65,13 +68,18 @@
 
         .header-content-bottom {
             display: flex;
+            flex: 1;
             flex-direction: row;
-            justify-content: space-evenly;
-            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-content: flex-end;
             gap: 3em;
-            width: 100%;
+            width: auto;
 
-            margin-top: 3%;
+            margin-top: 0;
+            margin-left: -5%;
+            margin-right: -5%;
+            padding: 1.8em 5% 2em;
 
             a {
                 color: var(--text-primary-color);
@@ -94,13 +102,8 @@
 
 @media screen and (min-width: 1025px) {
     .header-desktop .header-content {
-        .header-content-top .header-buttons {
-            width: 10em;
-        }
-
         .header-content-bottom {
-            margin-top: 1.5em;
-            align-items: center;
+            align-items: end;
         }
     }
 }
