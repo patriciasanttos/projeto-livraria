@@ -19,22 +19,8 @@ const FooterMobile = () => {
           </Link>
 
           <div>
-            <div className="about">
-              <Link to="/aboutus">
-                <h2 className="flex-field-title">Sobre Nós</h2>
-              </Link>
 
-              <h2 className="flex-field-title">Redes Sociais</h2>
 
-              <a
-                className="social-media"
-                href={import.meta.env.VITE_INSTAGRAM_URL}
-                target="_blank"
-              >
-                <img src={instagram} alt="insta-logo" />
-                <p>@lorem.ipsum</p>
-              </a>
-            </div>
 
             <div className="category">
               <h2 className="flex-field-title">Categorias</h2>
@@ -73,12 +59,6 @@ const FooterMobile = () => {
             <img src={location} alt="location" className="location-img" />
             <h2 className="flex-field-title">Como Chegar</h2>
           </div>
-
-          <a href="#" target="_blank">
-            Lorem ipsum dolor sit amet, <br />
-            consectetur adipiscing elit, <br />
-            sed do eiusmod tempor
-          </a>
         </div>
       </footer>
     );

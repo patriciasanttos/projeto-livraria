@@ -186,9 +186,9 @@
           "name": "Estojo Box Grande Duplo",
           "description": "Estojo box grande com dois compartimentos, zíper resistente. Cabe muitas canetas, lápis e acessórios escolares.",
           "price": "39.90",
-          "mainImage": "https://images.unsplash.com/photo-1581605405669-fcdf81165b94?w=400&h=400&fit=crop",
+          "mainImage": "https://images.unsplash.com/photo-1452860606245-08f8e384a845?w=400&h=400&fit=crop",
           "images": [
-            { "url": "https://images.unsplash.com/photo-1581605405669-fcdf81165b94?w=400&h=400&fit=crop" }
+            { "url": "https://images.unsplash.com/photo-1452860606245-08f8e384a845?w=400&h=400&fit=crop" }
           ],
           "status": true,
           "created_at": "2025-01-10T10:00:00.000Z",
@@ -224,7 +224,7 @@
     },
     {
       "id": 4,
-      "name": "Livros",
+      "name": "Livros Infantis",
       "description": "Livros infantis, educativos e de literatura",
       "image": "https://images.unsplash.com/photo-1512820790803-83ca734da794?w=400&h=400&fit=crop",
       "banner": null,
@@ -442,7 +442,7 @@
     },
     {
       "id": 7,
-      "name": "Papelaria Criativa",
+      "name": "Papelaria",
       "description": "Acessórios de papelaria criativos e decorativos",
       "image": "https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=400&h=400&fit=crop",
       "banner": null,
@@ -520,7 +520,7 @@
       "id": 8,
       "name": "Presentes",
       "description": "Presentes criativos e personalizados para todas as idades",
-      "image": "https://images.unsplash.com/photo-1549465220-1a8b9238f760?w=400&h=400&fit=crop",
+      "image": "https://images.unsplash.com/photo-1513885535751-8b9238bd345a?w=400&h=400&fit=crop",
       "banner": null,
       "created_at": "2025-01-10T10:00:00.000Z",
       "updated_at": "2025-01-10T10:00:00.000Z",
@@ -530,9 +530,9 @@
           "name": "Kit Presente Papelaria Completo",
           "description": "Kit presente com caderno, caneta, marca-texto, adesivos e estojo coordenados. Embalados em caixa decorativa pronta para presentear.",
           "price": "89.90",
-          "mainImage": "https://images.unsplash.com/photo-1549465220-1a8b9238f760?w=400&h=400&fit=crop",
+          "mainImage": "https://images.unsplash.com/photo-1513885535751-8b9238bd345a?w=400&h=400&fit=crop",
           "images": [
-            { "url": "https://images.unsplash.com/photo-1549465220-1a8b9238f760?w=400&h=400&fit=crop" },
+            { "url": "https://images.unsplash.com/photo-1513885535751-8b9238bd345a?w=400&h=400&fit=crop" },
             { "url": "https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?w=400&h=400&fit=crop" }
           ],
           "status": true,
@@ -573,6 +573,69 @@
           "mainImage": "https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=400&h=400&fit=crop",
           "images": [
             { "url": "https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=400&h=400&fit=crop" }
+          ],
+          "status": true,
+          "created_at": "2025-01-10T10:00:00.000Z",
+          "updated_at": "2025-01-10T10:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "name": "Atividades",
+      "description": "Jogos educativos, quebra-cabeças e atividades para crianças",
+      "image": "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=400&h=400&fit=crop",
+      "banner": null,
+      "created_at": "2025-01-10T10:00:00.000Z",
+      "updated_at": "2025-01-10T10:00:00.000Z",
+      "items": [
+        {
+          "id": 901,
+          "name": "Jogo da Memória Educativo Animais",
+          "description": "Jogo da memória com ilustrações de animais para crianças a partir de 3 anos. 40 peças em papelão reforçado e colorido.",
+          "price": "24.90",
+          "mainImage": "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=400&h=400&fit=crop",
+          "images": [
+            { "url": "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=400&h=400&fit=crop" }
+          ],
+          "status": true,
+          "created_at": "2025-01-10T10:00:00.000Z",
+          "updated_at": "2025-01-10T10:00:00.000Z"
+        },
+        {
+          "id": 902,
+          "name": "Quebra-Cabeça 100 Peças Mapa do Brasil",
+          "description": "Quebra-cabeça educativo com mapa do Brasil, estados e capitais. 100 peças de encaixe perfeito. Ideal para crianças de 6 a 10 anos.",
+          "price": "32.90",
+          "mainImage": "https://images.unsplash.com/photo-1509228627152-72ae9ae6848d?w=400&h=400&fit=crop",
+          "images": [
+            { "url": "https://images.unsplash.com/photo-1509228627152-72ae9ae6848d?w=400&h=400&fit=crop" }
+          ],
+          "status": true,
+          "created_at": "2025-01-10T10:00:00.000Z",
+          "updated_at": "2025-01-10T10:00:00.000Z"
+        },
+        {
+          "id": 903,
+          "name": "Kit Massinha de Modelar 12 Cores",
+          "description": "Kit com 12 cores de massinha de modelar atóxica. Textura macia e fácil de moldar. Acompanha moldes e ferramentas.",
+          "price": "19.90",
+          "mainImage": "https://images.unsplash.com/photo-1560421683-6856ea585c78?w=400&h=400&fit=crop",
+          "images": [
+            { "url": "https://images.unsplash.com/photo-1560421683-6856ea585c78?w=400&h=400&fit=crop" }
+          ],
+          "status": true,
+          "created_at": "2025-01-10T10:00:00.000Z",
+          "updated_at": "2025-01-10T10:00:00.000Z"
+        },
+        {
+          "id": 904,
+          "name": "Livro de Atividades Infantil com Adesivos",
+          "description": "Livro de atividades para crianças com jogos, labirintos, caça-palavras e mais de 100 adesivos temáticos inclusos.",
+          "price": "27.90",
+          "mainImage": "https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?w=400&h=400&fit=crop",
+          "images": [
+            { "url": "https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?w=400&h=400&fit=crop" }
           ],
           "status": true,
           "created_at": "2025-01-10T10:00:00.000Z",

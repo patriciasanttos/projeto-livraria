@@ -28,6 +28,7 @@ const MenuDrawer = ({ isOpen, setMenuOpen }) => {
       category: "atividades",
     },
     { text: "Ver tudo", link: "/categories", category: null },
+    { text: "Sobre Nós", link: "/aboutus", category: null },
   ];
 
   const onClickItem = () => {

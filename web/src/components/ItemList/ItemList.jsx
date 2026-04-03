@@ -56,8 +56,18 @@ function ItemList() {
   }
 
   useEffect(() => {
-    setProductList(loadProducts());
-    console.log(productList);
+    const products = loadProducts();
+    setProductList(products);
+
+    // Sync localStorage: remove stale entries that don't match any real product
+    if (data) {
+      const validCart = {};
+      for (const p of products) {
+        if (p.id && p.quantity > 0) validCart[p.id] = p.quantity;
+      }
+      if (Object.keys(validCart).length === 0) localStorage.removeItem("cart");
+      else localStorage.setItem("cart", JSON.stringify(validCart));
+    }
   }, [data]);
 
   const handleSaveCart = useCallback(() => {

@@ -82,6 +82,7 @@ const HeaderDesktop = () => {
             Atividades
           </Link>
           <Link to="/categories">Ver tudo</Link>
+          <Link to="/aboutus">Sobre Nós</Link>
         </div>
       </div>
     </header>
