@@ -1,7 +1,6 @@
 import React from 'react';
 
 import './AboutUs.scss';
-import aboutUsImg from '../../../assets/images/aboutUsImg.svg';
 import instagramIcon from '../../../assets/images/aboutUsInstagramIcon.svg';
 import whatsappIcon from '../../../assets/images/aboutUsWppIcon.svg';
 import locationIcon from '../../../assets/images/aboutUsLocationIcon.svg';
@@ -12,7 +11,9 @@ function AboutUs() {
       <h1 className="aboutus-section-title">Sobre nós</h1>
       <section className="aboutus-apresentation">
         <figure className="aboutus-team">
-          <img src={aboutUsImg} alt="Foto da equipe" />
+          <div className="aboutus-image-placeholder">
+            <span>Sua imagem aqui</span>
+          </div>
         </figure>
 
         <div className="aboutus-text-container">

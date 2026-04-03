@@ -18,8 +18,22 @@
     .aboutus-team {
       margin: 3% 0 0 0;
 
-      img {
+      .aboutus-image-placeholder {
         width: 32dvw;
+        height: 300px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #e8edf2;
+        border: 2px dashed #a0b4c8;
+        border-radius: 12px;
+
+        span {
+          font-size: 1.2rem;
+          color: #7a8fa3;
+          font-weight: 500;
+          font-style: italic;
+        }
       }
     }
 
@@ -215,8 +229,9 @@
       .aboutus-team {
         margin: 2% 0 0 0;
 
-        img {
+        .aboutus-image-placeholder {
           width: 80%;
+          height: 200px;
         }
       }
 
