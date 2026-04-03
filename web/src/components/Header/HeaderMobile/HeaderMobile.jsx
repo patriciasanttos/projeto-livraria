@@ -15,7 +15,7 @@ import "./HeaderMobile.scss";
 import CartNumber from "../CartNumber/CartNumber";
 
 const HeaderMobile = () => {
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState("");
   const [isMenuOpen, setIsMenuOpen] = useState();
   const cartCookie = JSON.parse(localStorage.getItem("cart")) || {};
   const cartItems = Object.keys(cartCookie).length;
@@ -25,12 +25,7 @@ const HeaderMobile = () => {
     <>
       <header className="header-mobile">
         <div className="row-top">
-          <img
-            className="icon"
-            src={menuIcon}
-            alt="Menu"
-            onClick={() => setIsMenuOpen(true)}
-          />
+          <img src={menuIcon} alt="Menu" onClick={() => setIsMenuOpen(true)} />
 
           <Link to="/">
             <span className="logo">LOGO</span>

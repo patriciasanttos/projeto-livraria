@@ -14,14 +14,14 @@ const MenuDrawer = ({ isOpen, setMenuOpen }) => {
 
   const listLinks = [
     { text: "Home", link: "/", category: null },
-    { text: "Presentes", link: "/categories/presente", category: "presentes" },
+    { text: "Presentes", link: "/categories/presentes", category: "presentes" },
     {
       text: "Livros Infantis",
       link: "/categories/livros%20infantis",
       category: "livros infantis",
     },
     { text: "Papelaria", link: "/categories/papelaria", category: "papelaria" },
-    { text: "Cadernos", link: "/categories", category: "cadernos" },
+    { text: "Cadernos", link: "/categories/cadernos", category: "cadernos" },
     {
       text: "Atividades",
       link: "/categories/atividades",
