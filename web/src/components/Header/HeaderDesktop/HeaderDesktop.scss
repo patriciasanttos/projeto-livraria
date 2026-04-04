@@ -117,6 +117,20 @@
     }
 }
 
+@media screen and (min-width: 1360px) {
+    .header-desktop .header-content .header-content-bottom {
+        position: initial;
+        top: initial;
+    }
+}
+
+@media screen and (min-width: 1700px) {
+    .header-desktop .header-content .header-content-bottom {
+        position: relative;
+        top: -0.5vw;
+    }
+}
+
 @media screen and (min-width: 1440px) {
     .header-desktop .header-content .header-content-bottom a {
         font-size: 1.3em;
