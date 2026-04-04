@@ -40,6 +40,23 @@
         align-items: center;
     }
 
+    .product-link {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        color: inherit;
+        cursor: pointer;
+
+        &:hover .product-text {
+            color: var(--button-pink);
+            text-decoration: underline;
+        }
+
+        &:hover .item-list-image {
+            opacity: 0.8;
+        }
+    }
+
     .item-list-image {
         width: 100px;
         border-radius: 5px;

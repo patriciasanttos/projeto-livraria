@@ -184,13 +184,13 @@ function ItemList() {
   };
 
   const onClickCompletePurchase = () => {
-    let url =
-      `#`;
+    let message = "📦 Pedido via WhatsApp\n\n";
 
     productList.forEach((product) => {
-      url += `%0A%E2%80%A2${product.quantity}x+${product.name}+(R$${product.price})`;
+      message += `• ${product.quantity}x ${product.name} (${formatValues(product.price)})\n`;
     });
-    url += `%0A%0ATotal da compra: ${formatValues(calculateTotal())}`;
+
+    message += `\nTotal da compra: ${formatValues(calculateTotal())}`;
 
     for (const product of productList) {
       mutate({
@@ -201,7 +201,7 @@ function ItemList() {
       });
     };
 
-    window.open(url, "_blank").focus();
+    alert(message);
   };
 
   if (isLoading)
@@ -249,13 +249,15 @@ function ItemList() {
               product?.id && (
                 <tr key={index}>
                   <td className="product-item">
-                    <img
-                      src={product.image ?? kitCanetas}
-                      alt="Imagem do item"
-                      width="120px"
-                      className="item-list-image"
-                    />
-                    <p className="product-text">{product.name}</p>
+                    <Link to={`/products/${product.id}`} className="product-link">
+                      <img
+                        src={product.image ?? kitCanetas}
+                        alt="Imagem do item"
+                        width="120px"
+                        className="item-list-image"
+                      />
+                      <p className="product-text">{product.name}</p>
+                    </Link>
                   </td>
                   <td className="right">{formatValues(product.price)}</td>
                   <td className="right">
@@ -288,11 +290,15 @@ function ItemList() {
   const TableMobile = () => {
     return productList.map((product, index) => product?.id && (
       <section className="mobile-row" key={index}>
-        <img src={product.image} alt="Imagem do item" className="item-list-image" width="120px" />
+        <Link to={`/products/${product.id}`}>
+          <img src={product.image} alt="Imagem do item" className="item-list-image" width="120px" />
+        </Link>
 
         <div className="column">
           <div className="mobile-row">
-            <p className="product-text">{product.name}</p>
+            <Link to={`/products/${product.id}`} className="product-link">
+              <p className="product-text">{product.name}</p>
+            </Link>
             <div className="right">{formatValues(product.price)}</div>
           </div>
 
